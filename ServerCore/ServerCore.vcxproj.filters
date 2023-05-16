@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="NetWork">
+      <UniqueIdentifier>{9b6b2eb3-1dc8-44e8-ad8f-be9f6f4aee2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{b2c91a49-c3c4-46ac-b6a3-919f871e1be0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL">
+      <UniqueIdentifier>{f0296077-bab2-4a9e-a65b-d84e69989bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL\LRUQueue">
+      <UniqueIdentifier>{fc5c6bf9-8996-4337-983a-f6338c823fa6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="STL\RedBlackTree">
+      <UniqueIdentifier>{0b1e97b7-3a30-47cb-b14a-1d045cdc1ee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NetWork\Lock">
+      <UniqueIdentifier>{fe62a7bc-ad8f-4548-863f-d5371fa8bcac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\MemoryPool">
+      <UniqueIdentifier>{15203f10-b12b-4c6e-b349-527d3f0d5278}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="CorePch.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Types.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="LRU_Queue.h">
+      <Filter>STL\LRUQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="PriorityQueue.h">
+      <Filter>STL\LRUQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="RBT.h">
+      <Filter>STL\RedBlackTree</Filter>
+    </ClInclude>
+    <ClInclude Include="SpinLock.h">
+      <Filter>NetWork\Lock</Filter>
+    </ClInclude>
+    <ClInclude Include="ForwardDeclarations.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPool.h">
+      <Filter>Utils\MemoryPool</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="CorePch.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="RBT.cpp">
+      <Filter>STL\RedBlackTree</Filter>
+    </ClCompile>
+    <ClCompile Include="SpinLock.cpp">
+      <Filter>NetWork\Lock</Filter>
+    </ClCompile>
+    <ClCompile Include="MemoryPool.cpp">
+      <Filter>Utils\MemoryPool</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
