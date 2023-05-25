@@ -5,29 +5,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Main">
-      <UniqueIdentifier>{b0ebc23b-ce69-4a31-9ac7-ad1a46f121b8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{08ea8995-9936-4d2a-8820-fda34c22a5e0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Client.h">
-      <Filter>Main</Filter>
-    </ClInclude>
-    <ClInclude Include="framework.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
+    <ClInclude Include="Editor_Window.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Client.rc">
+    <ResourceCompile Include="Editor_Window.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -35,13 +21,11 @@
     <Image Include="small.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Client.ico">
+    <Image Include="Editor_Window.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Client.cpp">
-      <Filter>Main</Filter>
-    </ClCompile>
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
 </Project>

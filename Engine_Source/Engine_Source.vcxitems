@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{8148c251-0e2f-4ff2-9cb4-e12d278b5c48}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Enums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Input.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Resource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Resources.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RokaMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RokaTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Resource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Resources.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)RokaMath.inl" />
+  </ItemGroup>
+</Project>
