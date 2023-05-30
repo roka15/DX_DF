@@ -19,6 +19,7 @@ namespace roka::graphics
 		bool CreateBuffer(ID3D11Buffer** buffer, D3D11_BUFFER_DESC* desc, D3D11_SUBRESOURCE_DATA* data);
 		bool CreateShader();
 		bool CreateTexture(const D3D11_TEXTURE2D_DESC* desc, void* data);
+		void BindViewPort(D3D11_VIEWPORT* viewPort);
 		void Draw();
 	private:
 		// 실제 그래픽카드 하드웨어 객체
@@ -42,7 +43,8 @@ namespace roka::graphics
 
 		// 더블버퍼링 작업을 진행해주는 swapChain
 		Microsoft::WRL::ComPtr<IDXGISwapChain> mSwapChain;
-	
+	    
+		D3D11_VIEWPORT mViewPort;
 	};
 	inline GraphicDevice_Dx11*& GetDevice()
 	{

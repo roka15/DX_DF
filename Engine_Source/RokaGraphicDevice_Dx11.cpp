@@ -51,6 +51,16 @@ namespace roka::graphics
 		if (!CreateTexture(&depthStencilDesc, &data))
 			return;
 
+		RECT winRect = {};
+		GetClientRect(hWnd, &winRect);
+		mViewPort =
+		{
+			0.0f,0.0f,
+			(float)(winRect.right - winRect.left),
+			(float)(winRect.bottom - winRect.top),
+			0.0f,1.0f
+		};
+		BindViewPort(&mViewPort);
 		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
 
 	}
@@ -116,6 +126,7 @@ namespace roka::graphics
 		std::filesystem::path vsPath(shaderPath.c_str());
 		vsPath += L"TriangleVS.hlsl";
 
+		//hlsl compile 해서 trianglevsBlob에 결과를 넘김.
 		D3DCompileFromFile(vsPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE, 
 			"main","vs_5_0", 0, 0, &roka::renderer::triangleVSBlob, &roka::renderer::errorBlob);
 
@@ -124,9 +135,49 @@ namespace roka::graphics
 			OutputDebugStringA((char*)roka::renderer::errorBlob->GetBufferPointer());
 			roka::renderer::errorBlob->Release();
 		}
-
+		//compile된 hlsl 코드를 가지고 셰이더 개체를 만듦
 		mDevice->CreateVertexShader(roka::renderer::triangleVSBlob->GetBufferPointer(), roka::renderer::triangleVSBlob->GetBufferSize(),
 			nullptr, &roka::renderer::triangleVSShader);
+
+		std::filesystem::path psPath(shaderPath.c_str());
+		psPath += L"TrianglePS.hlsl";
+
+		D3DCompileFromFile(psPath.c_str(), nullptr, D3D_COMPILE_STANDARD_FILE_INCLUDE
+			, "main", "ps_5_0", 0, 0, &roka::renderer::trianglePSBlob, &roka::renderer::errorBlob);
+
+		if (roka::renderer::errorBlob)
+		{
+			OutputDebugStringA((char*)roka::renderer::errorBlob->GetBufferPointer());
+			roka::renderer::errorBlob->Release();
+		}
+
+		mDevice->CreatePixelShader(roka::renderer::trianglePSBlob->GetBufferPointer()
+			, roka::renderer::trianglePSBlob->GetBufferSize()
+			, nullptr, &roka::renderer::trianglePSShader);
+
+		// Input layout 정점 구조 정보를 넘겨줘야한다.
+		D3D11_INPUT_ELEMENT_DESC arrLayout[2] = {};
+
+		//첫번째 요소 정보 정의(Vertex)
+		arrLayout[0].AlignedByteOffset = 0; // 시작 offet
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT; // float3
+		arrLayout[0].InputSlot = 0;//등록된 vertex buffer / index buffer가 여럿 존재할 때 몇번째 buffer를 쓸 것인지.
+		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[0].SemanticName = "POSITION";//hlsl 식별
+		arrLayout[0].SemanticIndex = 0;//동일한 semantic이름을 가진 입력값의 구분을 위한 index
+		//두번째 요소 정보 정의(Color)
+		arrLayout[1].AlignedByteOffset = 12;// 시작 offset
+		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;//float4
+		arrLayout[1].InputSlot = 0;
+		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[1].SemanticName = "COLOR";
+		arrLayout[1].SemanticIndex = 0;
+
+		mDevice->CreateInputLayout(arrLayout, 2
+			, renderer::triangleVSBlob->GetBufferPointer()
+			, renderer::triangleVSBlob->GetBufferSize()
+			, &renderer::triangleLayout);
+
 
 		return true;
 	}
@@ -156,10 +207,47 @@ namespace roka::graphics
 		
 		return true;
 	}
+	void GraphicDevice_Dx11::BindViewPort(D3D11_VIEWPORT* viewPort)
+	{
+		mContext->RSSetViewports(1, viewPort);
+	}
 	void GraphicDevice_Dx11::Draw()
 	{
 		FLOAT bgColor[4] = { 0.3f,0.74f,0.88f,1.0f };
 		mContext->ClearRenderTargetView(mRenderTargetView.Get(), bgColor);
+		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
+
+		HWND hWnd = application.GetHwnd();
+		RECT winRect = {};
+		GetClientRect(hWnd, &winRect);
+		mViewPort =
+		{
+			0.0f,0.0f,
+			(float)(winRect.right - winRect.left),
+			(float)(winRect.bottom - winRect.top),
+			0.0f,1.0f
+		};
+		BindViewPort(&mViewPort);
+		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+
+		// input assembler 정점데이터 정보 지정
+		UINT vertexsize = sizeof(renderer::Vertex);
+		UINT offset = 0;
+
+		//정점 정보들 설정
+		mContext->IASetVertexBuffers(0, 1, &renderer::triangleBuffer, &vertexsize, &offset);
+		mContext->IASetIndexBuffer(renderer::indexBuffer, DXGI_FORMAT_R32_UINT, 0);
+		mContext->IASetInputLayout(renderer::triangleLayout);//셰이더 코드에 입력되는 정점 개체들의 정보.
+		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+
+		//수행할 셰이더 코드들 장착
+		mContext->VSSetShader(renderer::triangleVSShader, 0, 0);
+		mContext->PSSetShader(renderer::trianglePSShader, 0, 0);
+
+		
+		mContext->DrawIndexed(renderer::indexs.size(), 0, 0);
+		mContext->Draw(renderer::vertexs.size(), 0);
 
 		mSwapChain->Present(0, 0); 
 	}
