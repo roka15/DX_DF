@@ -5,7 +5,7 @@ extern roka::Application application;
 
 namespace roka
 {
-	int ASCII[(UINT)eKeyCode::END] =
+	int ASCII[(UINT)EKeyCode::END] =
 	{
 		'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P',
 		'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L',
@@ -20,11 +20,11 @@ namespace roka
 
 	void Input::Initialize()
 	{
-		for (UINT i = 0; i < (UINT)eKeyCode::END; i++)
+		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
 		{
 			Key keyInfo;
-			keyInfo.key = (eKeyCode)i;
-			keyInfo.state = eKeyState::None;
+			keyInfo.key = (EKeyCode)i;
+			keyInfo.state = EKeyState::None;
 			keyInfo.bPressed = false;
 
 			mKeys.push_back(keyInfo);
@@ -36,15 +36,15 @@ namespace roka
 		if (GetFocus())
 		{
 
-			for (UINT i = 0; i < (UINT)eKeyCode::END; i++)
+			for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
 			{
 				if (GetAsyncKeyState(ASCII[i]) & 0x8000)
 				{
 					// 이전 프레임에도 눌려 있었다
 					if (mKeys[i].bPressed)
-						mKeys[i].state = eKeyState::Pressed;
+						mKeys[i].state = EKeyState::Pressed;
 					else
-						mKeys[i].state = eKeyState::Down;
+						mKeys[i].state = EKeyState::Down;
 
 					mKeys[i].bPressed = true;
 				}
@@ -52,9 +52,9 @@ namespace roka
 				{
 					// 이전 프레임에 내키가 눌려있엇다.
 					if (mKeys[i].bPressed)
-						mKeys[i].state = eKeyState::Up;
+						mKeys[i].state = EKeyState::Up;
 					else
-						mKeys[i].state = eKeyState::None;
+						mKeys[i].state = EKeyState::None;
 
 					mKeys[i].bPressed = false;
 				}
@@ -69,16 +69,16 @@ namespace roka
 		}
 		else
 		{
-			for (UINT i = 0; i < (UINT)eKeyCode::END; i++)
+			for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
 			{
-				if (eKeyState::Down == mKeys[i].state
-					|| eKeyState::Pressed == mKeys[i].state)
+				if (EKeyState::Down == mKeys[i].state
+					|| EKeyState::Pressed == mKeys[i].state)
 				{
-					mKeys[i].state = eKeyState::Up;
+					mKeys[i].state = EKeyState::Up;
 				}
-				else if (eKeyState::Up == mKeys[i].state)
+				else if (EKeyState::Up == mKeys[i].state)
 				{
-					mKeys[i].state = eKeyState::None;
+					mKeys[i].state = EKeyState::None;
 				}
 
 				mKeys[i].bPressed = false;

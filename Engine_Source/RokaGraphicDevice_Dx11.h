@@ -1,6 +1,6 @@
 #pragma once
 #include "RokaEngine.h"
-
+#include "RokaGraphics.h"
 #include <d3d11.h>
 #include <d3dcompiler.h>
 
@@ -20,6 +20,9 @@ namespace roka::graphics
 		bool CreateShader();
 		bool CreateTexture(const D3D11_TEXTURE2D_DESC* desc, void* data);
 		void BindViewPort(D3D11_VIEWPORT* viewPort);
+		void SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size);
+		void BindConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer);
+		void BindsConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer);
 		void Draw();
 	private:
 		// 실제 그래픽카드 하드웨어 객체

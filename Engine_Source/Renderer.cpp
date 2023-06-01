@@ -7,6 +7,7 @@ namespace roka::renderer
 	ID3D11InputLayout* triangleLayout = nullptr;
 	ID3D11Buffer* triangleBuffer = nullptr;
 	ID3D11Buffer* indexBuffer = nullptr;
+	ID3D11Buffer* constantBuffer = nullptr;
 	ID3DBlob* errorBlob = nullptr;
 	ID3DBlob* triangleVSBlob = nullptr;
 	ID3D11VertexShader* triangleVSShader = nullptr;
@@ -38,6 +39,16 @@ namespace roka::renderer
 		D3D11_SUBRESOURCE_DATA idata;
 		idata.pSysMem = indexs.data();
 		roka::graphics::GetDevice()->CreateBuffer(&indexBuffer, &indexDesc, &idata);
+	
+		//constant buffer
+		D3D11_BUFFER_DESC constantDesc = {};
+		constantDesc.ByteWidth = sizeof(Vector4);
+		constantDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
+		constantDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
+		constantDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+
+		roka::graphics::GetDevice()->CreateBuffer(&constantBuffer, &constantDesc, nullptr);
+
 	}
 	void LoadShader()
 	{
@@ -55,16 +66,16 @@ namespace roka::renderer
 		*/
 		// 인덱스 버퍼 사용법 https://koreanfoodie.me/727
 
-		/* 사각형
+		/* 사각형*/
 		vertexs.resize(4);
 
-		vertexs[0].pos = { -0.5f, -0.5f, 0.0f };
+		vertexs[0].pos = { -0.25f, -0.25f, 0.0f };
 		vertexs[0].color = { 1.0f,0.0f,0.0f,1.0f };
-		vertexs[1].pos = { -0.5f, +0.5f, 0.0f };
+		vertexs[1].pos = { -0.25f, +0.25f, 0.0f };
 		vertexs[1].color = { 0.0f,1.0f,0.0f,1.0f };
-		vertexs[2].pos = { +0.5f, -0.5f, 0.0f };
+		vertexs[2].pos = { +0.25f, -0.25f, 0.0f };
 		vertexs[2].color = { 0.0f,0.0f,1.0f,1.0f };
-		vertexs[3].pos = { +0.5f, +0.5f, 0.0f };
+		vertexs[3].pos = { +0.25f, +0.25f, 0.0f };
 		vertexs[3].color = { 0.0f,1.0f,0.0f,1.0f };
 
 
@@ -74,7 +85,7 @@ namespace roka::renderer
 		indexs.push_back(2);
 		indexs.push_back(1);
 		indexs.push_back(3);
-		*/
+		
 
 		/* 마름모
 

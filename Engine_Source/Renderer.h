@@ -16,6 +16,7 @@ namespace roka::renderer
 	extern ID3D11InputLayout* triangleLayout;
 	extern ID3D11Buffer* triangleBuffer;
 	extern ID3D11Buffer* indexBuffer;
+	extern ID3D11Buffer* constantBuffer;
 	extern ID3DBlob* errorBlob;
 	extern ID3DBlob* triangleVSBlob;
 	extern ID3D11VertexShader* triangleVSShader;

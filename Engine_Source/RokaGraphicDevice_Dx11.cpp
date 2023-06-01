@@ -211,6 +211,52 @@ namespace roka::graphics
 	{
 		mContext->RSSetViewports(1, viewPort);
 	}
+	void GraphicDevice_Dx11::SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
+	{
+		//cpu buffer를 gpu에 올리는 과정.
+		D3D11_MAPPED_SUBRESOURCE SubRes = {};
+		mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &SubRes);
+		memcpy(SubRes.pData, data, size);
+		//올리고 나서 해제해줘야함.
+		mContext->Unmap(buffer, 0);
+	}
+	void GraphicDevice_Dx11::BindConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer)
+	{
+		switch (stage)
+		{
+		case EShaderStage::VS:
+			mContext->VSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case EShaderStage::HS:
+			mContext->HSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case EShaderStage::DS:
+			mContext->DSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case EShaderStage::GS:
+			mContext->GSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case EShaderStage::PS:
+			mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case EShaderStage::CS:
+			mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
+			break;
+		case EShaderStage::End:
+			break;
+		default:
+			break;
+		}
+	}
+	void GraphicDevice_Dx11::BindsConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer)
+	{
+		mContext->VSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->HSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->DSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->GSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
+		mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
+	}
 	void GraphicDevice_Dx11::Draw()
 	{
 		FLOAT bgColor[4] = { 0.3f,0.74f,0.88f,1.0f };
@@ -247,7 +293,7 @@ namespace roka::graphics
 
 		
 		mContext->DrawIndexed(renderer::indexs.size(), 0, 0);
-		mContext->Draw(renderer::vertexs.size(), 0);
+		//mContext->Draw(renderer::vertexs.size(), 0);
 
 		mSwapChain->Present(0, 0); 
 	}

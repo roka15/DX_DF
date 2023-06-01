@@ -4,7 +4,7 @@
 namespace roka
 {
 	using namespace roka::math;
-	enum class eKeyCode
+	enum class EKeyCode
 	{
 		Q, W, E, R, T, Y, U, I, O, P,
 		A, S, D, F, G, H, J, K, L,
@@ -15,7 +15,7 @@ namespace roka
 		END,
 	};
 
-	enum class eKeyState
+	enum class EKeyState
 	{
 		Down,
 		Pressed,
@@ -28,8 +28,8 @@ namespace roka
 	public:
 		struct Key
 		{
-			eKeyCode key;
-			eKeyState state;
+			EKeyCode key;
+			EKeyState state;
 			bool bPressed;
 		};
 
@@ -37,7 +37,7 @@ namespace roka
 		static void Update();
 		static void Render(HDC hdc);
 
-		inline static eKeyState GetKeyState(eKeyCode keyCode)
+		inline static EKeyState GetKeyState(EKeyCode keyCode)
 		{
 			return mKeys[(UINT)keyCode].state;
 		};
@@ -46,19 +46,19 @@ namespace roka
 		//GetKeyDown()	키를 눌렀을 때, 딱 한번 true를 반환
 		//GetKeyUp()	키를 누르다 땠을 때, 딱 한번 true를 반환
 
-		static __forceinline bool GetKey(eKeyCode keyCode)
+		static __forceinline bool GetKey(EKeyCode keyCode)
 		{
-			return mKeys[static_cast<UINT>(keyCode)].state == eKeyState::Pressed;
+			return mKeys[static_cast<UINT>(keyCode)].state == EKeyState::Pressed;
 		}
 
-		static __forceinline bool GetKeyDown(eKeyCode keyCode)
+		static __forceinline bool GetKeyDown(EKeyCode keyCode)
 		{
-			return mKeys[static_cast<UINT>(keyCode)].state == eKeyState::Down;
+			return mKeys[static_cast<UINT>(keyCode)].state == EKeyState::Down;
 		}
 
-		static __forceinline bool GetKeyUp(eKeyCode keyCode)
+		static __forceinline bool GetKeyUp(EKeyCode keyCode)
 		{
-			return mKeys[static_cast<UINT>(keyCode)].state == eKeyState::Up;
+			return mKeys[static_cast<UINT>(keyCode)].state == EKeyState::Up;
 		}
 		
 		static __forceinline Vector2 GetMousePos() { return mMousePos; }
