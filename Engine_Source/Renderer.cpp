@@ -4,55 +4,52 @@ namespace roka::renderer
 {
 	std::vector<Vertex> vertexs;
 	std::vector<UINT> indexs;
-	ID3D11InputLayout* triangleLayout = nullptr;
-	ID3D11Buffer* triangleBuffer = nullptr;
-	ID3D11Buffer* indexBuffer = nullptr;
-	ID3D11Buffer* constantBuffer = nullptr;
-	ID3DBlob* errorBlob = nullptr;
-	ID3DBlob* triangleVSBlob = nullptr;
-	ID3D11VertexShader* triangleVSShader = nullptr;
-	ID3DBlob* trianglePSBlob = nullptr;
-	ID3D11PixelShader* trianglePSShader = nullptr;
+
+	Shader* shader = nullptr;
+	Mesh* mesh = nullptr;
+	roka::graphics::ConstantBuffer* constantBuffer = nullptr;
 
 	void SetupState()
 	{
+		// Input layout 정점 구조 정보를 넘겨줘야한다.
+		D3D11_INPUT_ELEMENT_DESC arrLayout[2] = {};
 
+		//첫번째 요소 정보 정의(Vertex)
+		arrLayout[0].AlignedByteOffset = 0; // 시작 offet
+		arrLayout[0].Format = DXGI_FORMAT_R32G32B32_FLOAT; // float3
+		arrLayout[0].InputSlot = 0;//등록된 vertex buffer / index buffer가 여럿 존재할 때 몇번째 buffer를 쓸 것인지.
+		arrLayout[0].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[0].SemanticName = "POSITION";//hlsl 식별
+		arrLayout[0].SemanticIndex = 0;//동일한 semantic이름을 가진 입력값의 구분을 위한 index
+		//두번째 요소 정보 정의(Color)
+		arrLayout[1].AlignedByteOffset = 12;// 시작 offset
+		arrLayout[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;//float4
+		arrLayout[1].InputSlot = 0;
+		arrLayout[1].InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+		arrLayout[1].SemanticName = "COLOR";
+		arrLayout[1].SemanticIndex = 0;
+
+		roka::graphics::GetDevice()->CreateInputLayout(arrLayout, 2
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 	}
 	void LoadBuffer()
 	{
-		D3D11_BUFFER_DESC triangleDesc = {};
-		triangleDesc.ByteWidth = sizeof(Vertex) * vertexs.size();
-		triangleDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
-		triangleDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		triangleDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
+		mesh = new Mesh();
+		mesh->CreateVertexBuffer(vertexs.data(), vertexs.size());
+		mesh->CreateIndexBuffer(indexs.data(), indexs.size());
 
-		D3D11_SUBRESOURCE_DATA vdata;
-		vdata.pSysMem = vertexs.data();
-		roka::graphics::GetDevice()->CreateBuffer(&triangleBuffer, &triangleDesc, &vdata);
-
-		D3D11_BUFFER_DESC indexDesc = {};
-		indexDesc.ByteWidth = sizeof(UINT) * indexs.size();
-		indexDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_INDEX_BUFFER;
-		indexDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		indexDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
-
-		D3D11_SUBRESOURCE_DATA idata;
-		idata.pSysMem = indexs.data();
-		roka::graphics::GetDevice()->CreateBuffer(&indexBuffer, &indexDesc, &idata);
-	
 		//constant buffer
-		D3D11_BUFFER_DESC constantDesc = {};
-		constantDesc.ByteWidth = sizeof(Vector4);
-		constantDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_CONSTANT_BUFFER;
-		constantDesc.Usage = D3D11_USAGE::D3D11_USAGE_DYNAMIC;
-		constantDesc.CPUAccessFlags = D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
-
-		roka::graphics::GetDevice()->CreateBuffer(&constantBuffer, &constantDesc, nullptr);
-
+		constantBuffer = new roka::graphics::ConstantBuffer(ECBType::Transform);
+		constantBuffer->Create(sizeof(Vector4));
+		Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
+		constantBuffer->SetData(&pos);
+		constantBuffer->Bind(EShaderStage::VS);
 	}
 	void LoadShader()
 	{
-		roka::graphics::GetDevice()->CreateShader();
+		shader = new Shader();
+		shader->Create(EShaderStage::VS, L"TriangleVS.hlsl", "main");
+		shader->Create(EShaderStage::PS, L"TrianglePS.hlsl", "main");
 	}
 	void Initialize()
 	{
@@ -176,8 +173,15 @@ namespace roka::renderer
  
 
 		
-		SetupState();
+		
 		LoadBuffer();
 		LoadShader();
+		SetupState();
+	}
+	void Release()
+	{
+		delete mesh;
+		delete shader;
+		delete constantBuffer;
 	}
 }

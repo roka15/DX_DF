@@ -31,41 +31,16 @@ namespace roka
 		Input::Initialize();
 
 		roka::renderer::Initialize();
+		mScene = new Scene();
+		mScene->Initialize();
 	}
 
 	void Application::Update()
 	{
 		Input::Update();
 		Time::Update();
-		bool keyFlag = false;
-		static Vector4 offset(0.0f, 0.0f, 0.0f, 1.0f);
-		float speed = 5;
-		if (roka::Input::GetKey(roka::EKeyCode::A))
-		{
-			keyFlag = true;
-			offset.x += -speed *Time::DeltaTime();
-		}
-		if (roka::Input::GetKey(roka::EKeyCode::D))
-		{
-			keyFlag = true;
-			offset.x += speed * Time::DeltaTime();
-		}
-		if (roka::Input::GetKey(roka::EKeyCode::W))
-		{
-			keyFlag = true;
-			offset.y += speed * Time::DeltaTime();
-		}
-		if (roka::Input::GetKey(roka::EKeyCode::S))
-		{
-			keyFlag = true;
-			offset.y += -speed * Time::DeltaTime();
-		}
-
-		if (keyFlag == true)
-		{
-			roka::graphics::GetDevice()->SetConstantBuffer(roka::renderer::constantBuffer, &offset, sizeof(Vector4));
-			roka::graphics::GetDevice()->BindConstantBuffer(EShaderStage::VS, ECBType::Transform, roka::renderer::constantBuffer);
-		}
+		
+		mScene->Update();
 	}
 
 	void Application::LateUpdate()
@@ -77,6 +52,8 @@ namespace roka
 		Time::Render();
 
 		graphicDevice->Draw();
+		mScene->Render();
+		graphicDevice->Present();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

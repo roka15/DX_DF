@@ -15,7 +15,7 @@
 #include <limits> 
 #include <memory> 
 #include <filesystem> 
-#include <wrl.h>
+
 
 #include "CommonInclude.h"
 #include "Enums.h"

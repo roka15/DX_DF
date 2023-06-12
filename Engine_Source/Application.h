@@ -1,7 +1,7 @@
 #pragma once
 #include "RokaEngine.h"
 #include "RokaGraphicDevice_Dx11.h"
-
+#include "Scene.h"
 namespace roka
 {
 	class Application
@@ -32,6 +32,8 @@ namespace roka
 		HWND mHwnd;
 		UINT mWidth;
 		UINT mHeight;
+
+		Scene* mScene;
 	};
 }
 
