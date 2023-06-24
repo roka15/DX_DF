@@ -3,6 +3,12 @@
 namespace roka
 {
     roka::Mesh::Mesh()
+        :Resource(enums::EResourceType::Mesh)
+        ,mVertexBuffer(nullptr)
+        ,mIndexBuffer(nullptr)
+        , mVBDesc{}
+        , mIBDesc{}
+        ,mIndexCount(0)
     {
     }
 
@@ -55,6 +61,10 @@ namespace roka
         UINT offset = 0;
         graphics::GetDevice()->BindVertexBuffer(0, mVertexBuffer.GetAddressOf(), &stride, &offset);
         graphics::GetDevice()->BindIndexBuffer(mIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+    }
+    void Mesh::Render()
+    {
+        graphics::GetDevice()->DrawIndexed(mIndexCount, 0, 0);
     }
 }
 

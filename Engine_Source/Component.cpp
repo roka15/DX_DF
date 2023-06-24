@@ -2,7 +2,7 @@
 
 namespace roka
 {
-	Component::Component():mType(roka::enums::EComponentType::End)
+	Component::Component(EComponentType type):mType(type)
 	{
 	}
 

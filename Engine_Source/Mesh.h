@@ -16,6 +16,7 @@ namespace roka
 		bool CreateIndexBuffer(void* data, UINT Count);
 
 		void BindBuffer();
+		void Render();
 		UINT GetIndexCount() { return mIndexCount; }
 	private:
 		Microsoft::WRL::ComPtr<ID3D11Buffer> mVertexBuffer;

@@ -8,7 +8,26 @@ namespace roka::enums
 		Transform,
 		Mesh,
 		Particle,
+		MeshRenderer,
 		Script,
+		Camera,
+		End,
+	};
+
+	enum class ELayerType
+	{
+		Player,
+		Monster,
+		UI,
+		End,
+	};
+	
+	enum class EResourceType
+	{
+		Mesh,
+		Shader,
+		Material,
+		Texture,
 		End,
 	};
 }

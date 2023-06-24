@@ -189,6 +189,12 @@ namespace roka::graphics
 		}
 		return true;
 	}
+	bool GraphicDevice_Dx11::CreateSampler(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
+	{
+		if (FAILED(mDevice->CreateSamplerState(pSamplerDesc, ppSamplerState)))
+			return false;
+		return true;
+	}
 	void GraphicDevice_Dx11::BindViewPort(D3D11_VIEWPORT* viewPort)
 	{
 		mContext->RSSetViewports(1, viewPort);
@@ -239,6 +245,62 @@ namespace roka::graphics
 		mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
 		mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
 	}
+	void GraphicDevice_Dx11::BindShaderResource(EShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV)
+	{
+		switch (stage)
+		{
+		case EShaderStage::VS:
+			mContext->VSSetShaderResources(startSlot, 1, ppSRV);
+			break;
+		case EShaderStage::HS:
+			mContext->HSSetShaderResources(startSlot, 1, ppSRV);
+			break;
+		case EShaderStage::DS:
+			mContext->DSSetShaderResources(startSlot, 1, ppSRV);
+			break;
+		case EShaderStage::GS:
+			mContext->GSSetShaderResources(startSlot, 1, ppSRV);
+			break;
+		case EShaderStage::PS:
+			mContext->PSSetShaderResources(startSlot, 1, ppSRV);
+			break;
+		case EShaderStage::CS:
+			mContext->CSSetShaderResources(startSlot, 1, ppSRV);
+			break;
+		case EShaderStage::End:
+			break;
+		default:
+			break;
+		}
+	}
+	void GraphicDevice_Dx11::BindSampler(EShaderStage stage, UINT StartSlot, ID3D11SamplerState** ppSamplers)
+	{
+		switch (stage)
+		{
+		case EShaderStage::VS:
+			mContext->VSSetSamplers(StartSlot, 1, ppSamplers);
+			break;
+		case EShaderStage::HS:
+			mContext->HSSetSamplers(StartSlot, 1, ppSamplers);
+			break;
+		case EShaderStage::DS:
+			mContext->DSSetSamplers(StartSlot, 1, ppSamplers);
+			break;
+		case EShaderStage::GS:
+			mContext->GSSetSamplers(StartSlot, 1, ppSamplers);
+			break;
+		case EShaderStage::PS:
+			mContext->PSSetSamplers(StartSlot, 1, ppSamplers);
+			break;
+		case EShaderStage::CS:
+			mContext->CSSetSamplers(StartSlot, 1, ppSamplers);
+			break;
+		case EShaderStage::End:
+			break;
+		default:
+			break;
+		}
+	}
 	void GraphicDevice_Dx11::BindInputLayout(ID3D11InputLayout* pInputLayout)
 	{
 		mContext->IASetInputLayout(pInputLayout);
@@ -270,12 +332,16 @@ namespace roka::graphics
 		mContext->DrawIndexed(IndexCount, StartIndexLocation, BaseVertexLocation);
 	}
 
-	void GraphicDevice_Dx11::Draw()
+	void GraphicDevice_Dx11::ClearTarget()
 	{
 		FLOAT bgColor[4] = { 0.3f,0.74f,0.88f,1.0f };
 		mContext->ClearRenderTargetView(mRenderTargetView.Get(), bgColor);
 		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
+		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+	}
 
+	void GraphicDevice_Dx11::UpdateViewPort()
+	{
 		HWND hWnd = application.GetHwnd();
 		RECT winRect = {};
 		GetClientRect(hWnd, &winRect);
@@ -287,7 +353,10 @@ namespace roka::graphics
 			0.0f,1.0f
 		};
 		BindViewPort(&mViewPort);
-		mContext->OMSetRenderTargets(1, mRenderTargetView.GetAddressOf(), mDepthStencilView.Get());
+	}
+
+	void GraphicDevice_Dx11::Draw()
+	{
 	}
 	void GraphicDevice_Dx11::Present()
 	{

@@ -7,6 +7,9 @@
 #include <type_traits>
 
 #define arraysize(a) (sizeof(a) / sizeof(a[0]))
+#define PROPERTY(_get,_set) _declspec(property(get=_get,put=_set))
+#define SET_PROPERTY(_set) _declspec(property(put=_set))
+#define GET_PROPERTY(_get) _declspec(property(get=_get))
 
 // Enable enum flags:
 // https://www.justsoftwaresolutions.co.uk/cplusplus/using-enum-classes-as-bitfields.html

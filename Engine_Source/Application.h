@@ -16,6 +16,7 @@ namespace roka
 		void Update();
 		void LateUpdate();
 		void Render();
+		void Release();
 
 		void SetWindow(HWND hwnd, UINT width, UINT height);
 
@@ -32,8 +33,6 @@ namespace roka
 		HWND mHwnd;
 		UINT mWidth;
 		UINT mHeight;
-
-		Scene* mScene;
 	};
 }
 

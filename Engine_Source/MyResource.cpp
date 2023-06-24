@@ -3,7 +3,8 @@
 
 namespace roka
 {
-	Resource::Resource()
+	Resource::Resource(roka::enums::EResourceType type)
+		:mType(type)
 	{
 
 	}

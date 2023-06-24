@@ -2,10 +2,14 @@
 #include "Entity.h"
 namespace roka
 {
+	using namespace roka::enums;
+	using namespace roka::math;
+
+	class GameObject;
 	class Component:public Entity
 	{
 	public:
-		Component();
+		Component(EComponentType type);
 		virtual ~Component();
 
 		virtual void Initialize();
@@ -13,8 +17,12 @@ namespace roka
 		virtual void LateUpdate();
 		virtual void Render();
 
+		GameObject* GetOwner() {return mOwner;}
+		void SetOwner(GameObject* owner) { mOwner = owner; }
+		PROPERTY(GetOwner, SetOwner)GameObject* owner;
 	private:
-		const roka::enums::EComponentType mType;
+		const EComponentType mType;
+		GameObject* mOwner;
 	};
 }
 

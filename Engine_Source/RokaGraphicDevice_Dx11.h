@@ -18,7 +18,7 @@ namespace roka::graphics
 		bool CompileFromfile(const std::wstring& fileName, const std::string& funcName, const std::string& version, ID3DBlob** ppBlob);
 		bool CreateVertexShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11VertexShader** ppVertexShader);
 		bool CreatePixelShader(const void* pShaderBytecode, SIZE_T BytecodeLength, ID3D11PixelShader** ppPixelShader);
-		
+		bool CreateSampler(D3D11_SAMPLER_DESC* pSamplerDesc,ID3D11SamplerState** ppSamplerState);
 		
 		void BindInputLayout(ID3D11InputLayout* pInputLayout);
 		void BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY Topology);
@@ -29,12 +29,18 @@ namespace roka::graphics
 	    void SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size);
 		void BindConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer);
 		void BindsConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer);
+		void BindShaderResource(EShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV);
+		void BindSampler(EShaderStage stage, UINT StartSlot, ID3D11SamplerState** ppSamplers);
 		void BindViewPort(D3D11_VIEWPORT* viewPort);
 		
 		
 		void DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation);
+		void ClearTarget();
+		void UpdateViewPort();
 		void Draw();
 		void Present();
+
+		ID3D11Device* GetID3D11Device() { return mDevice.Get(); }
 	private:
 		// 실제 그래픽카드 하드웨어 객체
 		Microsoft::WRL::ComPtr<ID3D11Device> mDevice;
