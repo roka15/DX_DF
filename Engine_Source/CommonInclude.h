@@ -11,6 +11,9 @@
 #define SET_PROPERTY(_set) _declspec(property(put=_set))
 #define GET_PROPERTY(_get) _declspec(property(get=_get))
 
+
+
+
 // Enable enum flags:
 // https://www.justsoftwaresolutions.co.uk/cplusplus/using-enum-classes-as-bitfields.html
 

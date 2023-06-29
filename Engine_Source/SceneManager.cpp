@@ -1,15 +1,26 @@
 #include "SceneManager.h"
 
 #include "PlayScene.h"
+#include "SeriaGateScene.h"
+#include "HendonmyreScene.h"
+#include "WestcoastScene.h"
 namespace roka
 {
 	Scene* SceneManager::mActiveScene = nullptr;
 	std::map<std::wstring, Scene*> SceneManager::mScenes;
 	void SceneManager::Initialize()
 	{
-		mActiveScene = new PlayScene();
-		mScenes.insert(std::make_pair(L"PlayScene",mActiveScene));
-		mActiveScene->Initialize();
+
+		mScenes.insert(std::make_pair(L"PlayScene", new PlayScene()));
+		mScenes.insert(std::make_pair(L"SeriaGateScene", new SeriaGateScene()));
+		mScenes.insert(std::make_pair(L"HendonmyreScene", new HendonmyreScene()));
+		mScenes.insert(std::make_pair(L"WestCoastScene", new WestcoastScene()));
+		for (auto scene : mScenes)
+		{
+			scene.second->Initialize();
+		}
+
+		LoadScene(L"SeriaGateScene");
 	}
 	void SceneManager::Update()
 	{
@@ -36,10 +47,11 @@ namespace roka
 		std::map<std::wstring, Scene*>::iterator itr = mScenes.find(name);
 		if (itr == mScenes.end())
 			return nullptr;
-		mActiveScene->OnExit();
+		if (mActiveScene != nullptr)
+			mActiveScene->OnExit();
 		mActiveScene = itr->second;
 		mActiveScene->OnEnter();
-		
+
 		return itr->second;
 	}
 }

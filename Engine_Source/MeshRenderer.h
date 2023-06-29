@@ -17,10 +17,12 @@ namespace roka
 		virtual void Render()override;
 
 		void SetMesh(std::shared_ptr<Mesh> mesh) { mMesh = mesh; }
+		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
 		void SetMaterial(std::shared_ptr<Material> material) { mMaterial = material; }
+		std::shared_ptr<Material> GetMaterial() { return mMaterial; }
 
-		SET_PROPERTY(SetMesh) std::shared_ptr<Mesh> mesh;
-		SET_PROPERTY(SetMaterial) std::shared_ptr<Material> material;
+		PROPERTY(GetMesh,SetMesh) std::shared_ptr<Mesh> mesh;
+		PROPERTY(GetMaterial,SetMaterial) std::shared_ptr<Material> material;
 	private:
 		std::shared_ptr<Mesh> mMesh;
 		std::shared_ptr<Material> mMaterial;

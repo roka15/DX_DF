@@ -2,8 +2,8 @@
 
 roka::graphics::Material::Material()
 	:Resource(enums::EResourceType::Material)
-	,mShader(nullptr)
-	,mTexture(nullptr)
+	, mShader(nullptr)
+	, mTexture(nullptr)
 {
 }
 
@@ -18,8 +18,10 @@ HRESULT roka::graphics::Material::Load(const std::wstring& path)
 
 void roka::graphics::Material::Binds()
 {
-	mTexture->BindShader(EShaderStage::PS, 0);
-	mShader->Binds();
+	if (mTexture != nullptr)
+		mTexture->BindShader(EShaderStage::PS, 0);
+	if (mShader != nullptr)
+		mShader->Binds();
 }
 
 void roka::graphics::Material::Clear()

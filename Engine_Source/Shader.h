@@ -28,6 +28,15 @@ namespace roka
 		}
 
 	private:
+		void SetRSState(ERSType type) { mRsType = type; }
+		void SetDSState(EDSType type) { mDsType = type; }
+		void SetBSState(EBSType type) { mBsType = type; }
+	public:
+		SET_PROPERTY(SetRSState) ERSType rsstate;
+		SET_PROPERTY(SetDSState) EDSType dsstate;
+		SET_PROPERTY(SetBSState) EBSType bsstate;
+		
+	private:
 		ID3D11InputLayout* mInputLayout;
 		D3D11_PRIMITIVE_TOPOLOGY mTopology;
 
@@ -42,6 +51,10 @@ namespace roka
 		Microsoft::WRL::ComPtr<ID3D11DomainShader> mDS;
 		Microsoft::WRL::ComPtr<ID3D11GeometryShader> mGS;
 		Microsoft::WRL::ComPtr<ID3D11PixelShader> mPS;
+
+		ERSType mRsType;
+		EDSType mDsType;
+		EBSType mBsType;
 	};
 }
 

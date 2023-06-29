@@ -1,51 +1,64 @@
 #include "Scene.h"
 
-roka::Scene::Scene()
+namespace roka
 {
-}
-
-roka::Scene::~Scene()
-{
-}
-
-void roka::Scene::Initialize()
-{
-	mLayers.resize((int)ELayerType::End);
-}
-
-void roka::Scene::Update()
-{
-	for (Layer& layer : mLayers)
+	Scene::Scene(ESceneType type) :mType(type)
 	{
-		layer.Update();
+	}
+
+	Scene::~Scene()
+	{
+	}
+
+	void Scene::Initialize()
+	{
+		mLayers.resize((int)ELayerType::End);
+	}
+
+	void Scene::Update()
+	{
+		for (Layer& layer : mLayers)
+		{
+			layer.Update();
+		}
+	}
+
+	void Scene::LateUpdate()
+	{
+		for (Layer& layer : mLayers)
+		{
+			layer.LateUpdate();
+		}
+	}
+
+	void Scene::Render()
+	{
+		for (Layer& layer : mLayers)
+		{
+			layer.Render();
+		}
+	}
+
+	void Scene::OnExit()
+	{
+	}
+
+	void Scene::OnEnter()
+	{
+	}
+
+	void Scene::Loading()
+	{
+	}
+
+	void Scene::AddGameObject(ELayerType type, GameObject* gameObj)
+	{
+		mLayers[(int)type].AddGameObject(gameObj);
+	}
+
+	GameObject* Scene::FindGameObject(ELayerType type, std::wstring name)
+	{
+		return mLayers[(int)type].FindGameObject(name);
 	}
 }
 
-void roka::Scene::LateUpdate()
-{
-	for (Layer& layer : mLayers)
-	{
-		layer.LateUpdate();
-	}
-}
-
-void roka::Scene::Render()
-{
-	for (Layer& layer : mLayers)
-	{
-		layer.Render();
-	}
-}
-
-void roka::Scene::OnExit()
-{
-}
-
-void roka::Scene::OnEnter()
-{
-}
-
-void roka::Scene::AddGameObject(ELayerType type, GameObject* gameObj)
-{
-	mLayers[(int)type].AddGameObject(gameObj);
-}

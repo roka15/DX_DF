@@ -1,11 +1,14 @@
 #include "Shader.h"
-
+#include "Renderer.h"
 namespace roka
 {
 	Shader::Shader()
 		:Resource(enums::EResourceType::Shader)
-		,mInputLayout(nullptr),
-		mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+		,mInputLayout(nullptr)
+		,mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
+		,mRsType(ERSType::SolidBack)
+		,mDsType(EDSType::Less)
+		,mBsType(EBSType::AlphaBlend)
 	{
 	}
 	Shader::~Shader()
@@ -46,5 +49,12 @@ namespace roka
 		
 		graphics::GetDevice()->BindVertexShader(mVS.Get());
 		graphics::GetDevice()->BindPixelShader(mPS.Get());
+
+		Microsoft::WRL::ComPtr<ID3D11RasterizerState> rsState = renderer::rasterizerStates[(UINT)mRsType];
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilState> dsState = renderer::depthstencilStates[(UINT)mDsType];
+		Microsoft::WRL::ComPtr<ID3D11BlendState> bsState = renderer::blendStates[(UINT)mBsType];
+		graphics::GetDevice()->BindRasterizerState(rsState.Get());
+		graphics::GetDevice()->BindDepthStencilState(dsState.Get());
+		graphics::GetDevice()->BindBlendState(bsState.Get());
 	}
 }

@@ -42,4 +42,13 @@ namespace roka
 	{
 		mGameObjects.push_back(gameObj);
 	}
+	GameObject* Layer::FindGameObject(std::wstring name)
+	{
+		for (auto& obj : mGameObjects)
+		{
+			if (obj->GetName().compare(name) == 0)
+				return obj;
+		}
+		return nullptr;
+	}
 }

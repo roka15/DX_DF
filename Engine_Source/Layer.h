@@ -13,6 +13,7 @@ namespace roka
 		virtual void Render();
 
 		void AddGameObject(GameObject* gameObj);
+		GameObject* FindGameObject(std::wstring name);
 	private:
 		std::vector<GameObject*> mGameObjects;
 	};

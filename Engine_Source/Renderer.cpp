@@ -10,8 +10,14 @@ namespace roka::renderer
 
 	ConstantBuffer* constantBuffer[(UINT)ECBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];
+
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerStates[(UINT)ERSType::End];
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
+	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
+
 	void SetupState()
 	{
+#pragma region InputLayout
 		// Input layout 정점 구조 정보를 넘겨줘야한다.
 		D3D11_INPUT_ELEMENT_DESC arrLayout[3] = {};
 
@@ -44,19 +50,96 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"SpriteShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
-
+#pragma endregion
+#pragma region SamplerState
 		//Sampler State
-		D3D11_SAMPLER_DESC desc = {};
-		desc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-		desc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-		desc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
-		desc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
+		D3D11_SAMPLER_DESC Samplerdesc = {};
+		Samplerdesc.AddressU = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		Samplerdesc.AddressV = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		Samplerdesc.AddressW = D3D11_TEXTURE_ADDRESS_MODE::D3D11_TEXTURE_ADDRESS_WRAP;
+		Samplerdesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 
-		GetDevice()->CreateSampler(&desc,samplerStates[(UINT)ESamplerType::Point].GetAddressOf());
+		GetDevice()->CreateSamplerState(&Samplerdesc, samplerStates[(UINT)ESamplerType::Point].GetAddressOf());
 		GetDevice()->BindSampler(EShaderStage::PS, 0, samplerStates[(UINT)ESamplerType::Point].GetAddressOf());
-		desc.Filter = D3D11_FILTER_ANISOTROPIC;
-		GetDevice()->CreateSampler(&desc, samplerStates[(UINT)ESamplerType::Anisotropic].GetAddressOf());
+		Samplerdesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		GetDevice()->CreateSamplerState(&Samplerdesc, samplerStates[(UINT)ESamplerType::Anisotropic].GetAddressOf());
 		GetDevice()->BindSampler(EShaderStage::PS, 1, samplerStates[(UINT)ESamplerType::Anisotropic].GetAddressOf());
+#pragma endregion
+#pragma region RasterizerState
+		D3D11_RASTERIZER_DESC RasterDesc = {};
+		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
+		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
+		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::SolidFront].GetAddressOf());
+		
+		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
+		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
+		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::SolidBack].GetAddressOf());
+
+		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
+		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::SolidNone].GetAddressOf());
+		
+		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
+		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
+		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::WireFrameNone].GetAddressOf());
+
+#pragma endregion 
+#pragma region DepthStencilState
+		D3D11_DEPTH_STENCIL_DESC DepthStencilDesc = {};
+		DepthStencilDesc.DepthEnable = true;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		DepthStencilDesc.StencilEnable = false;
+
+		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::Less].GetAddressOf());
+		
+		DepthStencilDesc.DepthEnable = true;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		DepthStencilDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::Greater].GetAddressOf());
+		
+		DepthStencilDesc.DepthEnable = true;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
+		DepthStencilDesc.StencilEnable = false;
+		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::NoWirte].GetAddressOf());
+
+		DepthStencilDesc.DepthEnable = false;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
+		DepthStencilDesc.StencilEnable = false;
+
+		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::None].GetAddressOf());
+#pragma endregion
+#pragma region Blend State
+		D3D11_BLEND_DESC BlendDesc = {};
+		blendStates[(UINT)EBSType::Default] = nullptr;
+
+		//alpha blend
+		BlendDesc.AlphaToCoverageEnable = false;
+		BlendDesc.IndependentBlendEnable = false;
+		BlendDesc.RenderTarget[0].BlendEnable = true;
+		BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+		BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+		BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+		BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+		GetDevice()->CreateBlendState(&BlendDesc, blendStates[(UINT)EBSType::AlphaBlend].GetAddressOf());
+
+		BlendDesc.AlphaToCoverageEnable = false;
+		BlendDesc.IndependentBlendEnable = false;
+		BlendDesc.RenderTarget[0].BlendEnable = true;
+		BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
+		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+		GetDevice()->CreateBlendState(&BlendDesc, blendStates[(UINT)EBSType::OneOne].GetAddressOf());
+#pragma endregion
 	}
 	void LoadBuffer()
 	{
@@ -84,12 +167,16 @@ namespace roka::renderer
 		spriteShdaer->Create(EShaderStage::PS, L"SpritePS.hlsl", "main");
 		roka::Resources::Insert(L"SpriteShader", spriteShdaer);
 		{
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Link", L"..\\Resources\\Texture\\Link.png");
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->shader = spriteShdaer;
-			spriteMaterial->texture = texture;
-			Resources::Insert(L"SpriteMaterial", spriteMaterial);
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"BGMaterial", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"SpriteMaterial", spriteMaterial);
+			}
 		}
 		{
 			std::shared_ptr<Texture> texture
@@ -117,7 +204,7 @@ namespace roka::renderer
 
 		vertexs[0].pos = { -0.25f, -0.25f, 0.0f };
 		vertexs[0].color = { 1.0f,0.0f,0.0f,1.0f };
-		vertexs[0].uv = { 0.0f,1.0f};//uv 좌표 참고로 불칸과 다렉은 좌표가 다름.
+		vertexs[0].uv = { 0.0f,1.0f };//uv 좌표 참고로 불칸과 다렉은 좌표가 다름.
 
 		vertexs[1].pos = { -0.25f, +0.25f, 0.0f };
 		vertexs[1].color = { 0.0f,1.0f,0.0f,1.0f };
@@ -138,7 +225,7 @@ namespace roka::renderer
 		indexs.push_back(2);
 		indexs.push_back(1);
 		indexs.push_back(3);
-		
+
 		/*graphics::Texture* texture
 			= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
 
@@ -205,7 +292,7 @@ namespace roka::renderer
 		vertexs.push_back(center);
 
 		Vertex v = {};
-	
+
 		//360 = 2pi
 		for (int i = 0; i < 360; i++)
 		{
@@ -224,18 +311,18 @@ namespace roka::renderer
 					indexs.push_back(i);
 				}
 			}
-			
+
 			v.pos.x = center.pos.x + radius * std::cosf(Deg2Rad((float)i))/2.0f;
 			v.pos.y = center.pos.y + radius * std::sinf(Deg2Rad((float)i));
 			v.color = { 1.0f,0.0f,1.0f,1.0f };
 			vertexs.push_back(v);
 		}
-       */
-		
- 
+	   */
 
-		
-		
+
+
+
+
 		LoadBuffer();
 		LoadShader();
 		SetupState();

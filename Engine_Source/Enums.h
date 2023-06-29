@@ -14,10 +14,19 @@ namespace roka::enums
 		End,
 	};
 
+	enum class ESceneType
+	{
+		DefaultVillage,
+		AnotherVillage,
+		Dungeon,
+		End,
+	};
 	enum class ELayerType
 	{
+		BackObject,
 		Player,
 		Monster,
+		FrontObject,
 		UI,
 		End,
 	};
@@ -28,6 +37,15 @@ namespace roka::enums
 		Shader,
 		Material,
 		Texture,
+		NPK,
 		End,
+	};
+
+	enum class EDir4Type
+	{
+		LEFT,
+		RIGHT,
+		UP,
+		DOWN
 	};
 }

@@ -139,6 +139,35 @@ namespace roka::graphics
 
 		return true;
 	}
+	bool GraphicDevice_Dx11::CreateTexture(const D3D11_TEXTURE2D_DESC* desc, void* data, ID3D11Texture2D** texture, UINT channel)
+	{
+		D3D11_TEXTURE2D_DESC dxgiDesc = {};
+		dxgiDesc.BindFlags = desc->BindFlags;
+		dxgiDesc.Usage = desc->Usage;
+		//CPU access 설정 -0 은 access x
+		dxgiDesc.CPUAccessFlags = 0;
+
+		dxgiDesc.Format = desc->Format;
+		dxgiDesc.Width = desc->Width;
+		dxgiDesc.Height = desc->Height;
+		dxgiDesc.ArraySize = desc->ArraySize;
+		dxgiDesc.SampleDesc.Count = desc->SampleDesc.Count;
+		dxgiDesc.SampleDesc.Quality = 0;
+
+		//연산량을 줄이기 위해 크기별로 텍스쳐를 찍어두는것을 설정 할 수 있다.
+		dxgiDesc.MipLevels = desc->MipLevels;
+		dxgiDesc.MiscFlags = desc->MiscFlags;
+
+		D3D11_SUBRESOURCE_DATA binaryData = {};
+		binaryData.pSysMem = data;
+		
+		binaryData.SysMemPitch = dxgiDesc.Width * channel;
+
+		if (FAILED(mDevice->CreateTexture2D(&dxgiDesc, nullptr,texture)))
+			return false;
+	
+		return true;
+	}
 	bool GraphicDevice_Dx11::CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, UINT NumElements, ID3DBlob* byteCode, ID3D11InputLayout** ppInputLayout)
 	{
 		if (FAILED(mDevice->CreateInputLayout(pInputElementDescs, NumElements
@@ -189,15 +218,49 @@ namespace roka::graphics
 		}
 		return true;
 	}
-	bool GraphicDevice_Dx11::CreateSampler(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
+	bool GraphicDevice_Dx11::CreateSamplerState(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
 	{
 		if (FAILED(mDevice->CreateSamplerState(pSamplerDesc, ppSamplerState)))
+			return false;
+		return true;
+	}
+	bool GraphicDevice_Dx11::CreateRasterizerState(const D3D11_RASTERIZER_DESC* pRasterizerDesc,ID3D11RasterizerState** ppRasterizerState)
+	{
+		if (FAILED(mDevice->CreateRasterizerState(pRasterizerDesc, ppRasterizerState)))
+			return false;
+		return true;
+	}
+	bool GraphicDevice_Dx11::CreateDepthStencilState(const D3D11_DEPTH_STENCIL_DESC* pDepthStencilDesc,ID3D11DepthStencilState** ppDepthStencilState)
+	{
+		if (FAILED(mDevice->CreateDepthStencilState(pDepthStencilDesc, ppDepthStencilState)))
+			return false;
+		return true;
+	}
+	bool GraphicDevice_Dx11::CreateBlendState(const D3D11_BLEND_DESC* pBlendStateDesc,ID3D11BlendState** ppBlendState)
+	{
+		if (FAILED(mDevice->CreateBlendState(pBlendStateDesc, ppBlendState)))
 			return false;
 		return true;
 	}
 	void GraphicDevice_Dx11::BindViewPort(D3D11_VIEWPORT* viewPort)
 	{
 		mContext->RSSetViewports(1, viewPort);
+	}
+	void GraphicDevice_Dx11::BindRasterizerState(ID3D11RasterizerState* pRasterizerState)
+	{
+		mContext->RSSetState(pRasterizerState);
+	}
+	void GraphicDevice_Dx11::BindDepthStencilState(ID3D11DepthStencilState* pDepthStencilState)
+	{
+		mContext->OMSetDepthStencilState(pDepthStencilState, 0);
+	}
+	void GraphicDevice_Dx11::BindBlendState(ID3D11BlendState* pBlendState)
+	{
+		mContext->OMSetBlendState(pBlendState, nullptr, 0xffffffff);
+	}
+	void GraphicDevice_Dx11::UpdateSubResource(ID3D11Resource* pDstResource, UINT DstSubresource, const D3D11_BOX* pDstBox, const void* pSrcData, UINT SrcRowPitch, UINT SrcDepthPitch)
+	{
+		mContext->UpdateSubresource(pDstResource, DstSubresource, pDstBox, pSrcData, SrcRowPitch, SrcDepthPitch);
 	}
 	void GraphicDevice_Dx11::SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size)
 	{
@@ -348,8 +411,10 @@ namespace roka::graphics
 		mViewPort =
 		{
 			0.0f,0.0f,
-			(float)(winRect.right - winRect.left),
-			(float)(winRect.bottom - winRect.top),
+			(float)application.GetWidth(),
+			(float)application.GetHeight(),
+		/*	(float)(winRect.right - winRect.left),
+			(float)(winRect.bottom - winRect.top+30),*/
 			0.0f,1.0f
 		};
 		BindViewPort(&mViewPort);
