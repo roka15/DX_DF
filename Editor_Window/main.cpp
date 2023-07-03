@@ -3,9 +3,15 @@
 
 #include "framework.h"
 #include "Editor_Window.h"
-#include "Application.h"
-
+#include "..\Engine_Source\Application.h"
+#include "..\Engine\LoadScene.h"
 roka::Application application;
+
+#ifdef _DEBUG
+#pragma comment(lib, "..\\Libraries\\Debug\\Engine.lib")
+#else
+#pragma comment(lib, "..\\Libraries\\Debug\\Engine.lib")
+#endif
 
 #define MAX_LOADSTRING 100
 
@@ -124,6 +130,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    UpdateWindow(hWnd);
 
    application.Initialize();
+   roka::InitializeScenes();
    return TRUE;
 }
 

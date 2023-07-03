@@ -16,7 +16,6 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CameraScript.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Component.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ConstantBuffer.h" />
@@ -27,7 +26,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Material.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MeshRenderer.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)PlayScene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)NPK.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.h" />
@@ -39,6 +39,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Resources.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SceneSector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Script.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h" />
@@ -47,7 +48,6 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)CameraScript.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Component.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp" />
@@ -56,7 +56,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MeshRenderer.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)PlayScene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaMath.cpp" />
@@ -66,6 +67,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Resources.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SceneSector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Script.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp" />

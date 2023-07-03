@@ -10,17 +10,6 @@ namespace roka
 	std::map<std::wstring, Scene*> SceneManager::mScenes;
 	void SceneManager::Initialize()
 	{
-
-		mScenes.insert(std::make_pair(L"PlayScene", new PlayScene()));
-		mScenes.insert(std::make_pair(L"SeriaGateScene", new SeriaGateScene()));
-		mScenes.insert(std::make_pair(L"HendonmyreScene", new HendonmyreScene()));
-		mScenes.insert(std::make_pair(L"WestCoastScene", new WestcoastScene()));
-		for (auto scene : mScenes)
-		{
-			scene.second->Initialize();
-		}
-
-		LoadScene(L"SeriaGateScene");
 	}
 	void SceneManager::Update()
 	{

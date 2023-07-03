@@ -165,9 +165,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\Engine_Source\CameraScript.h" />
+    <ClInclude Include="..\Engine_Source\HendonmyreScene.h" />
+    <ClInclude Include="..\Engine_Source\PlayScene.h" />
+    <ClInclude Include="..\Engine_Source\SeriaGateScene.h" />
+    <ClInclude Include="..\Engine_Source\WestcoastScene.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="LoadScene.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Engine_Source\CameraScript.cpp" />
+    <ClCompile Include="..\Engine_Source\HendonmyreScene.cpp" />
+    <ClCompile Include="..\Engine_Source\PlayScene.cpp" />
+    <ClCompile Include="..\Engine_Source\SeriaGateScene.cpp" />
+    <ClCompile Include="..\Engine_Source\WestcoastScene.cpp" />
     <ClCompile Include="Engine.cpp" />
   </ItemGroup>
   <ItemGroup>

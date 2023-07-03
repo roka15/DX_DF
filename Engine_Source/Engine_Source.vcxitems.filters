@@ -58,9 +58,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)PlayScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
@@ -70,12 +67,14 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp">
       <Filter>Resource</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)CameraScript.cpp">
-      <Filter>GameObject\Component\Script</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
       <Filter>GameObject\Component</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)SceneSector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -147,9 +146,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)PlayScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h">
       <Filter>Resource</Filter>
     </ClInclude>
@@ -159,12 +155,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Material.h">
       <Filter>Resource</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)CameraScript.h">
-      <Filter>GameObject\Component\Script</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
       <Filter>GameObject\Component</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NPK.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SceneSector.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
