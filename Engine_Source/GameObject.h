@@ -64,7 +64,12 @@ namespace roka
 			buff->owner = this;
 			return component;
 		}
+		void SetMoveFlag(bool flag) { mbMove = flag; }
+		bool GetMoveFlag() { return mbMove; }
+		PROPERTY(GetMoveFlag, SetMoveFlag) bool ismove;
+
 	private:
+		bool mbMove;
 		EState mState;
 		std::vector<Component*> mComponents;
 		std::vector<Script*> mScripts;

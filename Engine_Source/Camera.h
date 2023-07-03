@@ -13,8 +13,8 @@ namespace roka
 		};
 		Camera();
 		virtual ~Camera();
-		static Matrix GetViewMatrix() { return mView; }
-		static Matrix GetProjectionMatrix() { return mProjection; }
+		static Matrix GetViewMatrix() { return View; }
+		static Matrix GetProjectionMatrix() { return Projection; }
 
 
 		virtual void Initialize() override;
@@ -36,8 +36,11 @@ namespace roka
 		void RenderCutOut();
 		void RenderTransparent();
 	private:
-		static Matrix mView;
-		static Matrix mProjection;
+		static Matrix View;
+		static Matrix Projection;
+
+		Matrix mView;
+		Matrix mProjection;
 
 		float mAspectRatio;
 		float mNear;

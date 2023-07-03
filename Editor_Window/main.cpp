@@ -10,7 +10,7 @@ roka::Application application;
 #ifdef _DEBUG
 #pragma comment(lib, "..\\Libraries\\Debug\\Engine.lib")
 #else
-#pragma comment(lib, "..\\Libraries\\Release\\Engine.lib")
+#pragma comment(lib, "..\\Libraries\\Debug\\Engine.lib")
 #endif
 
 #define MAX_LOADSTRING 100

@@ -186,6 +186,7 @@ namespace roka::renderer
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
 			spriteMaterial->texture = texture;
+			spriteMaterial->SetRenderMode(ERenderMode::Transparent);
 			Resources::Insert(L"SpriteMaterial02", spriteMaterial);
 		}
 	}

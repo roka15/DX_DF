@@ -3,12 +3,13 @@
 #include "Transform.h"
 #include "Application.h"
 #include "Renderer.h"
-
+#include "SceneManager.h"
+#include "MeshRenderer.h"
 extern roka::Application application;
 namespace roka
 {
-	Matrix Camera::mView = Matrix::Identity;
-	Matrix Camera::mProjection = Matrix::Identity;
+	Matrix Camera::View = Matrix::Identity;
+	Matrix Camera::Projection = Matrix::Identity;
 
 	Camera::Camera() :Component(EComponentType::Script)
 		, mType(EProjectionType::OrthoGraphic)
@@ -20,14 +21,17 @@ namespace roka
 		, mOpaqueGameObjects{}
 		, mCutOutGameObjects{}
 		, mTransparentObjects{}
+		, mView(Matrix::Identity)
+		, mProjection(Matrix::Identity)
 	{
+		EnableLayerMasks();
 	}
 	Camera::~Camera()
 	{
 	}
 	void Camera::Initialize()
 	{
-		EnableLayerMasks();
+		
 	}
 	void Camera::Update()
 	{
@@ -40,6 +44,9 @@ namespace roka
 	}
 	void Camera::Render()
 	{
+		View = mView;
+		Projection = mProjection;
+
 		SortGameObjects();
 
 		RenderOpaque();
@@ -109,7 +116,42 @@ namespace roka
 	}
 	void Camera::SortGameObjects()
 	{
-		
+		mOpaqueGameObjects.clear();
+		mCutOutGameObjects.clear();
+		mTransparentObjects.clear();
+
+		Scene* scene = SceneManager::GetActiveScene();
+		for (size_t i = 0; i < (UINT)ELayerType::End; i++)
+		{
+			if (mLayerMask[i] == false)
+				continue;
+
+			Layer& layer = scene->GetLayer((ELayerType)i);
+
+			const std::vector<GameObject*> objs = layer.GetGameObjects();
+
+			for (GameObject* obj : objs)
+			{
+				MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+				if (mr == nullptr)
+					continue;
+				ERenderMode mode = mr->material->GetRenderMode();
+				switch (mode)
+				{
+				case ERenderMode::Opaque:
+					mOpaqueGameObjects.push_back(obj);
+					break;
+				case ERenderMode::CutOut:
+					mCutOutGameObjects.push_back(obj);
+					break;
+				case ERenderMode::Transparent:
+					mTransparentObjects.push_back(obj);
+					break;
+				}
+			}
+			
+			
+		}
 	}
 	void Camera::RenderOpaque()
 	{

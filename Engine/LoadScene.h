@@ -1,17 +1,16 @@
 #pragma once
 #include "..\Engine_Source\SceneManager.h"
 
+#ifdef _DEBUG
+#pragma comment(lib,"..\\Libraries\\Debug\\Engine.lib")
+#else
+#pragma comment(lib,"..\\Libraries\\Debug\\Engine.lib")
+#endif
+
 #include "PlayScene.h"
 #include "SeriaGateScene.h"
 #include "WestcoastScene.h"
 #include "HendonmyreScene.h"
-
-#ifdef _DEBUG
-#pragma comment(lib,"..\\Libraries\\Debug\\Engine.lib")
-#else
-#pragma comment(lib,"..\\Libraries\\Release\\Engine.lib")
-#endif
-
 namespace roka
 {
 	void InitializeScenes()

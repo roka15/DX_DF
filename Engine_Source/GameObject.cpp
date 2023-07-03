@@ -4,6 +4,7 @@
 #include "Transform.h"
 roka::GameObject::GameObject()
 	:mState(EState::Active)
+	,mbMove(true)
 {
 	AddComponent<Transform>();
 }

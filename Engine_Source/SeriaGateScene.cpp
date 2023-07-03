@@ -48,6 +48,8 @@ void roka::SeriaGateScene::OnEnter()
 	
 	{
 	GameObject* bg = new GameObject();
+	bg->SetName(L"BackGround");
+	bg->ismove = false;
 	AddGameObject(ELayerType::BackObject, bg);
 	MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
 	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -69,7 +71,8 @@ void roka::SeriaGateScene::OnEnter()
 
 	//test
 	GameObject* bg = new GameObject();
-	AddGameObject(ELayerType::BackObject, bg);
+	bg->SetName(L"Smile");
+	AddGameObject(ELayerType::Player, bg);
 	MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
 	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 	mr->material = Resources::Find<Material>(L"SpriteMaterial");
@@ -83,6 +86,16 @@ void roka::SeriaGateScene::OnEnter()
 		AddGameObject(ELayerType::Player, camera);
 		camera->AddComponent<CameraScript>();
 		Camera* cameraComp = camera->AddComponent<Camera>();
+		cameraComp->TurnLayerMask(ELayerType::UI, false);
+		camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
+	}
+
+	{
+		GameObject* camera = new GameObject();
+		AddGameObject(ELayerType::UI, camera);
+		Camera* cameraComp = camera->AddComponent<Camera>();
+		cameraComp->DisableLayerMasks();
+		cameraComp->TurnLayerMask(ELayerType::UI,true);
 		camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
 	}
 }

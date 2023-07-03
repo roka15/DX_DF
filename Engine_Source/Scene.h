@@ -21,6 +21,29 @@ namespace roka
 		virtual void Loading();
 		void AddGameObject(ELayerType type, GameObject* gameObj);
 		GameObject* FindGameObject(ELayerType type,std::wstring name);
+
+		template <typename T>
+		std::vector<T*> FindObjectsOfType()
+		{
+			std::vector<T*> FindObjs = {};
+			for (Layer& layer : mLayers)
+			{
+				auto objs = layer->GetGameObjects();
+
+				for (GameObject* obj : objs)
+				{
+					T* find = dynamic_cast<T*>(obj);
+					if (find == nullptr)
+						continue;
+
+					FindObjs.push_back(find);
+				}
+			}
+			return FindObjs;
+		}
+
+		Layer& GetLayer(ELayerType type) { return mLayers[(UINT)type]; }
+
 	protected:
 		SceneSector* GetSector() { return mActiveSector; }
 		void SetSector(SceneSector* sector) { 

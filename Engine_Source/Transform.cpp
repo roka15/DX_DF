@@ -2,7 +2,7 @@
 #include "Camera.h"
 #include "ConstantBuffer.h"
 #include "Renderer.h"
-
+#include "GameObject.h"
 namespace roka
 {
     using namespace roka::graphics;
@@ -48,7 +48,14 @@ namespace roka
     {
         renderer::TransformCB trCB = {};
         trCB.mWorld = mWorld;
-        trCB.mView = Camera::GetViewMatrix();
+        Matrix CameraView = Camera::GetViewMatrix();
+        if (owner->ismove == false)
+        {
+            float depth = CameraView._43;
+            CameraView = Matrix::Identity;
+            CameraView._43 = depth;
+        }
+        trCB.mView = CameraView;
         trCB.mProjection = Camera::GetProjectionMatrix();
 
         ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Transform];
