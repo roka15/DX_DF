@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "..\Engine_Source\Scene.h"
 namespace roka
 {
 	class SeriaGateScene :

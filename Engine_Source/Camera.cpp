@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Application.h"
+#include "Renderer.h"
 
 extern roka::Application application;
 namespace roka
@@ -15,6 +16,10 @@ namespace roka
 		, mNear(1.0f)
 		, mFar(1000.0f)
 		, mSize(5.0f)
+		, mLayerMask{}
+		, mOpaqueGameObjects{}
+		, mCutOutGameObjects{}
+		, mTransparentObjects{}
 	{
 	}
 	Camera::~Camera()
@@ -22,6 +27,7 @@ namespace roka
 	}
 	void Camera::Initialize()
 	{
+		EnableLayerMasks();
 	}
 	void Camera::Update()
 	{
@@ -30,9 +36,15 @@ namespace roka
 	{
 		CreateViewMatrix();
 		CreateProjectionMatrix(mType);
+		RegisterCameraInRenderer();
 	}
 	void Camera::Render()
 	{
+		SortGameObjects();
+
+		RenderOpaque();
+		RenderCutOut();
+		RenderTransparent();
 	}
 	bool Camera::CreateViewMatrix()
 	{
@@ -75,16 +87,55 @@ namespace roka
 
 		if (type == EProjectionType::OrthoGraphic)
 		{
-			float orthoGraphicRatio = mSize / mFar;	
+			float orthoGraphicRatio = mSize / mFar;
 			width *= orthoGraphicRatio;
 			height *= orthoGraphicRatio;
 
-			mProjection=Matrix::CreateOrthographicLH(width, height, mNear, mFar);
+			mProjection = Matrix::CreateOrthographicLH(width, height, mNear, mFar);
 		}
 		else
 		{
 			mProjection = Matrix::CreatePerspectiveFieldOfViewLH(XM_2PI / 6.0f, mAspectRatio, mNear, mFar);
 		}
 		return true;
+	}
+	void Camera::RegisterCameraInRenderer()
+	{
+		renderer::cameras.push_back(this);
+	}
+	void Camera::TurnLayerMask(ELayerType type, bool enable)
+	{
+		mLayerMask.set((UINT)type, enable);
+	}
+	void Camera::SortGameObjects()
+	{
+		
+	}
+	void Camera::RenderOpaque()
+	{
+		for (GameObject* obj : mOpaqueGameObjects)
+		{
+			if (obj == nullptr)
+				continue;
+			obj->Render();
+		}
+	}
+	void Camera::RenderCutOut()
+	{
+		for (GameObject* obj : mCutOutGameObjects)
+		{
+			if (obj == nullptr)
+				continue;
+			obj->Render();
+		}
+	}
+	void Camera::RenderTransparent()
+	{
+		for (GameObject* obj : mTransparentObjects)
+		{
+			if (obj == nullptr)
+				continue;
+			obj->Render();
+		}
 	}
 }

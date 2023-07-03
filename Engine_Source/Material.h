@@ -17,13 +17,19 @@ namespace roka::graphics
 
 		void SetShader(std::shared_ptr<Shader> shader) { mShader = shader; }
 		void SetTexture(std::shared_ptr<Texture> texture) { mTexture = texture; }
+		void SetRenderMode(ERenderMode mode) { mMode = mode; }
+
+		ERenderMode GetRenderMode() { return mMode; }
+		
 
 		SET_PROPERTY(SetShader) std::shared_ptr<Shader> shader;
 		SET_PROPERTY(SetTexture) std::shared_ptr<Texture> texture;
 		
+		PROPERTY(GetRenderMode, SetRenderMode) ERenderMode render_mode;
 	private:
 		std::shared_ptr<Shader> mShader;
 		std::shared_ptr <Texture> mTexture;
+		ERenderMode mMode;
 	};
 }
 

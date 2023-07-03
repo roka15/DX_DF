@@ -2,6 +2,7 @@
 #include "Resources.h"
 #include "Texture.h"
 #include "Material.h"
+
 namespace roka::renderer
 {
 	using namespace roka::graphics;
@@ -15,6 +16,7 @@ namespace roka::renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
 
+	std::vector<roka::Camera*> cameras = {};
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -326,6 +328,17 @@ namespace roka::renderer
 		LoadBuffer();
 		LoadShader();
 		SetupState();
+	}
+	void Render()
+	{
+		for (Camera* camera : cameras)
+		{
+			if (camera == nullptr)
+				continue;
+
+			camera->Render();
+		}
+		cameras.clear();
 	}
 	void Release()
 	{

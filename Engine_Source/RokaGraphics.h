@@ -60,6 +60,13 @@ enum class EBSType
 	OneOne,
 	End
 };
+enum class ERenderMode
+{
+	Opaque,
+	CutOut,
+	Transparent,
+	End,
+};
 enum class EChannelType
 {
 	C8,

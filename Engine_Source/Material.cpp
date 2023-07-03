@@ -4,6 +4,7 @@ roka::graphics::Material::Material()
 	:Resource(enums::EResourceType::Material)
 	, mShader(nullptr)
 	, mTexture(nullptr)
+	, mMode(ERenderMode::Opaque)
 {
 }
 

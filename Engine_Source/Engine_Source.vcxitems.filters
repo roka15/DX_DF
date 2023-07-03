@@ -55,26 +55,26 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
       <Filter>GameObject\Component</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Mesh.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
       <Filter>GameObject\Component</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp">
-      <Filter>Resource</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneSector.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp">
+      <Filter>Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp">
+      <Filter>Resource\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Mesh.cpp">
+      <Filter>Resource\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp">
+      <Filter>Resource\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp">
+      <Filter>Resource\NPK</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -143,26 +143,26 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
       <Filter>GameObject\Component</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Material.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
       <Filter>GameObject\Component</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)NPK.h">
-      <Filter>Resource</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneSector.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h">
+      <Filter>Resource\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Material.h">
+      <Filter>Resource\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h">
+      <Filter>Resource\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)NPK.h">
+      <Filter>Resource\NPK</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h">
+      <Filter>Resource\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -212,6 +212,21 @@
     </Filter>
     <Filter Include="Scene\SceneManager">
       <UniqueIdentifier>{7fc40350-347b-47bf-880e-be1ed3341260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Texture">
+      <UniqueIdentifier>{420468e5-87e3-4a3a-a402-9652af334e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Material">
+      <UniqueIdentifier>{a3b4c2f5-a40e-4493-beba-9a6384a996ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Mesh">
+      <UniqueIdentifier>{c628f130-9f9f-4b36-8685-a65aabfc4926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader">
+      <UniqueIdentifier>{6dd853a8-d694-42f3-9801-3404761d47f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\NPK">
+      <UniqueIdentifier>{acba7d4b-b736-439d-ac92-a55bef0ff668}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
