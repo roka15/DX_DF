@@ -54,7 +54,7 @@ void roka::SeriaGateScene::OnEnter()
 	MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
 	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 	mr->material = Resources::Find<Material>(L"BGMaterial");
-
+	mr->material->render_mode = ERenderMode::Transparent;
 	Transform* tf = bg->GetComponent<Transform>();
 	tf->position = Vector3(0.0f, 0.0f, 0.9f);
 	tf->scale = Vector3(16.0f, 8.8f, 1.0f);
@@ -76,6 +76,7 @@ void roka::SeriaGateScene::OnEnter()
 	MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
 	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 	mr->material = Resources::Find<Material>(L"SpriteMaterial");
+	mr->material->render_mode = ERenderMode::Transparent;
 
 	Transform* tf = bg->GetComponent<Transform>();
 	tf->position = Vector3(0.0f, 0.0f, 0.0f);

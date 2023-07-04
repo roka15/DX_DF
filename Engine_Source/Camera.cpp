@@ -8,6 +8,14 @@
 extern roka::Application application;
 namespace roka
 {
+	bool CompareZSort(GameObject* obj1, GameObject* obj2)
+	{
+		if (obj1->GetComponent<Transform>()->position.z
+			< obj2->GetComponent<Transform>()->position.z)
+			return false;
+
+		return true;
+	}
 	Matrix Camera::View = Matrix::Identity;
 	Matrix Camera::Projection = Matrix::Identity;
 
@@ -47,11 +55,14 @@ namespace roka
 		View = mView;
 		Projection = mProjection;
 
-		SortGameObjects();
+		AlphaSortGameObjects();
+		ZSortTransparencyGameObjects();
 
 		RenderOpaque();
+		DisableDepthStencilState();
 		RenderCutOut();
 		RenderTransparent();
+		EnableDepthStencilState();
 	}
 	bool Camera::CreateViewMatrix()
 	{
@@ -114,7 +125,7 @@ namespace roka
 	{
 		mLayerMask.set((UINT)type, enable);
 	}
-	void Camera::SortGameObjects()
+	void Camera::AlphaSortGameObjects()
 	{
 		mOpaqueGameObjects.clear();
 		mCutOutGameObjects.clear();
@@ -130,28 +141,36 @@ namespace roka
 
 			const std::vector<GameObject*> objs = layer.GetGameObjects();
 
-			for (GameObject* obj : objs)
-			{
-				MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
-				if (mr == nullptr)
-					continue;
-				ERenderMode mode = mr->material->GetRenderMode();
-				switch (mode)
-				{
-				case ERenderMode::Opaque:
-					mOpaqueGameObjects.push_back(obj);
-					break;
-				case ERenderMode::CutOut:
-					mCutOutGameObjects.push_back(obj);
-					break;
-				case ERenderMode::Transparent:
-					mTransparentObjects.push_back(obj);
-					break;
-				}
-			}
-			
-			
+			DivideAlphaBlendGameObjects(objs);
 		}
+	}
+	void Camera::ZSortTransparencyGameObjects()
+	{
+		std::sort(mCutOutGameObjects.begin(), mCutOutGameObjects.end(), CompareZSort);
+		std::sort(mTransparentObjects.begin(), mTransparentObjects.end(), CompareZSort);
+	}
+	void Camera::DivideAlphaBlendGameObjects(const std::vector<GameObject*> objs)
+	{
+		for (GameObject* obj : objs)
+		{
+			MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+			if (mr == nullptr)
+				continue;
+			ERenderMode mode = mr->material->GetRenderMode();
+			switch (mode)
+			{
+			case ERenderMode::Opaque:
+				mOpaqueGameObjects.push_back(obj);
+				break;
+			case ERenderMode::CutOut:
+				mCutOutGameObjects.push_back(obj);
+				break;
+			case ERenderMode::Transparent:
+				mTransparentObjects.push_back(obj);
+				break;
+			}
+		}
+
 	}
 	void Camera::RenderOpaque()
 	{
@@ -179,5 +198,13 @@ namespace roka
 				continue;
 			obj->Render();
 		}
+	}
+	void Camera::EnableDepthStencilState()
+	{
+		GetDevice()->BindDepthStencilState(renderer::depthstencilStates[(UINT)EDSType::Less].Get());
+	}
+	void Camera::DisableDepthStencilState()
+	{
+		GetDevice()->BindDepthStencilState(renderer::depthstencilStates[(UINT)EDSType::None].Get());
 	}
 }

@@ -31,10 +31,16 @@ namespace roka
 		void DisableLayerMasks(){mLayerMask.reset();}
 		
 	private:
-		void SortGameObjects();
+		void AlphaSortGameObjects();
+		void ZSortTransparencyGameObjects();
+		void DivideAlphaBlendGameObjects(const std::vector<GameObject*> objs);
+
 		void RenderOpaque();
 		void RenderCutOut();
 		void RenderTransparent();
+
+		void EnableDepthStencilState();
+		void DisableDepthStencilState();
 	private:
 		static Matrix View;
 		static Matrix Projection;
