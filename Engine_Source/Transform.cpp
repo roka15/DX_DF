@@ -37,6 +37,11 @@ namespace roka
 
         mWorld = scale * rotation * position;
 
+        if (mParent != nullptr)
+        {
+            mWorld *= mParent->mWorld;
+        }
+
         mUp = Vector3::TransformNormal(Vector3::Up, rotation);
         mRight = Vector3::TransformNormal(Vector3::Right, rotation);
         mForward = Vector3::TransformNormal(Vector3::Forward, rotation);

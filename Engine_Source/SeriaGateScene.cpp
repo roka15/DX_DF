@@ -8,7 +8,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "NPK.h"
-roka::SeriaGateScene::SeriaGateScene():Scene(ESceneType::DefaultVillage)
+roka::SeriaGateScene::SeriaGateScene() :Scene(ESceneType::DefaultVillage)
 {
 }
 
@@ -45,42 +45,68 @@ void roka::SeriaGateScene::OnEnter()
 {
 	Scene::OnEnter();
 
-	
+
 	{
-	GameObject* bg = new GameObject();
-	bg->SetName(L"BackGround");
-	bg->ismove = false;
-	AddGameObject(ELayerType::BackObject, bg);
-	MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
-	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-	mr->material = Resources::Find<Material>(L"BGMaterial");
-	mr->material->render_mode = ERenderMode::Transparent;
-	Transform* tf = bg->GetComponent<Transform>();
-	tf->position = Vector3(0.0f, 0.0f, 0.9f);
-	tf->scale = Vector3(16.0f, 8.8f, 1.0f);
-	{
-		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mapnpk");
-			if(npk==nullptr)
+		GameObject* bg = new GameObject();
+		bg->SetName(L"BackGround");
+		bg->ismove = false;
+		AddGameObject(ELayerType::BackObject, bg);
+		MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
+		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+		mr->material = Resources::Find<Material>(L"BGMaterial");
+		
+		Transform* tf = bg->GetComponent<Transform>();
+		tf->position = Vector3(0.0f, 0.0f, 0.9f);
+		tf->scale = Vector3(16.0f, 8.8f, 1.0f);
+		{
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mapnpk");
+			if (npk == nullptr)
 				npk = Resources::Load<NPK>(L"mapnpk", L"..\\Resources\\npk\\map.npk");
 
-		std::shared_ptr<Texture> texture = npk->GetTexture(L"seriagate", 0);
-		Resources::Insert(L"seriagateTexture", texture);
-		mr->material->texture = texture;
-	}
+			std::shared_ptr<Texture> texture = npk->GetTexture(L"seriagate", 0);
+			Resources::Insert(L"seriagateTexture", texture);
+			mr->material->texture = texture;
+		}
 	}
 
 	//test
-	GameObject* bg = new GameObject();
-	bg->SetName(L"Smile");
-	AddGameObject(ELayerType::Player, bg);
-	MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
+
+	GameObject* player1 = new GameObject();
+	player1->SetName(L"Smile");
+	AddGameObject(ELayerType::Player, player1);
+	{
+		MeshRenderer* mr = player1->AddComponent<MeshRenderer>();
 	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 	mr->material = Resources::Find<Material>(L"SpriteMaterial");
-	mr->material->render_mode = ERenderMode::Transparent;
+	//mr->material->render_mode = ERenderMode::Transparent;
 
-	Transform* tf = bg->GetComponent<Transform>();
-	tf->position = Vector3(0.0f, 0.0f, 0.0f);
+	Transform* tf = player1->GetComponent<Transform>();
+	tf->position = Vector3(0.0f, 0.0f, 0.1f);
 	mr->material->texture = Resources::Find<Texture>(L"Smile");
+	}
+
+
+
+	GameObject* player2 = new GameObject();
+	player2->SetName(L"Smile2");
+	AddGameObject(ELayerType::Player, player2);
+	{
+	MeshRenderer* mr = player2->AddComponent<MeshRenderer>();
+	mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+	mr->material = Resources::Find<Material>(L"SpriteMaterial");
+	//mr->material->render_mode = ERenderMode::Transparent;
+
+	Transform* tf = player2->GetComponent<Transform>();
+	tf->position = Vector3(1.0f, 0.0f, 0.0f);
+	mr->material->texture = Resources::Find<Texture>(L"Smile");
+
+	tf->SetParent(player1->GetComponent<Transform>());
+	}
+	const float pi = 3.141592f;
+	float degree = pi / 2.0f;
+
+	player1->GetComponent<Transform>()->SetPosition(Vector3(-3.0f, 0.0f, 0.1f));
+	player1->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 
 	{
 		GameObject* camera = new GameObject();
@@ -96,7 +122,7 @@ void roka::SeriaGateScene::OnEnter()
 		AddGameObject(ELayerType::UI, camera);
 		Camera* cameraComp = camera->AddComponent<Camera>();
 		cameraComp->DisableLayerMasks();
-		cameraComp->TurnLayerMask(ELayerType::UI,true);
+		cameraComp->TurnLayerMask(ELayerType::UI, true);
 		camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
 	}
 }

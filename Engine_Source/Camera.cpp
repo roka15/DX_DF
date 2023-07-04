@@ -11,7 +11,7 @@ namespace roka
 	bool CompareZSort(GameObject* obj1, GameObject* obj2)
 	{
 		if (obj1->GetComponent<Transform>()->position.z
-			< obj2->GetComponent<Transform>()->position.z)
+			<= obj2->GetComponent<Transform>()->position.z)
 			return false;
 
 		return true;

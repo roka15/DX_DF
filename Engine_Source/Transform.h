@@ -31,6 +31,9 @@ namespace roka
         Vector3 Right() { return mRight; }
         Vector3 Forward() { return mForward; }
 
+        void SetParent(Transform* transform) { mParent = transform; }
+        Transform* GetParent() { return mParent; }
+
         PROPERTY(GetPosition, SetPosition) Vector3 position;
         PROPERTY(GetRotation, SetRotation)Vector3 rotation;
         PROPERTY(GetScale, SetScale)Vector3 scale;
@@ -38,6 +41,8 @@ namespace roka
         GET_PROPERTY(Up) Vector3 up;
         GET_PROPERTY(Right) Vector3 right;
         GET_PROPERTY(Forward) Vector3 forward;
+
+        PROPERTY(GetParent, SetParent) Transform* parent;
 
     private:
         Vector3 mPosition;
@@ -49,6 +54,8 @@ namespace roka
         Vector3 mRight;
 
         Matrix mWorld;
+
+        Transform* mParent;
     };
 }
 
