@@ -23,6 +23,7 @@ namespace roka
 				return false;
 
 			mScenes.insert(std::make_pair(name, scene));
+			scene->SetName(name);
 			mActiveScene = scene;
 			scene->Initialize();
 			return true;

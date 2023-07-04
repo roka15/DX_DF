@@ -44,8 +44,8 @@ namespace roka
 		char* binaryImage = pack->binbuf[index]->buffer;
 
 		texture->Create(binaryImage,pack->binbuf[index]->length);
-
-		Resources::Insert(name + L"Texture", texture);
+		std::wstring key = GetKey();
+		Resources::Insert(key + name + L"Texture", texture);
 
 		return texture;
 	}

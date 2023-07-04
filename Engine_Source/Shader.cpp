@@ -7,7 +7,7 @@ namespace roka
 		,mInputLayout(nullptr)
 		,mTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST)
 		,mRsType(ERSType::SolidBack)
-		,mDsType(EDSType::Less)
+		,mDsType(EDSType::LessEqual)
 		,mBsType(EBSType::AlphaBlend)
 	{
 	}

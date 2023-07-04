@@ -201,7 +201,7 @@ namespace roka
 	}
 	void Camera::EnableDepthStencilState()
 	{
-		GetDevice()->BindDepthStencilState(renderer::depthstencilStates[(UINT)EDSType::Less].Get());
+		GetDevice()->BindDepthStencilState(renderer::depthstencilStates[(UINT)EDSType::LessEqual].Get());
 	}
 	void Camera::DisableDepthStencilState()
 	{

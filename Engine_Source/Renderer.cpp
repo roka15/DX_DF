@@ -92,9 +92,15 @@ namespace roka::renderer
 		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		DepthStencilDesc.StencilEnable = false;
-
 		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::Less].GetAddressOf());
 		
+		DepthStencilDesc.DepthEnable = true;
+		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
+		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+		DepthStencilDesc.StencilEnable = false;
+
+		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::LessEqual].GetAddressOf());
+
 		DepthStencilDesc.DepthEnable = true;
 		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_GREATER;
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
@@ -172,13 +178,166 @@ namespace roka::renderer
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"SpriteMaterial", spriteMaterial);
+			}
+#pragma region seria room material
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
 				Resources::Insert(L"BGMaterial", spriteMaterial);
+			}
+			
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"FrontObjMaterial01", spriteMaterial);
 			}
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				Resources::Insert(L"SpriteMaterial", spriteMaterial);
+				Resources::Insert(L"FrontObjMaterial02", spriteMaterial);
 			}
+
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"FlowerMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"FlowerMaterial02", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"LeafMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"LeafMaterial02", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"LeafMaterial03", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"GateMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				Resources::Insert(L"GateMaterial02", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"HudBase", L"..\\Resources\\Texture\\hudbase.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"HudBaseMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"HudBase2", L"..\\Resources\\Texture\\hudbase2.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"HudBaseMaterial02", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"HPBase", L"..\\Resources\\Texture\\hpui.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"HPBaseMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"MPBase", L"..\\Resources\\Texture\\mpui.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"MPBaseMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"HPFilter", L"..\\Resources\\Texture\\hpfilterui.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"HPFilterMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"MPFilter", L"..\\Resources\\Texture\\mpfilterui.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"MPFilterMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"SkillQuickSlot", L"..\\Resources\\Texture\\skillslot.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"SkillQuickSlotMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"ExpBar", L"..\\Resources\\Texture\\expbar.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"ExpBarMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"MoreSkillBtn", L"..\\Resources\\Texture\\moreskill.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"MoreSkillBtnMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"SkillChangeBtn", L"..\\Resources\\Texture\\skillchange.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"SkillChangeBtnMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"PlayerTexture", L"..\\Resources\\Texture\\player.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"PlayerTextureMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"SeriaTexture", L"..\\Resources\\Texture\\seria.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"SeriaTextureMaterial01", spriteMaterial);
+			}
+			{
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"GoldBox", L"..\\Resources\\Texture\\goldbox.png");
+				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+				spriteMaterial->shader = spriteShdaer;
+				spriteMaterial->texture = texture;
+				Resources::Insert(L"GoldBoxMaterial01", spriteMaterial);
+			}
+#pragma endregion
 		}
 		{
 			std::shared_ptr<Texture> texture

@@ -48,6 +48,7 @@ enum class ERSType
 enum class EDSType
 {
 	Less,
+	LessEqual,
 	Greater,
 	NoWirte,
 	None,
