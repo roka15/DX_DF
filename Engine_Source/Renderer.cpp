@@ -52,6 +52,11 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"SpriteShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
+		shader = roka::Resources::Find<Shader>(L"VerticalInverterShader"); 
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State
@@ -174,6 +179,12 @@ namespace roka::renderer
 		spriteShdaer->Create(EShaderStage::VS, L"SpriteVS.hlsl", "main");
 		spriteShdaer->Create(EShaderStage::PS, L"SpritePS.hlsl", "main");
 		roka::Resources::Insert(L"SpriteShader", spriteShdaer);
+
+		std::shared_ptr<Shader>  v_inversterShdaer = std::make_shared<Shader>();
+		v_inversterShdaer->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
+		v_inversterShdaer->Create(EShaderStage::PS, L"SpritePS.hlsl", "main");
+		roka::Resources::Insert(L"VerticalInverterShader", v_inversterShdaer);
+
 		{
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
@@ -230,111 +241,75 @@ namespace roka::renderer
 			}
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-				spriteMaterial->shader = spriteShdaer;
-				Resources::Insert(L"GateMaterial02", spriteMaterial);
+				spriteMaterial->shader = v_inversterShdaer;
+				Resources::Insert(L"GateVInverseMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"HudBase", L"..\\Resources\\Texture\\hudbase.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"HudBaseMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"HudBase2", L"..\\Resources\\Texture\\hudbase2.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"HudBaseMaterial02", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"HPBase", L"..\\Resources\\Texture\\hpui.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"HPBaseMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"MPBase", L"..\\Resources\\Texture\\mpui.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"MPBaseMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"HPFilter", L"..\\Resources\\Texture\\hpfilterui.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"HPFilterMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"MPFilter", L"..\\Resources\\Texture\\mpfilterui.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"MPFilterMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"SkillQuickSlot", L"..\\Resources\\Texture\\skillslot.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"SkillQuickSlotMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"ExpBar", L"..\\Resources\\Texture\\expbar.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"ExpBarMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"MoreSkillBtn", L"..\\Resources\\Texture\\moreskill.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"MoreSkillBtnMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"SkillChangeBtn", L"..\\Resources\\Texture\\skillchange.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"SkillChangeBtnMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"PlayerTexture", L"..\\Resources\\Texture\\player.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
+				std::shared_ptr<Texture> texture
+					= Resources::Load<Texture>(L"Player", L"..\\Resources\\Texture\\player.png");
 				spriteMaterial->texture = texture;
 				Resources::Insert(L"PlayerTextureMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"SeriaTexture", L"..\\Resources\\Texture\\seria.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"SeriaTextureMaterial01", spriteMaterial);
 			}
 			{
-				std::shared_ptr<Texture> texture
-					= Resources::Load<Texture>(L"GoldBox", L"..\\Resources\\Texture\\goldbox.png");
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
-				spriteMaterial->texture = texture;
 				Resources::Insert(L"GoldBoxMaterial01", spriteMaterial);
 			}
 #pragma endregion

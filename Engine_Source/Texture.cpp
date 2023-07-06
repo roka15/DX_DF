@@ -37,7 +37,7 @@ namespace roka::graphics
 		}
 		else // WIC (png, jpg, jpeg, bmp )
 		{
-			if (FAILED(LoadFromWICFile(path.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, nullptr, mImage)))
+			if (FAILED(LoadFromWICFile(path.c_str(), WIC_FLAGS::WIC_FLAGS_IGNORE_SRGB, nullptr, mImage)))
 				return S_FALSE;
 		}
 
