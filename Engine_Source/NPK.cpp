@@ -61,9 +61,9 @@ namespace roka
 		return Vector2(value.first, value.second);
 	}
 
-	Vector2 NPK::GetCanvasSize(std::wstring name)
+	Vector2 NPK::GetCanvasSize(std::wstring name, UINT index)
 	{
-		std::pair<int, int> value = mCsvs[roka::file::ws2s(name)]->base_size;
+		std::pair<int, int> value = mCsvs[roka::file::ws2s(name)]->canvas[index];
 		return Vector2(value.first, value.second);
 	}
 }
