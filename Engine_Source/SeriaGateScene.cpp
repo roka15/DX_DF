@@ -75,7 +75,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = bg->GetComponent<Transform>();
 			tf->position = Vector3(0.15f, 0.0f, 0.98f);
-			tf->scale = Vector3(17.0f, 8.8f, 1.0f);
+			tf->scale = Vector3(8.5f, 4.4f, 1.0f);
 			{
 				std::shared_ptr<Texture> texture = npk->GetTexture(L"bg", 0);
 				mr->material->texture = texture;
@@ -96,7 +96,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = frontTree->GetComponent<Transform>();
 			tf->position = Vector3(-2.6f, 0.0f, 0.1f);
-			tf->scale = Vector3(6.0f, 8.8f, 1.0f);
+			tf->scale = Vector3(3.0f, 4.4f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"border_tree", 0);
 				mr->material->texture = texture;
@@ -114,7 +114,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = frontTree2->GetComponent<Transform>();
 			tf->position = Vector3(3.4f, 0.0f, 0.1f);
-			tf->scale = Vector3(4.0f, 8.8f, 1.0f);
+			tf->scale = Vector3(2.0f, 4.4f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"border_tree", 1);
 				mr->material->texture = texture;
@@ -137,7 +137,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Flower01->GetComponent<Transform>();
 			tf->position = Vector3(-2.0f, 1.8f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.15f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"flower_1", 0);
 				mr->material->texture = texture;
@@ -156,7 +156,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Flower02->GetComponent<Transform>();
 			tf->position = Vector3(-3.6f, 0.7f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.15f, 1.0f);
 		}
 		GameObject* Flower03 = new GameObject();
 		{
@@ -170,7 +170,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Flower03->GetComponent<Transform>();
 			tf->position = Vector3(2.0f, 2.0f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.15f, 1.0f);
 			tf->rotation =Vector3(Vector3(0.0f, 0.0f, Deg2Rad(180)));
 		}
 
@@ -186,7 +186,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Flower04->GetComponent<Transform>();
 			tf->position = Vector3(1.5f, 2.0f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.15f, 1.0f);
 			tf->rotation = Vector3(Vector3(0.0f, 0.0f, Deg2Rad(180)));
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"flower_2", 0);
@@ -206,7 +206,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Flower05->GetComponent<Transform>();
 			tf->position = Vector3(-3.3f, 2.0f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.15f, 1.0f);
 		}
 #pragma endregion	
 
@@ -223,7 +223,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf01->GetComponent<Transform>();
 			tf->position = Vector3(-2.2f, 1.8f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"leaf_1", 0);
 				mr->material->texture = texture;
@@ -241,7 +241,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf02->GetComponent<Transform>();
 			tf->position = Vector3(-2.6f, 2.0f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"leaf_3", 0);
 				mr->material->texture = texture;
@@ -259,7 +259,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf03->GetComponent<Transform>();
 			tf->position = Vector3(-3.5f, 1.9f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 		}
 
 		GameObject* Leaf04 = new GameObject();
@@ -277,7 +277,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf04->GetComponent<Transform>();
 			tf->position = Vector3(2.5f, 1.8f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 		}
 
 		GameObject* Leaf05 = new GameObject();
@@ -292,7 +292,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf05->GetComponent<Transform>();
 			tf->position = Vector3(1.1f, 2.0f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 		}
 
 		GameObject* Leaf06 = new GameObject();
@@ -307,7 +307,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf06->GetComponent<Transform>();
 			tf->position = Vector3(2.0f, 1.8f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 		}
 
 		GameObject* Leaf07 = new GameObject();
@@ -322,7 +322,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = Leaf07->GetComponent<Transform>();
 			tf->position = Vector3(1.5f, 1.8f, 0.98f);
-			tf->scale = Vector3(0.3f, 0.5f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.25f, 1.0f);
 		}
 #pragma endregion
 
@@ -338,7 +338,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = GateRight->GetComponent<Transform>();
 			tf->position = Vector3(0.8f, -1.5f, 0.1f);
-			tf->scale = Vector3(2.0f, 2.5f, 1.0f);
+			tf->scale = Vector3(1.0f, 1.25f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"gate_new", 0);
 				mr->material->texture = texture;
@@ -355,7 +355,7 @@ void roka::SeriaGateScene::OnEnter()
 			
 			Transform* tf = GateLeft->GetComponent<Transform>();
 			tf->position = Vector3(-0.7f, -1.5f, 0.1f);
-			tf->scale = Vector3(2.0f, 2.5f, 1.0f);
+			tf->scale = Vector3(1.0f, 1.25f, 1.0f);
 			{
 				std::shared_ptr<Texture>texture = npk->GetTexture(L"gate_new", 0);
 				mr->material->texture = texture;
@@ -375,7 +375,7 @@ void roka::SeriaGateScene::OnEnter()
 			
 			Transform* tf = HudBase->GetComponent<Transform>();
 			tf->position = Vector3(0.1f, -1.91f, 0.1f);
-			tf->scale = Vector3(5.7f, 1.0f, 1.0f);
+			tf->scale = Vector3(2.85f, 0.5f, 1.0f);
 			{
 				std::shared_ptr<Texture> texture = hud_npk->GetTexture(L"hud.img", 0);
 				mr->material->texture = texture;
@@ -392,7 +392,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material->render_mode = ERenderMode::Transparent;
 
 			Transform* tf = HudBase2->GetComponent<Transform>();
-			tf->position = Vector3(-0.0f, -0.23f, -0.01f);
+			tf->position = Vector3(-0.0f, -0.43f, -0.01f);
 			tf->scale = Vector3(1.1f, 0.25f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -411,7 +411,7 @@ void roka::SeriaGateScene::OnEnter()
 			//mr->material->render_mode = ERenderMode::Transparent;
 			
 			Transform* tf = ExpBar->GetComponent<Transform>();
-			tf->position = Vector3(0.01f, -0.26f, -0.01f);
+			tf->position = Vector3(0.01f, -0.5f, -0.01f);
 			tf->scale = Vector3(0.8f, 0.07f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -430,7 +430,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"HPBaseMaterial01");
 			
 			Transform* tf = HPBase->GetComponent<Transform>();
-			tf->position = Vector3(-0.2f, 0.0f, 0.0f);
+			tf->position = Vector3(-0.4f, 0.0f, 0.0f);
 			tf->scale = Vector3(0.14f, 0.7f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -448,7 +448,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"MPBaseMaterial01");
 			
 			Transform* tf = MPBase->GetComponent<Transform>();
-			tf->position = Vector3(0.19f, 0.0f, 0.0f);
+			tf->position = Vector3(0.39f, 0.0f, 0.0f);
 			tf->scale = Vector3(0.14f, 0.7f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 
@@ -467,7 +467,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"HPFilterMaterial01");
 			mr->material->render_mode = ERenderMode::Transparent;
 			Transform* tf = HPFilter->GetComponent<Transform>();
-			tf->position = Vector3(-0.195f, -0.01f, 0.0f);
+			tf->position = Vector3(-0.395f, -0.01f, 0.0f);
 			tf->scale = Vector3(0.175f, 0.85f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -485,7 +485,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"MPFilterMaterial01");
 			mr->material->render_mode = ERenderMode::Transparent;
 			Transform* tf = MPFilter->GetComponent<Transform>();
-			tf->position = Vector3(0.195f, -0.01f, 0.0f);
+			tf->position = Vector3(0.385f, -0.01f, 0.0f);
 			tf->scale = Vector3(0.175f, 0.85f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -503,7 +503,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot01->GetComponent<Transform>();
-			tf->position = Vector3(-0.097f, 0.085f, 0.0f);
+			tf->position = Vector3(-0.194f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -521,7 +521,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot02->GetComponent<Transform>();
-			tf->position = Vector3(-0.058f, 0.085f, 0.0f);
+			tf->position = Vector3(-0.116f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -535,7 +535,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot03->GetComponent<Transform>();
-			tf->position = Vector3(-0.019f, 0.085f, 0.0f);
+			tf->position = Vector3(-0.038f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -549,7 +549,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot04->GetComponent<Transform>();
-			tf->position = Vector3(0.02f, 0.085f, 0.0f);
+			tf->position = Vector3(0.04f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -563,7 +563,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot05->GetComponent<Transform>();
-			tf->position = Vector3(0.059f, 0.085f, 0.0f);
+			tf->position = Vector3(0.118f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -577,7 +577,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot06->GetComponent<Transform>();
-			tf->position = Vector3(0.098f, 0.085f, 0.0f);
+			tf->position = Vector3(0.196f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -591,7 +591,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot07->GetComponent<Transform>();
-			tf->position = Vector3(0.137f, 0.085f, 0.0f);
+			tf->position = Vector3(0.274f, 0.17f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -605,7 +605,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot08->GetComponent<Transform>();
-			tf->position = Vector3(-0.097f, -0.13f, 0.0f);
+			tf->position = Vector3(-0.194f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -619,7 +619,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot09->GetComponent<Transform>();
-			tf->position = Vector3(-0.058f, -0.13f, 0.0f);
+			tf->position = Vector3(-0.116f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -633,7 +633,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot10->GetComponent<Transform>();
-			tf->position = Vector3(-0.019f, -0.13f, 0.0f);
+			tf->position = Vector3(-0.038f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -647,7 +647,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot11->GetComponent<Transform>();
-			tf->position = Vector3(0.02f, -0.13f, 0.0f);
+			tf->position = Vector3(0.04f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -661,7 +661,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot12->GetComponent<Transform>();
-			tf->position = Vector3(0.059f, -0.13f, 0.0f);
+			tf->position = Vector3(0.118f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -675,7 +675,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot13->GetComponent<Transform>();
-			tf->position = Vector3(0.098f, -0.13f, 0.0f);
+			tf->position = Vector3(0.196f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -689,7 +689,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillQuickSlotMaterial01");
 
 			Transform* tf = SkillQuickSlot14->GetComponent<Transform>();
-			tf->position = Vector3(0.137f, -0.13f, 0.0f);
+			tf->position = Vector3(0.274f, -0.26f, 0.0f);
 			tf->scale = Vector3(0.08f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 		}
@@ -703,7 +703,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"MoreSkillBtnMaterial01");
 
 			Transform* tf = MoreSkillBtn->GetComponent<Transform>();
-			tf->position = Vector3(-0.132f, 0.085f, 0.0f);
+			tf->position = Vector3(-0.26f, 0.16f, 0.0f);
 			tf->scale = Vector3(0.055f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -721,7 +721,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"SkillChangeBtnMaterial01");
 
 			Transform* tf = SkillChangeBtn->GetComponent<Transform>();
-			tf->position = Vector3(-0.132f, -0.13f, 0.0f);
+			tf->position = Vector3(-0.26f, -0.25f, 0.0f);
 			tf->scale = Vector3(0.055f, 0.45f, 1.0f);
 			tf->parent = HudBase->GetComponent<Transform>();
 			{
@@ -744,7 +744,7 @@ void roka::SeriaGateScene::OnEnter()
 
 			Transform* tf = SeriaNPC->GetComponent<Transform>();
 			tf->position = Vector3(0.2f, 0.07f, 0.1f);
-			tf->scale = Vector3(0.8f, 1.75f, 1.0f);
+			tf->scale = Vector3(0.4f, 0.875f, 1.0f);
 			{
 				std::shared_ptr<Texture> texture = seria_npk->GetTexture(L"seria_event_2012summer.img", 0);
 				mr->material->texture = texture;
@@ -761,7 +761,7 @@ void roka::SeriaGateScene::OnEnter()
 			
 			Transform* tf = Player->GetComponent<Transform>();
 			tf->position = Vector3(0.0f, -1.0f, 0.1f);
-			tf->scale = Vector3(0.8f, 1.5f, 1.0f);
+			tf->scale = Vector3(0.4f, 0.75f, 1.0f);
 			{
 				std::shared_ptr<Texture> texture = mbskin_npk->GetTexture(L"mg_body80500.img", 10);
 				mr->material->texture = texture;
@@ -775,10 +775,10 @@ void roka::SeriaGateScene::OnEnter()
 			MeshRenderer* mr = GoldBox->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"GoldBoxMaterial01");
-
+			
 			Transform* tf = GoldBox->GetComponent<Transform>();
 			tf->position = Vector3(-1.3f, -0.45f, 0.1f);
-			tf->scale = Vector3(1.5f, 1.5f, 1.0f);
+			tf->scale = Vector3(0.75f, 0.75f, 1.0f);
 		}
 #pragma endregion
 	}

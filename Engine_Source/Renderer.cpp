@@ -310,6 +310,8 @@ namespace roka::renderer
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 				spriteMaterial->shader = spriteShdaer;
+				std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"GoldBox", L"..\\Resources\\Texture\\goldbox.png");
+				spriteMaterial->texture = texture;
 				Resources::Insert(L"GoldBoxMaterial01", spriteMaterial);
 			}
 #pragma endregion
@@ -339,19 +341,19 @@ namespace roka::renderer
 		/* 사각형*/
 		vertexs.resize(4);
 
-		vertexs[0].pos = { -0.25f, -0.25f, 0.0f };
+		vertexs[0].pos = { -0.5f, -0.5f, 0.0f };
 		vertexs[0].color = { 1.0f,0.0f,0.0f,1.0f };
 		vertexs[0].uv = { 0.0f,1.0f };//uv 좌표 참고로 불칸과 다렉은 좌표가 다름.
 
-		vertexs[1].pos = { -0.25f, +0.25f, 0.0f };
+		vertexs[1].pos = { -0.5f, +0.5f, 0.0f };
 		vertexs[1].color = { 0.0f,1.0f,0.0f,1.0f };
 		vertexs[1].uv = { 0.0f,0.0f };
 
-		vertexs[2].pos = { +0.25f, -0.25f, 0.0f };
+		vertexs[2].pos = { +0.5f, -0.5f, 0.0f };
 		vertexs[2].color = { 0.0f,0.0f,1.0f,1.0f };
 		vertexs[2].uv = { 1.0f,1.0f };
 
-		vertexs[3].pos = { +0.25f, +0.25f, 0.0f };
+		vertexs[3].pos = { +0.5f, +0.5f, 0.0f };
 		vertexs[3].color = { 0.0f,1.0f,0.0f,1.0f };
 		vertexs[3].uv = { 1.0f,0.0f };
 
