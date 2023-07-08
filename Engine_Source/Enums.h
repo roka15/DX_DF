@@ -23,6 +23,7 @@ namespace roka::enums
 	};
 	enum class ELayerType
 	{
+		Grid,
 		BackObject,
 		Player,
 		Monster,

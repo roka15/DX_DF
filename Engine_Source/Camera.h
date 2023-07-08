@@ -30,6 +30,9 @@ namespace roka
 		void EnableLayerMasks(){mLayerMask.set();}
 		void DisableLayerMasks(){mLayerMask.reset();}
 		
+		float GetSize() { return mSize; }
+		GET_PROPERTY(GetSize) float size;
+
 	private:
 		void AlphaSortGameObjects();
 		void ZSortTransparencyGameObjects();

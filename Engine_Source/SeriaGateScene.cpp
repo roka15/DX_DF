@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "CameraScript.h"
+#include "GridScript.h"
 
 #include "Mesh.h"
 #include "Material.h"
@@ -819,9 +820,8 @@ void roka::SeriaGateScene::OnEnter()
 
 	player1->GetComponent<Transform>()->SetPosition(Vector3(-3.0f, 0.0f, 0.5f));
 	player1->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, Deg2Rad(90)));*/
-
+	GameObject* camera = new GameObject();
 	{
-		GameObject* camera = new GameObject();
 		AddGameObject(ELayerType::Player, camera);
 		camera->AddComponent<CameraScript>();
 		Camera* cameraComp = camera->AddComponent<Camera>();
@@ -829,13 +829,24 @@ void roka::SeriaGateScene::OnEnter()
 		camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
 	}
 
+	GameObject* UIcamera = new GameObject();
 	{
-		GameObject* camera = new GameObject();
-		AddGameObject(ELayerType::UI, camera);
-		Camera* cameraComp = camera->AddComponent<Camera>();
+		AddGameObject(ELayerType::UI, UIcamera);
+		Camera* cameraComp = UIcamera->AddComponent<Camera>();
 		cameraComp->DisableLayerMasks();
 		cameraComp->TurnLayerMask(ELayerType::UI, true);
-		camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
+		UIcamera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
+	}
+
+	{
+		GameObject* grid = new GameObject();
+		grid->SetName(L"Grid");
+		AddGameObject(ELayerType::Grid, grid);
+		MeshRenderer* mr = grid->AddComponent<MeshRenderer>();
+		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+		mr->material = Resources::Find<Material>(L"GridMaterial");
+		GridScript* script = grid->AddComponent<GridScript>();
+		script->camera = UIcamera->GetComponent<Camera>();
 	}
 }
 

@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="..\Engine_Source\CameraScript.h">
-      <Filter>Contents\Script</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine_Source\HendonmyreScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
@@ -20,12 +17,15 @@
     <ClInclude Include="LoadScene.h">
       <Filter>Contents\Load</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine_Source\CameraScript.h">
+      <Filter>Contents\Script\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="GridScript.h">
+      <Filter>Contents\Script\Grid</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="..\Engine_Source\CameraScript.cpp">
-      <Filter>Contents\Script</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engine_Source\HendonmyreScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
@@ -37,6 +37,12 @@
     </ClCompile>
     <ClCompile Include="..\Engine_Source\WestcoastScene.cpp">
       <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine_Source\CameraScript.cpp">
+      <Filter>Contents\Script\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine_Source\GridScript.cpp">
+      <Filter>Contents\Script\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +57,12 @@
     </Filter>
     <Filter Include="Contents\Script">
       <UniqueIdentifier>{3e345786-6a89-4854-8033-5de66dce86f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\Grid">
+      <UniqueIdentifier>{e4c70c7f-c862-4986-8e20-5bd5ebe604db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\Camera">
+      <UniqueIdentifier>{e1bacb99-4c5b-4706-9a86-3c81ab27b544}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

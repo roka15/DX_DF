@@ -13,6 +13,7 @@
 #define CBUFFER(name,slot) static const int CB_GETBINDSLOT(name)=slot; struct alignas(16) name
 
 #define CBSLOT_TRANSFORM 0
+#define CBSLOT_GRID 2
 
 
 enum class EShaderStage
@@ -29,6 +30,7 @@ enum class ECBType
 {
 	Transform,
 	Material,
+	Grid,
 	End
 };
 enum class ESamplerType

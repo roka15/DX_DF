@@ -23,6 +23,13 @@ namespace roka::renderer
 		Matrix mProjection;
 	};
 
+	CBUFFER(GridCB, CBSLOT_GRID)
+	{
+		Vector4 CameraPos;
+		Vector2 CameraScale;
+		Vector2 Resolution;
+	};
+
 	extern std::vector<Vertex> vertexs;
 	extern std::vector<UINT> indexs;
 	extern roka::graphics::ConstantBuffer* constantBuffer[(UINT)ECBType::End];
