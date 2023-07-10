@@ -10,6 +10,7 @@ namespace roka
 		static void LateUpdate();
 		static void Render();
 		static void Release();
+		static void Destroy();
 
 		template <typename T>
 		static bool CreateScene(std::wstring name)

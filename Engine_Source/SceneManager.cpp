@@ -31,6 +31,10 @@ namespace roka
 			itr.second = nullptr;
 		}
 	}
+	void SceneManager::Destroy()
+	{
+		mActiveScene->Destroy();
+	}
 	Scene* SceneManager::LoadScene(std::wstring name)
 	{
 		std::map<std::wstring, Scene*>::iterator itr = mScenes.find(name);

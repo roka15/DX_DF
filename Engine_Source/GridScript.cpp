@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Application.h"
 #include "Renderer.h"
+
 extern roka::Application application;
 namespace roka
 {

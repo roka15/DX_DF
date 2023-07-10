@@ -7,7 +7,7 @@ namespace roka
 	class GameObject : public Entity
 	{
 	public:
-		enum EState
+		enum class EState
 		{
 			Active,
 			Paused,
@@ -68,6 +68,9 @@ namespace roka
 		bool GetMoveFlag() { return mbMove; }
 		PROPERTY(GetMoveFlag, SetMoveFlag) bool ismove;
 
+		void SetState(EState state) { mState = state; }
+		EState GetState() { return mState; }
+		PROPERTY(GetState, SetState) EState active;
 	private:
 		bool mbMove;
 		EState mState;

@@ -25,6 +25,7 @@ namespace roka
 		Update();
 		LateUpdate();
 		Render();
+		Destroy();
 	}
 
 	void Application::Initialize()
@@ -63,6 +64,11 @@ namespace roka
 	{
 		renderer::Release();
 		SceneManager::Release();
+	}
+
+	void Application::Destroy()
+	{
+		SceneManager::Destroy();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

@@ -17,6 +17,7 @@ namespace roka
 		void LateUpdate();
 		void Render();
 		void Release();
+		void Destroy(); 
 
 		void SetWindow(HWND hwnd, UINT width, UINT height);
 

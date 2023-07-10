@@ -39,6 +39,14 @@ namespace roka
 		}
 	}
 
+	void Scene::Destroy()
+	{
+		for (Layer& layer : mLayers)
+		{
+			layer.Destroy();
+		}
+	}
+
 	void Scene::OnExit()
 	{
 	}

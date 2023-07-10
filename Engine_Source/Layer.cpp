@@ -21,6 +21,9 @@ namespace roka
 	{
 		for (GameObject* gameObj : mGameObjects)
 		{
+			if (gameObj->active != GameObject::EState::Active)
+				continue;
+
 			gameObj->Update();
 		}
 	}
@@ -28,6 +31,8 @@ namespace roka
 	{
 		for (GameObject* gameObj : mGameObjects)
 		{
+			if (gameObj->active != GameObject::EState::Active)
+				continue;
 			gameObj->LateUpdate();
 		}
 	}
@@ -35,7 +40,26 @@ namespace roka
 	{
 		for (GameObject* gameObj : mGameObjects)
 		{
+			if (gameObj->active != GameObject::EState::Active)
+				continue;
 			gameObj->Render();
+		}
+	}
+	void Layer::Destroy()
+	{
+		for (std::vector<GameObject*>::iterator itr = mGameObjects.begin();
+			itr != mGameObjects.end();)
+		{
+			if ((*itr)->active == GameObject::EState::Dead)
+			{
+				GameObject* deleteObj = (*itr);
+				itr = mGameObjects.erase(itr);
+				delete deleteObj;
+				deleteObj = nullptr;
+				continue;
+			}
+
+			itr++;
 		}
 	}
 	void Layer::AddGameObject(GameObject* gameObj)
