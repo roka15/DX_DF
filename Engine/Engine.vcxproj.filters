@@ -20,8 +20,17 @@
     <ClInclude Include="..\Engine_Source\CameraScript.h">
       <Filter>Contents\Script\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="GridScript.h">
+    <ClInclude Include="..\Engine_Source\SelectCharacterScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine_Source\Slot.h">
+      <Filter>Contents\Script\Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine_Source\GridScript.h">
       <Filter>Contents\Script\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine_Source\MoveScript.h">
+      <Filter>Contents\Script\MoveTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +53,15 @@
     <ClCompile Include="..\Engine_Source\GridScript.cpp">
       <Filter>Contents\Script\Grid</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engine_Source\SelectCharacterScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine_Source\Slot.cpp">
+      <Filter>Contents\Script\Slot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine_Source\MoveScript.cpp">
+      <Filter>Contents\Script\MoveTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -63,6 +81,12 @@
     </Filter>
     <Filter Include="Contents\Script\Camera">
       <UniqueIdentifier>{e1bacb99-4c5b-4706-9a86-3c81ab27b544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\Slot">
+      <UniqueIdentifier>{12a0a32f-22dc-47b3-a702-effb2c6f4101}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MoveTest">
+      <UniqueIdentifier>{a2647b72-e4ea-4962-b649-f43569bd613e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

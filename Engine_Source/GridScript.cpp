@@ -8,8 +8,23 @@ extern roka::Application application;
 namespace roka
 {
 	GridScript::GridScript()
-		:mCamera(nullptr)
+		:Script(EScriptType::Grid),
+         mCamera()
 	{
+	}
+
+	GridScript::GridScript(const GridScript& ref):Script(ref)
+	{
+		mCamera = ref.mCamera;
+	}
+
+	void GridScript::Copy(Component* src)
+	{
+		Script::Copy(src);
+		GridScript* source = dynamic_cast<GridScript*>(src);
+		if (source == nullptr)
+			return;
+		mCamera = source->mCamera;
 	}
 
 	GridScript::~GridScript()
@@ -18,19 +33,22 @@ namespace roka
 
 	void GridScript::Initialize()
 	{
+		Script::Initialize();
 	}
 
 	void GridScript::Update()
 	{
-		if (mCamera == nullptr)
+		Script::Update();
+		std::shared_ptr<Camera> cam = mCamera.lock();
+		if (!cam)
 			return;
 
-		GameObject* obj = mCamera->GetOwner();
+		GameObject* obj = cam->GetOwner();
 
-		Transform* tf = obj->GetComponent<Transform>();
+		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		Vector3 pos = tf->position;
 
-		float size = mCamera->size;
+		float size = cam->size;
 		Vector2 scale(size, size);
 
 		HWND hwnd = application.GetHwnd();
@@ -56,10 +74,12 @@ namespace roka
 
 	void GridScript::LateUpdate()
 	{
+		Script::LateUpdate();
 	}
 
 	void GridScript::Render()
 	{
+		Script::Render();
 	}
 }
 

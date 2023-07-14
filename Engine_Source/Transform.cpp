@@ -6,12 +6,45 @@
 namespace roka
 {
     using namespace roka::graphics;
+
     Transform::Transform()
         :Component(EComponentType::Transform)
         ,mPosition(Vector3::Zero)
         ,mRotation(Vector3::Zero)
         ,mScale(Vector3::One)
     {
+    }
+    Transform::Transform(const Transform& ref):Component(ref)
+    {
+       mPosition =ref.mPosition;
+       mRotation=ref.mRotation;
+       mScale=ref.mScale;
+
+       mUp=ref.mUp;
+       mForward=ref.mForward;
+       mRight=ref.mRight;
+
+       mWorld=ref.mWorld;
+
+       mChild = ref.mChild;
+       mParent = ref.mParent;
+    }
+    void Transform::Copy(Component* src)
+    {
+        Component::Copy(src);
+        Transform* source = dynamic_cast<Transform*>(src);
+        mPosition = source->mPosition;
+        mRotation = source->mRotation;
+        mScale = source->mScale;
+
+        mUp = source->mUp;
+        mForward = source->mForward;
+        mRight = source->mRight;
+
+        mWorld = source->mWorld;
+
+        mChild = source->mChild;
+        mParent = source->mParent;
     }
     Transform::~Transform()
     {
@@ -37,9 +70,10 @@ namespace roka
 
         mWorld = scale * rotation * position;
 
-        if (mParent != nullptr)
+        std::shared_ptr<Transform> parent = mParent.lock();
+        if(parent)
         {
-            mWorld *= mParent->mWorld;
+            mWorld *= parent->mWorld;
         }
 
         mUp = Vector3::TransformNormal(Vector3::Up, rotation);
@@ -51,6 +85,7 @@ namespace roka
     }
     void Transform::BindConstantBuffer()
     {
+        GameObject* aowner = GetOwner();
         renderer::TransformCB trCB = {};
         trCB.mWorld = mWorld;
         Matrix CameraView = Camera::GetViewMatrix();
@@ -67,5 +102,10 @@ namespace roka
        
         cb->SetData(&trCB);
         cb->Bind(EShaderStage::VS);
+    }
+    void Transform::AddChild(std::shared_ptr<Transform> child)
+    {
+        mChild.push_back(child);
+        child->parent = owner->GetComponent<Transform>();
     }
 }

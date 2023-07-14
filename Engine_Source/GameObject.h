@@ -1,7 +1,7 @@
 #pragma once
 #include "Entity.h"
-#include "Component.h"
-#include "Script.h"
+#include "ComponentFactory.h"
+#include "ScriptFactory.h"
 namespace roka
 {
 	class GameObject : public Entity
@@ -14,6 +14,8 @@ namespace roka
 			Dead,
 		};
 		GameObject();
+		GameObject(const GameObject& ref);
+	
 		virtual ~GameObject();
 
 		virtual void Initialize();
@@ -22,46 +24,72 @@ namespace roka
 		virtual void Render();
 
 		template <typename T>
-		T* GetComponent()
+		std::shared_ptr<T> GetComponent()
 		{
-			T* component;
-			for (Component* comp : mComponents)
+			std::shared_ptr<T> component;
+			for (std::shared_ptr<Component> comp : mComponents)
 			{
-				component = dynamic_cast<T*>(comp);
+				component = std::dynamic_pointer_cast<T>(comp);
 				if (component != nullptr)
 					return component;
 			}
 
-			for (Script* script : mScripts)
+			for (std::shared_ptr<Script> script : mScripts)
 			{
-				component = dynamic_cast<T*>(script);
+				component = std::dynamic_pointer_cast<T>(script);
 				if (component != nullptr)
 					return component;
 			}
 
 			return nullptr;
 		}
-		template <typename T>
-		T* AddComponent()
+
+		std::shared_ptr<Component> GetComponent(EComponentType type)
 		{
-			T* component = GetComponent<T>();
-			if (component != nullptr)
+			for (std::shared_ptr<Component> comp : mComponents)
+			{
+				if (comp->type == type)
+					return comp;
+				if (comp != nullptr)
+					return nullptr;
+			}
+			return nullptr;
+		}
+		std::shared_ptr<Script> GetScript(EScriptType type)
+		{
+			for (std::shared_ptr<Script> script : mScripts)
+			{
+				if (script->script_type == type)
+					return script;
+				if (script != nullptr)
+					return nullptr;
+			}
+			return nullptr;
+		}
+		
+		template <typename T>
+		std::shared_ptr<T> AddComponent()
+		{
+			std::shared_ptr<T> component = GetComponent<T>();
+			if (static_cast<bool>(component) == true)
 				return component;
 
-			component = new T();
+			component = ComponentFactory::GetComponent<T>();
+			mComponents.push_back(component);
+			component->owner = this;
+			return component;
+		}
+		
+		template <typename T>
+		std::shared_ptr<T> AddScript()
+		{
+			std::shared_ptr<T> component = GetComponent<T>();
+			if (static_cast<bool>(component) == true)
+				return component;
 
-			Component* buff = dynamic_cast<Component*>(component);
-			Script* script = dynamic_cast<Script*>(component);
-
-			if (buff == nullptr)
-				return nullptr;
-
-			if (script == nullptr)
-				mComponents.push_back(buff);
-			else
-				mScripts.push_back(script);
-
-			buff->owner = this;
+			component = ScriptFactory::GetComponent<T>();
+			mScripts.push_back(component);
+			component->owner = this;
 			return component;
 		}
 		void SetMoveFlag(bool flag) { mbMove = flag; }
@@ -71,11 +99,13 @@ namespace roka
 		void SetState(EState state) { mState = state; }
 		EState GetState() { return mState; }
 		PROPERTY(GetState, SetState) EState active;
+	protected:
+		virtual void Copy(GameObject* src);
 	private:
 		bool mbMove;
 		EState mState;
-		std::vector<Component*> mComponents;
-		std::vector<Script*> mScripts;
+		std::vector<std::shared_ptr<Component>> mComponents;
+		std::vector<std::shared_ptr<Script>> mScripts;
 	};
 }
 

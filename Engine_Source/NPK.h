@@ -16,6 +16,7 @@ namespace roka
 
 		typedef roka::graphics::Texture Texture;
 		std::shared_ptr<Texture> GetTexture(std::wstring name, UINT index);
+		
 
 		Vector2 GetPos(std::wstring name, UINT index);
 		Vector2 GetSize(std::wstring name, UINT index);

@@ -1,3 +1,4 @@
+#include "Globals.hlsli"
 struct VSIn
 {
     float3 Pos : POSITION;
@@ -11,14 +12,10 @@ struct VSOut
     float4 Color : COLOR;
     float2 UV:TEXCOORD;
 };
-Texture2D albedoTexture:register(t0);
-
-SamplerState pointSampler : register(s0);
-SamplerState anisotropicSampler : register(s1);
 
 float4 main(VSOut In) : SV_TARGET
 {
-    float4 color = (float)0.0f;
+    float4 color = (float4)0.0f;
     color = albedoTexture.Sample(anisotropicSampler, In.UV);
 
 	return color;

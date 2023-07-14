@@ -1,13 +1,16 @@
 #pragma once
-#include <Script.h>
+#include "Script.h"
 #include "Camera.h"
 namespace roka
 {
 	class GridScript :
 		public Script
 	{
-	public:
+	private:
 		GridScript();
+		GridScript(const GridScript& ref);
+		virtual void Copy(Component* src)override;
+	public:
 		~GridScript();
 
 		virtual void Initialize() override;
@@ -15,10 +18,11 @@ namespace roka
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-		void SetCamera(Camera* camera) { mCamera = camera; }
-		SET_PROPERTY(SetCamera) Camera* camera;
+		void SetCamera(std::weak_ptr<Camera> camera) { mCamera = camera; }
+		SET_PROPERTY(SetCamera) std::weak_ptr<Camera> camera;
 	private:
-		Camera* mCamera;
+		friend class ScriptFactory;
+		std::weak_ptr<Camera> mCamera;
 	};
 }
 

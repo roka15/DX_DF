@@ -11,15 +11,18 @@
 #include "SeriaGateScene.h"
 #include "WestcoastScene.h"
 #include "HendonmyreScene.h"
+#include "SelectCharacterScene.h"
 namespace roka
 {
 	void InitializeScenes()
 	{
 		SceneManager::CreateScene<PlayScene>(L"PlayScene");
+
+		SceneManager::CreateScene<SelectCharacterScene>(L"SelectChScene");
 		SceneManager::CreateScene<SeriaGateScene>(L"SeriaGateScene");
 		SceneManager::CreateScene<WestcoastScene>(L"WestcoastScene");
 		SceneManager::CreateScene<HendonmyreScene>(L"HendonmyreScene");
 
-		SceneManager::LoadScene(L"SeriaGateScene");
+		SceneManager::LoadScene(L"PlayScene");
 	}
 }

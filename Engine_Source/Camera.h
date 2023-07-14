@@ -4,6 +4,10 @@ namespace roka
 {
 	class Camera :public Component
 	{
+	private:
+		Camera();
+		Camera(const Camera& ref);
+		virtual void Copy(Component* src)override;
 	public:
 		enum class EProjectionType
 		{
@@ -11,8 +15,9 @@ namespace roka
 			OrthoGraphic,
 			None
 		};
-		Camera();
+		
 		virtual ~Camera();
+
 		static Matrix GetViewMatrix() { return View; }
 		static Matrix GetProjectionMatrix() { return Projection; }
 
@@ -21,6 +26,8 @@ namespace roka
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
+
+		
 
 		bool CreateViewMatrix();
 		bool CreateProjectionMatrix(EProjectionType type);
@@ -45,6 +52,7 @@ namespace roka
 		void EnableDepthStencilState();
 		void DisableDepthStencilState();
 	private:
+		friend class ComponentFactory;
 		static Matrix View;
 		static Matrix Projection;
 

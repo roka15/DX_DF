@@ -19,7 +19,7 @@ namespace roka
 	Matrix Camera::View = Matrix::Identity;
 	Matrix Camera::Projection = Matrix::Identity;
 
-	Camera::Camera() :Component(EComponentType::Script)
+	Camera::Camera() :Component(EComponentType::Camera)
 		, mType(EProjectionType::OrthoGraphic)
 		, mAspectRatio(1.0f)
 		, mNear(1.0f)
@@ -33,6 +33,19 @@ namespace roka
 		, mProjection(Matrix::Identity)
 	{
 		EnableLayerMasks();
+	}
+	Camera::Camera(const Camera& ref):Component(ref)
+	{
+		mView = ref.mView;
+		mProjection = ref.mProjection;
+		mAspectRatio = ref.mAspectRatio;
+		mNear = ref.mNear;
+		mFar = ref.mFar;
+		mSize = ref.mSize;
+		mType = ref.mType;
+		mOpaqueGameObjects = ref.mOpaqueGameObjects;
+		mCutOutGameObjects = ref.mCutOutGameObjects;
+		mTransparentObjects = ref.mTransparentObjects;
 	}
 	Camera::~Camera()
 	{
@@ -64,9 +77,26 @@ namespace roka
 		RenderTransparent();
 		EnableDepthStencilState();
 	}
+	void Camera::Copy(Component* src)
+	{
+		Component::Copy(src);
+		Camera* source = dynamic_cast<Camera*>(src);
+		if (source == nullptr)
+			return;
+		mView = source->mView;
+		mProjection = source->mProjection;
+		mAspectRatio = source->mAspectRatio;
+		mNear = source->mNear;
+		mFar = source->mFar;
+		mSize = source->mSize;
+		mType = source->mType;
+		mOpaqueGameObjects = source->mOpaqueGameObjects;
+		mCutOutGameObjects = source->mCutOutGameObjects;
+		mTransparentObjects = source->mTransparentObjects;
+	}
 	bool Camera::CreateViewMatrix()
 	{
-		Transform* tf = owner->GetComponent<Transform>();
+		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		Vector3 pos = tf->position;
 		mView = Matrix::Identity;
 
@@ -153,7 +183,7 @@ namespace roka
 	{
 		for (GameObject* obj : objs)
 		{
-			MeshRenderer* mr = obj->GetComponent<MeshRenderer>();
+			std::shared_ptr<MeshRenderer> mr = obj->GetComponent<MeshRenderer>();
 			if (mr == nullptr)
 				continue;
 			ERenderMode mode = mr->material->GetRenderMode();

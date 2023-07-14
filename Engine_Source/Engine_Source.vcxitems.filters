@@ -75,6 +75,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp">
       <Filter>Resource\NPK</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPool.cpp">
+      <Filter>Common\ObjectPool</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ComponentFactory.cpp">
+      <Filter>Common\Factory\ComponentFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ScriptFactory.cpp">
+      <Filter>Common\Factory\ScriptFactory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -163,6 +175,24 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h">
       <Filter>Resource\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Object.h">
+      <Filter>Common\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Image.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPool.h">
+      <Filter>Common\ObjectPool</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ComponentFactory.h">
+      <Filter>Common\Factory\ComponentFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ScriptFactory.h">
+      <Filter>Common\Factory\ScriptFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ComponentFactoryBase.h">
+      <Filter>Common\Factory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -227,6 +257,21 @@
     </Filter>
     <Filter Include="Resource\NPK">
       <UniqueIdentifier>{acba7d4b-b736-439d-ac92-a55bef0ff668}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Object">
+      <UniqueIdentifier>{171fdcfe-80e2-42e4-ab23-b3a2e50b7c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\ObjectPool">
+      <UniqueIdentifier>{1a2d82c7-058f-4ca9-b6d1-4da36b24a992}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Factory">
+      <UniqueIdentifier>{fc3c677a-7cf3-447f-ba3a-eebce76430f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Factory\ComponentFactory">
+      <UniqueIdentifier>{1ebbdcbe-8005-46d3-ac3f-02d3b7fb7b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Factory\ScriptFactory">
+      <UniqueIdentifier>{26b9a799-1d55-4ca5-b5d7-635fd880a6d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

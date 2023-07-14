@@ -7,10 +7,12 @@ namespace roka
 	using namespace roka::graphics;
 	class MeshRenderer : public Component
 	{
-	public:
+	private:
 		MeshRenderer();
+		MeshRenderer(const MeshRenderer& ref);
+		virtual void Copy(Component* src)override;
+	public:
 		~MeshRenderer();
-
 		virtual void Initialize()override;
 		virtual void Update()override;
 		virtual void LateUpdate()override;
@@ -24,6 +26,7 @@ namespace roka
 		PROPERTY(GetMesh,SetMesh) std::shared_ptr<Mesh> mesh;
 		PROPERTY(GetMaterial,SetMaterial) std::shared_ptr<Material> material;
 	private:
+		friend class ComponentFactory;
 		std::shared_ptr<Mesh> mMesh;
 		std::shared_ptr<Material> mMaterial;
 	};

@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Material.h"
 
+
 namespace roka::renderer
 {
 	using namespace roka::graphics;
@@ -58,6 +59,10 @@ namespace roka::renderer
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 
 		shader = roka::Resources::Find<Shader>(L"GridShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
+		shader = roka::Resources::Find<Shader>(L"EffectShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 #pragma endregion
@@ -155,6 +160,7 @@ namespace roka::renderer
 		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		GetDevice()->CreateBlendState(&BlendDesc, blendStates[(UINT)EBSType::OneOne].GetAddressOf());
+
 #pragma endregion
 	}
 	void LoadMesh()
@@ -163,15 +169,15 @@ namespace roka::renderer
 		vertexs.resize(4);
 
 		vertexs[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
-		vertexs[0].color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+		vertexs[0].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertexs[0].uv = Vector2(0.0f, 0.0f);
 
 		vertexs[1].pos = Vector3(0.5f, 0.5f, 0.0f);
-		vertexs[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexs[1].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertexs[1].uv = Vector2(1.0f, 0.0f);
 
 		vertexs[2].pos = Vector3(0.5f, -0.5f, 0.0f);
-		vertexs[2].color = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+		vertexs[2].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 		vertexs[2].uv = Vector2(1.0f, 1.0f);
 
 		vertexs[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
@@ -331,13 +337,18 @@ namespace roka::renderer
 		gridShader->Create(EShaderStage::VS, L"GridVS.hlsl", "main");
 		gridShader->Create(EShaderStage::PS, L"GridPS.hlsl", "main");
 		roka::Resources::Insert(L"GridShader", gridShader);
+
+		std::shared_ptr<Shader> effectShader = std::make_shared<Shader>();
+		effectShader->Create(EShaderStage::VS, L"SpriteVS.hlsl", "main");
+		effectShader->Create(EShaderStage::PS, L"SpritePS.hlsl"/*L"EffectPS.hlsl"*/, "main");
+		roka::Resources::Insert(L"EffectShader", effectShader);
 	}
 	void LoadMaterial()
 	{
 		std::shared_ptr<Shader>  spriteShdaer = Resources::Find<Shader>(L"SpriteShader");
 		std::shared_ptr<Shader>  v_inversterShdaer = Resources::Find<Shader>(L"VerticalInverterShader");
 		std::shared_ptr<Shader> gridShader = Resources::Find<Shader>(L"GridShader");
-
+		std::shared_ptr<Shader> effectShader = Resources::Find<Shader>(L"EffectShader");
 		{
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
@@ -362,13 +373,17 @@ namespace roka::renderer
 			Resources::Insert(L"GridMaterial", spriteMaterial);
 		}
 #pragma endregion
-#pragma region seria room material
+#pragma region common material
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
 			Resources::Insert(L"BGMaterial", spriteMaterial);
 		}
-
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"BGMaterial02", spriteMaterial);
+		}
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
@@ -379,7 +394,111 @@ namespace roka::renderer
 			spriteMaterial->shader = spriteShdaer;
 			Resources::Insert(L"FrontObjMaterial02", spriteMaterial);
 		}
-
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial03", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial04", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial05", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial06", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial07", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial08", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial09", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial10", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial11", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"IconMaterial12", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"BtnMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"FocusEftMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"ItemSlotMaterial01", spriteMaterial);
+		}
+		
+#pragma endregion
+#pragma region Select Ch material
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SelectChGround", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SelectChMoveMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SelectChMoveMaterial02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SelectChMoveMaterial03", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SelectChMoveMaterial04", spriteMaterial);
+		}
+#pragma endregion
+#pragma region seria room material
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
@@ -405,6 +524,7 @@ namespace roka::renderer
 			spriteMaterial->shader = spriteShdaer;
 			Resources::Insert(L"LeafMaterial03", spriteMaterial);
 		}
+#pragma region gate 
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
@@ -415,6 +535,42 @@ namespace roka::renderer
 			spriteMaterial->shader = v_inversterShdaer;
 			Resources::Insert(L"GateVInverseMaterial01", spriteMaterial);
 		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GateDownMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GateDownMaterial02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GateUpMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GateUpMaterial02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GateDownThinMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GateUpThinMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = effectShader;
+			Resources::Insert(L"SeriaGateDoorEftMaterial", spriteMaterial);
+		}
+#pragma endregion
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
@@ -481,9 +637,27 @@ namespace roka::renderer
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			std::shared_ptr<Texture> texture = Resources::Load<Texture>(L"GoldBox", L"..\\Resources\\Texture\\goldbox.png");
-			spriteMaterial->texture = texture;
 			Resources::Insert(L"GoldBoxMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"PremiumCoinMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"EnchantBookMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = effectShader;
+			Resources::Insert(L"EnchantBookEftMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"PostBoxMaterial", spriteMaterial);
 		}
 #pragma endregion
 	}

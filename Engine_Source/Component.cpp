@@ -2,8 +2,15 @@
 
 namespace roka
 {
-	Component::Component(EComponentType type):mType(type)
+	
+	Component::Component(EComponentType type):
+		mType(type)
 	{
+	}
+
+	Component::Component(const Component& ref)
+	{
+		mType = ref.mType;
 	}
 
 	Component::~Component()
@@ -24,6 +31,11 @@ namespace roka
 
 	void Component::Render()
 	{
+	}
+
+	void Component::Copy(Component* src)
+	{
+		mType = src->type;
 	}
 
 }

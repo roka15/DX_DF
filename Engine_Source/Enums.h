@@ -6,11 +6,18 @@ namespace roka::enums
 	{
 		None,
 		Transform,
-		Mesh,
 		Particle,
 		MeshRenderer,
 		Script,
 		Camera,
+		End,
+	};
+	enum class EScriptType
+	{
+		None,
+		Camera,
+		Grid,
+        Move,
 		End,
 	};
 

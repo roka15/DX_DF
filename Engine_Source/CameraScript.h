@@ -4,11 +4,15 @@ namespace roka
 {
 	class CameraScript : public Script
 	{
-	public:
+	private:
 		CameraScript();
+		CameraScript(const CameraScript& ref);
+		virtual void Copy(Component* src)override;
+	public:
 		~CameraScript();
 		virtual void Update()override;
 	private:
+		friend class ScriptFactory;
 
 	};
 }

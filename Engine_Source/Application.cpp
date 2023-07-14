@@ -4,7 +4,8 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Resources.h"
-
+#include "ComponentFactory.h"
+#include "ScriptFactory.h"
 namespace roka
 {
 
@@ -35,6 +36,9 @@ namespace roka
 
 		roka::renderer::Initialize();
 		SceneManager::Initialize();
+
+		ComponentFactory::Initialize();
+		ScriptFactory::Initialize();
 	}
 
 	void Application::Update()

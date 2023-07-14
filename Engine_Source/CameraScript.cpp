@@ -5,15 +5,22 @@
 #include "Input.h"
 namespace roka
 {
-	CameraScript::CameraScript() :Script()
+	CameraScript::CameraScript() :Script(EScriptType::Camera)
 	{
+	}
+	CameraScript::CameraScript(const CameraScript& ref):Script(ref)
+	{
+	}
+	void CameraScript::Copy(Component* src)
+	{
+		Script::Copy(src);
 	}
 	CameraScript::~CameraScript()
 	{
 	}
 	void CameraScript::Update()
 	{
-		Transform* tf = GetOwner()->GetComponent<Transform>();
+		std::shared_ptr<Transform> tf = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tf->position;
 
 		if (Input::GetKey(EKeyCode::W))

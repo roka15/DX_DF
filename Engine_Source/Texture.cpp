@@ -59,20 +59,20 @@ namespace roka::graphics
 	{
 		GetDevice()->BindShaderResource(stage, startSlot, mSRV.GetAddressOf());
 	}
-	void Texture::Create(void* data,size_t size)
+	void Texture::Create(void* data, size_t size)
 	{
 		IWICImagingFactory* imagingFactory = nullptr;
 		IWICBitmapDecoder* bitmapDecoder = nullptr;
 		IWICBitmapFrameDecode* frameDecode = nullptr;
 		IWICFormatConverter* formatConverter = nullptr;
-		
+
 		UINT channel_count = 0;
-		
+
 		//read color type
-		char* read_point = (char*)data +25;
+		char* read_point = (char*)data + 25;
 		memcpy(&channel_count, read_point, 1);
 
-		GUID pfguid= GUID_WICPixelFormat32bppRGBA;
+		GUID pfguid = GUID_WICPixelFormat32bppRGBA;
 		EChannelType type = EChannelType::C32;
 		mDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		switch (channel_count)
@@ -86,14 +86,14 @@ namespace roka::graphics
 		}
 
 		int channel = 4;
-		
+
 		// Initialize Windows Imaging Component (WIC)
 		HRESULT hr = CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&imagingFactory));
 		if (FAILED(hr)) {
 			//"Error initializing Windows Imaging Component" 
 			return;
 		}
-		
+
 		unsigned char* buf = static_cast<unsigned char*>(data);
 		// Create the PNG decoder
 		hr = imagingFactory->CreateDecoderFromStream(reinterpret_cast<IStream*>(SHCreateMemStream(buf, size)), nullptr, WICDecodeMetadataCacheOnDemand, &bitmapDecoder);
@@ -120,7 +120,7 @@ namespace roka::graphics
 			imagingFactory->Release();
 			return;
 		}
-		
+
 		hr = formatConverter->Initialize(frameDecode, pfguid, WICBitmapDitherTypeNone, nullptr, 0.0, WICBitmapPaletteTypeCustom);
 		if (FAILED(hr)) {
 			//"Error initializing format converter"
@@ -128,7 +128,7 @@ namespace roka::graphics
 			frameDecode->Release();
 			bitmapDecoder->Release();
 			imagingFactory->Release();
-			return ;
+			return;
 		}
 		// Retrieve image dimensions
 		UINT width, height;
@@ -182,10 +182,17 @@ namespace roka::graphics
 				pixelData[i * 4 + 3] = 255; // Alpha
 			}
 		}
-		
+		for (UINT i = 0; i < width * height; ++i)
+		{
+			if (pixelData[i * 4 + 3] != 255)
+			{
+				int a = 0;
+			}
+		}
+
 		// Update the texture with the pixel data
-		roka::graphics::GetDevice()->UpdateSubResource(mTexture.Get(), 0,nullptr, pixelData.data(), width* channel, 0);
-		
+		roka::graphics::GetDevice()->UpdateSubResource(mTexture.Get(), 0, nullptr, pixelData.data(), width * channel, 0);
+
 		formatConverter->Release();
 		frameDecode->Release();
 		bitmapDecoder->Release();
@@ -200,6 +207,7 @@ namespace roka::graphics
 
 		roka::graphics::GetDevice()->GetID3D11Device()->CreateShaderResourceView(mTexture.Get(), &mSRVDesc, mSRV.GetAddressOf());
 	}
+	
 	void Texture::Clear()
 	{
 		ID3D11ShaderResourceView* rsv = nullptr;

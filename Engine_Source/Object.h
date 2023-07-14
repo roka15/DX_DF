@@ -14,6 +14,16 @@ namespace roka::object
 		return obj;
 	}
 	template<typename T>
+	static __forceinline T* Instantiate(GameObject* src,enums::ELayerType layer)
+	{
+		T* source = dynamic_cast<T*>(src);
+		T* obj = new T(*source);
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, obj);
+		
+		return obj;
+	}
+	template<typename T>
 	static __forceinline T* Instantiate(Vector3 pos,enums::ELayerType layer)
 	{
 		T* obj = new T();
@@ -28,7 +38,7 @@ namespace roka::object
 	static __forceinline T* Instantiate(Vector3 pos,Vector3 rotate, enums::ELayerType layer)
 	{
 		T* obj = new T();
-		Transform* tf = obj->GetComponent<Transform>();
+		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		tf->position = pos;
 		tf->rotation = rotate;
 		
@@ -41,7 +51,7 @@ namespace roka::object
 	static __forceinline T* Instantiate(Vector3 pos, Vector3 rotate,Vector3 scale, enums::ELayerType layer)
 	{
 		T* obj = new T();
-		Transform* tf = obj->GetComponent<Transform>();
+		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		tf->position = pos;
 		tf->rotation = rotate;
 		tf->scale = scale;

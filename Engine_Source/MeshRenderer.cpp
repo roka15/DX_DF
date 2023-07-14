@@ -9,6 +9,20 @@ namespace roka
 		:Component(EComponentType::MeshRenderer)
 	{
 	}
+	MeshRenderer::MeshRenderer(const MeshRenderer& ref):Component(ref)
+	{
+		mMesh = ref.mMesh;
+		mMaterial = ref.mMaterial;
+	}
+	void MeshRenderer::Copy(Component* src)
+	{
+		Component::Copy(src);
+		MeshRenderer* source = dynamic_cast<MeshRenderer*>(src);
+		if (source == nullptr)
+			return;
+		mMesh = source->mMesh;
+		mMaterial = source->mMaterial;
+	}
 	MeshRenderer::~MeshRenderer()
 	{
 	}
@@ -23,7 +37,8 @@ namespace roka
 	}
 	void MeshRenderer::Render()
 	{
-		Transform* tf = GetOwner()->GetComponent<Transform>();
+		GameObject* Owner = GetOwner();
+		std::shared_ptr<Transform> tf = GetOwner()->GetComponent<Transform>();
 		tf->BindConstantBuffer();
 
 		mMesh->BindBuffer();

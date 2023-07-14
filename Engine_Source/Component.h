@@ -9,19 +9,27 @@ namespace roka
 	class Component:public Entity
 	{
 	public:
+		Component() = delete;
 		Component(EComponentType type);
+		Component(const Component& ref);
 		virtual ~Component();
+		virtual void Copy(Component* src);
 
 		virtual void Initialize();
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
 
+		
+
 		GameObject* GetOwner() {return mOwner;}
 		void SetOwner(GameObject* owner) { mOwner = owner; }
 		PROPERTY(GetOwner, SetOwner)GameObject* owner;
-	private:
-		const EComponentType mType;
+
+		EComponentType GetType() { return mType; }
+		GET_PROPERTY(GetType) EComponentType type;
+	protected:
+		EComponentType mType;
 		GameObject* mOwner;
 	};
 }

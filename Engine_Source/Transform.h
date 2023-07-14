@@ -5,8 +5,11 @@ namespace roka
 {
     class Transform : public Component
     {
-    public:
+    private:
         Transform();
+        Transform(const Transform& ref);
+        virtual void Copy(Component* src)override;
+    public:
         ~Transform();
         virtual void Initialize()override;
         virtual void Update()override;
@@ -31,8 +34,9 @@ namespace roka
         Vector3 Right() { return mRight; }
         Vector3 Forward() { return mForward; }
 
-        void SetParent(Transform* transform) { mParent = transform; }
-        Transform* GetParent() { return mParent; }
+        void AddChild(std::shared_ptr<Transform> child);
+        void SetParent(std::weak_ptr<Transform> parent) { mParent = parent; }
+        std::shared_ptr<Transform> GetParent() { return mParent.lock(); }
 
         PROPERTY(GetPosition, SetPosition) Vector3 position;
         PROPERTY(GetRotation, SetRotation)Vector3 rotation;
@@ -42,9 +46,10 @@ namespace roka
         GET_PROPERTY(Right) Vector3 right;
         GET_PROPERTY(Forward) Vector3 forward;
 
-        PROPERTY(GetParent, SetParent) Transform* parent;
+        PROPERTY(GetParent, SetParent)  std::shared_ptr<Transform> parent;
 
     private:
+        friend class ComponentFactory;
         Vector3 mPosition;
         Vector3 mRotation;
         Vector3 mScale;
@@ -55,7 +60,8 @@ namespace roka
 
         Matrix mWorld;
 
-        Transform* mParent;
+        std::vector<std::shared_ptr<Transform>> mChild;
+        std::weak_ptr<Transform> mParent;
     };
 }
 

@@ -77,11 +77,11 @@ namespace roka
 			GameObject* bg = new GameObject();
 			bg->SetName(L"BackGround");
 			AddGameObject(ELayerType::BackObject, bg);
-			MeshRenderer* mr = bg->AddComponent<MeshRenderer>();
+			std::shared_ptr<MeshRenderer> mr = bg->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"BGMaterial");
 
-			Transform* tf = bg->GetComponent<Transform>();
+			std::shared_ptr<Transform> tf = bg->GetComponent<Transform>();
 			tf->position = Vector3(0.0f, 0.0f, 0.0f);
 			tf->scale = Vector3(40.0f, 9.0f, 1.0f);
 
@@ -97,8 +97,8 @@ namespace roka
 		{
 			GameObject* camera = new GameObject();
 			AddGameObject(ELayerType::Player, camera);
-			camera->AddComponent<CameraScript>();
-			Camera* cameraComp = camera->AddComponent<Camera>();
+			camera->AddScript<CameraScript>();
+			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 			camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
 		}
 	}
