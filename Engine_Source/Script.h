@@ -2,6 +2,7 @@
 #include "Component.h"
 namespace roka
 {
+	class Collider2D;
 	class Script:public Component	
 	{
 	public:
@@ -15,6 +16,10 @@ namespace roka
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
+
+		virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other) {}
+		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other){}
+		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other){}
 
 		EScriptType GetScriptType() { return mScriptType; }
 		GET_PROPERTY(GetScriptType) EScriptType script_type;

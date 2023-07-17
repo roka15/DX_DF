@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Camera.h"
 #include "ImageComponent.h"
+#include "Collider2D.h"
 namespace roka
 {
 	void ComponentFactory::Initialize()
@@ -22,6 +23,10 @@ namespace roka
 		mFactories[EComponentType::Image] = [](Component* component) {
 			ImageComponent* tr = dynamic_cast<ImageComponent*>(component);
 			return std::shared_ptr<ImageComponent>(new ImageComponent(*tr));
+		};
+		mFactories[EComponentType::Collider] = [](Component* component) {
+			Collider2D* col = dynamic_cast<Collider2D*>(component);
+			return std::shared_ptr<Collider2D>(new Collider2D(*col));
 		};
 	}
 

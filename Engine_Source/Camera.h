@@ -18,9 +18,10 @@ namespace roka
 		
 		virtual ~Camera();
 
-		static Matrix GetViewMatrix() { return View; }
-		static Matrix GetProjectionMatrix() { return Projection; }
-
+		static Matrix& GetGpuViewMatrix() { return View; }
+		static void SetGpuViewMatrix(Matrix view) { View = view; }
+		static Matrix& GetGpuProjectionMatrix() { return Projection; }
+		static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
 
 		virtual void Initialize() override;
 		virtual void Update() override;
@@ -40,6 +41,8 @@ namespace roka
 		float GetSize() { return mSize; }
 		GET_PROPERTY(GetSize) float size;
 
+		Matrix& GetViewMatrix() { return mView; }
+		Matrix& GetProjectionMatrix() { return mProjection; }
 	private:
 		void AlphaSortGameObjects();
 		void ZSortTransparencyGameObjects();

@@ -88,7 +88,7 @@ namespace roka
         GameObject* aowner = GetOwner();
         renderer::TransformCB trCB = {};
         trCB.mWorld = mWorld;
-        Matrix CameraView = Camera::GetViewMatrix();
+        Matrix CameraView = Camera::GetGpuViewMatrix();
         if (owner->ismove == false)
         {
             float depth = CameraView._43;
@@ -96,7 +96,7 @@ namespace roka
             CameraView._43 = depth;
         }
         trCB.mView = CameraView;
-        trCB.mProjection = Camera::GetProjectionMatrix();
+        trCB.mProjection = Camera::GetGpuProjectionMatrix();
 
         Matrix result = trCB.mWorld * trCB.mView * trCB.mProjection;
         ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Transform];

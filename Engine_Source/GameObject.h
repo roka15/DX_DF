@@ -58,6 +58,21 @@ namespace roka
 			}
 			return nullptr;
 		}
+		template <typename T>
+		const std::vector<std::shared_ptr<T>>& GetComponents()
+		{
+			std::vector<std::shared_ptr<T>> comps;
+
+			std::shared_ptr<T> component;
+			for (auto& comp : mComponents)
+			{
+				component = std::dynamic_pointer_cast<T>(comp);
+				if (component != nullptr)
+					comps.push_back(component);
+			}
+
+			return comps;
+		}
 		std::shared_ptr<Script> GetScript(enums::EScriptType type)
 		{
 			for (std::shared_ptr<Script> script : mScripts)

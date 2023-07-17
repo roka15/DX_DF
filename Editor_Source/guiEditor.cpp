@@ -32,7 +32,7 @@ namespace gui
 		mr->mesh = mesh;
 		mDebugObjects[(UINT)EColliderType::Rect] = debugObj;
 
-		EditorObject* grid = new EditorObject();
+		/*EditorObject* grid = new EditorObject();
 		grid->SetName(L"Grid");
 
 		mr = grid->AddComponent<roka::MeshRenderer>();
@@ -41,7 +41,7 @@ namespace gui
 		std::shared_ptr<roka::GridScript> gridsc = grid->AddComponent<roka::GridScript>();
 		gridsc->camera = roka::renderer::MainCamera;
 
-		mEditorObjects.push_back(grid);
+		mEditorObjects.push_back(grid);*/
 	}
 
 	void Editor::Run()
@@ -79,6 +79,7 @@ namespace gui
 		{
 			DebugRender(mesh);
 		}
+		roka::renderer::debugMeshs.clear();
 	}
 
 	void Editor::Release()
@@ -106,6 +107,18 @@ namespace gui
 	{
 		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
 
+		std::shared_ptr<roka::Transform> tf = debugObj->GetComponent<roka::Transform>();
+		Vector3 pos = mesh.position;
+		pos.z -= 0.01f;
+		tf->SetPosition(pos);
+		tf->SetScale(mesh.scale);
+		tf->SetRotation(mesh.rotation);
+		
+		tf->LateUpdate();
+
+		std::shared_ptr<roka::Camera> mainCamera = roka::renderer::MainCamera;
+		roka::Camera::SetGpuViewMatrix(mainCamera->GetViewMatrix());
+		roka::Camera::SetGpuProjectionMatrix(mainCamera->GetProjectionMatrix());
 
 		debugObj->Render();
 	}

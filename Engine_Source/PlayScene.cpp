@@ -27,19 +27,22 @@ namespace roka
 
 	
 
-		/*std::shared_ptr<GameObject> SeriaNPC =
-			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);*/
+		std::shared_ptr<GameObject> SeriaNPC =
+			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);
 		
 		/*{
 			std::shared_ptr<GameObject> obj = object::pool::ObjectPool<GameObject>::Spawn();
 			obj->GetComponent<Transform>()->position = Vector3(100.0f, 100.0f, 100.0f);
 		}*/
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			std::shared_ptr<GameObject> obj = object::pool::ObjectPool<GameObject>::Spawn();
 			Vector3 pos = obj->GetComponent<Transform>()->position;
-			pos.x += 0.1 * i;
+			pos.x += 1.5 * i;
 			obj->GetComponent<Transform>()->position = pos;
+			const float pi = 3.141592f;
+			float degree = pi / 8.0f;
+			obj->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 			AddGameObject(ELayerType::BackObject,obj);
 		}
 

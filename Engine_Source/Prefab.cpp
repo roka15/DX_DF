@@ -5,6 +5,7 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 #include "MoveScript.h"
+#include "Collider2D.h"
 
 namespace roka::prefab
 {
@@ -32,6 +33,7 @@ namespace roka::prefab
 			TestObject->SetName(L"TestObject");
 			std::shared_ptr<MeshRenderer> mr = TestObject->AddComponent<MeshRenderer>();
 			TestObject->AddScript<MoveScript>();
+			TestObject->AddComponent<Collider2D>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"SeriaTextureMaterial01");
 			{

@@ -392,8 +392,8 @@ namespace roka::renderer
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(EShaderStage::VS, L"DebugVS.hlsl", "main");
 		debugShader->Create(EShaderStage::PS, L"DebugPS.hlsl"/*L"EffectPS.hlsl"*/, "main");
-		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP);
-		debugShader->SetRSState(ERSType::SolidNone);
+		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		debugShader->SetRSState(ERSType::WireFrameNone);
 		roka::Resources::Insert(L"DebugShader", debugShader);
 	}
 	void LoadMaterial()
@@ -753,7 +753,7 @@ namespace roka::renderer
 		cameras.clear();
 		MainCamera.reset();
 	}
-	void PushDebugMeshAttribute(DebugMesh& mesh)
+	void PushDebugMeshAttribute(DebugMesh mesh)
 	{
 		debugMeshs.push_back(mesh);
 	}

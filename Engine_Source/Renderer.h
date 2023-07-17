@@ -42,5 +42,5 @@ namespace roka::renderer
 	void Initialize();
 	void Render();
 	void Release();
-	void PushDebugMeshAttribute(DebugMesh& mesh);
+	void PushDebugMeshAttribute(DebugMesh mesh);
 }
