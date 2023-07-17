@@ -8,6 +8,7 @@ namespace roka::graphics
 	{
 	public:
 		Material();
+		Material(const Material& ref);
 		~Material();
 
 		virtual HRESULT Load(const std::wstring& path)override;

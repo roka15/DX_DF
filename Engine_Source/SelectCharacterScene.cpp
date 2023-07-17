@@ -51,7 +51,7 @@ namespace roka
 			npk = Resources::Load<NPK>(L"selectch", L"..\\Resources\\npk\\selectch.npk");
 		}
 
-		GameObject* bg = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> bg = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(8.5f, 4.4f, 1.0f),
@@ -67,7 +67,7 @@ namespace roka
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* bg2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> bg2 = object::Instantiate<GameObject>(
 			Vector3(0.0f, -1.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(8.5f, 2.2f, 1.0f),
@@ -85,7 +85,7 @@ namespace roka
 		}
 #pragma region select ground
 		
-		GameObject* Selectch_ground = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground = object::Instantiate<GameObject>(
 			Vector3(-2.4f, 0.5f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.8f, 0.3f, 1.0f),
@@ -104,7 +104,7 @@ namespace roka
 
 		std::shared_ptr<Transform> groundup_parent = Selectch_ground->GetComponent<Transform>();
 
-		GameObject* Selectch_ground2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground2 = object::Instantiate<GameObject>(
 			Vector3(1.5f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -119,7 +119,7 @@ namespace roka
 			groundup_parent->AddChild(tf);
 		}
 
-		GameObject* Selectch_ground3 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground3 = object::Instantiate<GameObject>(
 			Vector3(3.0f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -133,7 +133,7 @@ namespace roka
 			std::shared_ptr<Transform> tf = Selectch_ground3->GetComponent<Transform>();
 			groundup_parent->AddChild(tf);
 		}
-		GameObject* Icon3 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon3 = object::Instantiate<GameObject>(
 			Vector3(-0.3f, -0.75f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.1f, 0.3f, 1.0f),
@@ -151,7 +151,7 @@ namespace roka
 			std::shared_ptr<Transform> tf = Icon3->GetComponent<Transform>();
 		    Selectch_ground3->GetComponent<Transform>()->AddChild(tf);
 		}
-		GameObject* Selectch_ground4 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground4 = object::Instantiate<GameObject>(
 			Vector3(4.5f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -167,7 +167,7 @@ namespace roka
 		}
 
 
-		GameObject* Selectch_ground5 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground5 = object::Instantiate<GameObject>(
 			Vector3(6.0f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -184,7 +184,7 @@ namespace roka
 
 		//down
 		
-		GameObject* Selectch_ground6 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground6 = object::Instantiate<GameObject>(
 			Vector3(-3.35f, -1.4f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.8f, 0.3f, 1.0f),
@@ -199,7 +199,7 @@ namespace roka
 
 		std::shared_ptr<Transform> grounddown_parent = Selectch_ground6->GetComponent<Transform>();
 
-		GameObject* Selectch_ground7 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground7 = object::Instantiate<GameObject>(
 			Vector3(1.4f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -213,7 +213,7 @@ namespace roka
 			std::shared_ptr<Transform> tf = Selectch_ground7->GetComponent<Transform>();
 			grounddown_parent->AddChild(tf);
 		}
-		GameObject* Selectch_ground8 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground8 = object::Instantiate<GameObject>(
 			Vector3(2.8f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -228,7 +228,7 @@ namespace roka
 			grounddown_parent->AddChild(tf);
 		}
 		
-		GameObject* Selectch_ground9 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground9 = object::Instantiate<GameObject>(
 			Vector3(4.2f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -243,7 +243,7 @@ namespace roka
 			grounddown_parent->AddChild(tf);
 		}
 
-		GameObject* Selectch_ground10 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground10 = object::Instantiate<GameObject>(
 			Vector3(5.6f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -258,7 +258,7 @@ namespace roka
 			grounddown_parent->AddChild(tf);
 		}
 
-		GameObject* Selectch_ground11 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground11 = object::Instantiate<GameObject>(
 			Vector3(7.0f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -273,7 +273,7 @@ namespace roka
 			grounddown_parent->AddChild(tf);
 		}
 
-		GameObject* Selectch_ground12 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Selectch_ground12 = object::Instantiate<GameObject>(
 			Vector3(8.4f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f),
@@ -290,7 +290,7 @@ namespace roka
 #pragma endregion
 
 #pragma region ui 
-		GameObject* Icon1 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon1 = object::Instantiate<GameObject>(
 			Vector3(-3.7f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.16f, 1.0f),
@@ -306,7 +306,7 @@ namespace roka
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon2 = object::Instantiate<GameObject>(
 			Vector3(-3.7f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.15f, 1.0f),
@@ -322,7 +322,7 @@ namespace roka
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* StartBtn = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> StartBtn = object::Instantiate<GameObject>(
 			Vector3(0.0f, -2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(1.3f, 0.35f, 1.0f),
@@ -338,7 +338,7 @@ namespace roka
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* FocusEft = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> FocusEft = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.9f, 0.98f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.5f, 1.0f),
@@ -355,7 +355,7 @@ namespace roka
 			}
 		}
 
-		GameObject* FocusEft2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> FocusEft2 = object::Instantiate<GameObject>(
 			Vector3(0.0f, -1.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.5f, 1.0f),
@@ -372,7 +372,7 @@ namespace roka
 			}
 		}
 
-		GameObject* ChangeSlotTxt = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ChangeSlotTxt = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.9f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.4f, 0.4f, 1.0f),
@@ -390,7 +390,7 @@ namespace roka
 		}
 
 		std::shared_ptr<Transform> subFocusParrent = FocusEft2->GetComponent<Transform>();
-		GameObject* MoveSlot = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MoveSlot = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.9f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.4f, 0.4f, 1.0f),
@@ -407,7 +407,7 @@ namespace roka
 			}
 		}
 
-		GameObject* MoveSlotLeft = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MoveSlotLeft = object::Instantiate<GameObject>(
 			Vector3(-0.25f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.5f, 1.0f, 1.0f),
@@ -425,7 +425,7 @@ namespace roka
 			std::shared_ptr<Transform> tf = MoveSlotLeft->GetComponent<Transform>();
 			subFocusParrent->AddChild(tf);
 		}
-		GameObject* MoveSlotRight = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MoveSlotRight = object::Instantiate<GameObject>(
 			Vector3(0.25f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.5f, 1.0f, 1.0f),
@@ -446,7 +446,7 @@ namespace roka
 	
 #pragma endregion
 
-		GameObject* camera = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),
 			ELayerType::Player);
 		{
@@ -456,7 +456,7 @@ namespace roka
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
 		}
 
-		GameObject* UIcamera = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> UIcamera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),
 			ELayerType::UI);
 		{

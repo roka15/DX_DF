@@ -9,6 +9,14 @@ namespace roka
 
 	}
 
+	Resource::Resource(const Resource& ref)
+		:mType(ref.mType),
+		mKey(ref.mKey),
+		mPath(ref.mPath)
+	{
+
+	}
+
 	Resource::~Resource()
 	{
 

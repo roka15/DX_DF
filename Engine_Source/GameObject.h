@@ -1,7 +1,8 @@
 #pragma once
 #include "Entity.h"
-#include "ComponentFactory.h"
-#include "ScriptFactory.h"
+#include "FactoryManager.h"
+#include "Script.h"
+#include "Component.h"
 namespace roka
 {
 	class GameObject : public Entity
@@ -22,6 +23,8 @@ namespace roka
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+
+		virtual void Copy(GameObject* src);
 
 		template <typename T>
 		std::shared_ptr<T> GetComponent()
@@ -44,7 +47,7 @@ namespace roka
 			return nullptr;
 		}
 
-		std::shared_ptr<Component> GetComponent(EComponentType type)
+		std::shared_ptr<Component> GetComponent(enums::EComponentType type)
 		{
 			for (std::shared_ptr<Component> comp : mComponents)
 			{
@@ -55,7 +58,7 @@ namespace roka
 			}
 			return nullptr;
 		}
-		std::shared_ptr<Script> GetScript(EScriptType type)
+		std::shared_ptr<Script> GetScript(enums::EScriptType type)
 		{
 			for (std::shared_ptr<Script> script : mScripts)
 			{
@@ -73,8 +76,9 @@ namespace roka
 			std::shared_ptr<T> component = GetComponent<T>();
 			if (static_cast<bool>(component) == true)
 				return component;
-
-			component = ComponentFactory::GetComponent<T>();
+			ComponentFactoryBase* cfb = reinterpret_cast<ComponentFactoryBase*>(FactoryManager::GetFactory(EFactoryType::Component));
+			component
+				= cfb->Create<T>();
 			mComponents.push_back(component);
 			component->owner = this;
 			return component;
@@ -86,8 +90,9 @@ namespace roka
 			std::shared_ptr<T> component = GetComponent<T>();
 			if (static_cast<bool>(component) == true)
 				return component;
-
-			component = ScriptFactory::GetComponent<T>();
+			ComponentFactoryBase* cfb = reinterpret_cast<ComponentFactoryBase*>(FactoryManager::GetFactory(EFactoryType::Script));
+			component
+				= cfb->Create<T>();
 			mScripts.push_back(component);
 			component->owner = this;
 			return component;
@@ -99,8 +104,7 @@ namespace roka
 		void SetState(EState state) { mState = state; }
 		EState GetState() { return mState; }
 		PROPERTY(GetState, SetState) EState active;
-	protected:
-		virtual void Copy(GameObject* src);
+	
 	private:
 		bool mbMove;
 		EState mState;

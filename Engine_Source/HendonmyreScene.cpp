@@ -5,6 +5,8 @@
 #include "Camera.h"
 #include "CameraScript.h"
 
+#include "Object.h"
+
 #include "Mesh.h"
 #include "Material.h"
 #include "NPK.h"
@@ -46,7 +48,7 @@ namespace roka
 	void HendonmyreScene::OnEnter()
 	{
 		Scene::OnEnter();
-		GameObject* bg = new GameObject();
+		std::shared_ptr<GameObject> bg = object::Instantiate<GameObject>();
 		AddGameObject(ELayerType::BackObject, bg);
 		std::shared_ptr<MeshRenderer> mr = bg->AddComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -66,7 +68,7 @@ namespace roka
 		}
 
 		{
-			GameObject* camera = new GameObject();
+			std::shared_ptr<GameObject>  camera = object::Instantiate<GameObject>();
 			AddGameObject(ELayerType::Player, camera);
 			camera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();

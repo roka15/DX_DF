@@ -1,32 +1,15 @@
 #pragma once
-#include "Script.h"
-
+#include "FactoryBase.h"
 namespace roka
 {
-	class ScriptFactory
+	class Script;
+	class ScriptFactory :public ComponentFactoryBase
 	{
 	public:
-		static void Initialize();
-		static std::shared_ptr<Script> CreateNCopyComponent(Script* script);
-		/*template <typename T>
-		static EScriptType GetType()
-		{
-			for (auto& ptr : mOrigins)
-			{
-				T* script = dynamic_cast<T*>(ptr.get());
-				if (script == nullptr)
-					return EScriptType::None;
-				return ptr->script_type;
-			}
-		}*/
-		template<typename T>
-		static std::shared_ptr<T> GetComponent()
-		{
-			return std::shared_ptr<T>(new T());
-		}
+		virtual void Initialize()override;
+		virtual std::shared_ptr<Component> CreateNCopy(Component* comp)override;
 	private:
-		static std::map<EScriptType, std::function<std::shared_ptr<Script>(Script*)>> mFactories;
-		//static std::vector<std::unique_ptr<Script>> mOrigins;
+		std::map<enums::EScriptType, std::function<std::shared_ptr<Script>(Script*)>> mFactories;
 	};
 }
 

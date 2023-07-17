@@ -43,7 +43,7 @@ namespace roka
 	private:
 		void AlphaSortGameObjects();
 		void ZSortTransparencyGameObjects();
-		void DivideAlphaBlendGameObjects(const std::vector<GameObject*> objs);
+		void DivideAlphaBlendGameObjects(const std::vector<std::shared_ptr<GameObject>> objs);
 
 		void RenderOpaque();
 		void RenderCutOut();
@@ -52,6 +52,7 @@ namespace roka
 		void EnableDepthStencilState();
 		void DisableDepthStencilState();
 	private:
+		friend class FactoryBase;
 		friend class ComponentFactory;
 		static Matrix View;
 		static Matrix Projection;
@@ -67,9 +68,9 @@ namespace roka
 		EProjectionType mType;
 
 		std::bitset<(UINT)ELayerType::End> mLayerMask;
-		std::vector<GameObject*> mOpaqueGameObjects;
-		std::vector<GameObject*> mCutOutGameObjects;
-		std::vector<GameObject*> mTransparentObjects;
+		std::vector<std::shared_ptr<GameObject>> mOpaqueGameObjects;
+		std::vector<std::shared_ptr<GameObject>> mCutOutGameObjects;
+		std::vector<std::shared_ptr<GameObject>> mTransparentObjects;
 	};
 }
 

@@ -6,12 +6,15 @@ namespace roka
 	}
 	Layer::~Layer()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (std::vector<std::shared_ptr<GameObject>>::iterator itr = mGameObjects.begin();
+			itr != mGameObjects.end();)
 		{
-			if (gameObj == nullptr)
+			if (*itr != nullptr)
+			{
+				itr = mGameObjects.erase(itr);
 				continue;
-			delete gameObj;
-			gameObj = nullptr;
+			}
+			itr++;
 		}
 	}
 	void Layer::Initialize()
@@ -19,7 +22,7 @@ namespace roka
 	}
 	void Layer::Update()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (std::shared_ptr<GameObject> gameObj : mGameObjects)
 		{
 			if (gameObj->active != GameObject::EState::Active)
 				continue;
@@ -29,7 +32,7 @@ namespace roka
 	}
 	void Layer::LateUpdate()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (std::shared_ptr<GameObject> gameObj : mGameObjects)
 		{
 			if (gameObj->active != GameObject::EState::Active)
 				continue;
@@ -38,7 +41,7 @@ namespace roka
 	}
 	void Layer::Render()
 	{
-		for (GameObject* gameObj : mGameObjects)
+		for (std::shared_ptr<GameObject> gameObj : mGameObjects)
 		{
 			if (gameObj->active != GameObject::EState::Active)
 				continue;
@@ -47,28 +50,24 @@ namespace roka
 	}
 	void Layer::Destroy()
 	{
-		for (std::vector<GameObject*>::iterator itr = mGameObjects.begin();
+		for (std::vector<std::shared_ptr<GameObject>>::iterator itr = mGameObjects.begin();
 			itr != mGameObjects.end();)
 		{
 			if ((*itr)->active == GameObject::EState::Dead)
 			{
-				GameObject* deleteObj = (*itr);
 				itr = mGameObjects.erase(itr);
-				delete deleteObj;
-				deleteObj = nullptr;
 				continue;
 			}
-
 			itr++;
 		}
 	}
-	void Layer::AddGameObject(GameObject* gameObj)
+	void Layer::AddGameObject(std::shared_ptr<GameObject> gameObj)
 	{
 		mGameObjects.push_back(gameObj);
 	}
-	GameObject* Layer::FindGameObject(std::wstring name)
+	std::shared_ptr<GameObject> Layer::FindGameObject(std::wstring name)
 	{
-		for (auto& obj : mGameObjects)
+		for (auto obj : mGameObjects)
 		{
 			if (obj->GetName().compare(name) == 0)
 				return obj;

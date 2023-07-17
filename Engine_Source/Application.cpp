@@ -4,8 +4,9 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Resources.h"
-#include "ComponentFactory.h"
-#include "ScriptFactory.h"
+#include "FactoryManager.h"
+#include "Prefab.h"
+#include "ObjectPool.h"
 namespace roka
 {
 
@@ -33,12 +34,17 @@ namespace roka
 	{
 		Time::Initiailize();
 		Input::Initialize();
+		
+		FactoryManager::Initialize();
 
 		roka::renderer::Initialize();
+		roka::prefab::Initialize();
+		//test 나중에 object pool manager 만들면 변경
+		object::pool::ObjectPool<GameObject>::Initialize(prefab::Prefabs[L"TestObject"], 10);
+	
 		SceneManager::Initialize();
 
-		ComponentFactory::Initialize();
-		ScriptFactory::Initialize();
+		
 	}
 
 	void Application::Update()
@@ -66,8 +72,10 @@ namespace roka
 
 	void Application::Release()
 	{
-		renderer::Release();
 		SceneManager::Release();
+		renderer::Release();
+		object::pool::ObjectPool<GameObject>::Release();
+		prefab::Release();
 	}
 
 	void Application::Destroy()

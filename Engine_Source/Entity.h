@@ -6,6 +6,7 @@ namespace roka
 	{
 	public:
 		Entity();
+		Entity(const Entity& ref);
 		virtual ~Entity();
 
 		void SetName(const std::wstring& name) { mName = name; }

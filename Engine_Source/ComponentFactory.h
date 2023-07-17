@@ -1,20 +1,16 @@
 #pragma once
-#include "Component.h"
+#include "FactoryBase.h"
 namespace roka
 {
-	class ComponentFactory
+	class Component;
+	class Entity;
+	class ComponentFactory : public ComponentFactoryBase
 	{
 	public:
-		static void Initialize();
-		static std::shared_ptr<Component> CreateNCopyComponent(Component* comp);
-		template <typename T>
-		static std::shared_ptr<T> GetComponent()
-		{
-			return std::shared_ptr<T>(new T());
-		}
-	
+		virtual void Initialize()override;
+		virtual std::shared_ptr<Component> CreateNCopy(Component* comp)override;
 	private:
-		static std::map<EComponentType, std::function<std::shared_ptr<Component>(Component*)>> mFactories;
+		std::map<enums::EComponentType, std::function<std::shared_ptr<Component>(Component*)>> mFactories;
 	};
 }
 

@@ -15,6 +15,7 @@ namespace roka
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 	private:
+		friend class FactoryBase;
 		friend class ScriptFactory;
 	};
 }

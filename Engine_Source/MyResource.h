@@ -7,6 +7,7 @@ namespace roka
 	{
 	public:
 		Resource(roka::enums::EResourceType type);
+		Resource(const Resource& ref);
 		virtual ~Resource();
 
 		virtual HRESULT Load(const std::wstring& path) = 0;

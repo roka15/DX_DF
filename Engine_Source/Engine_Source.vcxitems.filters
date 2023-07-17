@@ -87,6 +87,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ScriptFactory.cpp">
       <Filter>Common\Factory\ScriptFactory</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp">
+      <Filter>GameObject\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Prefab.cpp">
+      <Filter>GameObject\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FactoryManager.cpp">
+      <Filter>Common\Factory\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp">
+      <Filter>Common\Factory\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -190,8 +202,20 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ScriptFactory.h">
       <Filter>Common\Factory\ScriptFactory</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ComponentFactoryBase.h">
-      <Filter>Common\Factory</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h">
+      <Filter>GameObject\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Pools.h">
+      <Filter>Common\Pools</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Prefab.h">
+      <Filter>GameObject\Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FactoryManager.h">
+      <Filter>Common\Factory\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h">
+      <Filter>Common\Factory\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +296,18 @@
     </Filter>
     <Filter Include="Common\Factory\ScriptFactory">
       <UniqueIdentifier>{26b9a799-1d55-4ca5-b5d7-635fd880a6d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Pools">
+      <UniqueIdentifier>{ffcd0bdd-4e25-4bba-8db0-0cd803e12752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Prefab">
+      <UniqueIdentifier>{e651b288-f0a0-4cd2-9f0d-dd437bcbbdf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Factory\Manager">
+      <UniqueIdentifier>{f945d987-da8c-48ec-a484-434ed29ddbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Factory\Base">
+      <UniqueIdentifier>{929bd9b7-0b62-40db-9a0d-251c60e8e630}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

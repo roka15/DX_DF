@@ -12,6 +12,7 @@ namespace roka
 		~CameraScript();
 		virtual void Update()override;
 	private:
+		friend class FactoryBase;
 		friend class ScriptFactory;
 
 	};

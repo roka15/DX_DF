@@ -59,12 +59,12 @@ namespace roka
 	{
 	}
 
-	void Scene::AddGameObject(ELayerType type, GameObject* gameObj)
+	void Scene::AddGameObject(ELayerType type, std::shared_ptr<GameObject> gameObj)
 	{
 		mLayers[(int)type].AddGameObject(gameObj);
 	}
 
-	GameObject* Scene::FindGameObject(ELayerType type, std::wstring name)
+	std::shared_ptr<GameObject> Scene::FindGameObject(ELayerType type, std::wstring name)
 	{
 		return mLayers[(int)type].FindGameObject(name);
 	}

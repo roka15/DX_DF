@@ -8,7 +8,7 @@
 extern roka::Application application;
 namespace roka
 {
-	bool CompareZSort(GameObject* obj1, GameObject* obj2)
+	bool CompareZSort(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2)
 	{
 		if (obj1->GetComponent<Transform>()->position.z
 			<= obj2->GetComponent<Transform>()->position.z)
@@ -169,7 +169,7 @@ namespace roka
 
 			Layer& layer = scene->GetLayer((ELayerType)i);
 
-			const std::vector<GameObject*> objs = layer.GetGameObjects();
+			const std::vector<std::shared_ptr<GameObject>> objs = layer.GetGameObjects();
 
 			DivideAlphaBlendGameObjects(objs);
 		}
@@ -179,9 +179,9 @@ namespace roka
 		std::sort(mCutOutGameObjects.begin(), mCutOutGameObjects.end(), CompareZSort);
 		std::sort(mTransparentObjects.begin(), mTransparentObjects.end(), CompareZSort);
 	}
-	void Camera::DivideAlphaBlendGameObjects(const std::vector<GameObject*> objs)
+	void Camera::DivideAlphaBlendGameObjects(const std::vector<std::shared_ptr<GameObject>> objs)
 	{
-		for (GameObject* obj : objs)
+		for (std::shared_ptr<GameObject> obj : objs)
 		{
 			std::shared_ptr<MeshRenderer> mr = obj->GetComponent<MeshRenderer>();
 			if (mr == nullptr)
@@ -204,7 +204,7 @@ namespace roka
 	}
 	void Camera::RenderOpaque()
 	{
-		for (GameObject* obj : mOpaqueGameObjects)
+		for (std::shared_ptr<GameObject> obj : mOpaqueGameObjects)
 		{
 			if (obj == nullptr)
 				continue;
@@ -213,7 +213,7 @@ namespace roka
 	}
 	void Camera::RenderCutOut()
 	{
-		for (GameObject* obj : mCutOutGameObjects)
+		for (std::shared_ptr<GameObject> obj : mCutOutGameObjects)
 		{
 			if (obj == nullptr)
 				continue;
@@ -222,7 +222,7 @@ namespace roka
 	}
 	void Camera::RenderTransparent()
 	{
-		for (GameObject* obj : mTransparentObjects)
+		for (std::shared_ptr<GameObject> obj : mTransparentObjects)
 		{
 			if (obj == nullptr)
 				continue;

@@ -21,6 +21,7 @@ namespace roka
 		void SetCamera(std::weak_ptr<Camera> camera) { mCamera = camera; }
 		SET_PROPERTY(SetCamera) std::weak_ptr<Camera> camera;
 	private:
+		friend class FactoryBase;
 		friend class ScriptFactory;
 		std::weak_ptr<Camera> mCamera;
 	};

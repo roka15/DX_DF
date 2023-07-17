@@ -10,6 +10,7 @@ namespace roka::enums
 		MeshRenderer,
 		Script,
 		Camera,
+		Image,
 		End,
 	};
 	enum class EScriptType
@@ -48,7 +49,12 @@ namespace roka::enums
 		NPK,
 		End,
 	};
-
+	enum class EFactoryType
+	{
+		Component,
+		Script,
+		End,
+	};
 	enum class EDir4Type
 	{
 		LEFT,

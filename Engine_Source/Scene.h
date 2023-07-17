@@ -7,7 +7,7 @@ namespace roka
 	class Scene : public Entity
 	{
 	public:
-		Scene(ESceneType type);
+		Scene(enums::ESceneType type);
 		virtual ~Scene();
 
 		virtual void Initialize();
@@ -20,8 +20,8 @@ namespace roka
 		virtual void OnEnter();
 
 		virtual void Loading();
-		void AddGameObject(ELayerType type, GameObject* gameObj);
-		GameObject* FindGameObject(ELayerType type,std::wstring name);
+		void AddGameObject(enums::ELayerType type, std::shared_ptr<GameObject> gameObj);
+		std::shared_ptr<GameObject> FindGameObject(enums::ELayerType type,std::wstring name);
 
 		template <typename T>
 		std::vector<T*> FindObjectsOfType()
@@ -31,7 +31,7 @@ namespace roka
 			{
 				auto objs = layer->GetGameObjects();
 
-				for (GameObject* obj : objs)
+				for (std::shared_ptr<GameObject> obj : objs)
 				{
 					T* find = dynamic_cast<T*>(obj);
 					if (find == nullptr)
@@ -43,7 +43,7 @@ namespace roka
 			return FindObjs;
 		}
 
-		Layer& GetLayer(ELayerType type) { return mLayers[(UINT)type]; }
+		Layer& GetLayer(enums::ELayerType type) { return mLayers[(UINT)type]; }
 
 	protected:
 		SceneSector* GetSector() { return mActiveSector; }
@@ -53,7 +53,7 @@ namespace roka
 		PROPERTY(GetSector, SetSector) SceneSector* sector;
 	private:
 		std::vector<Layer> mLayers;
-		ESceneType mType;
+		enums::ESceneType mType;
 		SceneSector* mActiveSector;
 	};
 

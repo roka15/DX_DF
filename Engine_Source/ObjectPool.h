@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Transform.h"
+#include "Object.h"
 namespace roka::object::pool
 {
 	template <typename T>
@@ -9,7 +10,7 @@ namespace roka::object::pool
 	public:
 		static bool ActiveObjectPool();
 		static void Initialize(size_t _capacity = 100, size_t _max_capacity = 500);
-		static void Initialize(T* _origin, size_t _capacity = 100, size_t _max_capacity = 500);
+		static void Initialize(std::shared_ptr<GameObject> _origin, size_t _capacity = 100, size_t _max_capacity = 500);
 		static void Release();
 		static std::shared_ptr<T> Spawn();
 		static void DeSpawn(T* _obj);
@@ -22,7 +23,7 @@ namespace roka::object::pool
 		static size_t mcapacity;
 		static size_t mlimit_capacity;
 		static std::queue<T*> mpools;
-		static T* mOrigin;
+		static std::weak_ptr<T> mOrigin;
 	};
 	template<typename T>
 	bool ObjectPool<T>::mbInit = false;
@@ -33,8 +34,8 @@ namespace roka::object::pool
 	template <typename T>
 	size_t ObjectPool<T>::mlimit_capacity = 0;
 	template <typename T>
-	T* ObjectPool<T>::mOrigin = nullptr;
-	
+	std::weak_ptr<T> ObjectPool<T>::mOrigin;
+
 
 	template<typename T>
 	inline bool ObjectPool<T>::ActiveObjectPool()
@@ -48,34 +49,30 @@ namespace roka::object::pool
 		mbInit = true;
 		mcapacity = _capacity;
 		mlimit_capacity = _max_capacity;
+
 		int temp_min = mcapacity < mlimit_capacity ? mcapacity : mlimit_capacity;
+
 		for (int i = 0; i < temp_min; i++)
 		{
-			GameObject* obj = GameObject::Instantiate<T>();
+			T* obj = new T();
 			obj->Initialize();
 			mpools.push(obj);
 		}
+
+		mOrigin = mpools.front();
 	}
 	template<typename T>
-	inline void ObjectPool<T>::Initialize(T* _origin, size_t _capacity, size_t _max_capacity)
+	inline void ObjectPool<T>::Initialize(std::shared_ptr<GameObject> _origin, size_t _capacity, size_t _max_capacity)
 	{
 		mbInit = true;
 		mcapacity = _capacity;
 		mlimit_capacity = _max_capacity;
+		mOrigin = _origin;
 		int temp_min = mcapacity < mlimit_capacity ? mcapacity : mlimit_capacity;
+
 		for (int i = 0; i < temp_min; i++)
 		{
-			GameObject* obj = nullptr;
-			if (dynamic_cast<Rectangle*>(_origin) != nullptr)
-			{
-				obj = GameObject::Instantiate<Rectangle>();
-			}
-			else
-			{
-				obj = GameObject::Instantiate<GameObject>();
-			}
-			mOrigin = _origin;
-			obj->AddComponent<T>();
+			T* obj = new T(*(_origin.get()));
 			obj->Initialize();
 			mpools.push(obj);
 		}
@@ -85,38 +82,38 @@ namespace roka::object::pool
 	{
 		while (mpools.empty() == false)
 		{
-			GameObject* obj = mpools.front();
+			T* obj = mpools.front();
 			mpools.pop();
-			obj->Release();
 			delete obj;
 		}
 		mpools.~queue();
-		if (mOrigin != nullptr)
+		if (mOrigin.lock() != nullptr)
 		{
-			mOrigin->Release();
-			delete mOrigin;
-			mOrigin = nullptr;
+			//해제는 origin 생성한 곳에서 하도록 하는게 좋을 듯.
+			//prefab 인 경우 prefab 관리하는 곳에서 release 하도록 할려고 하는데
+			//여기서 delete 해버리면 가독성이 떨어지는 것 같음.
+			mOrigin.reset();
 		}
 		mbInit = false;
 	}
 	template<typename T>
-	inline std::shared_ptr<GameObject> ObjectPool<T>::Spawn()
+	inline std::shared_ptr<T> ObjectPool<T>::Spawn()
 	{
 		if (mpools.size() <= 0)
 		{
 			if (UpgradePoolSize() == false)
 				return nullptr;
 		}
-		
 
-		std::shared_ptr<GameObject> obj(mpools.front(), DeSpawn);
+		T* data = mpools.front();
+		std::shared_ptr<T> obj(data, [](T* obj)->void { DeSpawn(obj); });
 		mpools.pop();
-		obj->SetActive(true);
+		obj->SetState(GameObject::EState::Active);
 		return obj;
 	}
 
 	template<typename T>
-	inline void ObjectPool<T>::DeSpawn(GameObject* _obj)
+	inline void ObjectPool<T>::DeSpawn(T* _obj)
 	{
 		if (_obj == nullptr)
 			return;
@@ -124,10 +121,9 @@ namespace roka::object::pool
 		/*T* obj = dynamic_cast<T*>(_obj);
 		if (obj == nullptr)
 			return;*/
-		_obj->Release();
-		_obj->Initialize();
-		_obj->SetActive(false);
-		_obj->RemoveChilds();
+		std::shared_ptr<T> ptr = mOrigin.lock();
+		_obj->Copy(ptr.get());
+		_obj->SetState(GameObject::EState::Paused);
 		mpools.push(_obj);
 	}
 	template<typename T>
@@ -139,21 +135,13 @@ namespace roka::object::pool
 
 			if (add_cnt > mlimit_capacity)
 				return false;
-			GameObject* obj = nullptr;
+			T* obj = nullptr;
 			for (int i = mcapacity; i < add_cnt; i++)
 			{
-				if (dynamic_cast<Rectangle*>(mOrigin) != nullptr)
-				{
-					obj = GameObject::Instantiate<Rectangle>();
-				}
-				else
-				{
-					obj = GameObject::Instantiate<GameObject>();
-				}
-				obj->AddComponent<T>();
+				std::shared_ptr<T> ptr = mOrigin.lock();
+				obj = new T(*(ptr.get()));
 				mpools.push(obj);
 			}
-
 
 			mcapacity = add_cnt;
 			return true;

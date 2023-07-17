@@ -2,8 +2,11 @@
 #include "Renderer.h"
 #include "RokaGraphicDevice_Dx11.h"
 #include "Transform.h"
-
 #include "MeshRenderer.h"
+#include "Script.h"
+#include "FactoryManager.h"
+#include "ComponentFactory.h"
+#include "ScriptFactory.h"
 roka::GameObject::GameObject()
 	:mState(EState::Active)
 	, mbMove(true)
@@ -12,6 +15,7 @@ roka::GameObject::GameObject()
 }
 
 roka::GameObject::GameObject(const GameObject& ref) :
+	Entity(ref),
 	mbMove(ref.mbMove),
 	mState(ref.mState)
 {
@@ -23,7 +27,9 @@ roka::GameObject::GameObject(const GameObject& ref) :
 			newComp->Copy(comp.get());
 			continue;
 		}
-		newComp = ComponentFactory::CreateNCopyComponent(comp.get());
+		
+		newComp
+			= reinterpret_cast<ComponentFactoryBase*>(FactoryManager::GetFactory(EFactoryType::Component))->CreateNCopy(comp.get());
 		newComp->owner = this;
 		mComponents.push_back(std::move(newComp));
 	}
@@ -37,7 +43,10 @@ roka::GameObject::GameObject(const GameObject& ref) :
 			newScript->Copy(script.get());
 			continue;
 		}
-		newScript = ScriptFactory::CreateNCopyComponent(script.get());
+		std::shared_ptr<Component> comp
+			= reinterpret_cast<ComponentFactoryBase*>(FactoryManager::GetFactory(EFactoryType::Script))->CreateNCopy(script.get());
+		newScript = std::reinterpret_pointer_cast<Script>(comp);
+		
 		newScript->owner = this;
 		mScripts.push_back(std::move(newScript));
 	}
@@ -58,7 +67,8 @@ void roka::GameObject::Copy(GameObject* src)
 			newComp->Copy(comp.get());
 			continue;
 		}
-		newComp = ComponentFactory::CreateNCopyComponent(comp.get());
+		newComp 
+			= reinterpret_cast<ComponentFactoryBase*>(FactoryManager::GetFactory(EFactoryType::Component))->CreateNCopy(comp.get());
 		newComp->owner = this;
 		mComponents.push_back(std::move(newComp));
 	}
@@ -72,7 +82,9 @@ void roka::GameObject::Copy(GameObject* src)
 			newScript->Copy(script.get());
 			continue;
 		}
-		newScript = ScriptFactory::CreateNCopyComponent(script.get());
+		std::shared_ptr<Component> comp 
+			= reinterpret_cast<ComponentFactoryBase*>(FactoryManager::GetFactory(EFactoryType::Script))->CreateNCopy(script.get());
+		newScript = std::reinterpret_pointer_cast<Script>(comp);
 		newScript->owner = this;
 		mScripts.push_back(std::move(newScript));
 	}

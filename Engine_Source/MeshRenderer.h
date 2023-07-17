@@ -26,6 +26,7 @@ namespace roka
 		PROPERTY(GetMesh,SetMesh) std::shared_ptr<Mesh> mesh;
 		PROPERTY(GetMaterial,SetMaterial) std::shared_ptr<Material> material;
 	private:
+		friend class FactoryBase;
 		friend class ComponentFactory;
 		std::shared_ptr<Mesh> mMesh;
 		std::shared_ptr<Material> mMaterial;

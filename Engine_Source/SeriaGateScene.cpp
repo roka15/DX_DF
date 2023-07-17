@@ -72,7 +72,7 @@ void roka::SeriaGateScene::OnEnter()
 			gate_npk = Resources::Load<NPK>(L"gate", L"..\\Resources\\npk\\gate.npk");
 
 #pragma region base bg
-		GameObject* bg = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> bg = object::Instantiate<GameObject>(
 			Vector3(0.15f, 0.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(8.5f, 4.4f, 1.0f),
@@ -92,7 +92,7 @@ void roka::SeriaGateScene::OnEnter()
 #pragma endregion
 
 #pragma region front tree
-		GameObject* frontTree = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> frontTree = object::Instantiate<GameObject>(
 			Vector3(-2.6f, 0.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(3.0f, 4.4f, 1.0f),
@@ -108,7 +108,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* frontTree2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> frontTree2 = object::Instantiate<GameObject>(
 			Vector3(3.4f, 0.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(2.0f, 4.4f, 1.0f),
@@ -129,7 +129,7 @@ void roka::SeriaGateScene::OnEnter()
 
 #pragma region flower bg
 
-		GameObject* Flower01 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Flower01 = object::Instantiate<GameObject>(
 			Vector3(-2.0f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.15f, 1.0f),
@@ -147,7 +147,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* Flower02 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Flower02 = object::Instantiate<GameObject>(
 			Vector3(-3.6f, 0.7f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.15f, 1.0f),
@@ -160,7 +160,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"FlowerMaterial01");
 		}
-		GameObject* Flower03 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Flower03 = object::Instantiate<GameObject>(
 			Vector3(2.0f, 2.0f, 0.98f),
 			Vector3(Vector3(0.0f, 0.0f, Deg2Rad(180))),
 			Vector3(0.15f, 0.15f, 1.0f),
@@ -174,7 +174,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"FlowerMaterial01");
 		}
 
-		GameObject* Flower04 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Flower04 = object::Instantiate<GameObject>(
 			Vector3(1.5f, 2.0f, 0.98f),
 			Vector3(Vector3(0.0f, 0.0f, Deg2Rad(180))),
 			Vector3(0.15f, 0.15f, 1.0f),
@@ -192,7 +192,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* Flower05 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Flower05 = object::Instantiate<GameObject>(
 			Vector3(-3.3f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.15f, 1.0f),
@@ -208,7 +208,7 @@ void roka::SeriaGateScene::OnEnter()
 #pragma endregion	
 
 #pragma region leaf bg
-		GameObject* Leaf01 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf01 = object::Instantiate<GameObject>(
 			Vector3(-2.2f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -225,7 +225,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Leaf02 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf02 = object::Instantiate<GameObject>(
 			Vector3(-2.6f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -242,7 +242,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Leaf03 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf03 = object::Instantiate<GameObject>(
 			Vector3(-3.5f, 1.9f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -256,7 +256,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"LeafMaterial03");
 		}
 
-		GameObject* Leaf04 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf04 = object::Instantiate<GameObject>(
 			Vector3(2.5f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -274,7 +274,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* Leaf05 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf05 = object::Instantiate<GameObject>(
 			Vector3(1.1f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -288,7 +288,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"LeafMaterial02");
 		}
 
-		GameObject* Leaf06 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf06 = object::Instantiate<GameObject>(
 			Vector3(2.0f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -302,7 +302,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->material = Resources::Find<Material>(L"LeafMaterial03");
 		}
 
-		GameObject* Leaf07 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Leaf07 = object::Instantiate<GameObject>(
 			Vector3(1.5f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.15f, 0.25f, 1.0f),
@@ -318,7 +318,7 @@ void roka::SeriaGateScene::OnEnter()
 #pragma endregion
 
 #pragma region gate
-		GameObject* MGateRight = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MGateRight = object::Instantiate<GameObject>(
 			Vector3(0.8f, -1.5f, 0.1f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.25f, 1.0f),
@@ -334,7 +334,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* MGateLeft = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MGateLeft = object::Instantiate<GameObject>(
 			Vector3(-0.7f, -1.5f, 0.1f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.25f, 1.0f),
@@ -350,7 +350,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* DoorEft = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> DoorEft = object::Instantiate<GameObject>(
 			Vector3(3.4f, -0.3f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.4f, 1.2f, 1.0f),
@@ -369,7 +369,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* GateDown = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> GateDown = object::Instantiate<GameObject>(
 			Vector3(3.3f, -1.1f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.6f, 0.25f, 1.0f),
@@ -403,7 +403,7 @@ void roka::SeriaGateScene::OnEnter()
 				}
 			}*/
 
-		GameObject* GateUp = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> GateUp = object::Instantiate<GameObject>(
 			Vector3(-0.0f, 1.7f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 4.0f, 1.0f),
@@ -425,7 +425,7 @@ void roka::SeriaGateScene::OnEnter()
 #pragma endregion
 
 #pragma region hud/ui
-		GameObject* HudBase = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> HudBase = object::Instantiate<GameObject>(
 			Vector3(0.1f, -1.92f, -10.0f),
 			Vector3::Zero,
 			Vector3(2.85f, 0.5f, 1.0f),
@@ -443,7 +443,7 @@ void roka::SeriaGateScene::OnEnter()
 		}
 		std::shared_ptr<Transform> HudBaseTF = HudBase->GetComponent<Transform>();
 
-		GameObject* HudBase2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> HudBase2 = object::Instantiate<GameObject>(
 			Vector3(-0.0f, -0.43f, -0.01f),
 			Vector3::Zero,
 			Vector3(1.1f, 0.25f, 1.0f),
@@ -464,7 +464,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* ExpBar = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ExpBar = object::Instantiate<GameObject>(
 			Vector3(0.01f, -0.5f, -0.01f),
 			Vector3::Zero,
 			Vector3(0.8f, 0.07f, 1.0f),
@@ -485,7 +485,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* HPBase = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> HPBase = object::Instantiate<GameObject>(
 			Vector3(-0.4f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.14f, 0.7f, 1.0f),
@@ -504,7 +504,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* MPBase = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MPBase = object::Instantiate<GameObject>(
 			Vector3(0.39f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.14f, 0.7f, 1.0f),
@@ -523,7 +523,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* HPFilter = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> HPFilter = object::Instantiate<GameObject>(
 			Vector3(-0.395f, -0.01f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.175f, 0.85f, 1.0f),
@@ -542,7 +542,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* MPFilter = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MPFilter = object::Instantiate<GameObject>(
 			Vector3(0.385f, -0.01f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.175f, 0.85f, 1.0f),
@@ -561,7 +561,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* SkillQuickSlot01 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot01 = object::Instantiate<GameObject>(
 			Vector3(-0.194f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -580,7 +580,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* SkillQuickSlot02 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot02 = object::Instantiate<GameObject>(
 			Vector3(-0.116f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -595,7 +595,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot02->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot03 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot03 = object::Instantiate<GameObject>(
 			Vector3(-0.038f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -610,7 +610,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot03->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot04 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot04 = object::Instantiate<GameObject>(
 			Vector3(0.04f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -625,7 +625,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot04->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot05 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot05 = object::Instantiate<GameObject>(
 			Vector3(0.118f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -640,7 +640,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot05->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot06 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot06 = object::Instantiate<GameObject>(
 			Vector3(0.196f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -655,7 +655,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot06->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot07 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot07 = object::Instantiate<GameObject>(
 			Vector3(0.274f, 0.17f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -670,7 +670,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot07->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot08 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot08 = object::Instantiate<GameObject>(
 			Vector3(-0.194f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -685,7 +685,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot08->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot09 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot09 = object::Instantiate<GameObject>(
 			Vector3(-0.116f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -700,7 +700,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot09->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot10 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot10 = object::Instantiate<GameObject>(
 			Vector3(-0.038f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -715,7 +715,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot10->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot11 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot11 = object::Instantiate<GameObject>(
 			Vector3(0.04f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -730,7 +730,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot11->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot12 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot12 = object::Instantiate<GameObject>(
 			Vector3(0.118f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -745,7 +745,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot12->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot13 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot13 = object::Instantiate<GameObject>(
 			Vector3(0.196f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -760,7 +760,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot13->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* SkillQuickSlot14 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillQuickSlot14 = object::Instantiate<GameObject>(
 			Vector3(0.274f, -0.26f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -775,7 +775,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<Transform> tf = SkillQuickSlot14->GetComponent<Transform>();
 			HudBaseTF->AddChild(tf);
 		}
-		GameObject* MoreSkillBtn = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> MoreSkillBtn = object::Instantiate<GameObject>(
 			Vector3(-0.26f, 0.16f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.055f, 0.45f, 1.0f),
@@ -794,7 +794,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* SkillChangeBtn = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SkillChangeBtn = object::Instantiate<GameObject>(
 			Vector3(-0.26f, -0.25f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.055f, 0.45f, 1.0f),
@@ -814,7 +814,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* ItemSlot1 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ItemSlot1 = object::Instantiate<GameObject>(
 			Vector3(-0.6f, -0.32f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -833,7 +833,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* ItemSlot2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ItemSlot2 = object::Instantiate<GameObject>(
 			Vector3(-0.68f, -0.32f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -852,7 +852,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* ItemSlot3 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ItemSlot3 = object::Instantiate<GameObject>(
 			Vector3(-0.76f, -0.32f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -871,7 +871,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* ItemSlot4 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ItemSlot4 = object::Instantiate<GameObject>(
 			Vector3(-0.84f, -0.32f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -890,7 +890,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* ItemSlot5 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ItemSlot5 = object::Instantiate<GameObject>(
 			Vector3(-0.92f, -0.32f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -909,7 +909,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* ItemSlot6 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> ItemSlot6 = object::Instantiate<GameObject>(
 			Vector3(-1.0f, -0.32f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.08f, 0.45f, 1.0f),
@@ -929,7 +929,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* Icon1 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon1 = object::Instantiate<GameObject>(
 			Vector3(0.6f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.13f, 0.31f, 1.0f),
@@ -948,7 +948,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon2 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon2 = object::Instantiate<GameObject>(
 			Vector3(0.69f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.06f, 0.3f, 1.0f),
@@ -967,7 +967,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon3 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon3 = object::Instantiate<GameObject>(
 			Vector3(0.738f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.04f, 0.3f, 1.0f),
@@ -986,7 +986,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon4 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon4 = object::Instantiate<GameObject>(
 			Vector3(0.772f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.04f, 0.3f, 1.0f),
@@ -1005,7 +1005,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon5 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon5 = object::Instantiate<GameObject>(
 			Vector3(0.806f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.04f, 0.3f, 1.0f),
@@ -1024,7 +1024,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon6 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon6 = object::Instantiate<GameObject>(
 			Vector3(0.84f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.04f, 0.3f, 1.0f),
@@ -1043,7 +1043,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon7 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon7 = object::Instantiate<GameObject>(
 			Vector3(0.874f, -0.1f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.04f, 0.3f, 1.0f),
@@ -1062,7 +1062,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon8 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon8 = object::Instantiate<GameObject>(
 			Vector3(0.57f, -0.29f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.05f, 0.1f, 1.0f),
@@ -1081,7 +1081,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon9 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon9 = object::Instantiate<GameObject>(
 			Vector3(0.75f, -0.3f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.28f, 0.1f, 1.0f),
@@ -1100,7 +1100,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon10 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon10 = object::Instantiate<GameObject>(
 			Vector3(0.725f, -0.425f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.33f, 0.15f, 1.0f),
@@ -1120,7 +1120,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 
-		GameObject* Icon11 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon11 = object::Instantiate<GameObject>(
 			Vector3(0.75f, -0.3f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.27f, 0.05f, 1.0f),
@@ -1139,7 +1139,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Icon12 = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Icon12 = object::Instantiate<GameObject>(
 			Vector3(0.76f, -0.425f, 0.0f),
 			Vector3::Zero,
 			Vector3(0.25f, 0.05f, 1.0f),
@@ -1161,7 +1161,7 @@ void roka::SeriaGateScene::OnEnter()
 #pragma endregion
 
 #pragma region obj
-		GameObject* SeriaNPC = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> SeriaNPC = object::Instantiate<GameObject>(
 			Vector3(0.2f, 0.07f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.4f, 0.875f, 1.0f),
@@ -1177,7 +1177,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* Player = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> Player = object::Instantiate<GameObject>(
 			Vector3(0.0f, -1.0f, 0.1f),
 			Vector3::Zero,
 			Vector3(0.4f, 0.75f, 1.0f),
@@ -1192,7 +1192,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* GoldBox = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> GoldBox = object::Instantiate<GameObject>(
 			Vector3(-1.3f, -0.45f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.75f, 0.75f, 1.0f),
@@ -1208,7 +1208,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* PremiumCoinShop = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> PremiumCoinShop = object::Instantiate<GameObject>(
 			Vector3(1.2f, 0.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.4f, 0.2f, 1.0f),
@@ -1224,7 +1224,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* EnchantBook = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> EnchantBook = object::Instantiate<GameObject>(
 			Vector3(0.7f, 0.6f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.35f, 0.45f, 1.0f),
@@ -1240,7 +1240,7 @@ void roka::SeriaGateScene::OnEnter()
 				mr->material->texture = texture;
 			}
 		}
-		GameObject* EnchantBookEft = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> EnchantBookEft = object::Instantiate<GameObject>(
 			Vector3(0.73f, 0.66f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.65f, 0.7f, 1.0f),
@@ -1257,7 +1257,7 @@ void roka::SeriaGateScene::OnEnter()
 			}
 		}
 		
-		GameObject* PostBox = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> PostBox = object::Instantiate<GameObject>(
 			Vector3(2.45f, -0.40f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.7f, 0.85f, 1.0f),
@@ -1314,7 +1314,7 @@ void roka::SeriaGateScene::OnEnter()
 
 	player1->GetComponent<Transform>()->SetPosition(Vector3(-3.0f, 0.0f, 0.5f));
 	player1->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, Deg2Rad(90)));*/
-	GameObject* camera = object::Instantiate<GameObject>(
+	std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 		Vector3(0.0f, 0.0f, -10.0f),
 		ELayerType::Player);
 	{
@@ -1324,7 +1324,7 @@ void roka::SeriaGateScene::OnEnter()
 		cameraComp->TurnLayerMask(ELayerType::UI, false);
 	}
 
-	GameObject* UIcamera = object::Instantiate<GameObject>(
+	std::shared_ptr<GameObject> UIcamera = object::Instantiate<GameObject>(
 		Vector3(0.0f, 0.0f, -10.0f),
 		ELayerType::UI);
 	{
@@ -1335,7 +1335,7 @@ void roka::SeriaGateScene::OnEnter()
 	}
 
 	{
-		GameObject* grid = object::Instantiate<GameObject>(ELayerType::Grid);
+		std::shared_ptr<GameObject> grid = object::Instantiate<GameObject>(ELayerType::Grid);
 		grid->SetName(L"Grid");
 		std::shared_ptr<MeshRenderer> mr = grid->AddComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");

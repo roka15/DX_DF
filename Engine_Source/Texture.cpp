@@ -182,14 +182,7 @@ namespace roka::graphics
 				pixelData[i * 4 + 3] = 255; // Alpha
 			}
 		}
-		for (UINT i = 0; i < width * height; ++i)
-		{
-			if (pixelData[i * 4 + 3] != 255)
-			{
-				int a = 0;
-			}
-		}
-
+		
 		// Update the texture with the pixel data
 		roka::graphics::GetDevice()->UpdateSubResource(mTexture.Get(), 0, nullptr, pixelData.data(), width * channel, 0);
 

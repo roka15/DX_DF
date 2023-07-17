@@ -2,9 +2,9 @@
 #include "MeshRenderer.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "ImageComponent.h"
 namespace roka
 {
-	std::map<EComponentType, std::function<std::shared_ptr<Component>(Component*)>> ComponentFactory::mFactories;
 	void ComponentFactory::Initialize()
 	{
 		mFactories[EComponentType::Camera] = [](Component* component) {
@@ -19,9 +19,13 @@ namespace roka
 			Transform* tr = dynamic_cast<Transform*>(component);
 			return std::shared_ptr<Transform>(new Transform(*tr));
 		};
+		mFactories[EComponentType::Image] = [](Component* component) {
+			ImageComponent* tr = dynamic_cast<ImageComponent*>(component);
+			return std::shared_ptr<ImageComponent>(new ImageComponent(*tr));
+		};
 	}
 
-	std::shared_ptr<Component> ComponentFactory::CreateNCopyComponent(Component* comp)
+	std::shared_ptr<Component> ComponentFactory::CreateNCopy(Component* comp)
 	{
 		EComponentType type = comp->GetType();
 		std::shared_ptr<Component> newComp = mFactories[type](comp);

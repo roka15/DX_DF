@@ -8,6 +8,11 @@ namespace roka
 	{
 	}
 
+	Entity::Entity(const Entity& ref)
+		:mName(ref.mName)
+	{
+	}
+
 	Entity::~Entity()
 	{
 	}

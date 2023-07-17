@@ -12,12 +12,12 @@ namespace roka
 		virtual void LateUpdate();
 		virtual void Render();
 		virtual void Destroy();
-		void AddGameObject(GameObject* gameObj);
-		GameObject* FindGameObject(std::wstring name);
+		void AddGameObject(std::shared_ptr<GameObject> gameObj);
+		std::shared_ptr<GameObject> FindGameObject(std::wstring name);
 
-		std::vector<GameObject*>& GetGameObjects() { return mGameObjects; }
+		std::vector<std::shared_ptr<GameObject>>& GetGameObjects() { return mGameObjects; }
 	private:
-		std::vector<GameObject*> mGameObjects;
+		std::vector<std::shared_ptr<GameObject>> mGameObjects;
 	};
 }
 

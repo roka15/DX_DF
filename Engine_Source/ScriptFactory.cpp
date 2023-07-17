@@ -4,7 +4,6 @@
 #include "MoveScript.h"
 namespace roka
 {
-	std::map<EScriptType, std::function<std::shared_ptr<Script>(Script*)>> ScriptFactory::mFactories;
 	void ScriptFactory::Initialize()
 	{
 		mFactories[EScriptType::Camera] = [](Script* script){
@@ -20,9 +19,13 @@ namespace roka
 			return std::shared_ptr<MoveScript>(new MoveScript(*ms));
 		};
 	}
-	std::shared_ptr<Script> ScriptFactory::CreateNCopyComponent(Script* script)
+	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)
 	{
+		Script* script = dynamic_cast<Script*>(comp);
+		if (script == nullptr)
+			return nullptr;
 		EScriptType type = script->script_type;
+
 		std::shared_ptr<Script> newScript = mFactories[type](script);
 		return newScript;
 	}

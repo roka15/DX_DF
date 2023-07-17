@@ -49,6 +49,7 @@ namespace roka
         PROPERTY(GetParent, SetParent)  std::shared_ptr<Transform> parent;
 
     private:
+        friend class FactoryBase;
         friend class ComponentFactory;
         Vector3 mPosition;
         Vector3 mRotation;

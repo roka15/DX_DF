@@ -9,6 +9,8 @@
 #include "Object.h"
 
 #include "MoveScript.h"
+#include "ObjectPool.h"
+#include "Prefab.h"
 namespace roka
 {
 	PlayScene::PlayScene():Scene(ESceneType::End)
@@ -21,37 +23,25 @@ namespace roka
 	{
 		Scene::Initialize();
 
-		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
-		if (npc_npk == nullptr)
-			npc_npk = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
+	
 
-		GameObject* SeriaNPC = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.0f, 0.98f),
-			Vector3::Zero,
-			Vector3(0.4f, 0.875f, 1.0f),
-			ELayerType::BackObject);
+		std::shared_ptr<GameObject> SeriaNPC =
+			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);
+		
+		/*{
+			std::shared_ptr<GameObject> obj = object::pool::ObjectPool<GameObject>::Spawn();
+			obj->GetComponent<Transform>()->position = Vector3(100.0f, 100.0f, 100.0f);
+		}*/
+		for (int i = 0; i < 5; i++)
 		{
-			SeriaNPC->SetName(L"SeriaNPC");
-			//SeriaNPC->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = SeriaNPC->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SeriaTextureMaterial01");
-			{
-				std::shared_ptr<Texture> texture = npc_npk->GetTexture(L"seria_event_2012summer.img", 0);
-				mr->material->texture = texture;
-			}
+			std::shared_ptr<GameObject> obj = object::pool::ObjectPool<GameObject>::Spawn();
+			Vector3 pos = obj->GetComponent<Transform>()->position;
+			pos.x += 0.1 * i;
+			obj->GetComponent<Transform>()->position = pos;
+			AddGameObject(ELayerType::BackObject,obj);
 		}
 
-		GameObject* dst = object::Instantiate<GameObject>(SeriaNPC,ELayerType::BackObject);
-		dst->SetName(L"dst");
-		dst->ismove = true;
-		dst->AddScript<MoveScript>();
-		
-
-		dst->GetComponent<Transform>()->position = Vector3(0.5f, 0.0f, 0.9f);
-		int a = 0;
-
-		GameObject* camera = object::Instantiate<GameObject>(
+		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),
 			ELayerType::Player);
 		{

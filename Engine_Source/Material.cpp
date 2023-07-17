@@ -8,6 +8,13 @@ roka::graphics::Material::Material()
 {
 }
 
+roka::graphics::Material::Material(const Material& ref):Resource(ref)
+{
+	mMode = ref.mMode;
+	mShader = ref.mShader;
+	mTexture = ref.mTexture;
+}
+
 roka::graphics::Material::~Material()
 {
 }
