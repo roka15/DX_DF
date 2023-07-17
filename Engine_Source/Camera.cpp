@@ -49,6 +49,9 @@ namespace roka
 	}
 	Camera::~Camera()
 	{
+		mOpaqueGameObjects.clear();
+		mCutOutGameObjects.clear();
+		mTransparentObjects.clear();
 	}
 	void Camera::Initialize()
 	{
@@ -208,6 +211,8 @@ namespace roka
 		{
 			if (obj == nullptr)
 				continue;
+			if (obj->GetState() != GameObject::EState::Active)
+				continue;
 			obj->Render();
 		}
 	}
@@ -217,6 +222,8 @@ namespace roka
 		{
 			if (obj == nullptr)
 				continue;
+			if (obj->GetState() != GameObject::EState::Active)
+				continue;
 			obj->Render();
 		}
 	}
@@ -225,6 +232,8 @@ namespace roka
 		for (std::shared_ptr<GameObject> obj : mTransparentObjects)
 		{
 			if (obj == nullptr)
+				continue;
+			if (obj->GetState() != GameObject::EState::Active)
 				continue;
 			obj->Render();
 		}

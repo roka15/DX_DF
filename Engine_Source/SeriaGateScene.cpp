@@ -1334,7 +1334,7 @@ void roka::SeriaGateScene::OnEnter()
 		cameraComp->TurnLayerMask(ELayerType::UI, true);
 	}
 
-	{
+	/*{
 		std::shared_ptr<GameObject> grid = object::Instantiate<GameObject>(ELayerType::Grid);
 		grid->SetName(L"Grid");
 		std::shared_ptr<MeshRenderer> mr = grid->AddComponent<MeshRenderer>();
@@ -1342,7 +1342,7 @@ void roka::SeriaGateScene::OnEnter()
 		mr->material = Resources::Find<Material>(L"GridMaterial");
 		std::shared_ptr<GridScript> script = grid->AddScript<GridScript>();
 		script->camera = UIcamera->GetComponent<Camera>();
-	}
+	}*/
 }
 
 void roka::SeriaGateScene::Loading()

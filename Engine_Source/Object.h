@@ -49,9 +49,7 @@ namespace roka::object
 	static __forceinline std::shared_ptr<T> Instantiate(enums::ELayerType layer)
 	{
 		std::shared_ptr<T> obj = std::make_shared<T>();
-		Scene* scene = SceneManager::GetActiveScene();
-		scene->AddGameObject(layer, obj);
-
+	
 		return obj;
 	}
 	template<typename T>
@@ -62,9 +60,7 @@ namespace roka::object
 			return nullptr;
 
 		std::shared_ptr<T> obj = std::make_shared<T>(*(source.get()));
-		Scene* scene = SceneManager::GetActiveScene();
-		scene->AddGameObject(layer, obj);
-		
+	
 		return obj;
 	}
 	template<typename T>
@@ -72,9 +68,6 @@ namespace roka::object
 	{
 		std::shared_ptr<T> obj = std::make_shared<T>();
 		obj->GetComponent<Transform>()->position = pos;
-
-		Scene* scene = SceneManager::GetActiveScene();
-		scene->AddGameObject(layer, obj);
 
 		return obj;
 	}
@@ -85,9 +78,6 @@ namespace roka::object
 		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		tf->position = pos;
 		tf->rotation = rotate;
-		
-		Scene* scene = SceneManager::GetActiveScene();
-		scene->AddGameObject(layer, obj);
 
 		return obj;
 	}
@@ -99,9 +89,6 @@ namespace roka::object
 		tf->position = pos;
 		tf->rotation = rotate;
 		tf->scale = scale;
-
-		Scene* scene = SceneManager::GetActiveScene();
-		scene->AddGameObject(layer, obj);
 
 		return obj;
 	}

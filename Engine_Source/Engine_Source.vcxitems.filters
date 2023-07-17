@@ -47,7 +47,7 @@
       <Filter>Scene\Base</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp">
-      <Filter>Scene\SceneManager</Filter>
+      <Filter>Manager\SceneManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MeshRenderer.cpp">
       <Filter>GameObject\Component</Filter>
@@ -94,10 +94,16 @@
       <Filter>GameObject\Prefab</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryManager.cpp">
-      <Filter>Common\Factory\Manager</Filter>
+      <Filter>Manager\FactoryManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp">
       <Filter>Common\Factory\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Collider2D.cpp">
+      <Filter>GameObject\Component\Collider2D</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp">
+      <Filter>Manager\CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,7 +165,7 @@
       <Filter>Scene\Base</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h">
-      <Filter>Scene\SceneManager</Filter>
+      <Filter>Manager\SceneManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MeshRenderer.h">
       <Filter>GameObject\Component</Filter>
@@ -212,10 +218,16 @@
       <Filter>GameObject\Prefab</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryManager.h">
-      <Filter>Common\Factory\Manager</Filter>
+      <Filter>Manager\FactoryManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h">
       <Filter>Common\Factory\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Collider2D.h">
+      <Filter>GameObject\Component\Collider2D</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h">
+      <Filter>Manager\CollisionManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,9 +276,6 @@
     <Filter Include="Scene\Base">
       <UniqueIdentifier>{1a7fcbeb-88a4-4b0d-8993-7a7197d05b7c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene\SceneManager">
-      <UniqueIdentifier>{7fc40350-347b-47bf-880e-be1ed3341260}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource\Texture">
       <UniqueIdentifier>{420468e5-87e3-4a3a-a402-9652af334e13}</UniqueIdentifier>
     </Filter>
@@ -303,11 +312,23 @@
     <Filter Include="GameObject\Prefab">
       <UniqueIdentifier>{e651b288-f0a0-4cd2-9f0d-dd437bcbbdf4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Factory\Manager">
-      <UniqueIdentifier>{f945d987-da8c-48ec-a484-434ed29ddbec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Factory\Base">
       <UniqueIdentifier>{929bd9b7-0b62-40db-9a0d-251c60e8e630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Collider2D">
+      <UniqueIdentifier>{86697c12-86bf-4c09-b55c-f0ccffae693b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{c06a9f45-6235-440d-a3a0-dbcf03c38743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\SceneManager">
+      <UniqueIdentifier>{7fc40350-347b-47bf-880e-be1ed3341260}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\CollisionManager">
+      <UniqueIdentifier>{36f5e404-df1c-44c7-a955-a928858caaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\FactoryManager">
+      <UniqueIdentifier>{f945d987-da8c-48ec-a484-434ed29ddbec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

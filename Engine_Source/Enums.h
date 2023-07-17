@@ -11,6 +11,7 @@ namespace roka::enums
 		Script,
 		Camera,
 		Image,
+		Collider,
 		End,
 	};
 	enum class EScriptType
@@ -53,6 +54,14 @@ namespace roka::enums
 	{
 		Component,
 		Script,
+		End,
+	};
+	enum class EColliderType
+	{
+		Rect,
+		Circle,
+		Sphere,
+		Cube,
 		End,
 	};
 	enum class EDir4Type

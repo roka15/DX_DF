@@ -25,7 +25,7 @@ namespace roka::prefab
 			npc_npk = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
 
 		std::shared_ptr<roka::GameObject> TestObject = object::Instantiate<roka::GameObject>(
-			Vector3(0.0f, 0.0f, 0.98f),
+			Vector3(0.0f, 0.0f, 1.0001f),
 			Vector3::Zero,
 			Vector3(0.4f, 0.875f, 1.0f));
 		{

@@ -24,7 +24,7 @@ VSOut main(VSIn In)
 	gridPos.y = In.Pos.y * 1.0f * Resolution.y + CameraScale.y * CameraPosition.y;
 
 	const float meshScale = 2.0f;
-	Out.Pos = float4(In.Pos.xy * meshScale, 0.999f, 1.0f);
+	Out.Pos = float4(In.Pos.xy * meshScale, -0.999f, 1.0f);
 	Out.UV = In.UV;
 	Out.GridPos = gridPos;
 

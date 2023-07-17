@@ -67,7 +67,6 @@ namespace roka
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
 		renderer::Render();
-		graphicDevice->Present();
 	}
 
 	void Application::Release()
@@ -81,6 +80,11 @@ namespace roka
 	void Application::Destroy()
 	{
 		SceneManager::Destroy();
+	}
+
+	void Application::Present()
+	{
+		graphicDevice->Present();
 	}
 
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)

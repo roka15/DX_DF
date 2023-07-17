@@ -6,16 +6,10 @@ namespace roka
 	}
 	Layer::~Layer()
 	{
-		for (std::vector<std::shared_ptr<GameObject>>::iterator itr = mGameObjects.begin();
-			itr != mGameObjects.end();)
-		{
-			if (*itr != nullptr)
-			{
-				itr = mGameObjects.erase(itr);
-				continue;
-			}
-			itr++;
-		}
+		if (mGameObjects.size() == 0)
+			return;
+		std::shared_ptr<GameObject>& ptr = *(mGameObjects.begin());
+		mGameObjects.clear();
 	}
 	void Layer::Initialize()
 	{

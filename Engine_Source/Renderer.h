@@ -30,16 +30,17 @@ namespace roka::renderer
 		Vector2 Resolution;
 	};
 
-	extern std::vector<Vertex> vertexs;
-	extern std::vector<UINT> indexs;
 	extern roka::graphics::ConstantBuffer* constantBuffer[(UINT)ECBType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerStates[(UINT)ERSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
 	extern std::vector<std::shared_ptr<roka::Camera>> cameras;
+	extern std::shared_ptr<roka::Camera> MainCamera;
+	extern std::vector<DebugMesh> debugMeshs;
 
 	void Initialize();
 	void Render();
 	void Release();
+	void PushDebugMeshAttribute(DebugMesh& mesh);
 }

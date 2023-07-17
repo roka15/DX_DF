@@ -7,8 +7,6 @@
 namespace roka::renderer
 {
 	using namespace roka::graphics;
-	std::vector<Vertex> vertexs;
-	std::vector<UINT> indexs;
 
 	ConstantBuffer* constantBuffer[(UINT)ECBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];
@@ -18,6 +16,9 @@ namespace roka::renderer
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
 
 	std::vector<std::shared_ptr<roka::Camera>> cameras = {};
+	std::shared_ptr<roka::Camera> MainCamera = nullptr;
+
+	std::vector<DebugMesh> debugMeshs = {};
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -54,7 +55,7 @@ namespace roka::renderer
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 
-		shader = roka::Resources::Find<Shader>(L"VerticalInverterShader"); 
+		shader = roka::Resources::Find<Shader>(L"VerticalInverterShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 
@@ -65,6 +66,11 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"EffectShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
+		shader = roka::Resources::Find<Shader>(L"DebugShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State
@@ -85,7 +91,7 @@ namespace roka::renderer
 		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_FRONT;
 		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::SolidFront].GetAddressOf());
-		
+
 		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_BACK;
 		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::SolidBack].GetAddressOf());
@@ -93,7 +99,7 @@ namespace roka::renderer
 		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_SOLID;
 		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::SolidNone].GetAddressOf());
-		
+
 		RasterDesc.CullMode = D3D11_CULL_MODE::D3D11_CULL_NONE;
 		RasterDesc.FillMode = D3D11_FILL_MODE::D3D11_FILL_WIREFRAME;
 		GetDevice()->CreateRasterizerState(&RasterDesc, rasterizerStates[(UINT)ERSType::WireFrameNone].GetAddressOf());
@@ -106,7 +112,7 @@ namespace roka::renderer
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		DepthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::Less].GetAddressOf());
-		
+
 		DepthStencilDesc.DepthEnable = true;
 		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS_EQUAL;
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
@@ -119,7 +125,7 @@ namespace roka::renderer
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
 		DepthStencilDesc.StencilEnable = false;
 		GetDevice()->CreateDepthStencilState(&DepthStencilDesc, depthstencilStates[(UINT)EDSType::Greater].GetAddressOf());
-		
+
 		DepthStencilDesc.DepthEnable = true;
 		DepthStencilDesc.DepthFunc = D3D11_COMPARISON_FUNC::D3D11_COMPARISON_LESS;
 		DepthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ZERO;
@@ -165,32 +171,77 @@ namespace roka::renderer
 	}
 	void LoadMesh()
 	{
+		std::vector<Vertex> vertexes = {};
+		std::vector<UINT> indexes = {};
+
+		vertexes.resize(4);
 		/* 사각형*/
-		vertexs.resize(4);
+		
+		vertexes[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
+		vertexes[0].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[0].uv = Vector2(0.0f, 0.0f);
 
-		vertexs[0].pos = Vector3(-0.5f, 0.5f, 0.0f);
-		vertexs[0].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertexs[0].uv = Vector2(0.0f, 0.0f);
+		vertexes[1].pos = Vector3(0.5f, 0.5f, 0.0f);
+		vertexes[1].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[1].uv = Vector2(1.0f, 0.0f);
 
-		vertexs[1].pos = Vector3(0.5f, 0.5f, 0.0f);
-		vertexs[1].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertexs[1].uv = Vector2(1.0f, 0.0f);
+		vertexes[2].pos = Vector3(0.5f, -0.5f, 0.0f);
+		vertexes[2].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[2].uv = Vector2(1.0f, 1.0f);
 
-		vertexs[2].pos = Vector3(0.5f, -0.5f, 0.0f);
-		vertexs[2].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertexs[2].uv = Vector2(1.0f, 1.0f);
+		vertexes[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
+		vertexes[3].color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes[3].uv = Vector2(0.0f, 1.0f);
 
-		vertexs[3].pos = Vector3(-0.5f, -0.5f, 0.0f);
-		vertexs[3].color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-		vertexs[3].uv = Vector2(0.0f, 1.0f);
+		indexes.push_back(0);
+		indexes.push_back(1);
+		indexes.push_back(2);
+		indexes.push_back(0);
+		indexes.push_back(2);
+		indexes.push_back(3);
+
+		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
+		mesh->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		mesh->CreateIndexBuffer(indexes.data(), indexes.size());
+		Resources::Insert(L"RectMesh", mesh);
 
 
-		indexs.push_back(0);
-		indexs.push_back(1);
-		indexs.push_back(2);
-		indexs.push_back(0);
-		indexs.push_back(2);
-		indexs.push_back(3);
+		std::shared_ptr<Mesh> rectDebug = std::make_shared<Mesh>();
+		rectDebug->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		rectDebug->CreateIndexBuffer(indexes.data(), indexes.size());
+		Resources::Insert(L"DebugRect", rectDebug);
+
+		vertexes.clear();
+		indexes.clear();
+	   /* 원 */
+		Vertex center = {};
+		center.pos = Vector3(0.0f, 0.0f, 0.0f);
+		center.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+		vertexes.push_back(center);
+
+		int iSlice = 40;
+		float fRadius = 0.5f;
+		float fTheta = XM_2PI / (float)iSlice;
+
+		for (int i = 0; i < iSlice; ++i)
+		{
+			center.pos = Vector3(fRadius * cosf(fTheta * (float)i)
+				, fRadius * sinf(fTheta * (float)i)
+				, 0.0f);
+			center.color = Vector4(0.0f, 1.0f, 0.0f, 1.f);
+			vertexes.push_back(center);
+		}
+
+		for (int i = 0; i < vertexes.size() - 2; ++i)
+		{
+			indexes.push_back(i + 1);
+		}
+		indexes.push_back(1);
+
+		std::shared_ptr<Mesh> circleDebug = std::make_shared<Mesh>();
+		Resources::Insert(L"DebugCircle", circleDebug);
+		circleDebug->CreateVertexBuffer(vertexes.data(), vertexes.size());
+		circleDebug->CreateIndexBuffer(indexes.data(), indexes.size());
 
 #pragma region another 
 		/* 삼각형
@@ -203,7 +254,7 @@ namespace roka::renderer
 				*/
 				// 인덱스 버퍼 사용법 https://koreanfoodie.me/727
 
-		
+
 		/*graphics::Texture* texture
 			= Resources::Load<Texture>(L"Smile", L"..\\Resources\\Texture\\Smile.png");
 
@@ -301,11 +352,6 @@ namespace roka::renderer
 	}
 	void LoadBuffer()
 	{
-		std::shared_ptr<Mesh> mesh = std::make_shared<Mesh>();
-		mesh->CreateVertexBuffer(vertexs.data(), vertexs.size());
-		mesh->CreateIndexBuffer(indexs.data(), indexs.size());
-		Resources::Insert(L"RectMesh", mesh);
-
 		//constant buffer
 		constantBuffer[(UINT)ECBType::Transform] = new roka::graphics::ConstantBuffer(ECBType::Transform);
 		constantBuffer[(UINT)ECBType::Transform]->Create(sizeof(TransformCB));
@@ -342,6 +388,13 @@ namespace roka::renderer
 		effectShader->Create(EShaderStage::VS, L"SpriteVS.hlsl", "main");
 		effectShader->Create(EShaderStage::PS, L"SpritePS.hlsl"/*L"EffectPS.hlsl"*/, "main");
 		roka::Resources::Insert(L"EffectShader", effectShader);
+
+		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
+		debugShader->Create(EShaderStage::VS, L"DebugVS.hlsl", "main");
+		debugShader->Create(EShaderStage::PS, L"DebugPS.hlsl"/*L"EffectPS.hlsl"*/, "main");
+		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_LINESTRIP);
+		debugShader->SetRSState(ERSType::SolidNone);
+		roka::Resources::Insert(L"DebugShader", debugShader);
 	}
 	void LoadMaterial()
 	{
@@ -349,6 +402,8 @@ namespace roka::renderer
 		std::shared_ptr<Shader>  v_inversterShdaer = Resources::Find<Shader>(L"VerticalInverterShader");
 		std::shared_ptr<Shader> gridShader = Resources::Find<Shader>(L"GridShader");
 		std::shared_ptr<Shader> effectShader = Resources::Find<Shader>(L"EffectShader");
+		std::shared_ptr<Shader> debugShader = Resources::Find<Shader>(L"DebugShader");
+
 		{
 			{
 				std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
@@ -356,6 +411,11 @@ namespace roka::renderer
 				Resources::Insert(L"SpriteMaterial", spriteMaterial);
 			}
 
+		}
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = debugShader;
+			Resources::Insert(L"DebugMaterial", material);
 		}
 		{
 			std::shared_ptr<Texture> texture
@@ -469,7 +529,7 @@ namespace roka::renderer
 			spriteMaterial->shader = spriteShdaer;
 			Resources::Insert(L"ItemSlotMaterial01", spriteMaterial);
 		}
-		
+
 #pragma endregion
 #pragma region Select Ch material
 		{
@@ -690,5 +750,11 @@ namespace roka::renderer
 			delete buff;
 			buff = nullptr;
 		}
+		cameras.clear();
+		MainCamera.reset();
+	}
+	void PushDebugMeshAttribute(DebugMesh& mesh)
+	{
+		debugMeshs.push_back(mesh);
 	}
 }

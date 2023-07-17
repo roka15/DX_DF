@@ -63,7 +63,7 @@ namespace roka
 			renderer::constantBuffer[(UINT)ECBType::Grid];
 
 		renderer::GridCB gridbuf;
-		gridbuf.CameraPos = Vector4(pos.x,pos.y,pos.z,1.0f);
+		gridbuf.CameraPos = Vector4(pos.x,pos.y,pos.z,1.00f);
 		gridbuf.CameraScale = scale;
 		gridbuf.Resolution = resolution;
 

@@ -98,6 +98,7 @@ namespace roka
         trCB.mView = CameraView;
         trCB.mProjection = Camera::GetProjectionMatrix();
 
+        Matrix result = trCB.mWorld * trCB.mView * trCB.mProjection;
         ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Transform];
        
         cb->SetData(&trCB);

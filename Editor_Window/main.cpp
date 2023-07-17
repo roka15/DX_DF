@@ -5,6 +5,7 @@
 #include "Editor_Window.h"
 #include "..\Engine_Source\Application.h"
 #include "..\Engine\LoadScene.h"
+#include "guiEditor.h"
 roka::Application application;
 
 #ifdef _DEBUG
@@ -70,9 +71,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         {
             // 여기서 게임 로직이 돌아가야한다.
             application.Run();
+            gui::Editor::Run();
+            application.Present();
         }
     }
     application.Release();
+    gui::Editor::Release();
     return (int) msg.wParam;
 }
 
@@ -131,6 +135,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    application.Initialize();
    roka::InitializeScenes();
+   gui::Editor::Initialize();
    return TRUE;
 }
 

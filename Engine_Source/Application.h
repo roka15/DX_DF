@@ -19,6 +19,7 @@ namespace roka
 		void Release();
 		void Destroy(); 
 
+		void Present();
 		void SetWindow(HWND hwnd, UINT width, UINT height);
 
 		UINT GetWidth() { return mWidth; }

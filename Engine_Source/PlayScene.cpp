@@ -1,5 +1,7 @@
 #include "PlayScene.h"
 #include "Resources.h"
+#include "Renderer.h"
+
 #include "MeshRenderer.h"
 #include "CameraScript.h"
 #include "Transform.h"
@@ -25,8 +27,8 @@ namespace roka
 
 	
 
-		std::shared_ptr<GameObject> SeriaNPC =
-			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);
+		/*std::shared_ptr<GameObject> SeriaNPC =
+			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);*/
 		
 		/*{
 			std::shared_ptr<GameObject> obj = object::pool::ObjectPool<GameObject>::Spawn();
@@ -49,6 +51,8 @@ namespace roka
 			camera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
+			AddGameObject(ELayerType::BackObject,camera);
+			renderer::MainCamera = cameraComp;
 		}
 		/*{
 			GameObject* player = new GameObject();
