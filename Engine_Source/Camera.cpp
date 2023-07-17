@@ -149,7 +149,7 @@ namespace roka
 	}
 	void Camera::RegisterCameraInRenderer()
 	{
-		renderer::cameras.push_back(this);
+		renderer::cameras.push_back(shared_from_this());
 	}
 	void Camera::TurnLayerMask(ELayerType type, bool enable)
 	{

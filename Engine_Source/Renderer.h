@@ -37,7 +37,7 @@ namespace roka::renderer
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerStates[(UINT)ERSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
-	extern std::vector<roka::Camera*> cameras;
+	extern std::vector<std::shared_ptr<roka::Camera>> cameras;
 
 	void Initialize();
 	void Render();

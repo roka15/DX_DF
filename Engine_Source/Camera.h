@@ -2,7 +2,7 @@
 #include "Component.h"
 namespace roka
 {
-	class Camera :public Component
+	class Camera :public Component,public std::enable_shared_from_this<Camera>
 	{
 	private:
 		Camera();

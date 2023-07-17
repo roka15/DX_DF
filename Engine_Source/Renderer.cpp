@@ -17,7 +17,7 @@ namespace roka::renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
 
-	std::vector<roka::Camera*> cameras = {};
+	std::vector<std::shared_ptr<roka::Camera>> cameras = {};
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -671,7 +671,7 @@ namespace roka::renderer
 	}
 	void Render()
 	{
-		for (Camera* camera : cameras)
+		for (std::shared_ptr<Camera> camera : cameras)
 		{
 			if (camera == nullptr)
 				continue;
