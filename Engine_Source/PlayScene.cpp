@@ -13,6 +13,7 @@
 #include "MoveScript.h"
 #include "ObjectPool.h"
 #include "Prefab.h"
+#include "TestPool.h"
 namespace roka
 {
 	PlayScene::PlayScene():Scene(ESceneType::End)
@@ -36,7 +37,8 @@ namespace roka
 		}*/
 		for (int i = 0; i < 2; i++)
 		{
-			std::shared_ptr<GameObject> obj = object::pool::ObjectPool<GameObject>::Spawn();
+			object::pool::TestPool* pool = object::pool::TestPool::GetInstance();
+			std::shared_ptr<GameObject> obj = object::pool::TestPool::GetInstance()->GetPool(L"TestObject")->Spawn();
 			Vector3 pos = obj->GetComponent<Transform>()->position;
 			pos.x += 1.5 * i;
 			obj->GetComponent<Transform>()->position = pos;

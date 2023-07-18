@@ -105,6 +105,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp">
       <Filter>Manager\CollisionManager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPoolManager.cpp">
+      <Filter>Manager\ObjectPoolManager\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)SingleTon.cpp">
+      <Filter>Common\Singleton</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp">
+      <Filter>Manager\ObjectPoolManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -211,9 +220,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h">
       <Filter>GameObject\Component</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Pools.h">
-      <Filter>Common\Pools</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Prefab.h">
       <Filter>GameObject\Prefab</Filter>
     </ClInclude>
@@ -228,6 +234,15 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h">
       <Filter>Manager\CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPoolManager.h">
+      <Filter>Manager\ObjectPoolManager\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SingleTon.h">
+      <Filter>Common\Singleton</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h">
+      <Filter>Manager\ObjectPoolManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -306,9 +321,6 @@
     <Filter Include="Common\Factory\ScriptFactory">
       <UniqueIdentifier>{26b9a799-1d55-4ca5-b5d7-635fd880a6d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Pools">
-      <UniqueIdentifier>{ffcd0bdd-4e25-4bba-8db0-0cd803e12752}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Prefab">
       <UniqueIdentifier>{e651b288-f0a0-4cd2-9f0d-dd437bcbbdf4}</UniqueIdentifier>
     </Filter>
@@ -329,6 +341,15 @@
     </Filter>
     <Filter Include="Manager\FactoryManager">
       <UniqueIdentifier>{f945d987-da8c-48ec-a484-434ed29ddbec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\ObjectPoolManager">
+      <UniqueIdentifier>{ffcd0bdd-4e25-4bba-8db0-0cd803e12752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\ObjectPoolManager\Base">
+      <UniqueIdentifier>{fe72e9ac-3227-4102-ad31-6f85ef38b7f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Singleton">
+      <UniqueIdentifier>{f9bbb76b-7628-4281-82da-32c00147351c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
