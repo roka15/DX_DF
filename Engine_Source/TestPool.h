@@ -1,7 +1,7 @@
 #pragma once
 #include "ObjectPoolManager.h"
 #include "Prefab.h"
-namespace roka::object::pool
+namespace roka::pool
 {
 	class TestPool : public ObjectPoolManager<TestPool,GameObject>
 	{

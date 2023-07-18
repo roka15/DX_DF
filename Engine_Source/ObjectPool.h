@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Object.h"
-namespace roka::object::pool
+namespace roka::pool
 {
 	template <typename T>
 	class ObjectPool 

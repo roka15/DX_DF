@@ -2,7 +2,7 @@
 #include "RokaEngine.h"
 #include "ObjectPool.h"
 #include "SingleTon.h"
-namespace roka::object::pool
+namespace roka::pool
 {
 	template <typename Pool,typename Origin>
 	class ObjectPoolManager : public Singleton<Pool>
@@ -45,7 +45,6 @@ namespace roka::object::pool
 		
 			return true;
 		}
-
 	private:
 		size_t mPoolSize;
 		std::map<std::wstring, std::unique_ptr<ObjectPool<Origin>>> mPools;

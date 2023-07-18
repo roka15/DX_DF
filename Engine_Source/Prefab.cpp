@@ -10,6 +10,7 @@
 namespace roka::prefab
 {
 	std::map<std::wstring, std::shared_ptr<roka::GameObject>> Prefabs = {};
+	std::map<std::wstring, std::shared_ptr<roka::Resource>> Resources = {};
 	void RegisterPrefab(std::wstring key, roka::GameObject* obj)
 	{
 		std::map<std::wstring, std::shared_ptr<roka::GameObject>>::iterator itr
@@ -21,6 +22,10 @@ namespace roka::prefab
 	}
 	void Initialize()
 	{
+		std::shared_ptr<Material> material = std::make_shared<Material>();
+		material->shader = Resources::Find<Shader>(L"SpriteShader");
+		Resources.insert(std::make_pair(L"DefualtMaterial", material));
+
 		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
 		if (npc_npk == nullptr)
 			npc_npk = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");

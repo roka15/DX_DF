@@ -1,8 +1,6 @@
 #pragma once
 #include "RokaEngine.h"
 #include "RokaGraphicDevice_Dx11.h"
-#include "Mesh.h"
-#include "Shader.h"
 #include "ConstantBuffer.h"
 #include "Camera.h"
 using namespace roka::math;
