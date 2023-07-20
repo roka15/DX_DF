@@ -14,6 +14,8 @@
 #include "ObjectPool.h"
 #include "Prefab.h"
 #include "TestPool.h"
+#include "Image.h"
+#include "ImageComponent.h"
 
 namespace roka
 {
@@ -28,8 +30,16 @@ namespace roka
 		Scene::Initialize();
 
 	
+		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
+		if (npc_npk == nullptr)
+			npc_npk = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
 
-		std::shared_ptr<GameObject> SeriaNPC =
+		std::shared_ptr<Image> img1 = object::Instantiate<Image>(Vector3(-2.0f,0.0f,0.0f),ELayerType::Player);
+		img1->GetComponent<ImageComponent>()->SetSprite(L"npc", L"seria_event_2012summer.img", 0);
+		std::shared_ptr<Image> img2 = object::Instantiate<Image>(Vector3(2.0f, 0.0f, 0.0f), ELayerType::Player);
+		img2->GetComponent<ImageComponent>()->SetSprite(L"npc", L"summer_2018_seria.img", 0);
+
+		/*std::shared_ptr<GameObject> SeriaNPC =
 			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);
 		
 	
@@ -43,9 +53,8 @@ namespace roka
 			const float pi = 3.141592f;
 			float degree = pi / 8.0f;
 			obj->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
-			AddGameObject(ELayerType::BackObject,obj);
 		}
-
+        */
 		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),
 			ELayerType::Player);
@@ -54,7 +63,6 @@ namespace roka
 			camera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
-			AddGameObject(ELayerType::BackObject,camera);
 			renderer::MainCamera = cameraComp;
 		}
 		/*{

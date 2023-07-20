@@ -26,11 +26,14 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ForwardDeclarations.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Layer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)LRU_Queue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Material.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Mesh.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MeshRenderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)NPK.h" />
@@ -44,6 +47,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPoolManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Prefab.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PriorityQueue.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RBT.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.h" />
@@ -60,6 +65,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ScriptFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SingleTon.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
@@ -80,6 +86,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Layer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryPool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Mesh.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MeshRenderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp" />
@@ -92,6 +99,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPoolManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Prefab.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RBT.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaMath.cpp" />
@@ -106,11 +114,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ScriptFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SingleTon.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)ClassDiagram.cd" />
     <None Include="$(MSBuildThisFileDirectory)RokaMath.inl" />
   </ItemGroup>
 </Project>

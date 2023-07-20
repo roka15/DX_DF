@@ -10,7 +10,7 @@ namespace roka::object
 		std::shared_ptr<T> source = std::dynamic_pointer_cast<T>(src);
 		if (source == nullptr)
 			return nullptr;
-
+		source->Initialize();
 		return std::make_shared<T>(*(source.get()));
 	}
 	template<typename T>
@@ -24,6 +24,7 @@ namespace roka::object
 		std::shared_ptr<T> obj = std::make_shared<T>();
 		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		tf->position = pos;
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
@@ -33,6 +34,7 @@ namespace roka::object
 		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		tf->position = pos;
 		tf->rotation = rotate;
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
@@ -43,13 +45,16 @@ namespace roka::object
 		tf->position = pos;
 		tf->rotation = rotate;
 		tf->scale = scale;
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
 	static __forceinline std::shared_ptr<T> Instantiate(enums::ELayerType layer)
 	{
 		std::shared_ptr<T> obj = std::make_shared<T>();
-	
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, obj);
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
@@ -60,7 +65,9 @@ namespace roka::object
 			return nullptr;
 
 		std::shared_ptr<T> obj = std::make_shared<T>(*(source.get()));
-	
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, obj);
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
@@ -68,7 +75,9 @@ namespace roka::object
 	{
 		std::shared_ptr<T> obj = std::make_shared<T>();
 		obj->GetComponent<Transform>()->position = pos;
-
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, obj);
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
@@ -78,7 +87,9 @@ namespace roka::object
 		std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
 		tf->position = pos;
 		tf->rotation = rotate;
-
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, obj);
+		obj->Initialize();
 		return obj;
 	}
 	template<typename T>
@@ -89,7 +100,9 @@ namespace roka::object
 		tf->position = pos;
 		tf->rotation = rotate;
 		tf->scale = scale;
-
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, obj);
+		obj->Initialize();
 		return obj;
 	}
 

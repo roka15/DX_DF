@@ -7,10 +7,10 @@ namespace roka::enums
 		None,
 		Transform,
 		Particle,
+		Image,
 		MeshRenderer,
 		Script,
 		Camera,
-		Image,
 		Collider,
 		End,
 	};
@@ -48,6 +48,7 @@ namespace roka::enums
 		Material,
 		Texture,
 		NPK,
+		Sprite,
 		End,
 	};
 	enum class EFactoryType

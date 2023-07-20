@@ -48,15 +48,16 @@ namespace roka
 	void HendonmyreScene::OnEnter()
 	{
 		Scene::OnEnter();
-		std::shared_ptr<GameObject> bg = object::Instantiate<GameObject>();
-		AddGameObject(ELayerType::BackObject, bg);
+		std::shared_ptr<GameObject> bg = 
+			object::Instantiate<GameObject>(
+				Vector3(0.0f, 0.0f, 0.99f),
+				Vector3::Zero,
+				Vector3(20.0f, 5.0f, 1.0f),
+				ELayerType::BackObject);
 		std::shared_ptr<MeshRenderer> mr = bg->AddComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 		mr->material = Resources::Find<Material>(L"BGMaterial");
 
-		std::shared_ptr<Transform> tf = bg->GetComponent<Transform>();
-		tf->position = Vector3(0.0f, 0.0f, 0.0f);
-		tf->scale = Vector3(40.0f, 9.0f, 1.0f);
 		{
 			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mapnpk");
 			if (npk == nullptr)
@@ -68,11 +69,12 @@ namespace roka
 		}
 
 		{
-			std::shared_ptr<GameObject>  camera = object::Instantiate<GameObject>();
-			AddGameObject(ELayerType::Player, camera);
+			std::shared_ptr<GameObject>  camera = 
+				object::Instantiate<GameObject>(
+					Vector3(0.0f, 0.0f, -10.0f),
+					ELayerType::Player);
 			camera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
-			camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
 		}
 	}
 

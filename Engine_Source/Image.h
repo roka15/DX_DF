@@ -3,19 +3,22 @@
 namespace roka
 {
 	class MeshRenderer;
+	class Transform;
+	class ImageComponent;
 	class Image : public GameObject
 	{
 	public:
 		Image();
 		virtual ~Image();
 
-		virtual void Initialize();
-		virtual void Update();
-		virtual void LateUpdate();
-		virtual void Render();
-
+		virtual void Initialize()override;
+		virtual void Update()override;
+		virtual void LateUpdate()override;
+		virtual void Render()override;
 	private:
-		MeshRenderer* mMeshRenderer;
+		std::weak_ptr<MeshRenderer> mMeshRender;
+		std::weak_ptr<Transform> mTransform;
+		std::weak_ptr<ImageComponent> mImage;
 	};
 }
 

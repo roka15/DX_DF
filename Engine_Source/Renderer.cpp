@@ -632,6 +632,48 @@ namespace roka::renderer
 			Resources::Insert(L"SeriaGateDoorEftMaterial", spriteMaterial);
 		}
 #pragma endregion
+	
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			std::shared_ptr<Texture> texture
+				= Resources::Load<Texture>(L"Player", L"..\\Resources\\Texture\\player.png");
+			spriteMaterial->texture = texture;
+			Resources::Insert(L"PlayerTextureMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SeriaTextureMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"GoldBoxMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"PremiumCoinMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"EnchantBookMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = effectShader;
+			Resources::Insert(L"EnchantBookEftMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"PostBoxMaterial", spriteMaterial);
+		}
+#pragma endregion
+#pragma region ui
+    #pragma region hud
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
@@ -682,45 +724,190 @@ namespace roka::renderer
 			spriteMaterial->shader = spriteShdaer;
 			Resources::Insert(L"SkillChangeBtnMaterial01", spriteMaterial);
 		}
+    #pragma endregion
+    #pragma region inven
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			std::shared_ptr<Texture> texture
-				= Resources::Load<Texture>(L"Player", L"..\\Resources\\Texture\\player.png");
-			spriteMaterial->texture = texture;
-			Resources::Insert(L"PlayerTextureMaterial01", spriteMaterial);
+			Resources::Insert(L"InvenBaseMaterial01", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			Resources::Insert(L"SeriaTextureMaterial01", spriteMaterial);
+			Resources::Insert(L"InvenBaseMaterial02", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			Resources::Insert(L"GoldBoxMaterial01", spriteMaterial);
+			Resources::Insert(L"InvenBaseMaterial03", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			Resources::Insert(L"PremiumCoinMaterial", spriteMaterial);
+			Resources::Insert(L"InvenBaseMaterial04", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			Resources::Insert(L"EnchantBookMaterial", spriteMaterial);
-		}
-		{
-			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
-			spriteMaterial->shader = effectShader;
-			Resources::Insert(L"EnchantBookEftMaterial", spriteMaterial);
+			Resources::Insert(L"InvenBasetab01", spriteMaterial);
 		}
 		{
 			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
 			spriteMaterial->shader = spriteShdaer;
-			Resources::Insert(L"PostBoxMaterial", spriteMaterial);
+			Resources::Insert(L"InvenBasetab02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"BarMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenUseItemSlot01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenUseItemSlot02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenUseItemSlot03", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenUseItemSlot04", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBook01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBook02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBook03", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBook04", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenIcon01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenIcon02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenPlayerMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBaseEftMaterial", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenSlotMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBase3Icon01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBase3Icon02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBase3Icon03", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBase3Icon04", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"InvenBase3Icon05", spriteMaterial);
+		}
+    #pragma endregion
+#pragma region skill tool tip
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipBaseMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipBaseMaterial02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipIconMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipIconMaterial02", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipIconMaterial03", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipIconMaterial04", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipIconMaterial05", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipIconMaterial06", spriteMaterial);
+		}
+
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipSkillMaterial01", spriteMaterial);
+		}
+		{
+			std::shared_ptr<Material> spriteMaterial = std::make_shared<Material>();
+			spriteMaterial->shader = spriteShdaer;
+			Resources::Insert(L"SkillTooltipLineMaterial01", spriteMaterial);
 		}
 #pragma endregion
+
+#pragma endregion
+
 	}
 	void Initialize()
 	{

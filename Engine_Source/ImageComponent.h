@@ -1,7 +1,14 @@
 #pragma once
 #include "Component.h"
+
+namespace roka::graphics
+{
+    class Material;
+}
+using namespace roka::graphics;
 namespace roka
 {
+    class Sprite;
 	class ImageComponent :
 		public Component
 	{
@@ -16,9 +23,13 @@ namespace roka
         virtual void LateUpdate()override;
         virtual void Render()override;
 
+        void SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index);
+        void SetMaterial(std::shared_ptr<Material> material);
     private:
         friend class FactoryBase;
         friend class ComponentFactory;
+        std::unique_ptr<Sprite> mSprite;
+        std::weak_ptr<Material> mMaterial;
 	};
 }
 

@@ -76,32 +76,27 @@ namespace roka
 			npk = Resources::Load<NPK>(L"mapnpk", L"..\\Resources\\npk\\map.npk");
 
 		{
-			std::shared_ptr<GameObject> bg = object::Instantiate<GameObject>();
+			std::shared_ptr<GameObject> bg = object::Instantiate<GameObject>(
+				Vector3(0.0f, 0.0f, 0.99f),
+				Vector3::Zero,
+				Vector3(14.0f, 5.5f, 1.0f),
+				ELayerType::BackObject);
 			bg->SetName(L"BackGround");
-			AddGameObject(ELayerType::BackObject, bg);
 			std::shared_ptr<MeshRenderer> mr = bg->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"BGMaterial");
 
-			std::shared_ptr<Transform> tf = bg->GetComponent<Transform>();
-			tf->position = Vector3(0.0f, 0.0f, 0.0f);
-			tf->scale = Vector3(40.0f, 9.0f, 1.0f);
-
 			std::shared_ptr<Texture> texture = npk->GetTexture(L"hendonmyre2", 0);
 			npk->GetTexture(L"hendonmyre3", 0);
-
-			
 			mr->material->texture = texture;
 		}
 
-		
-
 		{
-			std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>();
-			AddGameObject(ELayerType::Player, camera);
+			std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
+				Vector3(0.0f, 0.0f, -10.0f),
+				ELayerType::Player);
 			camera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
-			camera->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, -10.0f);
 		}
 	}
 }

@@ -97,7 +97,14 @@ roka::GameObject::~GameObject()
 
 void roka::GameObject::Initialize()
 {
-
+	for (std::shared_ptr<Component>& comp : mComponents)
+	{
+		comp->Initialize();
+	}
+	for (std::shared_ptr<Script>& script : mScripts)
+	{
+		script->Initialize();
+	}
 }
 
 void roka::GameObject::Update()

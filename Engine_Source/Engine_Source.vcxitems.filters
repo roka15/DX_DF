@@ -114,6 +114,15 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp">
       <Filter>Manager\ObjectPoolManager</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MemoryPool.cpp">
+      <Filter>Common\MemoryPool</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RBT.cpp">
+      <Filter>Common\STL\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp">
+      <Filter>Common\Sprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -244,6 +253,24 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h">
       <Filter>Manager\ObjectPoolManager</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MemoryPool.h">
+      <Filter>Common\MemoryPool</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RBT.h">
+      <Filter>Common\STL\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)LRU_Queue.h">
+      <Filter>Common\STL\LRU_Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PriorityQueue.h">
+      <Filter>Common\STL\LRU_Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ForwardDeclarations.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h">
+      <Filter>Common\Sprite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -351,10 +378,26 @@
     <Filter Include="Common\Singleton">
       <UniqueIdentifier>{f9bbb76b-7628-4281-82da-32c00147351c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\MemoryPool">
+      <UniqueIdentifier>{8d256061-0cdd-4212-9925-cead081f70a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\STL">
+      <UniqueIdentifier>{2d2e1092-0e5d-4bce-92f5-09ab6a77c1f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\STL\Map">
+      <UniqueIdentifier>{e057254d-a90c-4f01-b083-150803471fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\STL\LRU_Queue">
+      <UniqueIdentifier>{fa008e1d-557c-449b-b0bb-37612f89c727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Sprite">
+      <UniqueIdentifier>{a083efd3-64f6-4d30-b118-176bc9ec5469}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)RokaMath.inl">
       <Filter>Common\Math</Filter>
     </None>
+    <None Include="$(MSBuildThisFileDirectory)ClassDiagram.cd" />
   </ItemGroup>
 </Project>
