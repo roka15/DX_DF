@@ -53,7 +53,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EDITORWINDOW));
 
     MSG msg;
-
+    DWORD timeDuration = 0;
+    DWORD beforeTime = 0;
+    DWORD curTime;
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -69,6 +71,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         else
         {
+            curTime = timeGetTime();
+            timeDuration += curTime - beforeTime;
+            beforeTime = curTime;
+            if (timeDuration < 1000 / 60)
+            {
+                continue;
+            }
+            timeDuration = 0;
             // 여기서 게임 로직이 돌아가야한다.
             application.Run();
             gui::Editor::Run();
