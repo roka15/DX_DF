@@ -59,6 +59,45 @@ namespace roka::graphics
 	{
 		GetDevice()->BindShaderResource(stage, startSlot, mSRV.GetAddressOf());
 	}
+	void Texture::Create(void* data, size_t size, const file::CSVInfo* csv, UINT csv_index)
+	{
+		Create(data, size);
+		using namespace math;
+		Vector2 canvas = Vector2(csv->canvas[csv_index].first, csv->canvas[csv_index].second);
+		Vector2 imagesize = Vector2(csv->size[csv_index].first, csv->size[csv_index].second);
+		Vector2 offset = Vector2(csv->pos[csv_index].first, csv->pos[csv_index].second);
+
+		D3D11_BOX box;
+		box.front = 0;
+		box.back = 1;
+		box.left = 0;
+		box.right = imagesize.x;
+		box.top = 0;
+		box.bottom =imagesize.y;
+
+		D3D11_TEXTURE2D_DESC desc = {};
+		desc.Format = DXGI_FORMAT::DXGI_FORMAT_R8G8B8A8_UNORM;
+		desc.Usage = D3D11_USAGE_DEFAULT;
+		desc.Width = canvas.x;
+		desc.Height = canvas.y;
+		desc.MipLevels = 1;
+		desc.ArraySize = 1;
+		desc.SampleDesc.Count = 1;
+		desc.SampleDesc.Quality = 0;
+		desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+		desc.CPUAccessFlags = 0;
+		desc.MiscFlags = 0;
+
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> dest = nullptr;
+		roka::graphics::GetDevice()->CreateTexture(&desc, nullptr, dest.GetAddressOf(), 32);
+
+		graphics::GetDevice()->CopySubResourceRegion(dest.Get(),0,
+			offset.x, offset.y,0,
+			mTexture.Get(),0,&box);
+		mSRV.Reset();
+		roka::graphics::GetDevice()->GetID3D11Device()->CreateShaderResourceView(dest.Get(), &mSRVDesc, mSRV.GetAddressOf());
+		mTexture = dest;
+	}
 	void Texture::Create(void* data, size_t size)
 	{
 		IWICImagingFactory* imagingFactory = nullptr;

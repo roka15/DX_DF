@@ -41,7 +41,8 @@ namespace roka::graphics
 		void BindBlendState(ID3D11BlendState* pBlendState);
 
 		void UpdateSubResource(ID3D11Resource* pDstResource, UINT DstSubresource, const D3D11_BOX* pDstBox, const void* pSrcData, UINT SrcRowPitch, UINT SrcDepthPitch);
-		
+		void CopySubResourceRegion(ID3D11Resource* pDstResource, UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
+
 		void DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation);
 		void ClearTarget();
 		void UpdateViewPort();

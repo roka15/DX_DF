@@ -32,9 +32,10 @@ namespace roka
 	std::shared_ptr<Texture> NPK::GetTexture(std::wstring name, UINT index)
 	{
 		auto itr = mCsvs.find(roka::file::ws2s(name));
-		roka::file::CSVInfo* csvInfo = itr->second;
-			
-		std::shared_ptr<Texture> texture = Resources::Find<Texture>(name);
+		roka::file::CSVInfo* csv = itr->second;
+		std::wstring key = GetKey();
+		std::wstring texture_name = key + name + L"Texture" + std::to_wstring(index);
+		std::shared_ptr<Texture> texture = Resources::Find<Texture>(texture_name);
 		if (texture != nullptr)
 			return texture;
 		
@@ -43,9 +44,9 @@ namespace roka
 		roka::file::PackInfo* pack = mPacks[roka::file::ws2s(name)];
 		char* binaryImage = pack->binbuf[index]->buffer;
 
-		texture->Create(binaryImage,pack->binbuf[index]->length);
-		std::wstring key = GetKey();
-		Resources::Insert(key + name + L"Texture", texture);
+		texture->Create(binaryImage,pack->binbuf[index]->length,csv,index);
+		
+		Resources::Insert(texture_name,texture);
 
 		return texture;
 	}

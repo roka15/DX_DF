@@ -23,6 +23,8 @@ namespace roka
         virtual void LateUpdate()override;
         virtual void Render()override;
 
+        void Binds();
+
         void SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index);
         void SetMaterial(std::shared_ptr<Material> material);
     private:

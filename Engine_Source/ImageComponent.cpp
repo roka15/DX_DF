@@ -1,10 +1,13 @@
 #include "ImageComponent.h"
 #include "Resources.h"
+#include "Renderer.h"
 #include "MeshRenderer.h"
 #include "Material.h"
 #include "Sprite.h"
 #include "Prefab.h"
 #include "NPK.h"
+#include "Camera.h"
+#include "Transform.h"
 
 using namespace roka::graphics;
 namespace roka
@@ -41,13 +44,13 @@ namespace roka
 	}
 	void ImageComponent::Render()
 	{
-		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-		if (mr == nullptr)
-			return;
+	}
+	void ImageComponent::Binds()
+	{
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(mSprite->npk_key);
 		if (npk == nullptr)
 			return;
-		mr->material->texture = npk->GetTexture(mSprite->pack_key, mSprite->index);
+		npk->GetTexture(mSprite->pack_key, mSprite->index)->BindShader(EShaderStage::PS, 0);
 	}
 	void ImageComponent::SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index)
 	{

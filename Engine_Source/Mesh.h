@@ -3,6 +3,11 @@
 #include "RokaGraphicDevice_Dx11.h"
 namespace roka
 {
+	namespace renderer
+	{
+
+	}
+
 	class Mesh :
 		public Resource
 	{

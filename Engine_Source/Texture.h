@@ -22,6 +22,7 @@ namespace roka::graphics
 		virtual HRESULT Load(const std::wstring& path)override;
 		void BindShader(EShaderStage stage, UINT startSlot);
 
+		void Create(void* data, size_t size,const file::CSVInfo* csv,UINT csv_index);
 		void Create(void* data,size_t size);
 		void Clear();
 

@@ -66,6 +66,7 @@ namespace roka
         rotation *= Matrix::CreateRotationY(mRotation.y);
         rotation *= Matrix::CreateRotationZ(mRotation.z);
         Matrix position; 
+  
         position.Translation(mPosition);
 
         mWorld = scale * rotation * position;

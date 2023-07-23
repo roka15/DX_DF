@@ -1,6 +1,7 @@
 #include "PlayScene.h"
 #include "Resources.h"
 #include "Renderer.h"
+#include "Input.h"
 
 #include "MeshRenderer.h"
 #include "CameraScript.h"
@@ -30,14 +31,15 @@ namespace roka
 		Scene::Initialize();
 
 	
-		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
+		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"gate");
 		if (npc_npk == nullptr)
-			npc_npk = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
+			npc_npk = Resources::Load<NPK>(L"gate", L"..\\Resources\\npk\\gate.npk");
 
-		std::shared_ptr<Image> img1 = object::Instantiate<Image>(Vector3(-2.0f,0.0f,0.0f),ELayerType::Player);
-		img1->GetComponent<ImageComponent>()->SetSprite(L"npc", L"seria_event_2012summer.img", 0);
-		std::shared_ptr<Image> img2 = object::Instantiate<Image>(Vector3(2.0f, 0.0f, 0.0f), ELayerType::Player);
-		img2->GetComponent<ImageComponent>()->SetSprite(L"npc", L"summer_2018_seria.img", 0);
+		std::shared_ptr<Image> img1 = object::Instantiate<Image>(Vector3(0.0f,0.0f,0.0f),ELayerType::Player);
+		img1->SetName(L"image1");
+		img1->GetComponent<ImageComponent>()->SetSprite(L"gate", L"seriagate_dooreffect.img", 0);
+		/*std::shared_ptr<Image> img2 = object::Instantiate<Image>(Vector3(2.0f, 0.0f, 0.0f), ELayerType::Player);
+		img2->GetComponent<ImageComponent>()->SetSprite(L"gate", L"summer_2018_seria.img", 0);*/
 
 		/*std::shared_ptr<GameObject> SeriaNPC =
 			object::Instantiate<GameObject>(prefab::Prefabs[L"TestObject"],ELayerType::Player);
@@ -99,6 +101,14 @@ namespace roka
 	void PlayScene::Update()
 	{
 		Scene::Update();
+		static int num = 0;
+		if (Input::GetKeyDown(EKeyCode::SPACE))
+		{
+			std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"image1");
+			obj->GetComponent<ImageComponent>()->SetSprite(L"gate", L"seriagate_dooreffect.img",num++);
+			if (num == 9)
+				num = 0;
+		}
 	}
 
 	void PlayScene::LateUpdate()

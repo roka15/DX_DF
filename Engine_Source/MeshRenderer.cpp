@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Transform.h"
 #include "Renderer.h"
+#include "ImageComponent.h"
+
 namespace roka
 {
 	using namespace roka::graphics;
@@ -39,12 +41,15 @@ namespace roka
 	{
 		GameObject* Owner = GetOwner();
 		std::shared_ptr<Transform> tf = GetOwner()->GetComponent<Transform>();
+		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
+		if (imageComp != nullptr)
+		{	
+			imageComp->Binds();
+		}
 		tf->BindConstantBuffer();
-
 		mMesh->BindBuffer();
 		mMaterial->Binds();
 		mMesh->Render();
-
 		mMaterial->Clear();
 	}
 }
