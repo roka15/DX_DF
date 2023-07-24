@@ -28,6 +28,14 @@ namespace roka::renderer
 		Vector2 Resolution;
 	};
 
+	CBUFFER(AnimationCB, CBSLOT_ANIMATION)
+	{
+		Vector2 SpriteLeftTop;
+		Vector2 SpriteSize;
+		Vector2 SpriteOffset;
+		Vector2 CanvasSize;
+	};
+
 	extern roka::graphics::ConstantBuffer* constantBuffer[(UINT)ECBType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerStates[(UINT)ERSType::End];

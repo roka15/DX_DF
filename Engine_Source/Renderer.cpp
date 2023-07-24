@@ -72,6 +72,14 @@ namespace roka::renderer
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 
+		shader = roka::Resources::Find<Shader>(L"AnimationShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
+		shader = roka::Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+		
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State
@@ -362,6 +370,10 @@ namespace roka::renderer
 
 		constantBuffer[(UINT)ECBType::Grid] = new roka::graphics::ConstantBuffer(ECBType::Grid);
 		constantBuffer[(UINT)ECBType::Grid]->Create(sizeof(GridCB));
+
+		constantBuffer[(UINT)ECBType::Animation] = new roka::graphics::ConstantBuffer(ECBType::Animation);
+		constantBuffer[(UINT)ECBType::Animation]->Create(sizeof(AnimationCB));
+
 	}
 	void LoadShader()
 	{
@@ -392,10 +404,21 @@ namespace roka::renderer
 
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(EShaderStage::VS, L"DebugVS.hlsl", "main");
-		debugShader->Create(EShaderStage::PS, L"DebugPS.hlsl"/*L"EffectPS.hlsl"*/, "main");
+		debugShader->Create(EShaderStage::PS, L"DebugPS.hlsl", "main");
 		debugShader->SetTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		debugShader->SetRSState(ERSType::WireFrameNone);
 		roka::Resources::Insert(L"DebugShader", debugShader);
+
+		std::shared_ptr<Shader> animationShader = std::make_shared<Shader>();
+		animationShader->Create(EShaderStage::VS, L"AnimationVS.hlsl", "main");
+		animationShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		roka::Resources::Insert(L"AnimationShader", animationShader);
+
+		std::shared_ptr<Shader> animationinVverterShader = std::make_shared<Shader>();
+		animationinVverterShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
+		animationinVverterShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		roka::Resources::Insert(L"VerticalInverterAnimationShader", animationinVverterShader);
+	
 	}
 	void LoadMaterial()
 	{

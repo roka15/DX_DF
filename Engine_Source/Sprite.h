@@ -27,6 +27,8 @@ namespace roka
         GET_PROPERTY(GetNpkKey) std::wstring npk_key;
         GET_PROPERTY(GetPackKey) std::wstring pack_key;
         GET_PROPERTY(GetIndex) UINT index;
+
+        void SetRatioValue(const Vector2& resolution);
     private:
         Vector2 mLeftTop;
         Vector2 mCanvasSize;

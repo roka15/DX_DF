@@ -34,4 +34,14 @@ namespace roka
 		mPackKey = imagepack_key;
 		mIndex = index;
 	}
+	void Sprite::SetRatioValue(const Vector2& resolution)
+	{
+		mLeftTop.x /= resolution.x;
+		mLeftTop.y /= resolution.y;
+		mImageSize.x = mCanvasSize.x;
+		mImageSize.y = mCanvasSize.y;
+		mCanvasSize = Vector2((mImageSize.x)/ resolution.x, (mImageSize.y) / resolution.y);
+		mImageSize.x /= resolution.x;
+		mImageSize.y /= resolution.y;
+	}
 }

@@ -17,6 +17,7 @@
 
 #define CBSLOT_TRANSFORM 0
 #define CBSLOT_GRID 2
+#define CBSLOT_ANIMATION 3
 
 namespace roka::graphics
 {
@@ -35,6 +36,7 @@ namespace roka::graphics
 		Transform,
 		Material,
 		Grid,
+		Animation,
 		End
 	};
 	enum class ESamplerType

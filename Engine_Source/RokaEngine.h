@@ -24,5 +24,6 @@
 
 #include "../External/NPKFileSystem/Include/FileSystem.h"
 #pragma comment(lib,"..\\External\\NPKFileSystem\\lib\\NPKSystem.lib")
+#pragma comment(lib, "Winmm.lib") 
 
 

@@ -22,9 +22,19 @@ namespace roka::prefab
 	}
 	void Initialize()
 	{
-		std::shared_ptr<Material> material = std::make_shared<Material>();
-		material->shader = Resources::Find<Shader>(L"SpriteShader");
-		Resources.insert(std::make_pair(L"DefaultMaterial", material));
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"SpriteShader");
+			Resources.insert(std::make_pair(L"DefaultMaterial", material));
+			Resources::Insert(L"DefaultMaterial", material);
+		}
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"AnimationShader");
+			Resources.insert(std::make_pair(L"DefaultAniMaterial", material));
+			Resources::Insert(L"DefaultAniMaterial", material);
+		}
+	
 
 		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
 		if (npc_npk == nullptr)

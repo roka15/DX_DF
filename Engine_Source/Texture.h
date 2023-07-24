@@ -22,7 +22,8 @@ namespace roka::graphics
 		virtual HRESULT Load(const std::wstring& path)override;
 		void BindShader(EShaderStage stage, UINT startSlot);
 
-		void Create(void* data, size_t size,const file::CSVInfo* csv,UINT csv_index);
+		
+		void Create(const file::CSVInfo* csvs, const file::PackInfo* packs);
 		void Create(void* data,size_t size);
 		void Clear();
 
@@ -32,6 +33,10 @@ namespace roka::graphics
 		GET_PROPERTY(GetView) D3D11_SHADER_RESOURCE_VIEW_DESC view_desc;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> GetTexture() { return mTexture; }
 		GET_PROPERTY(GetTexture) Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
+	protected:
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> CreateCanvasBaseTexture(std::vector<std::pair<int, int>> canvas_sizes,int count);
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> CreateTexture(void* data, size_t size, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& src);
+		void CombineTextures(std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> textures, Microsoft::WRL::ComPtr<ID3D11Texture2D> base, int count, const file::CSVInfo* csv, const file::PackInfo* pack);
 	private:
 		ScratchImage mImage;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> mTexture;
