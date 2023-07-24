@@ -123,6 +123,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp">
       <Filter>Common\Sprite</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Animation.cpp">
+      <Filter>Resource\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp">
+      <Filter>GameObject\Component\Animator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -271,6 +277,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h">
       <Filter>Common\Sprite</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h">
+      <Filter>Resource\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h">
+      <Filter>GameObject\Component\Animator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -392,6 +404,12 @@
     </Filter>
     <Filter Include="Common\Sprite">
       <UniqueIdentifier>{a083efd3-64f6-4d30-b118-176bc9ec5469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Animation">
+      <UniqueIdentifier>{f7f08c0c-bfef-4bcc-8c83-018924b3bfdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Animator">
+      <UniqueIdentifier>{dc57fcb0-25b6-472e-ae02-29f8e1c85abb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

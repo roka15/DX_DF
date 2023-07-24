@@ -9,6 +9,7 @@ namespace roka::enums
 		Particle,
 		Image,
 		MeshRenderer,
+		Animator,
 		Script,
 		Camera,
 		Collider,
@@ -48,7 +49,7 @@ namespace roka::enums
 		Material,
 		Texture,
 		NPK,
-		Sprite,
+		Animation,
 		End,
 	};
 	enum class EFactoryType

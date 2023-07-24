@@ -32,6 +32,7 @@
     <ClInclude Include="..\Engine_Source\MoveScript.h">
       <Filter>Contents\Script\MoveTest</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
@@ -62,6 +63,7 @@
     <ClCompile Include="..\Engine_Source\MoveScript.cpp">
       <Filter>Contents\Script\MoveTest</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -87,6 +89,9 @@
     </Filter>
     <Filter Include="Contents\Script\MoveTest">
       <UniqueIdentifier>{a2647b72-e4ea-4962-b649-f43569bd613e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\PlayerScript">
+      <UniqueIdentifier>{f7396af7-d457-4919-8b73-f99c4b222e82}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

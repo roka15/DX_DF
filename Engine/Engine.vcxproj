@@ -180,6 +180,7 @@
     <ClInclude Include="..\Engine_Source\WestcoastScene.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="PlayerScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine_Source\CameraScript.cpp" />
@@ -192,6 +193,7 @@
     <ClCompile Include="..\Engine_Source\Slot.cpp" />
     <ClCompile Include="..\Engine_Source\WestcoastScene.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="PlayerScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Update="C:\Users\skagu\OneDrive\바탕 화면\예람\DX11_DF\Engine_Source\RokaMath.inl">
