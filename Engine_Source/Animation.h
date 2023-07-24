@@ -31,7 +31,8 @@ namespace roka
 		void Create(std::wstring npk_key, std::wstring pack_key,std::wstring set_name, UINT start_index,UINT end_index);
 
 		void SetDuration(float duration) { mDuration = duration; }
-		SET_PROPERTY(SetDuration) float duration;
+		float GetDuration() { return mDuration; }
+		PROPERTY(GetDuration,SetDuration) float duration;
 		bool IsComplete() { return mIsComplete; }
 		GET_PROPERTY(IsComplete) bool is_complete;
 

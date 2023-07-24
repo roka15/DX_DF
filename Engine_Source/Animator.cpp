@@ -20,7 +20,7 @@ namespace roka
 		{
 			std::shared_ptr<Events> events
 				= FindEvents(mActiveAnimation.lock()->GetKey());
-			if (events !=nullptr)
+			if (events != nullptr)
 				events->completeEvent();
 
 			mActiveAnimation.lock()->Reset();
@@ -33,7 +33,7 @@ namespace roka
 	void Animator::Render()
 	{
 	}
-	void Animator::Create(std::wstring npk_name, std::wstring pack_name, std::wstring set_name, int start_index, int end_index)
+	void Animator::Create(std::wstring npk_name, std::wstring pack_name, std::wstring set_name, int start_index, int end_index, float duration)
 	{
 		std::shared_ptr<Animation> animation = FindAnimation(set_name);
 		if (animation != nullptr)
@@ -41,6 +41,7 @@ namespace roka
 
 		animation = std::make_shared<Animation>();
 		animation->SetKey(set_name);
+		animation->duration = duration;
 		animation->Create(npk_name, pack_name, set_name, start_index, end_index);
 		mAnimations.insert(std::make_pair(set_name, animation));
 
@@ -70,23 +71,24 @@ namespace roka
 
 		return iter->second;
 	}
-	void Animator::PlayAnimation(const std::wstring& name, bool loop,float duration)
+	void Animator::PlayAnimation(const std::wstring& name, bool loop, float duration)
 	{
 		std::shared_ptr<Animation> prevAnimation = mActiveAnimation.lock();
 
 		std::shared_ptr<Events> events;
-		if (prevAnimation!=nullptr)
+		if (prevAnimation != nullptr)
 		{
 			events = FindEvents(prevAnimation->GetKey());
-			if (events!=nullptr)
+			if (events != nullptr)
 				events->endEvent();
 		}
 
 		std::shared_ptr<Animation> animation = FindAnimation(name);
-		if (animation!=nullptr)
+		if (animation != nullptr)
 		{
 			mActiveAnimation = animation;
-			mActiveAnimation.lock()->duration = duration;
+			if (duration != 0.0f)
+				mActiveAnimation.lock()->duration = duration;
 		}
 
 		std::shared_ptr<Animation> ActiveAni = mActiveAnimation.lock();
@@ -100,7 +102,7 @@ namespace roka
 	void Animator::Binds()
 	{
 		std::shared_ptr<Animation> ani = mActiveAnimation.lock();
-		if (ani==nullptr)
+		if (ani == nullptr)
 			return;
 		ani->Binds();
 	}

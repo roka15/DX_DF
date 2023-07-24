@@ -64,12 +64,10 @@ namespace roka::graphics
 	{
 		std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> textures;
 		int count = packs->binbuf.size();
-		std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> srvs;
 		for (int i = 0; i < count; i++)
 		{
 			Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv;
 			textures.push_back(CreateTexture(packs->binbuf[i]->buffer, packs->binbuf[i]->length,srv));
-			srvs.push_back(srv);
 		}
 
 
@@ -80,13 +78,10 @@ namespace roka::graphics
 		if (canvas.x * count == imagesize.x && canvas.y == imagesize.y)
 		{
 			mTexture = textures[0];
-			mSRV = srvs[0];
 			return;
 		}
 
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> dest = CreateCanvasBaseTexture(csvs->canvas, count);
-
-		
 
 		CombineTextures(textures, dest, count, csvs, packs);
 	}
@@ -412,7 +407,8 @@ namespace roka::graphics
 		mSRVDesc.Texture2D.MostDetailedMip = 0;
 		mSRVDesc.Texture2D.MipLevels = 1;
 
-		//roka::graphics::GetDevice()->GetID3D11Device()->CreateShaderResourceView(texture.Get(), &mSRVDesc, mSRV.GetAddressOf());
+		mSRV.Reset();
+		roka::graphics::GetDevice()->GetID3D11Device()->CreateShaderResourceView(texture.Get(), &mSRVDesc, mSRV.GetAddressOf());
 
 		return texture;
 	}

@@ -15,6 +15,7 @@ namespace roka
 		,mIndex(-1)
 		,mTime(0.0f)
 		,mIsComplete(false)
+		,mDuration(0.0f)
 	{
 	}
 	Animation::~Animation()

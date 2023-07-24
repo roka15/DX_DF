@@ -58,9 +58,9 @@ namespace roka
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 		mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 		std::shared_ptr<Animator> ani = obj->AddComponent<Animator>();
-		ani->Create(L"baseskin", L"mg_body80500.img", L"Idle", 10, 13);
-		ani->Create(L"baseskin", L"mg_body80500.img", L"Right", 0, 9);
-		ani->PlayAnimation(L"Idle", true, 0.3f);
+		ani->Create(L"baseskin", L"mg_body80500.img", L"Idle", 10, 13,0.3f);
+		ani->Create(L"baseskin", L"mg_body80500.img", L"Right", 0, 9,0.1f);
+		ani->PlayAnimation(L"Idle", true);
 		
 
 		//ani->Create();
@@ -134,25 +134,25 @@ namespace roka
 		if (Input::GetKeyUp(EKeyCode::RIGHT))
 		{
 			code = EKeyCode::S;
-			obj->GetComponent<Animator>()->PlayAnimation(L"Idle", true, 0.3f);
+			obj->GetComponent<Animator>()->PlayAnimation(L"Idle", true);
 		}
 		if (Input::GetKeyUp(EKeyCode::LEFT))
 		{
 			code = EKeyCode::S;
 			obj->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"AnimationShader");
-			obj->GetComponent<Animator>()->PlayAnimation(L"Idle", true, 0.3f);
+			obj->GetComponent<Animator>()->PlayAnimation(L"Idle", true);
 		}
 		
 		if (Input::GetKey(EKeyCode::RIGHT)&& code !=EKeyCode::RIGHT)
 		{
 			code = EKeyCode::RIGHT;
-			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true, 0.1f);
+			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true);
 		}
 		if (Input::GetKey(EKeyCode::LEFT) && code != EKeyCode::LEFT)
 		{
 			code = EKeyCode::LEFT;
 			obj->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true, 0.1f);
+			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true);
 		}
 		if (Input::GetKeyDown(EKeyCode::SPACE))
 		{
