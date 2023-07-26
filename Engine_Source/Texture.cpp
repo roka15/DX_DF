@@ -66,8 +66,7 @@ namespace roka::graphics
 		int count = packs->binbuf.size();
 		for (int i = 0; i < count; i++)
 		{
-			Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> srv;
-			textures.push_back(CreateTexture(packs->binbuf[i]->buffer, packs->binbuf[i]->length,srv));
+			textures.push_back(CreateTexture(packs->binbuf[i]->buffer, packs->binbuf[i]->length));
 		}
 
 
@@ -265,7 +264,7 @@ namespace roka::graphics
 		roka::graphics::GetDevice()->CreateTexture(&desc, nullptr, texture.GetAddressOf(), 32);
 		return texture;
 	}
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture::CreateTexture(void* data, size_t size,Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& srv)
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> Texture::CreateTexture(void* data, size_t size)
 	{
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> texture = nullptr;
 		IWICImagingFactory* imagingFactory = nullptr;

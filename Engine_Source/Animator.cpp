@@ -38,7 +38,7 @@ namespace roka
 		std::shared_ptr<Animation> animation = FindAnimation(set_name);
 		if (animation != nullptr)
 			return;
-
+	
 		animation = std::make_shared<Animation>();
 		animation->SetKey(set_name);
 		animation->duration = duration;

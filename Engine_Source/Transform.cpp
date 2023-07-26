@@ -87,6 +87,10 @@ namespace roka
     void Transform::BindConstantBuffer()
     {
         GameObject* aowner = GetOwner();
+        if (aowner->GetName().compare(L"HPFilter") == 0)
+        {
+            int a = 0;
+        }
         renderer::TransformCB trCB = {};
         trCB.mWorld = mWorld;
         Matrix CameraView = Camera::GetGpuViewMatrix();

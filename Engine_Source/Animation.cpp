@@ -8,14 +8,14 @@
 #include "RokaTime.h"
 namespace roka
 {
-	Animation::Animation():Resource(enums::EResourceType::Animation)
-		,mAtlas(nullptr)
-		,mAnimator()
+	Animation::Animation() :Resource(enums::EResourceType::Animation)
+		, mAtlas(nullptr)
+		, mAnimator()
 		, mSprites{}
-		,mIndex(-1)
-		,mTime(0.0f)
-		,mIsComplete(false)
-		,mDuration(0.0f)
+		, mIndex(-1)
+		, mTime(0.0f)
+		, mIsComplete(false)
+		, mDuration(0.0f)
 	{
 	}
 	Animation::~Animation()
@@ -71,12 +71,12 @@ namespace roka
 		Vector2 LeftTop = {};
 		float width = 0;
 		float height = 0;
-		for (int i = start_index; i <= end_index; i++)
+		for (int i = start_index; i < end_index; i++)
 		{
 			Sprite sprite;
 			sprite.lefttop = LeftTop;
-			sprite.Create(npk_key, pack_key,i);
-			
+			sprite.Create(npk_key, pack_key, i);
+
 			LeftTop.x += sprite.canvas_size.x;
 			if (height < sprite.canvas_size.y)
 				height = sprite.canvas_size.y;
@@ -88,11 +88,12 @@ namespace roka
 		{
 			sprite.SetRatioValue(Vector2(width, height));
 		}
-	
+
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(npk_key);
 		if (npk == nullptr)
 			return;
-	    
-		mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, set_name);
+		mAtlas = Resources::Find<Texture>(set_name + L"AtlasTexture");
+		if (mAtlas == nullptr)
+			mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, set_name);
 	}
 }

@@ -30,11 +30,43 @@ namespace roka::prefab
 		}
 		{
 			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"SpriteShader");
+			material->render_mode = ERenderMode::Transparent;
+			Resources.insert(std::make_pair(L"DefaultMaterial", material));
+			Resources::Insert(L"TransparentMaterial", material);
+		}
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"VerticalInverterShader");
+			Resources.insert(std::make_pair(L"DefaultVInverterMaterial", material));
+			Resources::Insert(L"DefaultVInverterMaterial", material);
+		}
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->shader = Resources::Find<Shader>(L"AnimationShader");
 			Resources.insert(std::make_pair(L"DefaultAniMaterial", material));
 			Resources::Insert(L"DefaultAniMaterial", material);
 		}
-	
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"EffectShader");
+			Resources.insert(std::make_pair(L"DefaultEffectMaterial", material));
+			Resources::Insert(L"DefaultEffectMaterial", material);
+		}
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"EffectAniShader");
+			material->render_mode = ERenderMode::Transparent;
+			Resources.insert(std::make_pair(L"DefaultEffectAniMaterial", material));
+			Resources::Insert(L"DefaultEffectAniMaterial", material);
+		}
+		{
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+			material->render_mode = ERenderMode::Transparent;
+			Resources.insert(std::make_pair(L"DefaultVInverterAniMaterial", material));
+			Resources::Insert(L"DefaultVInverterAniMaterial", material);
+		}
 
 		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
 		if (npc_npk == nullptr)

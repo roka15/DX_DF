@@ -35,7 +35,7 @@ namespace roka::graphics
 		GET_PROPERTY(GetTexture) Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	protected:
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> CreateCanvasBaseTexture(std::vector<std::pair<int, int>> canvas_sizes,int count);
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> CreateTexture(void* data, size_t size, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& src);
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> CreateTexture(void* data, size_t size);
 		void CombineTextures(std::vector<Microsoft::WRL::ComPtr<ID3D11Texture2D>> textures, Microsoft::WRL::ComPtr<ID3D11Texture2D> base, int count, const file::CSVInfo* csv, const file::PackInfo* pack);
 	private:
 		ScratchImage mImage;

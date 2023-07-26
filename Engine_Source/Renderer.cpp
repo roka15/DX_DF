@@ -68,6 +68,10 @@ namespace roka::renderer
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 
+		shader = roka::Resources::Find<Shader>(L"EffectAniShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
 		shader = roka::Resources::Find<Shader>(L"DebugShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
@@ -399,8 +403,15 @@ namespace roka::renderer
 
 		std::shared_ptr<Shader> effectShader = std::make_shared<Shader>();
 		effectShader->Create(EShaderStage::VS, L"SpriteVS.hlsl", "main");
-		effectShader->Create(EShaderStage::PS, L"SpritePS.hlsl"/*L"EffectPS.hlsl"*/, "main");
+		effectShader->Create(EShaderStage::PS, L"SpritePS.hlsl", "main");
+		effectShader->bsstate = EBSType::OneOne;
 		roka::Resources::Insert(L"EffectShader", effectShader);
+
+		std::shared_ptr<Shader> effectAniShader = std::make_shared<Shader>();
+		effectAniShader->Create(EShaderStage::VS, L"AnimationVS.hlsl", "main");
+		effectAniShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		effectAniShader->bsstate = EBSType::OneOne;
+		roka::Resources::Insert(L"EffectAniShader", effectAniShader);
 
 		std::shared_ptr<Shader> debugShader = std::make_shared<Shader>();
 		debugShader->Create(EShaderStage::VS, L"DebugVS.hlsl", "main");
@@ -414,10 +425,11 @@ namespace roka::renderer
 		animationShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
 		roka::Resources::Insert(L"AnimationShader", animationShader);
 
-		std::shared_ptr<Shader> animationinVverterShader = std::make_shared<Shader>();
-		animationinVverterShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
-		animationinVverterShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
-		roka::Resources::Insert(L"VerticalInverterAnimationShader", animationinVverterShader);
+		std::shared_ptr<Shader> animationinverterShader = std::make_shared<Shader>();
+		animationinverterShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
+		animationinverterShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		animationinverterShader->bsstate = EBSType::OneOne;
+		roka::Resources::Insert(L"VerticalInverterAnimationShader", animationinverterShader);
 	
 	}
 	void LoadMaterial()

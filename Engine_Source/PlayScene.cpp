@@ -32,14 +32,32 @@ namespace roka
 		Scene::Initialize();
 
 
-		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"baseskin");
+		/*std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"baseskin");
 		if (npc_npk == nullptr)
-			npc_npk = Resources::Load<NPK>(L"baseskin", L"..\\Resources\\npk\\baseskin.npk");
+			npc_npk = Resources::Load<NPK>(L"baseskin", L"..\\Resources\\npk\\baseskin.npk");*/
 
-		/*std::shared_ptr<Image> img1 = object::Instantiate<Image>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
+			/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
+			obj->SetName(L"player");
+			obj->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
+			std::shared_ptr<MeshRenderer> mr = obj->AddComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			std::shared_ptr<Animator> ani = obj->AddComponent<Animator>();
+			ani->Create(L"baseskin", L"mg_body80500.img", L"Idle", 10, 13,0.3f);
+			ani->Create(L"baseskin", L"mg_body80500.img", L"Right", 0, 9,0.1f);
+			ani->PlayAnimation(L"Idle", true);*/
+
+		std::shared_ptr<NPK> gate_npk = Resources::Find<NPK>(L"gate");
+		if (gate_npk == nullptr)
+			gate_npk = Resources::Load<NPK>(L"gate", L"..\\Resources\\npk\\gate.npk");
+		std::shared_ptr<Image> img1 = object::Instantiate<Image>(Vector3(0.0f, 0.0f, 0.0f),Vector3::Zero,Vector3(2.0f,2.0f,1.0f), ELayerType::Player);
 		img1->SetName(L"image1");
-			img1->GetComponent<ImageComponent>()->SetSprite(L"gate", L"seriagate_dooreffect.img", 0);*/
-
+		img1->GetComponent<ImageComponent>()->SetSprite(L"gate", L"gatedown.img", 0);
+		/*std::shared_ptr<Animator> ani = img1->AddComponent<Animator>();
+		ani->Create(L"gate", L"gatedown.img", L"gate", 0, 29, 0.3f);
+		ani->PlayAnimation(L"gate", true);
+		std::shared_ptr<MeshRenderer> mr = img1->AddComponent<MeshRenderer>();
+		mr->material = Resources::Find<Material>(L"DefaultAniMaterial");*/
 		/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
 		obj->SetName(L"obj");
 		std::shared_ptr<MeshRenderer> mr = obj->AddComponent<MeshRenderer>();
@@ -51,16 +69,6 @@ namespace roka
 		ani->PlayAnimation(L"SeriaDoorEffect", true, 0.5f);*/
 
 
-		std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
-		obj->SetName(L"player");
-		obj->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
-		std::shared_ptr<MeshRenderer> mr = obj->AddComponent<MeshRenderer>();
-		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
-		std::shared_ptr<Animator> ani = obj->AddComponent<Animator>();
-		ani->Create(L"baseskin", L"mg_body80500.img", L"Idle", 10, 13,0.3f);
-		ani->Create(L"baseskin", L"mg_body80500.img", L"Right", 0, 9,0.1f);
-		ani->PlayAnimation(L"Idle", true);
 		
 
 		//ani->Create();
@@ -130,7 +138,7 @@ namespace roka
 		Scene::Update();
 		static int num = 0;
 		static EKeyCode code;
-		std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"player");
+		/*std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"player");
 		if (Input::GetKeyUp(EKeyCode::RIGHT))
 		{
 			code = EKeyCode::S;
@@ -153,13 +161,13 @@ namespace roka
 			code = EKeyCode::LEFT;
 			obj->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
 			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true);
-		}
+		}*/
 		if (Input::GetKeyDown(EKeyCode::SPACE))
 		{
-			/*std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"image1");
-			obj->GetComponent<ImageComponent>()->SetSprite(L"gate", L"seriagate_dooreffect.img", num++);
-			if (num == 9)
-				num = 0;*/
+			std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"image1");
+			obj->GetComponent<ImageComponent>()->SetSprite(L"gate", L"gatedown.img", num++);
+			if (num == 29)
+				num = 0;
 		}
 	}
 

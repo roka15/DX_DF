@@ -51,7 +51,7 @@ namespace roka
 
 		roka::file::PackInfo* pack = mPacks[roka::file::ws2s(name)];
 		file::CSVInfo use_csv = {};
- 		file::PackInfo use_pack = {};
+		file::PackInfo use_pack = {};
 		use_csv.canvas.push_back(csv->canvas[index]);
 		use_csv.name = csv->name;
 		use_csv.pos.push_back(csv->pos[index]);
@@ -60,7 +60,7 @@ namespace roka
 		file::FileInfo* fileData = new file::FileInfo(*(pack->binbuf[index]));
 		use_pack.binbuf.push_back(fileData);
 
-		texture->Create(&use_csv,&use_pack);
+		texture->Create(&use_csv, &use_pack);
 
 		Resources::Insert(texture_name, texture);
 
@@ -76,8 +76,8 @@ namespace roka
 		auto csv_itr = mCsvs.find(file::ws2s(pack_name));
 		auto pack_itr = mPacks.find(file::ws2s(pack_name));
 		int count = end_index - start_index;
-	
-		for (int i = start_index; i <= end_index; i++)
+
+		for (int i = start_index; i < end_index; i++)
 		{
 			csv.canvas.push_back(csv_itr->second->canvas[i]);
 			csv.name = csv_itr->second->name;
@@ -87,7 +87,7 @@ namespace roka
 			file::FileInfo* fileData = new file::FileInfo(*(pack_itr->second->binbuf[i]));
 			pack.binbuf.push_back(fileData);
 		}
-		
+
 		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 		texture->Create(&csv, &pack);
 
@@ -108,17 +108,21 @@ namespace roka
 
 	Vector2 NPK::GetCanvasSize(std::wstring name, UINT index)
 	{
-		std::pair<int, int> value = mCsvs[roka::file::ws2s(name)]->canvas[index];
-		return Vector2(value.first, value.second);
+		Vector2 CanvasSize = {};
+
+		CanvasSize.x = mCsvs[roka::file::ws2s(name)]->canvas[index].first;
+		CanvasSize.y = mCsvs[roka::file::ws2s(name)]->canvas[index].second;
+
+		return CanvasSize;
 	}
 	Vector2 NPK::GetAddCanvasSize(std::wstring name, UINT start_index, UINT end_index)
 	{
 		Vector2 size = {};
-		
+
 		auto itr = mCsvs.find(file::ws2s(name));
 		if (itr == mCsvs.end())
 			return Vector2(0, 0);
-		
+
 		for (int i = start_index; i <= end_index; i++)
 		{
 			size.x += itr->second->canvas[i].first;
