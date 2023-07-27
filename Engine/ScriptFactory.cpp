@@ -2,6 +2,8 @@
 #include "CameraScript.h"
 #include "GridScript.h"
 #include "MoveScript.h"
+#include "PlayerScript.h"
+#include "AvatarScript.h"
 namespace roka
 {
 	void ScriptFactory::Initialize()
@@ -17,6 +19,16 @@ namespace roka
 		mFactories[EScriptType::Move] = [](Script* script) {
 			MoveScript* ms = dynamic_cast<MoveScript*>(script);
 			return std::shared_ptr<MoveScript>(new MoveScript(*ms));
+		};
+		mFactories[EScriptType::Player] = [](Script* script)
+		{
+			PlayerScript* ps = dynamic_cast<PlayerScript*>(script);
+			return std::shared_ptr<PlayerScript>(new PlayerScript(*ps));
+		};
+		mFactories[EScriptType::Avatar] = [](Script* script)
+		{
+			AvatarScript* ps = dynamic_cast<AvatarScript*>(script);
+			return std::shared_ptr<AvatarScript>(new AvatarScript(*ps));
 		};
 	}
 	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)

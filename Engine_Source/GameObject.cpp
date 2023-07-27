@@ -4,9 +4,9 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Script.h"
-#include "FactoryManager.h"
-#include "ComponentFactory.h"
-#include "ScriptFactory.h"
+
+#include "..\\Engine\\ComponentFactory.h"
+#include "..\\Engine\\ScriptFactory.h"
 roka::GameObject::GameObject()
 	:mState(EState::Active)
 	, mbMove(true)

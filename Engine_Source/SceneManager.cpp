@@ -1,9 +1,5 @@
 #include "SceneManager.h"
 
-#include "PlayScene.h"
-#include "SeriaGateScene.h"
-#include "HendonmyreScene.h"
-#include "WestcoastScene.h"
 namespace roka
 {
 	Scene* SceneManager::mActiveScene = nullptr;

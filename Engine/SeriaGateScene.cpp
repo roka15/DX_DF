@@ -521,7 +521,7 @@ void roka::SeriaGateScene::OnEnter()
 			GateMidLeftEft->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = GateMidLeftEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultVInverterAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultVInverterEftAniMaterial");
 			std::shared_ptr<Animator> ani = GateMidLeftEft->AddComponent<Animator>();
 			ani->Create(L"seria_room", L"gate_new_eff", L"DoorEft06", 0, 5, 0.08f);
 			ani->PlayAnimation(L"DoorEft06", true);
@@ -557,7 +557,7 @@ void roka::SeriaGateScene::OnEnter()
 			GateMidLeftGlowEft->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = GateMidLeftGlowEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultVInverterAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultVInverterEftAniMaterial");
 			std::shared_ptr<Animator> ani = GateMidLeftGlowEft->AddComponent<Animator>();
 			ani->Create(L"seria_room", L"gate_new_glow_eff", L"DoorEft07", 0, 24, 0.08f);
 			ani->PlayAnimation(L"DoorEft07", true);

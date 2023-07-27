@@ -7,7 +7,7 @@
 
 #include "Transform.h"
 #include "MeshRenderer.h"
-#include "GridScript.h"
+#include "..\\Engine\\GridScript.h"
 
 
 namespace gui
