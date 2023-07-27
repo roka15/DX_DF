@@ -3,7 +3,44 @@
 namespace roka
 {
 	Animator::Animator() :Component(EComponentType::Animator)
+		, mAnimations{}
+		, mEvents{}
+		, mActiveAnimation()
+		, mFirstUpdateAnimation()
+		, mIsLoop(false)
 	{
+	}
+	Animator::Animator(const Animator& ref) :Component(ref)
+	{
+		for (auto map : ref.mAnimations)
+		{
+			std::shared_ptr<Animation> animation = std::make_shared<Animation>(*(map.second));
+			mAnimations.insert(std::make_pair(map.first, animation));
+		}
+		for (auto map : ref.mEvents)
+		{
+			mEvents.insert(std::make_pair(map.first, map.second));
+		}
+		mActiveAnimation = ref.mActiveAnimation.lock();
+		mFirstUpdateAnimation = ref.mFirstUpdateAnimation.lock();
+		mIsLoop = ref.mIsLoop;
+	}
+	void Animator::Copy(Component* src)
+	{
+		Component::Copy(src);
+		Animator* source = dynamic_cast<Animator*>(src);
+		for (auto map : source->mAnimations)
+		{
+			std::shared_ptr<Animation> animation = std::make_shared<Animation>(*(map.second));
+			mAnimations.insert(std::make_pair(map.first, animation));
+		}
+		for (auto map : source->mEvents)
+		{
+			mEvents.insert(std::make_pair(map.first, map.second));
+		}
+		mActiveAnimation = source->mActiveAnimation.lock();
+		mFirstUpdateAnimation = source->mFirstUpdateAnimation.lock();
+		mIsLoop = source->mIsLoop;
 	}
 	Animator::~Animator()
 	{
@@ -15,7 +52,7 @@ namespace roka
 	{
 		if (mActiveAnimation.expired() == true)
 			return;
-
+		mFirstUpdateAnimation = mActiveAnimation.lock();
 		if (mActiveAnimation.lock()->IsComplete() && mIsLoop)
 		{
 			std::shared_ptr<Events> events
@@ -29,6 +66,14 @@ namespace roka
 	}
 	void Animator::LateUpdate()
 	{
+		if (mFirstUpdateAnimation.lock().get() != mActiveAnimation.lock().get())
+		{
+			mActiveAnimation.lock()->LateUpdate();
+		}
+		else
+		{
+			mFirstUpdateAnimation.reset();
+		}
 	}
 	void Animator::Render()
 	{
@@ -38,7 +83,7 @@ namespace roka
 		std::shared_ptr<Animation> animation = FindAnimation(set_name);
 		if (animation != nullptr)
 			return;
-	
+
 		animation = std::make_shared<Animation>();
 		animation->SetKey(set_name);
 		animation->duration = duration;

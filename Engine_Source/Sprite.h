@@ -7,6 +7,7 @@ namespace roka
     {
     public:
         Sprite();
+        Sprite(const Sprite& ref);
         virtual ~Sprite();
     
         void Create(std::wstring npk_key,std::wstring imagepack_key,UINT index);

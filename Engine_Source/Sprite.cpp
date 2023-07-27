@@ -13,6 +13,17 @@ namespace roka
 		mIndex(0)
 	{
 	}
+	Sprite::Sprite(const Sprite& ref)
+	{
+		mLeftTop = ref.mLeftTop;
+		mCanvasSize = ref.mCanvasSize;
+		mImageSize = ref.mImageSize;
+		mOffset = ref.mOffset;
+
+		mNPKKey = ref.mNPKKey;
+		mPackKey = ref.mPackKey;
+		mIndex = ref.mIndex;
+	}
 	Sprite::~Sprite()
 	{
 	}

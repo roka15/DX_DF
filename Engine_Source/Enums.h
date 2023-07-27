@@ -21,6 +21,9 @@ namespace roka::enums
 		Camera,
 		Grid,
         Move,
+		Player,
+		Avatar,
+
 		End,
 	};
 

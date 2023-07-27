@@ -55,6 +55,7 @@ namespace roka::object
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, obj);
 		obj->Initialize();
+		obj->layer_type = layer;
 		return obj;
 	}
 	template<typename T>
@@ -68,6 +69,7 @@ namespace roka::object
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, obj);
 		obj->Initialize();
+		obj->layer_type = layer;
 		return obj;
 	}
 	template<typename T>
@@ -78,6 +80,7 @@ namespace roka::object
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, obj);
 		obj->Initialize();
+		obj->layer_type = layer;
 		return obj;
 	}
 	template<typename T>
@@ -90,6 +93,7 @@ namespace roka::object
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, obj);
 		obj->Initialize();
+		obj->layer_type = layer;
 		return obj;
 	}
 	template<typename T>
@@ -103,6 +107,7 @@ namespace roka::object
 		Scene* scene = SceneManager::GetActiveScene();
 		scene->AddGameObject(layer, obj);
 		obj->Initialize();
+		obj->layer_type = layer;
 		return obj;
 	}
 

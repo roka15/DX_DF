@@ -428,8 +428,13 @@ namespace roka::renderer
 		std::shared_ptr<Shader> animationinverterShader = std::make_shared<Shader>();
 		animationinverterShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
 		animationinverterShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
-		animationinverterShader->bsstate = EBSType::OneOne;
 		roka::Resources::Insert(L"VerticalInverterAnimationShader", animationinverterShader);
+
+		std::shared_ptr<Shader> animationinverterEftShader = std::make_shared<Shader>();
+		animationinverterEftShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
+		animationinverterEftShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		animationinverterEftShader->bsstate = EBSType::OneOne;
+		roka::Resources::Insert(L"VerticalInverterEftAnimationShader", animationinverterEftShader);
 	
 	}
 	void LoadMaterial()

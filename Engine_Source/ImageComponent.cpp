@@ -47,6 +47,8 @@ namespace roka
 	}
 	void ImageComponent::Binds()
 	{
+		if (mSprite == nullptr)
+			return;
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(mSprite->npk_key);
 		if (npk == nullptr)
 			return;

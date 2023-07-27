@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.h"
-#include "FactoryManager.h"
+#include "..\\Engine\\FactoryManager.h"
 #include "Script.h"
 #include "Component.h"
 namespace roka
@@ -96,6 +96,7 @@ namespace roka
 				= cfb->Create<T>();
 			mComponents.push_back(component);
 			component->owner = this;
+			component->Initialize();
 			return component;
 		}
 		
@@ -110,19 +111,25 @@ namespace roka
 				= cfb->Create<T>();
 			mScripts.push_back(component);
 			component->owner = this;
+			component->Initialize();
 			return component;
 		}
 		void SetMoveFlag(bool flag) { mbMove = flag; }
 		bool GetMoveFlag() { return mbMove; }
-		PROPERTY(GetMoveFlag, SetMoveFlag) bool ismove;
 
 		void SetState(EState state) { mState = state; }
 		EState GetState() { return mState; }
+
+		void SetLayerType(ELayerType layer) { mLayerType = layer; }
+		ELayerType GetLayerType() { return mLayerType; }
+
+		PROPERTY(GetMoveFlag, SetMoveFlag) bool ismove;
 		PROPERTY(GetState, SetState) EState active;
-	
+		PROPERTY(GetLayerType, SetLayerType) ELayerType layer_type;
 	private:
 		bool mbMove;
 		EState mState;
+		ELayerType mLayerType;
 		std::vector<std::shared_ptr<Component>> mComponents;
 		std::vector<std::shared_ptr<Script>> mScripts;
 	};

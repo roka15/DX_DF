@@ -17,6 +17,7 @@ namespace roka
 	{
 	public:
 		Animation();
+		Animation(const Animation& ref);
 		virtual ~Animation();
 
 		virtual HRESULT Load(const std::wstring& path) { return S_FALSE; };

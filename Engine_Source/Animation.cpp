@@ -18,6 +18,19 @@ namespace roka
 		, mDuration(0.0f)
 	{
 	}
+	Animation::Animation(const Animation& ref):Resource(ref)
+	{
+		mAtlas = ref.mAtlas;
+		for (const auto& copy_sprite : ref.mSprites)
+		{
+			Sprite sprite = copy_sprite;
+			mSprites.push_back(sprite);
+		}
+		mDuration = ref.mDuration;
+		mIndex = 0;
+		mTime = 0;
+		mIsComplete = false;
+	}
 	Animation::~Animation()
 	{
 	}

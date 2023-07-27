@@ -6,6 +6,10 @@ namespace roka
 	class Animator :
 		public Component
 	{
+	private:
+		Animator();
+		Animator(const Animator& ref);
+		virtual void Copy(Component* src)override;
 	public:
 		struct Event
 		{
@@ -28,7 +32,7 @@ namespace roka
 			Event endEvent;
 		};
 
-		Animator();
+		
 		~Animator();
 
 		virtual void Initialize();
@@ -47,9 +51,13 @@ namespace roka
 		std::function<void()>& EndEvent(const std::wstring key);
 
 	private:
+		friend class FactoryBase;
+		friend class ComponentFactory;
+
 		std::map<std::wstring, std::shared_ptr<Animation>> mAnimations;
 		std::map<std::wstring, std::shared_ptr<Events>> mEvents;
 		std::weak_ptr<Animation> mActiveAnimation;
+		std::weak_ptr<Animation> mFirstUpdateAnimation;
 		bool mIsLoop;
 	};
 }
