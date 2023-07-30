@@ -36,16 +36,14 @@ namespace roka
 	void PlayerScript::Initialize()
 	{
 		mTransform = owner->GetComponent<Transform>();
-		mMeshRenderer = owner->AddComponent<MeshRenderer>();
-		mMoveScript = owner->AddComponent<MoveScript>();
-		mAvatar = owner->AddComponent<AvatarScript>();
-
+		mMoveScript = owner->GetComponent<MoveScript>();
+		mAvatar = owner->GetChild<AvatarScript>()->GetComponent<AvatarScript>();
 		mUser->Initialize();
 
 
-		std::shared_ptr<MeshRenderer> mesh = mMeshRenderer.lock();
+		/*std::shared_ptr<MeshRenderer> mesh = mMeshRenderer.lock();
 		mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mesh->material = Resources::Find<Material>(L"DefaultAniMaterial");
+		mesh->material = Resources::Find<Material>(L"DefaultAniMaterial");*/
 
 
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
@@ -59,17 +57,16 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
 		avatar->InsertStateAniInfo(EPlayerState::Walk, EAvatarParts::Base, L"PlayerBAWalk");
 
+		mPlayerState = EPlayerState::Idle;
 		//현재 idle 상태 애니 재생.
 		avatar->PlayPartsMotion();
 
 
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		ms->SetSpeed(0.8f);
-		ms->SetKeys(mUser->GetRightKey(), mUser->GetLeftKey(), mUser->GetUpKey(), mUser->GetDownKey());
 	}
 	void PlayerScript::Update()
 	{
-		Move();
 	}
 	void PlayerScript::LateUpdate()
 	{
@@ -77,118 +74,118 @@ namespace roka
 	void PlayerScript::Render()
 	{
 	}
-	void PlayerScript::Move()
+
+	void PlayerScript::LeftBtnDown()
 	{
-		if (mIsActiveInput == false)
-			return;
+		mPlayerState = EPlayerState::Walk;
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
-		std::shared_ptr<MeshRenderer> mr = mMeshRenderer.lock();
-		UINT rightkey = mUser->GetRightKey();
-		UINT leftkey = mUser->GetLeftKey();
-		UINT upkey = mUser->GetUpKey();
-		UINT downkey = mUser->GetDownKey();
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		ms->SetDirX(-1.0f);
+		as->SettingLeftMaterial();
+		as->PlayPartsMotion();
+	}
 
-		int active_vertical = -1;
-		int active_horizontal = -1;
+	void PlayerScript::RightBtnDown()
+	{
+		mPlayerState = EPlayerState::Walk;
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		ms->SetDirX(1.0f);
+		as->SettingRightMaterial();
+		as->PlayPartsMotion();
+	}
 
-		bool keydown = false;
-		if (Input::GetKeyDown((EKeyCode)rightkey))
-		{
-			ms->VerticalMove(rightkey);
-			active_vertical = rightkey;
-			keydown = true;
-		}
-		if (Input::GetKeyDown((EKeyCode)leftkey))
-		{
-			ms->VerticalMove(leftkey);
-			active_vertical = leftkey;
-			keydown = true;
-		}
-		if (Input::GetKeyDown((EKeyCode)upkey))
-		{
-			ms->HorizontalMove(upkey);
-			active_horizontal = upkey;
-			keydown = true;
-		}
-		if (Input::GetKeyDown((EKeyCode)downkey))
-		{
-			ms->HorizontalMove(downkey);
-			active_horizontal = downkey;
-			keydown = true;
-		}
+	void PlayerScript::UpBtnDown()
+	{
+		mPlayerState = EPlayerState::Walk;
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		ms->SetDirY(1.0f);
 
-		bool keyup_flag = false;
-		if (Input::GetKeyUp((EKeyCode)rightkey))
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		as->PlayPartsMotion();
+	}
+
+	void PlayerScript::DownBtnDown()
+	{
+		mPlayerState = EPlayerState::Walk;
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		ms->SetDirY(-1.0f);
+
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		as->PlayPartsMotion();
+	}
+
+	void PlayerScript::LeftBtnUp()
+	{
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		if (Input::GetKey((EKeyCode)mUser->right_key))
 		{
-			ms->VerticalStop(rightkey);
-			keyup_flag = true;
-		}
-		if (Input::GetKeyUp((EKeyCode)leftkey))
-		{
-			ms->VerticalStop(leftkey);
-			keyup_flag = true;
-		}
-		if (Input::GetKeyUp((EKeyCode)upkey))
-		{
-			ms->HorizontalStop(upkey);
-			keyup_flag = true;
-		}
-		if (Input::GetKeyUp((EKeyCode)downkey))
-		{
-			ms->HorizontalStop(downkey);
-			keyup_flag = true;
-		}
-		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
-		if (keydown == true)
-		{
-			if (active_vertical == rightkey || active_vertical == leftkey
-				|| active_horizontal == upkey || active_horizontal == downkey)
-			{
-				mPlayerState = EPlayerState::Walk;
-				if (active_vertical == rightkey)
-				{
-					SettingRightMaterial(mr);
-				}
-				if (active_vertical == leftkey)
-				{
-					SettingLeftMaterial(mr);
-				}
-			}
-			avatar->update_flag = true;
+			ms->SetDirX(1.0f);
+			as->SettingRightMaterial();
 		}
 		else
+			ms->SetDirX(0.0f);
+
+		if (ms->is_stop)
 		{
-			if (active_vertical == -1 && active_horizontal == -1)
-			{
-				if (keyup_flag == true)
-				{
-					if (Input::GetKey((EKeyCode)rightkey) == false && Input::GetKey((EKeyCode)leftkey) == false
-						&& Input::GetKey((EKeyCode)upkey) == false && Input::GetKey((EKeyCode)downkey) == false)
-					{
-						//아무입력 X
-						mPlayerState = EPlayerState::Idle;
-						avatar->update_flag = true;
-					}
-					else if (Input::GetKey((EKeyCode)rightkey))
-					{
-						SettingRightMaterial(mr);
-						ms->VerticalMove(rightkey);
-					}
-					else if (Input::GetKey((EKeyCode)leftkey))
-					{
-						SettingLeftMaterial(mr);
-						ms->VerticalMove(leftkey);
-					}
-				}
-			}
+			//idle;
+			mPlayerState = EPlayerState::Idle;
+			as->PlayPartsMotion();
 		}
 	}
-	void PlayerScript::SettingRightMaterial(std::shared_ptr<MeshRenderer> mr)
+
+	void PlayerScript::RightBtnUp()
 	{
-		mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		if (Input::GetKey((EKeyCode)mUser->left_key))
+		{
+			ms->SetDirX(-1.0f);
+			as->SettingLeftMaterial();
+		}
+		else
+			ms->SetDirX(0.0f);
+
+		if (ms->is_stop)
+		{
+			//idle
+			mPlayerState = EPlayerState::Idle;
+			as->PlayPartsMotion();
+		}
 	}
-	void PlayerScript::SettingLeftMaterial(std::shared_ptr<MeshRenderer> mr)
+
+	void PlayerScript::UpBtnUp()
 	{
-		mr->material = Resources::Find<Material>(L"DefaultVInverterAniMaterial");
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		if (Input::GetKey((EKeyCode)mUser->down_key))
+			ms->SetDirY(-1.0f);
+		else
+			ms->SetDirY(0.0f);
+
+		if (ms->is_stop)
+		{
+			//idle
+			mPlayerState = EPlayerState::Idle;
+			std::shared_ptr<AvatarScript> as = mAvatar.lock();
+			as->PlayPartsMotion();
+		}
+	}
+
+	void PlayerScript::DownBtnUp()
+	{
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		if (Input::GetKey((EKeyCode)mUser->up_key))
+			ms->SetDirY(1.0f);
+		else
+			ms->SetDirY(0.0f);
+
+		if (ms->is_stop)
+		{
+			//idle
+			mPlayerState = EPlayerState::Idle;
+			std::shared_ptr<AvatarScript> as = mAvatar.lock();
+			as->PlayPartsMotion();
+		}
 	}
 }

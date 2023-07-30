@@ -10,13 +10,16 @@ namespace roka::object
 		std::shared_ptr<T> source = std::dynamic_pointer_cast<T>(src);
 		if (source == nullptr)
 			return nullptr;
-		source->Initialize();
-		return std::make_shared<T>(*(source.get()));
+		std::shared_ptr<T> ptr = std::make_shared<T>(*(source.get()));
+		ptr->Initialize();
+		return ptr;
 	}
 	template<typename T>
 	static __forceinline std::shared_ptr<T> Instantiate()
 	{
-		return std::make_shared<T>();
+		std::shared_ptr<T> ptr = std::make_shared<T>();
+		ptr->Initialize();
+		return ptr;
 	}
 	template<typename T>
 	static __forceinline std::shared_ptr<T> Instantiate(Vector3 pos)

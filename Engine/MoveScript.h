@@ -2,6 +2,7 @@
 #include "Script.h"
 namespace roka
 {
+	using namespace math;
 	class MoveScript : public Script
 	{
 	private:
@@ -16,27 +17,19 @@ namespace roka
 		virtual void Render() override;
 
 		void SetSpeed(float speed) { mSpeed = speed; }
-		void SetKeys(UINT right, UINT left, UINT up, UINT down);
+		void SetDirX(float dir) { mDir.x = dir; }
+		void SetDirY(float dir) { mDir.y = dir; }
 
-		void VerticalMove(UINT vertical);
-		void HorizontalMove(UINT horizontal);
-		void VerticalStop(UINT vertical);
-		void HorizontalStop(UINT horizontal);
+		bool IsStop() { return mDir.x == 0.0f && mDir.y == 0.0f; }
+
 		SET_PROPERTY(SetSpeed) float speed;
+		GET_PROPERTY(IsStop) bool is_stop;
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
 		float mSpeed;
-
-		UINT mVerticalActiveKey;
-		UINT mHorizontalActiveKey;
-		bool mIsVertical;
-		bool mIsHorizontal;
-
-		UINT mRightKey;
-		UINT mLeftKey;
-		UINT mUpKey;
-		UINT mDownKey;
+		
+		Vector2 mDir;
 	};
 }
 

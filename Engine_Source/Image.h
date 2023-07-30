@@ -9,6 +9,8 @@ namespace roka
 	{
 	public:
 		Image();
+		Image(const Image& ref);
+		virtual void Copy(GameObject* src)override;
 		virtual ~Image();
 
 		virtual void Initialize()override;

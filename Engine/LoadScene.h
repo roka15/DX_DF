@@ -23,6 +23,6 @@ namespace roka
 		SceneManager::CreateScene<WestcoastScene>(L"WestcoastScene");
 		SceneManager::CreateScene<HendonmyreScene>(L"HendonmyreScene");
 
-		SceneManager::LoadScene(L"HendonmyreScene");
+		SceneManager::LoadScene(L"PlayScene");
 	}
 }

@@ -23,7 +23,7 @@ namespace roka::enums
         Move,
 		Player,
 		Avatar,
-
+		Part,
 		End,
 	};
 

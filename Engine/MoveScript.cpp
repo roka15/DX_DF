@@ -5,14 +5,16 @@
 #include "RokaTime.h"
 namespace roka
 {
-	MoveScript::MoveScript():Script(EScriptType::Move)
-		,mSpeed(0.0f)
+	MoveScript::MoveScript() :Script(EScriptType::Move)
+		, mSpeed(0.0f)
+		, mDir(Vector2::Zero)
 	{
 	}
 
-	MoveScript::MoveScript(const MoveScript& ref):Script(ref)
+	MoveScript::MoveScript(const MoveScript& ref) : Script(ref)
 	{
 		mSpeed = ref.mSpeed;
+		mDir = ref.mDir;
 	}
 
 	void MoveScript::Copy(Component* src)
@@ -28,7 +30,7 @@ namespace roka
 
 	void MoveScript::Initialize()
 	{
-		
+
 	}
 
 	void MoveScript::Update()
@@ -39,36 +41,10 @@ namespace roka
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		Vector3 pos = tf->position;
 
-		if (mIsVertical == true)
-		{
-			if (mRightKey == mVerticalActiveKey)
-			{
-				pos.x += mSpeed * Time::DeltaTime();
-				tf->position = pos;
-			}
-			else if (mLeftKey == mVerticalActiveKey)
-			{
-				pos.x -= mSpeed * Time::DeltaTime();
-				tf->position = pos;
-			}
+		pos.x += mDir.x * mSpeed * Time::DeltaTime();
+		pos.y += mDir.y * mSpeed * Time::DeltaTime();
 
-		}
-
-		if (mIsHorizontal == true)
-		{
-			if (mUpKey == mHorizontalActiveKey)
-			{
-				pos.y += mSpeed * Time::DeltaTime();
-				tf->position = pos;
-			}
-			else if (mDownKey == mHorizontalActiveKey)
-			{
-				pos.y -= mSpeed * Time::DeltaTime();
-				tf->position = pos;
-			}
-		}
-	
-
+		tf->position = pos;
 	}
 
 	void MoveScript::LateUpdate()
@@ -79,37 +55,5 @@ namespace roka
 	{
 	}
 
-	void MoveScript::SetKeys(UINT right, UINT left, UINT up, UINT down)
-	{
-		mRightKey = right;
-		mLeftKey = left;
-		mUpKey = up;
-		mDownKey = down;
-	}
-
-	void MoveScript::VerticalMove(UINT vertical)
-	{
-		mVerticalActiveKey = vertical;
-		mIsVertical = true;
-	}
-
-	void MoveScript::HorizontalMove(UINT horizontal)
-	{
-		mHorizontalActiveKey = horizontal;
-		mIsHorizontal = true;
-	}
-
-	void MoveScript::VerticalStop(UINT vertical)
-	{
-		if (mVerticalActiveKey == vertical)
-			mIsVertical = false;
-	}
-
-	void MoveScript::HorizontalStop(UINT horizontal)
-	{
-		if (mHorizontalActiveKey == horizontal)
-			mIsHorizontal = false;
-	}
-	
 }
 

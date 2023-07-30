@@ -4,6 +4,7 @@
 namespace roka
 {
 	class Image;
+	class Transform;
 	using namespace enums;
 	class AvatarScript :
 		public Script
@@ -11,7 +12,7 @@ namespace roka
 	private:
 		AvatarScript();
 		AvatarScript(const AvatarScript& ref);
-		void Copy(AvatarScript* src);
+		virtual void Copy(Component* src)override;
 	public:
 		~AvatarScript();
 
@@ -26,6 +27,8 @@ namespace roka
 
 		void CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name,std::wstring set_name, UINT start, UINT end, float duration);
 		void InsertStateAniInfo(EPlayerState state,EAvatarParts part, std::wstring ani_name);
+		void SettingRightMaterial();
+		void SettingLeftMaterial();
 		void PlayPartsMotion();
 		
 		void SetUpdateFlag(bool flag) { mUpdateFlag = flag; }
@@ -37,7 +40,7 @@ namespace roka
 
 		bool mUpdateFlag;
 		std::map<EPlayerState, std::vector<std::pair<EAvatarParts,std::wstring>>> mStateAnis;
-		std::map<EAvatarParts, std::weak_ptr<Image>> mParts;
+		std::map<EAvatarParts, std::weak_ptr<GameObject>> mParts;
 	};
 
 }

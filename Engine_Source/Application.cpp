@@ -5,7 +5,7 @@
 #include "SceneManager.h"
 #include "Resources.h"
 #include "..\\Engine\\FactoryManager.h"
-#include "Prefab.h"
+#include "..\\Engine\\Prefab.h"
 #include "TestPool.h"
 namespace roka
 {

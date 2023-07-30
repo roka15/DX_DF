@@ -2,34 +2,36 @@
 #include "RokaInclude.h"
 
 using namespace roka::enums;
-
+#define MAX_NAME 10
+#define MAX_ID 10
+#define MAX_AVATAR 255
 namespace roka::info
 {
 	struct UserInfo
 	{
-		std::wstring party_name; // 모험단 명
-		std::wstring id;
-		std::wstring pw;
+		wchar_t party_name[MAX_NAME]; // 모험단 명
+		wchar_t id[MAX_ID];
+
 		int character_cnt;
 	};
 	struct CharacterInfo
 	{
-		std::wstring name;
+		wchar_t  name[MAX_NAME];
 		int fame;//명성
 		int fatigue;//피로도
 		ECharacterClassType character_class_type;
 
 		//avatar
-		std::wstring base_skin_avatar;
-		std::wstring face_avatar;
-		std::wstring hair_avatar;
-		std::wstring cap_avatar;
-		std::wstring coat_avatar;
-		std::wstring neck_avatar;
-		std::wstring pants_avatar;
-		std::wstring belt_avatar;
-		std::wstring shoes_avatar;
-		std::wstring weapon_avatar;
+		wchar_t base_skin_avatar[MAX_AVATAR];
+		wchar_t face_avatar[MAX_AVATAR];
+		wchar_t hair_avatar[MAX_AVATAR];
+		wchar_t cap_avatar[MAX_AVATAR];
+		wchar_t coat_avatar[MAX_AVATAR];
+		wchar_t neck_avatar[MAX_AVATAR];
+		wchar_t pants_avatar[MAX_AVATAR];
+		wchar_t belt_avatar[MAX_AVATAR];
+		wchar_t shoes_avatar[MAX_AVATAR];
+		wchar_t weapon_avatar[MAX_AVATAR];
 	};
 	struct KeysInfo
 	{
@@ -49,13 +51,13 @@ namespace roka::info
 		void Initialize(); //나중에 로그인 성공시 db 가져온 정보 세팅해주기
 		void Release();
 
-		const std::wstring& GetPartyName() { return mUserInfo->party_name; }
-		const std::wstring& GetName() { return mCharacterInfo->name; }
+		const std::wstring& GetPartyName() { return std::wstring(mUserInfo->party_name); }
+		const std::wstring& GetName() { return std::wstring(mCharacterInfo->name); }
 		const int& GetFame() { return mCharacterInfo->fame; }
 		const int& GetFatigue() { return mCharacterInfo->fatigue; }
 		const ECharacterClassType& GetClassType() { return mCharacterInfo->character_class_type; }
 		
-		const std::wstring& GetBaseAvatar() { return mCharacterInfo->base_skin_avatar; }
+		std::wstring GetBaseAvatar() { return std::wstring(mCharacterInfo->base_skin_avatar); }
 
 		const UINT& GetRightKey() { return mKeysInfo->right; }
 		const UINT& GetLeftKey() { return mKeysInfo->left; }

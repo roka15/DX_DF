@@ -3,6 +3,8 @@
 #include "ConstantBuffer.h"
 #include "Renderer.h"
 #include "GameObject.h"
+#include "Object.h"
+#include "..\\Engine\\Prefab.h"
 namespace roka
 {
     using namespace roka::graphics;
@@ -25,9 +27,6 @@ namespace roka
        mRight=ref.mRight;
 
        mWorld=ref.mWorld;
-
-       mChild = ref.mChild;
-       mParent = ref.mParent;
     }
     void Transform::Copy(Component* src)
     {
@@ -42,9 +41,6 @@ namespace roka
         mRight = source->mRight;
 
         mWorld = source->mWorld;
-
-        mChild = source->mChild;
-        mParent = source->mParent;
     }
     Transform::~Transform()
     {
@@ -71,10 +67,11 @@ namespace roka
 
         mWorld = scale * rotation * position;
 
-        std::shared_ptr<Transform> parent = mParent.lock();
+        std::shared_ptr<GameObject> parent = owner->parent;
         if(parent)
         {
-            mWorld *= parent->mWorld;
+            std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
+            mWorld *= tf->mWorld;
         }
 
         mUp = Vector3::TransformNormal(Vector3::Up, rotation);
@@ -87,10 +84,6 @@ namespace roka
     void Transform::BindConstantBuffer()
     {
         GameObject* aowner = GetOwner();
-        if (aowner->GetName().compare(L"HPFilter") == 0)
-        {
-            int a = 0;
-        }
         renderer::TransformCB trCB = {};
         trCB.mWorld = mWorld;
         Matrix CameraView = Camera::GetGpuViewMatrix();
@@ -108,10 +101,5 @@ namespace roka
        
         cb->SetData(&trCB);
         cb->Bind(EShaderStage::VS);
-    }
-    void Transform::AddChild(std::shared_ptr<Transform> child)
-    {
-        mChild.push_back(child);
-        child->parent = owner->GetComponent<Transform>();
     }
 }

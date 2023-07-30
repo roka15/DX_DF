@@ -1,69 +1,125 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="framework.h" />
-    <ClInclude Include="..\Engine_Source\HendonmyreScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine_Source\PlayScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine_Source\SeriaGateScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine_Source\WestcoastScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="LoadScene.h">
       <Filter>Contents\Load</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine_Source\CameraScript.h">
+    <ClInclude Include="User.h">
+      <Filter>Contents\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="ContentEnums.h">
+      <Filter>Contents\Info</Filter>
+    </ClInclude>
+    <ClInclude Include="RokaInclude.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="AvatarScript.h">
+      <Filter>Contents\Script\AvatarScript</Filter>
+    </ClInclude>
+    <ClInclude Include="FactoryManager.h">
+      <Filter>Factory\FactoryManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptFactory.h">
+      <Filter>Factory\ScriptFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentFactory.h">
+      <Filter>Factory\ComponentFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraScript.h">
       <Filter>Contents\Script\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine_Source\SelectCharacterScene.h">
-      <Filter>Contents\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine_Source\Slot.h">
-      <Filter>Contents\Script\Slot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine_Source\GridScript.h">
+    <ClInclude Include="GridScript.h">
       <Filter>Contents\Script\Grid</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine_Source\MoveScript.h">
-      <Filter>Contents\Script\MoveTest</Filter>
+    <ClInclude Include="MoveScript.h">
+      <Filter>Contents\Script\MoveScript</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="Slot.h">
+      <Filter>Contents\Script\Slot</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerScript.h">
+      <Filter>Contents\Script\PlayerScript</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectCharacterScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SeriaGateScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="WestcoastScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="HendonmyreScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Prefab.h">
+      <Filter>Prefab</Filter>
+    </ClInclude>
+    <ClInclude Include="PartScript.h">
+      <Filter>Contents\Script\PartScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="..\Engine_Source\HendonmyreScene.cpp">
-      <Filter>Contents\Scene</Filter>
+    <ClCompile Include="User.cpp">
+      <Filter>Contents\Info</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\PlayScene.cpp">
-      <Filter>Contents\Scene</Filter>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\SeriaGateScene.cpp">
-      <Filter>Contents\Scene</Filter>
+    <ClCompile Include="AvatarScript.cpp">
+      <Filter>Contents\Script\AvatarScript</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\WestcoastScene.cpp">
-      <Filter>Contents\Scene</Filter>
+    <ClCompile Include="FactoryManager.cpp">
+      <Filter>Factory\FactoryManager</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\CameraScript.cpp">
+    <ClCompile Include="ScriptFactory.cpp">
+      <Filter>Factory\ScriptFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="ComponentFactory.cpp">
+      <Filter>Factory\ComponentFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraScript.cpp">
       <Filter>Contents\Script\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\GridScript.cpp">
+    <ClCompile Include="GridScript.cpp">
       <Filter>Contents\Script\Grid</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\SelectCharacterScene.cpp">
-      <Filter>Contents\Scene</Filter>
+    <ClCompile Include="MoveScript.cpp">
+      <Filter>Contents\Script\MoveScript</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\Slot.cpp">
+    <ClCompile Include="Slot.cpp">
       <Filter>Contents\Script\Slot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine_Source\MoveScript.cpp">
-      <Filter>Contents\Script\MoveTest</Filter>
+    <ClCompile Include="PlayerScript.cpp">
+      <Filter>Contents\Script\PlayerScript</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="SelectCharacterScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SeriaGateScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="WestcoastScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="HendonmyreScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Prefab.cpp">
+      <Filter>Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="PartScript.cpp">
+      <Filter>Contents\Script\PartScript</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -87,11 +143,38 @@
     <Filter Include="Contents\Script\Slot">
       <UniqueIdentifier>{12a0a32f-22dc-47b3-a702-effb2c6f4101}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\MoveTest">
-      <UniqueIdentifier>{a2647b72-e4ea-4962-b649-f43569bd613e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Script\PlayerScript">
       <UniqueIdentifier>{f7396af7-d457-4919-8b73-f99c4b222e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Info">
+      <UniqueIdentifier>{b5b43276-156c-4a02-85ab-33899fbd0980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common">
+      <UniqueIdentifier>{50a53def-395b-4591-b05e-e87db7d73ce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\AvatarScript">
+      <UniqueIdentifier>{faee0034-81b5-471d-b3c2-2941ddbf09b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{e2a03d57-739f-4746-82d0-f7f6d9a30655}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ComponentFactory">
+      <UniqueIdentifier>{2b73a784-bb7b-4eec-aefd-58c6cba0521f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\ScriptFactory">
+      <UniqueIdentifier>{f54ff08f-4052-410f-b2b2-5ab98a2c2d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory\FactoryManager">
+      <UniqueIdentifier>{1db5f407-f724-4cd0-9355-9eea76fd702e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MoveScript">
+      <UniqueIdentifier>{a2647b72-e4ea-4962-b649-f43569bd613e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Prefab">
+      <UniqueIdentifier>{d3938b0e-52e9-4f85-974c-cd3512b2a4fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\PartScript">
+      <UniqueIdentifier>{ce278227-0394-45ee-962d-e1d9d30ca995}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

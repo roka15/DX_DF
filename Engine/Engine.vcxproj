@@ -95,7 +95,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -114,7 +114,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -133,7 +133,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -152,7 +152,7 @@
       <WarningLevel>Level3</WarningLevel>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -169,31 +169,47 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Engine_Source\CameraScript.h" />
-    <ClInclude Include="..\Engine_Source\GridScript.h" />
-    <ClInclude Include="..\Engine_Source\HendonmyreScene.h" />
-    <ClInclude Include="..\Engine_Source\MoveScript.h" />
-    <ClInclude Include="..\Engine_Source\PlayScene.h" />
-    <ClInclude Include="..\Engine_Source\SelectCharacterScene.h" />
-    <ClInclude Include="..\Engine_Source\SeriaGateScene.h" />
-    <ClInclude Include="..\Engine_Source\Slot.h" />
-    <ClInclude Include="..\Engine_Source\WestcoastScene.h" />
+    <ClInclude Include="AvatarScript.h" />
+    <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="ComponentFactory.h" />
+    <ClInclude Include="ContentEnums.h" />
+    <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GridScript.h" />
+    <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="MoveScript.h" />
+    <ClInclude Include="PartScript.h" />
     <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="Prefab.h" />
+    <ClInclude Include="RokaInclude.h" />
+    <ClInclude Include="ScriptFactory.h" />
+    <ClInclude Include="SelectCharacterScene.h" />
+    <ClInclude Include="SeriaGateScene.h" />
+    <ClInclude Include="Slot.h" />
+    <ClInclude Include="User.h" />
+    <ClInclude Include="WestcoastScene.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Engine_Source\CameraScript.cpp" />
-    <ClCompile Include="..\Engine_Source\GridScript.cpp" />
-    <ClCompile Include="..\Engine_Source\HendonmyreScene.cpp" />
-    <ClCompile Include="..\Engine_Source\MoveScript.cpp" />
-    <ClCompile Include="..\Engine_Source\PlayScene.cpp" />
-    <ClCompile Include="..\Engine_Source\SelectCharacterScene.cpp" />
-    <ClCompile Include="..\Engine_Source\SeriaGateScene.cpp" />
-    <ClCompile Include="..\Engine_Source\Slot.cpp" />
-    <ClCompile Include="..\Engine_Source\WestcoastScene.cpp" />
+    <ClCompile Include="AvatarScript.cpp" />
+    <ClCompile Include="CameraScript.cpp" />
+    <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="FactoryManager.cpp" />
+    <ClCompile Include="GridScript.cpp" />
+    <ClCompile Include="HendonmyreScene.cpp" />
+    <ClCompile Include="MoveScript.cpp" />
+    <ClCompile Include="PartScript.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Prefab.cpp" />
+    <ClCompile Include="ScriptFactory.cpp" />
+    <ClCompile Include="SelectCharacterScene.cpp" />
+    <ClCompile Include="SeriaGateScene.cpp" />
+    <ClCompile Include="Slot.cpp" />
+    <ClCompile Include="User.cpp" />
+    <ClCompile Include="WestcoastScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Update="C:\Users\skagu\OneDrive\바탕 화면\예람\DX11_DF\Engine_Source\RokaMath.inl">

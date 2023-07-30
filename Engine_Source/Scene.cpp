@@ -1,5 +1,4 @@
 #include "Scene.h"
-
 namespace roka
 {
 	Scene::Scene(ESceneType type) :mType(type)

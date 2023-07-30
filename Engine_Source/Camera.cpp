@@ -34,7 +34,7 @@ namespace roka
 	{
 		EnableLayerMasks();
 	}
-	Camera::Camera(const Camera& ref):Component(ref)
+	Camera::Camera(const Camera& ref) :Component(ref)
 	{
 		mView = ref.mView;
 		mProjection = ref.mProjection;
@@ -55,7 +55,7 @@ namespace roka
 	}
 	void Camera::Initialize()
 	{
-		
+
 	}
 	void Camera::Update()
 	{
@@ -187,23 +187,25 @@ namespace roka
 		for (std::shared_ptr<GameObject> obj : objs)
 		{
 			std::shared_ptr<MeshRenderer> mr = obj->GetComponent<MeshRenderer>();
-			if (mr == nullptr)
-				continue;
-			ERenderMode mode = mr->material->GetRenderMode();
-			switch (mode)
+			if (mr != nullptr)
 			{
-			case ERenderMode::Opaque:
-				mOpaqueGameObjects.push_back(obj);
-				break;
-			case ERenderMode::CutOut:
-				mCutOutGameObjects.push_back(obj);
-				break;
-			case ERenderMode::Transparent:
-				mTransparentObjects.push_back(obj);
-				break;
+				ERenderMode mode = mr->material->GetRenderMode();
+				switch (mode)
+				{
+				case ERenderMode::Opaque:
+					mOpaqueGameObjects.push_back(obj);
+					break;
+				case ERenderMode::CutOut:
+					mCutOutGameObjects.push_back(obj);
+					break;
+				case ERenderMode::Transparent:
+					mTransparentObjects.push_back(obj);
+					break;
+				}
 			}
+			if (obj->GetChildCont() != 0)
+				DivideAlphaBlendGameObjects(obj->GetChilds());
 		}
-
 	}
 	void Camera::RenderOpaque()
 	{

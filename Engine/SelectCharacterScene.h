@@ -15,7 +15,7 @@ namespace roka
 		virtual void Render();
 
 		virtual void OnExit();
-		virtual void OnEnter();
+		//virtual void OnEnter();
 
 		virtual void Loading();
 	};

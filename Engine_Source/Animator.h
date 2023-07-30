@@ -44,7 +44,7 @@ namespace roka
 		std::shared_ptr<Animation> FindAnimation(const std::wstring& name);
 		std::shared_ptr<Animator::Events> FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop, float duration=0.0f);
-		void Binds();
+		bool Binds();
 
 		std::function<void()>& StartEvent(const std::wstring key);
 		std::function<void()>& CompleteEvent(const std::wstring key);

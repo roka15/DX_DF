@@ -4,7 +4,7 @@
 #include "MeshRenderer.h"
 #include "Material.h"
 #include "Sprite.h"
-#include "Prefab.h"
+#include "..\\Engine\\Prefab.h"
 #include "NPK.h"
 #include "Camera.h"
 #include "Transform.h"
@@ -32,9 +32,10 @@ namespace roka
 		auto default_material = prefab::Resources.find(L"DefaultMaterial");
 		if (default_material == prefab::Resources.end())
 			return;
-		
+
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-		mr->material = std::dynamic_pointer_cast<Material>(default_material->second);
+		if (mr->material == nullptr)
+			mr->material = std::dynamic_pointer_cast<Material>(default_material->second);
 	}
 	void ImageComponent::Update()
 	{
@@ -45,17 +46,18 @@ namespace roka
 	void ImageComponent::Render()
 	{
 	}
-	void ImageComponent::Binds()
+	bool ImageComponent::Binds()
 	{
 		if (mSprite == nullptr)
-			return;
+			return false;
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(mSprite->npk_key);
 		if (npk == nullptr)
-			return;
+			return false;
 		std::shared_ptr<Texture> texture = npk->GetTexture(mSprite->pack_key, mSprite->index);
 		if (texture == nullptr)
 			texture = npk->Create(mSprite->pack_key, mSprite->index);
 		texture->BindShader(EShaderStage::PS, 0);
+		return true;
 	}
 	void ImageComponent::SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index)
 	{

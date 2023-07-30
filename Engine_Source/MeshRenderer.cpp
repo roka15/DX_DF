@@ -40,22 +40,28 @@ namespace roka
 	void MeshRenderer::Render()
 	{
 		GameObject* Owner = GetOwner();
-		std::shared_ptr<Transform> tf = GetOwner()->GetComponent<Transform>();
+		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
 		std::shared_ptr<Animator> animator = owner->GetComponent<Animator>();
+		int flag = 0;
 		if (imageComp != nullptr)
 		{	
-			imageComp->Binds();
+			if (imageComp->Binds() == true)
+				flag++;
 		}
 		if (animator != nullptr)
 		{
-			animator->Binds();
+			if (animator->Binds())
+				flag++;
 		}
 
-		tf->BindConstantBuffer();
-		mMesh->BindBuffer();
-		mMaterial->Binds();
-		mMesh->Render();
-		mMaterial->Clear();
+		if (flag > 0)
+		{
+			tf->BindConstantBuffer();
+			mMesh->BindBuffer();
+			mMaterial->Binds();
+			mMesh->Render();
+			mMaterial->Clear();
+		}
 	}
 }

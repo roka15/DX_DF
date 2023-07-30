@@ -2,7 +2,7 @@
 #include "Input.h"
 namespace roka::info
 {
-	User::User():
+	User::User() :
 		mUserInfo(std::make_unique<UserInfo>()),
 		mCharacterInfo(std::make_unique<CharacterInfo>()),
 		mKeysInfo(std::make_unique<KeysInfo>())
@@ -10,6 +10,9 @@ namespace roka::info
 	}
 	User::User(const User& ref)
 	{
+		mUserInfo = std::make_unique<UserInfo>();
+		mCharacterInfo = std::make_unique<CharacterInfo>();
+		mKeysInfo = std::make_unique<KeysInfo>();
 		memcpy(mUserInfo.get(), ref.mUserInfo.get(), sizeof(UserInfo));
 		memcpy(mCharacterInfo.get(), ref.mCharacterInfo.get(), sizeof(CharacterInfo));
 		memcpy(mKeysInfo.get(), ref.mKeysInfo.get(), sizeof(KeysInfo));
@@ -25,17 +28,16 @@ namespace roka::info
 	}
 	void User::Initialize()
 	{
-		mUserInfo->party_name = L"코딩노예람";
-		mUserInfo->id = L"1234";
-		mUserInfo->pw = L"1234";
+		wcscpy(mUserInfo->party_name,L"코딩노예람");
+		wcscpy(mUserInfo->id, L"1234");
 		mUserInfo->character_cnt = 1;
 
-		mCharacterInfo->name = L"로카";
+		wcscpy(mCharacterInfo->name, L"로카");
 		mCharacterInfo->fame = 1000;
 		mCharacterInfo->fatigue = 156;
 		mCharacterInfo->character_class_type = ECharacterClassType::Mage;
 
-		mCharacterInfo->base_skin_avatar = L"mg_body80500.img";
+		wcscpy(mCharacterInfo->base_skin_avatar,L"mg_body80500.img");
 
 		mKeysInfo->right = (UINT)EKeyCode::RIGHT;
 		mKeysInfo->left = (UINT)EKeyCode::LEFT;

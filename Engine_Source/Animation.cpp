@@ -60,6 +60,8 @@ namespace roka
 	}
 	void Animation::Binds()
 	{
+		if (mAtlas == nullptr)
+			return;
 		mAtlas->BindShader(graphics::EShaderStage::PS, 12);
 		renderer::AnimationCB data = {};
 		data.SpriteLeftTop = mSprites[mIndex].lefttop;

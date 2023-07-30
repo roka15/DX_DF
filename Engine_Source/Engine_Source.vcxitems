@@ -22,12 +22,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Component.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ComponentFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)FactoryManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ForwardDeclarations.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Image.h" />
@@ -48,7 +46,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPoolManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Prefab.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PriorityQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RBT.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
@@ -64,7 +61,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneSector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Script.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ScriptFactory.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SingleTon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
@@ -80,11 +76,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Collider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Component.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ComponentFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)FactoryManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp" />
@@ -102,7 +96,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPoolManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Prefab.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RBT.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.cpp" />
@@ -115,7 +108,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneSector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Script.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ScriptFactory.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SingleTon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />

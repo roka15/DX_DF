@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-
+#include "..\\Engine\\Prefab.h"
 namespace roka
 {
 	Scene* SceneManager::mActiveScene = nullptr;
@@ -40,7 +40,6 @@ namespace roka
 			mActiveScene->OnExit();
 		mActiveScene = itr->second;
 		mActiveScene->OnEnter();
-
 		return itr->second;
 	}
 }

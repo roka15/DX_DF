@@ -10,6 +10,13 @@ namespace roka
 	{
 		
 	}
+	Image::Image(const Image& ref):GameObject(ref)
+	{
+	}
+	void Image::Copy(GameObject* src)
+	{
+		GameObject::Copy(src);
+	}
 	Image::~Image()
 	{
 	}

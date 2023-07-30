@@ -81,20 +81,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPool.cpp">
       <Filter>Common\ObjectPool</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ComponentFactory.cpp">
-      <Filter>Common\Factory\ComponentFactory</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ScriptFactory.cpp">
-      <Filter>Common\Factory\ScriptFactory</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp">
       <Filter>GameObject\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Prefab.cpp">
-      <Filter>GameObject\Prefab</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)FactoryManager.cpp">
-      <Filter>Manager\FactoryManager</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp">
       <Filter>Common\Factory\Base</Filter>
@@ -226,20 +214,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPool.h">
       <Filter>Common\ObjectPool</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ComponentFactory.h">
-      <Filter>Common\Factory\ComponentFactory</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ScriptFactory.h">
-      <Filter>Common\Factory\ScriptFactory</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h">
       <Filter>GameObject\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Prefab.h">
-      <Filter>GameObject\Prefab</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)FactoryManager.h">
-      <Filter>Manager\FactoryManager</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h">
       <Filter>Common\Factory\Base</Filter>
@@ -354,15 +330,6 @@
     <Filter Include="Common\Factory">
       <UniqueIdentifier>{fc3c677a-7cf3-447f-ba3a-eebce76430f6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Common\Factory\ComponentFactory">
-      <UniqueIdentifier>{1ebbdcbe-8005-46d3-ac3f-02d3b7fb7b0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Factory\ScriptFactory">
-      <UniqueIdentifier>{26b9a799-1d55-4ca5-b5d7-635fd880a6d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\Prefab">
-      <UniqueIdentifier>{e651b288-f0a0-4cd2-9f0d-dd437bcbbdf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common\Factory\Base">
       <UniqueIdentifier>{929bd9b7-0b62-40db-9a0d-251c60e8e630}</UniqueIdentifier>
     </Filter>
@@ -377,9 +344,6 @@
     </Filter>
     <Filter Include="Manager\CollisionManager">
       <UniqueIdentifier>{36f5e404-df1c-44c7-a955-a928858caaf9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager\FactoryManager">
-      <UniqueIdentifier>{f945d987-da8c-48ec-a484-434ed29ddbec}</UniqueIdentifier>
     </Filter>
     <Filter Include="Manager\ObjectPoolManager">
       <UniqueIdentifier>{ffcd0bdd-4e25-4bba-8db0-0cd803e12752}</UniqueIdentifier>

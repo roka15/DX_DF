@@ -33,6 +33,16 @@ namespace roka
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other) {}
 
 		void Move();
+		// input system 적용시 사용
+		void LeftBtnDown();
+		void RightBtnDown();
+		void UpBtnDown();
+		void DownBtnDown();
+
+		void LeftBtnUp();
+		void RightBtnUp();
+		void UpBtnUp();
+		void DownBtnUp();
 
 		EPlayerState GetState() { return mPlayerState; }
 		void EnableKeyInput() { mIsActiveInput = true; }
@@ -40,9 +50,6 @@ namespace roka
 
 	
 		GET_PROPERTY(GetState) EPlayerState player_state;
-	protected:
-		void SettingRightMaterial(std::shared_ptr<MeshRenderer> mr);
-		void SettingLeftMaterial(std::shared_ptr<MeshRenderer> mr);
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
@@ -52,7 +59,6 @@ namespace roka
 
 		std::unique_ptr<info::User> mUser;
 		std::weak_ptr<Transform> mTransform;
-		std::weak_ptr<MeshRenderer> mMeshRenderer;
 		std::weak_ptr<MoveScript> mMoveScript;
 		std::weak_ptr<AvatarScript> mAvatar;
 	};

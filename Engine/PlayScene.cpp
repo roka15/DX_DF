@@ -19,9 +19,12 @@
 #include "ImageComponent.h"
 #include "Animator.h"
 #include "PlayerScript.h"
+#include "AvatarScript.h"
+#include "PartScript.h"
 
 namespace roka
 {
+	static std::shared_ptr<GameObject> s_player;
 	PlayScene::PlayScene() :Scene(ESceneType::End)
 	{
 	}
@@ -31,18 +34,19 @@ namespace roka
 	void PlayScene::Initialize()
 	{
 		Scene::Initialize();
-		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"baseskin");
-		if (npc_npk == nullptr)
-			npc_npk = Resources::Load<NPK>(L"baseskin", L"..\\Resources\\npk\\baseskin.npk");
+	
 		/* player script text*/
-		std::shared_ptr<Image> player = object::Instantiate<Image>(
-			Vector3(0.0f,0.0f,0.0f),
-			Vector3::Zero,
-			Vector3(3.0f,3.0f,1.0f),
-			ELayerType::Player);
-		player->AddComponent<PlayerScript>();
+		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
 
+		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
+		player->SetName(L"Player");
+		//AddGameObject(ELayerType::Player, player);
+		s_player = player;
 
+		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
+		another_player->SetName(L"AnotherPlayer");
+		another_player->GetComponent<Transform>()->position = Vector3(-2.0f,0.0f,1.0f);
+		AddGameObject(ELayerType::Player, another_player);
 
 			/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
 			obj->SetName(L"player");
@@ -146,37 +150,46 @@ namespace roka
 		Scene::Update();
 		static int num = 0;
 		static EKeyCode code;
-		/*std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"player");
-		if (Input::GetKeyUp(EKeyCode::RIGHT))
-		{
-			code = EKeyCode::S;
-			obj->GetComponent<Animator>()->PlayAnimation(L"Idle", true);
-		}
-		if (Input::GetKeyUp(EKeyCode::LEFT))
-		{
-			code = EKeyCode::S;
-			obj->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"AnimationShader");
-			obj->GetComponent<Animator>()->PlayAnimation(L"Idle", true);
-		}
 		
-		if (Input::GetKey(EKeyCode::RIGHT)&& code !=EKeyCode::RIGHT)
+		std::shared_ptr<GameObject> obj 
+			= FindGameObject(ELayerType::Player,L"Player");
+		if(obj)
 		{
-			code = EKeyCode::RIGHT;
-			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true);
+			std::shared_ptr<GameObject> av1 = obj->GetChild<AvatarScript>()->GetChild<PartScript>();
+			std::shared_ptr<Animator> ani1
+				= av1->GetComponent<Animator>();
 		}
-		if (Input::GetKey(EKeyCode::LEFT) && code != EKeyCode::LEFT)
+			
+
+		std::shared_ptr<GameObject> obj2
+			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
+		std::shared_ptr<GameObject> av2 = obj2->GetChild<AvatarScript>()->GetChild<PartScript>();
+		std::shared_ptr<Animator> ani2
+			= av2->GetComponent<Animator>();
+
+		std::shared_ptr<PlayerScript> ps
+			= obj2->GetComponent<PlayerScript>();
+
+		if (Input::GetKeyDown(EKeyCode::A))
 		{
-			code = EKeyCode::LEFT;
-			obj->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-			obj->GetComponent<Animator>()->PlayAnimation(L"Right", true);
-		}*/
-		if (Input::GetKeyDown(EKeyCode::SPACE))
-		{
-			std::shared_ptr<GameObject> obj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"image1");
-			obj->GetComponent<ImageComponent>()->SetSprite(L"gate", L"gatedown.img", num++);
-			if (num == 29)
-				num = 0;
+			AddGameObject(ELayerType::Player, s_player);
 		}
+		if (Input::GetKeyDown(EKeyCode::LEFT))
+			ps->LeftBtnDown();
+		if (Input::GetKeyUp(EKeyCode::LEFT))
+			ps->LeftBtnUp();
+		if (Input::GetKeyDown(EKeyCode::RIGHT))
+			ps->RightBtnDown();
+		if (Input::GetKeyUp(EKeyCode::RIGHT))
+			ps->RightBtnUp();
+		if (Input::GetKeyDown(EKeyCode::UP))
+			ps->UpBtnDown();
+		if (Input::GetKeyUp(EKeyCode::UP))
+			ps->UpBtnUp();
+		if (Input::GetKeyDown(EKeyCode::DOWN))
+			ps->DownBtnDown();
+		if (Input::GetKeyUp(EKeyCode::DOWN))
+			ps->DownBtnUp();
 	}
 
 	void PlayScene::LateUpdate()

@@ -79,11 +79,18 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"AnimationShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
-
+		
 		shader = roka::Resources::Find<Shader>(L"VerticalInverterAnimationShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
-		
+
+		shader = roka::Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
+		shader = roka::Resources::Find<Shader>(L"Player1Shader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State
@@ -423,11 +430,13 @@ namespace roka::renderer
 		std::shared_ptr<Shader> animationShader = std::make_shared<Shader>();
 		animationShader->Create(EShaderStage::VS, L"AnimationVS.hlsl", "main");
 		animationShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		animationShader->SetKey(L"AnimationShader");
 		roka::Resources::Insert(L"AnimationShader", animationShader);
 
 		std::shared_ptr<Shader> animationinverterShader = std::make_shared<Shader>();
 		animationinverterShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
 		animationinverterShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		animationinverterShader->SetKey(L"VerticalInverterAnimationShader");
 		roka::Resources::Insert(L"VerticalInverterAnimationShader", animationinverterShader);
 
 		std::shared_ptr<Shader> animationinverterEftShader = std::make_shared<Shader>();
@@ -436,6 +445,11 @@ namespace roka::renderer
 		animationinverterEftShader->bsstate = EBSType::OneOne;
 		roka::Resources::Insert(L"VerticalInverterEftAnimationShader", animationinverterEftShader);
 	
+		//test
+		std::shared_ptr<Shader> playerShader = std::make_shared<Shader>();
+		playerShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
+		playerShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
+		roka::Resources::Insert(L"Player1Shader", playerShader);
 	}
 	void LoadMaterial()
 	{

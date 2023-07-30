@@ -50,6 +50,7 @@ namespace roka
 	}
 	void Animator::Update()
 	{
+		GameObject* Owner = owner;
 		if (mActiveAnimation.expired() == true)
 			return;
 		mFirstUpdateAnimation = mActiveAnimation.lock();
@@ -119,16 +120,19 @@ namespace roka
 	void Animator::PlayAnimation(const std::wstring& name, bool loop, float duration)
 	{
 		std::shared_ptr<Animation> prevAnimation = mActiveAnimation.lock();
-
+		std::shared_ptr<Animation> animation = FindAnimation(name);
 		std::shared_ptr<Events> events;
 		if (prevAnimation != nullptr)
 		{
+			if (prevAnimation == animation && mIsLoop == true)
+			{
+				return;
+			}
 			events = FindEvents(prevAnimation->GetKey());
 			if (events != nullptr)
 				events->endEvent();
 		}
 
-		std::shared_ptr<Animation> animation = FindAnimation(name);
 		if (animation != nullptr)
 		{
 			mActiveAnimation = animation;
@@ -144,12 +148,13 @@ namespace roka
 		mIsLoop = loop;
 		ActiveAni->Reset();
 	}
-	void Animator::Binds()
+	bool Animator::Binds()
 	{
 		std::shared_ptr<Animation> ani = mActiveAnimation.lock();
 		if (ani == nullptr)
-			return;
+			return false;
 		ani->Binds();
+		return true;
 	}
 	std::function<void()>& Animator::StartEvent(const std::wstring key)
 	{

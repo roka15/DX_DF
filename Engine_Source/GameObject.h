@@ -5,7 +5,7 @@
 #include "Component.h"
 namespace roka
 {
-	class GameObject : public Entity
+	class GameObject : public Entity,public std::enable_shared_from_this<GameObject>
 	{
 	public:
 		enum class EState
@@ -114,6 +114,31 @@ namespace roka
 			component->Initialize();
 			return component;
 		}
+
+		void AddChild(std::shared_ptr<GameObject> child);
+		void SetParent(std::weak_ptr<GameObject> parent) { mParent = parent; }
+		std::shared_ptr<GameObject> GetParent() { return mParent.lock(); }
+
+		std::shared_ptr<GameObject> GetChild(std::wstring name);
+		std::vector<std::shared_ptr<GameObject>> GetChilds();
+		template <typename T>
+		std::shared_ptr<GameObject> GetChild()
+		{
+			for (auto& child : mChild)
+			{
+				std::shared_ptr<T> comp = child->GetComponent<T>();
+				if (comp != nullptr)
+				{
+					return child;
+				}
+			}
+			return nullptr;
+		}
+
+		UINT GetChildCont() { return mChild.size(); }
+
+
+
 		void SetMoveFlag(bool flag) { mbMove = flag; }
 		bool GetMoveFlag() { return mbMove; }
 
@@ -121,8 +146,11 @@ namespace roka
 		EState GetState() { return mState; }
 
 		void SetLayerType(ELayerType layer) { mLayerType = layer; }
-		ELayerType GetLayerType() { return mLayerType; }
+		ELayerType GetLayerType();
 
+		std::shared_ptr<GameObject> GetSharedPtr() { return shared_from_this(); }
+
+		PROPERTY(GetParent, SetParent)  std::shared_ptr<GameObject> parent;
 		PROPERTY(GetMoveFlag, SetMoveFlag) bool ismove;
 		PROPERTY(GetState, SetState) EState active;
 		PROPERTY(GetLayerType, SetLayerType) ELayerType layer_type;
@@ -132,6 +160,9 @@ namespace roka
 		ELayerType mLayerType;
 		std::vector<std::shared_ptr<Component>> mComponents;
 		std::vector<std::shared_ptr<Script>> mScripts;
+
+		std::vector<std::shared_ptr<GameObject>> mChild;
+		std::weak_ptr<GameObject> mParent;
 	};
 }
 

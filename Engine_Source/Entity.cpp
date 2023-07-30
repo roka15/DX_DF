@@ -13,6 +13,11 @@ namespace roka
 	{
 	}
 
+	void Entity::Copy(Entity* ref)
+	{
+		mName = ref->mName;
+	}
+
 	Entity::~Entity()
 	{
 	}
