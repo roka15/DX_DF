@@ -86,6 +86,7 @@ namespace roka
 		Vector2 LeftTop = {};
 		float width = 0;
 		float height = 0;
+		
 		for (int i = start_index; i < end_index; i++)
 		{
 			Sprite sprite;
@@ -108,7 +109,8 @@ namespace roka
 		if (npk == nullptr)
 			return;
 		mAtlas = Resources::Find<Texture>(set_name + L"AtlasTexture");
-		if (mAtlas == nullptr)
-			mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, set_name);
+		if (mAtlas != nullptr)
+			return;
+		mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, set_name);
 	}
 }

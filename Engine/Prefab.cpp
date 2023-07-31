@@ -50,6 +50,15 @@ namespace roka::prefab
 			Resources::Insert(key, material);
 		}
 		{
+			key = L"TransparentVInverterMaterial";
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->SetKey(key);
+			material->shader = Resources::Find<Shader>(L"VerticalInverterShader");
+			material->render_mode = ERenderMode::Transparent;
+			Resources.insert(std::make_pair(key, material));
+			Resources::Insert(key, material);
+		}
+		{
 			key = L"DefaultVInverterMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
@@ -62,6 +71,7 @@ namespace roka::prefab
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
 			material->shader = Resources::Find<Shader>(L"EffectShader");
+			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
 		}
@@ -70,6 +80,7 @@ namespace roka::prefab
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
 			material->shader = Resources::Find<Shader>(L"AnimationShader");
+			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
 		}
@@ -191,7 +202,6 @@ namespace roka::prefab
 				AvatarParrent->AddChild(Belt);
 				AvatarParrent->AddChild(Shoes);
 				AvatarParrent->AddChild(Weapon);
-
 
 				Base->GetComponent<PartScript>()->part_type = EAvatarParts::Base;
 				Face->GetComponent<PartScript>()->part_type = EAvatarParts::Face;

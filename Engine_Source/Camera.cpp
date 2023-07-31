@@ -10,8 +10,8 @@ namespace roka
 {
 	bool CompareZSort(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2)
 	{
-		if (obj1->GetComponent<Transform>()->position.z
-			<= obj2->GetComponent<Transform>()->position.z)
+		if (obj1->GetComponent<Transform>()->GetWorldZ()
+			<= obj2->GetComponent<Transform>()->GetWorldZ())
 			return false;
 
 		return true;
@@ -231,13 +231,20 @@ namespace roka
 	}
 	void Camera::RenderTransparent()
 	{
+		int index = 0;
 		for (std::shared_ptr<GameObject> obj : mTransparentObjects)
 		{
 			if (obj == nullptr)
 				continue;
 			if (obj->GetState() != GameObject::EState::Active)
 				continue;
+			if (obj->GetName().compare(L"Base") == 0 || 
+				obj->GetName().compare(L"MGateRight")==0)
+			{
+				int a = 0;
+			}
 			obj->Render();
+			index++;
 		}
 	}
 	void Camera::EnableDepthStencilState()

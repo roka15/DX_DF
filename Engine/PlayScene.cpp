@@ -24,7 +24,6 @@
 
 namespace roka
 {
-	static std::shared_ptr<GameObject> s_player;
 	PlayScene::PlayScene() :Scene(ESceneType::End)
 	{
 	}
@@ -41,7 +40,7 @@ namespace roka
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
 		//AddGameObject(ELayerType::Player, player);
-		s_player = player;
+		
 
 		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
 		another_player->SetName(L"AnotherPlayer");
@@ -148,32 +147,13 @@ namespace roka
 	void PlayScene::Update()
 	{
 		Scene::Update();
-		static int num = 0;
-		static EKeyCode code;
 		
 		std::shared_ptr<GameObject> obj 
 			= FindGameObject(ELayerType::Player,L"Player");
-		if(obj)
-		{
-			std::shared_ptr<GameObject> av1 = obj->GetChild<AvatarScript>()->GetChild<PartScript>();
-			std::shared_ptr<Animator> ani1
-				= av1->GetComponent<Animator>();
-		}
-			
-
-		std::shared_ptr<GameObject> obj2
-			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
-		std::shared_ptr<GameObject> av2 = obj2->GetChild<AvatarScript>()->GetChild<PartScript>();
-		std::shared_ptr<Animator> ani2
-			= av2->GetComponent<Animator>();
 
 		std::shared_ptr<PlayerScript> ps
-			= obj2->GetComponent<PlayerScript>();
+			= obj->GetComponent<PlayerScript>();
 
-		if (Input::GetKeyDown(EKeyCode::A))
-		{
-			AddGameObject(ELayerType::Player, s_player);
-		}
 		if (Input::GetKeyDown(EKeyCode::LEFT))
 			ps->LeftBtnDown();
 		if (Input::GetKeyUp(EKeyCode::LEFT))

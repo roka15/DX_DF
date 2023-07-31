@@ -102,4 +102,14 @@ namespace roka
         cb->SetData(&trCB);
         cb->Bind(EShaderStage::VS);
     }
+    float Transform::GetWorldZ()
+    {
+        Matrix result = mWorld;
+        if (owner->parent != nullptr)
+        {
+            result *= owner->parent->GetComponent<Transform>()->mWorld;
+        }
+
+        return result._43;
+    }
 }
