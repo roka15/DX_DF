@@ -55,7 +55,7 @@ namespace roka
 				flag++;
 		}
 
-		if (flag > 0)
+		if (flag > 0 || owner->is_debug == true)
 		{
 			tf->BindConstantBuffer();
 			mMesh->BindBuffer();

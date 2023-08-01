@@ -1,8 +1,13 @@
 #pragma once
 #include "GameObject.h"
 
+namespace roka
+{
+	using namespace math;
+}
 namespace gui
 {
+	
 	class DebugObject : public roka::GameObject
 	{
 	public:
@@ -15,7 +20,10 @@ namespace gui
 		virtual void Render();
 
 		virtual void Copy(GameObject* src);
-   
+
+		void SetColor(roka::math::Vector4 color);
+	private:
+		Vector4 mColor;
 	};
 }
 

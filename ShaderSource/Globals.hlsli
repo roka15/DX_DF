@@ -5,7 +5,10 @@ cbuffer Transform : register(b0)
 	row_major matrix ViewMatrix;
 	row_major matrix ProjectionMatrix;
 }
-
+cbuffer Material : register(b1)
+{
+	float4 Color;
+}
 cbuffer Grid : register(b2)
 {
 	float4 CameraPosition;

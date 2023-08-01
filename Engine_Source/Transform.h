@@ -34,6 +34,7 @@ namespace roka
 		Vector3 Right() { return mRight; }
 		Vector3 Forward() { return mForward; }
 
+		Matrix& GetMatrix() { return mWorld; }
 		float GetWorldZ();
 		
 		PROPERTY(GetPosition, SetPosition) Vector3 position;

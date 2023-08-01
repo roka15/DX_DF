@@ -50,6 +50,7 @@ namespace roka
 		std::function<void()>& CompleteEvent(const std::wstring key);
 		std::function<void()>& EndEvent(const std::wstring key);
 
+		const class Sprite& GetSprite();
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;

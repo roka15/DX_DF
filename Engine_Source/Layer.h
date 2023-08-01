@@ -15,7 +15,7 @@ namespace roka
 		void AddGameObject(std::shared_ptr<GameObject> gameObj);
 		std::shared_ptr<GameObject> FindGameObject(std::wstring name);
 
-		std::vector<std::shared_ptr<GameObject>>& GetGameObjects() { return mGameObjects; }
+		const std::vector<std::shared_ptr<GameObject>>& GetGameObjects() { return mGameObjects; }
 	private:
 		std::vector<std::shared_ptr<GameObject>> mGameObjects;
 	};

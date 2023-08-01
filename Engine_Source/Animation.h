@@ -33,10 +33,10 @@ namespace roka
 
 		void SetDuration(float duration) { mDuration = duration; }
 		float GetDuration() { return mDuration; }
-		PROPERTY(GetDuration,SetDuration) float duration;
 		bool IsComplete() { return mIsComplete; }
+		const Sprite& GetSprite();
+		PROPERTY(GetDuration,SetDuration) float duration;
 		GET_PROPERTY(IsComplete) bool is_complete;
-
 	private:
 		std::shared_ptr<Texture> mAtlas;
 		std::weak_ptr<Animator> mAnimator;

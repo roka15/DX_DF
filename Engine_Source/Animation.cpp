@@ -113,4 +113,8 @@ namespace roka
 			return;
 		mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, set_name);
 	}
+	const Sprite& Animation::GetSprite()
+	{
+		return mSprites[mIndex];
+	}
 }

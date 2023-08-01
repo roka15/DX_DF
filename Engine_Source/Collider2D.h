@@ -25,7 +25,13 @@ namespace roka
 		void SetType(EColliderType type) { mColType = type; }
 		void SetSize(Vector2 size) { mSize = size; }
 		void SetCenter(Vector2 size) { mCenter = size; }
+		Vector2 GetSize() { return mSize; }
+		Vector2 GetCenter() { return mCenter; }
+
 		UINT GetColliderID() { return mColliderID; }
+
+		PROPERTY(GetSize, SetSize) Vector2 size;
+		PROPERTY(GetCenter, SetCenter) Vector2 center;
 
 		GET_PROPERTY(GetColliderID) UINT collider_id;
 	private:
@@ -40,6 +46,7 @@ namespace roka
 		Vector3 mPosition;
 		Vector2 mSize;
 		Vector2 mCenter;
+		bool mbCollision;
 	};
 }
 

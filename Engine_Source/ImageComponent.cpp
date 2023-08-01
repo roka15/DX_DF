@@ -63,6 +63,10 @@ namespace roka
 	{
 		mSprite->Create(npk_key, pack_key, index);
 	}
+	const Sprite& ImageComponent::GetSprite()
+	{
+		return *(mSprite.get());
+	}
 	void ImageComponent::SetMaterial(std::shared_ptr<Material> material)
 	{
 		mMaterial = material;

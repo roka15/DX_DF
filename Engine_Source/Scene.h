@@ -42,7 +42,7 @@ namespace roka
 			}
 			return FindObjs;
 		}
-
+		const std::vector<std::shared_ptr<GameObject>>& GetGameObjects(ELayerType type);
 		Layer& GetLayer(enums::ELayerType type) { return mLayers[(UINT)type]; }
 
 	protected:

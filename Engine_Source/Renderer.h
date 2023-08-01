@@ -20,7 +20,10 @@ namespace roka::renderer
 		Matrix mView;
 		Matrix mProjection;
 	};
-
+	CBUFFER(MaterialCB, CBSLOT_ANIMATION)
+	{
+		Vector4 Color;
+	};
 	CBUFFER(GridCB, CBSLOT_GRID)
 	{
 		Vector4 CameraPos;
@@ -35,6 +38,7 @@ namespace roka::renderer
 		Vector2 SpriteOffset;
 		Vector2 CanvasSize;
 	};
+	
 
 	extern roka::graphics::ConstantBuffer* constantBuffer[(UINT)ECBType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];

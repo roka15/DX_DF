@@ -26,6 +26,6 @@ VSOut main(VSIn In)
 
     Out.Pos = proj;
     Out.UV = In.UV;
-    Out.Color = In.Color;
+    Out.Color = Color;
     return Out;
 }

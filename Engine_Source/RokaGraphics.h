@@ -16,6 +16,7 @@
 #define CBUFFER(name,slot) static const int CB_GETBINDSLOT(name)=slot; struct alignas(16) name
 
 #define CBSLOT_TRANSFORM 0
+#define CBSLOT_MATERIAL 1
 #define CBSLOT_GRID 2
 #define CBSLOT_ANIMATION 3
 
@@ -106,6 +107,7 @@ namespace roka::graphics
 		float radius;
 		float duration;
 		float time;
+		math::Vector4 color;
 	};
 }
 

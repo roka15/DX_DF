@@ -1,9 +1,12 @@
 #include "guiDebugObject.h"
-
+#include "MeshRenderer.h"
+#include "Renderer.h"
+using namespace roka;
 namespace gui
 {
-    DebugObject::DebugObject()
+    DebugObject::DebugObject():GameObject()
     {
+        mbDebugObject = true;
     }
     DebugObject::~DebugObject()
     {
@@ -25,5 +28,17 @@ namespace gui
     void DebugObject::Copy(GameObject* src)
     {
         GameObject::Copy(src);
+    }
+    void DebugObject::SetColor(roka::math::Vector4 color)
+    {
+        graphics::ConstantBuffer* cb =
+            renderer::constantBuffer[(UINT)ECBType::Material];
+
+        renderer::MaterialCB materialbuf;
+        materialbuf.Color = color;
+
+        cb->SetData(&materialbuf);
+        cb->Bind(EShaderStage::VS);
+        cb->Bind(EShaderStage::PS);
     }
 }

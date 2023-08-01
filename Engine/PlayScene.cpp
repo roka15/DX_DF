@@ -10,6 +10,7 @@
 #include "Mesh.h"
 #include "NPK.h"
 #include "Object.h"
+#include "CollisionManager.h"
 
 #include "MoveScript.h"
 #include "ObjectPool.h"
@@ -21,6 +22,9 @@
 #include "PlayerScript.h"
 #include "AvatarScript.h"
 #include "PartScript.h"
+#include "Collider2D.h"
+
+
 
 namespace roka
 {
@@ -37,15 +41,21 @@ namespace roka
 		/* player script text*/
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
 
+		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
+		another_player->SetName(L"AnotherPlayer");
+		
+		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
+		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
+		AddGameObject(ELayerType::Player, another_player);
+
+
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
+		//cd->SetSize(Vector2(0.05f, 0.2f));
 		AddGameObject(ELayerType::Player, player);
 		
 
-		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
-		another_player->SetName(L"AnotherPlayer");
-		another_player->GetComponent<Transform>()->position = Vector3(-2.0f,0.0f,1.0f);
-		AddGameObject(ELayerType::Player, another_player);
+		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player,true);
 
 			/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
 			obj->SetName(L"player");
@@ -150,7 +160,8 @@ namespace roka
 		
 		std::shared_ptr<GameObject> obj 
 			= FindGameObject(ELayerType::Player,L"Player");
-
+		std::shared_ptr<GameObject> obj2
+			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
 		std::shared_ptr<PlayerScript> ps
 			= obj->GetComponent<PlayerScript>();
 
@@ -172,6 +183,8 @@ namespace roka
 			ps->DownBtnUp();
 		if (Input::GetKeyDown(EKeyCode::X))
 			ps->NomalAtkBtnDown();
+		if (Input::GetKeyDown(EKeyCode::G))
+			obj2->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
 	}
 
 	void PlayScene::LateUpdate()

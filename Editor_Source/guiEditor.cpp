@@ -113,8 +113,9 @@ namespace gui
 		tf->SetPosition(pos);
 		tf->SetScale(mesh.scale);
 		tf->SetRotation(mesh.rotation);
-		
 		tf->LateUpdate();
+
+		debugObj->SetColor(mesh.color);
 
 		std::shared_ptr<roka::Camera> mainCamera = roka::renderer::MainCamera;
 		roka::Camera::SetGpuViewMatrix(mainCamera->GetViewMatrix());

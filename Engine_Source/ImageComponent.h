@@ -26,7 +26,9 @@ namespace roka
         bool Binds();
 
         void SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index);
+        const Sprite& GetSprite();
         void SetMaterial(std::shared_ptr<Material> material);
+        
     private:
         friend class FactoryBase;
         friend class ComponentFactory;

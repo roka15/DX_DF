@@ -1,5 +1,5 @@
 #include "Animator.h"
-
+#include "Sprite.h"
 namespace roka
 {
 	Animator::Animator() :Component(EComponentType::Animator)
@@ -171,5 +171,9 @@ namespace roka
 	{
 		std::shared_ptr<Events> events = FindEvents(key);
 		return events->endEvent.mEvent;
+	}
+	const Sprite& Animator::GetSprite()
+	{
+		return mActiveAnimation.lock()->GetSprite();
 	}
 }

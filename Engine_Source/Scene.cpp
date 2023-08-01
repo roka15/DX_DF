@@ -67,5 +67,9 @@ namespace roka
 	{
 		return mLayers[(int)type].FindGameObject(name);
 	}
+	const std::vector<std::shared_ptr<GameObject>>& Scene::GetGameObjects(ELayerType type)
+	{
+		return mLayers[(int)type].GetGameObjects();
+	}
 }
 

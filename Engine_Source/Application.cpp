@@ -7,6 +7,7 @@
 #include "..\\Engine\\FactoryManager.h"
 #include "..\\Engine\\Prefab.h"
 #include "TestPool.h"
+#include "CollisionManager.h"
 namespace roka
 {
 
@@ -48,9 +49,9 @@ namespace roka
 
 	void Application::Update()
 	{
-		Input::Update();
 		Time::Update();
-		
+		Input::Update();
+		CollisionManager::Update();
 		SceneManager::Update();
 	}
 

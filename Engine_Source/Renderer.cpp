@@ -375,9 +375,9 @@ namespace roka::renderer
 		//constant buffer
 		constantBuffer[(UINT)ECBType::Transform] = new roka::graphics::ConstantBuffer(ECBType::Transform);
 		constantBuffer[(UINT)ECBType::Transform]->Create(sizeof(TransformCB));
-		/*Vector4 pos(0.0f, 0.0f, 0.0f, 1.0f);
-		constantBuffer->SetData(&pos);
-		constantBuffer->Bind(EShaderStage::VS);*/
+
+		constantBuffer[(UINT)ECBType::Material] = new roka::graphics::ConstantBuffer(ECBType::Material);
+		constantBuffer[(UINT)ECBType::Material]->Create(sizeof(MaterialCB));
 
 		constantBuffer[(UINT)ECBType::Grid] = new roka::graphics::ConstantBuffer(ECBType::Grid);
 		constantBuffer[(UINT)ECBType::Grid]->Create(sizeof(GridCB));

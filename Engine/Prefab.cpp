@@ -216,6 +216,9 @@ namespace roka::prefab
 
 				AvatarParrent->AddScript<AvatarScript>();
 			}
+			std::shared_ptr<Collider2D> cd = PlayerObject->AddComponent<Collider2D>();
+			cd->SetSize(Vector2(0.1f, 0.2f));
+			cd->SetCenter(Vector2(-0.01f, -0.525f));
 			PlayerObject->AddScript<MoveScript>();
 			PlayerObject->AddScript<PlayerScript>();
 		}

@@ -5,7 +5,7 @@
 #include "Component.h"
 namespace roka
 {
-	class GameObject : public Entity,public std::enable_shared_from_this<GameObject>
+	class GameObject : public Entity, public std::enable_shared_from_this<GameObject>
 	{
 	public:
 		enum class EState
@@ -16,7 +16,7 @@ namespace roka
 		};
 		GameObject();
 		GameObject(const GameObject& ref);
-	
+
 		virtual ~GameObject();
 
 		virtual void Initialize();
@@ -84,7 +84,7 @@ namespace roka
 			}
 			return nullptr;
 		}
-		
+
 		template <typename T>
 		std::shared_ptr<T> AddComponent()
 		{
@@ -99,7 +99,7 @@ namespace roka
 			component->Initialize();
 			return component;
 		}
-		
+
 		template <typename T>
 		std::shared_ptr<T> AddScript()
 		{
@@ -138,6 +138,7 @@ namespace roka
 		UINT GetChildCont() { return mChild.size(); }
 
 
+		bool IsDebugObject() { return mbDebugObject; }
 
 		void SetMoveFlag(bool flag) { mbMove = flag; }
 		bool GetMoveFlag() { return mbMove; }
@@ -150,10 +151,13 @@ namespace roka
 
 		std::shared_ptr<GameObject> GetSharedPtr() { return shared_from_this(); }
 
+		GET_PROPERTY(IsDebugObject) bool is_debug;
 		PROPERTY(GetParent, SetParent)  std::shared_ptr<GameObject> parent;
 		PROPERTY(GetMoveFlag, SetMoveFlag) bool ismove;
 		PROPERTY(GetState, SetState) EState active;
 		PROPERTY(GetLayerType, SetLayerType) ELayerType layer_type;
+	protected:
+		bool mbDebugObject;
 	private:
 		bool mbMove;
 		EState mState;

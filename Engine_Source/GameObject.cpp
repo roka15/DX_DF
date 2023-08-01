@@ -11,6 +11,7 @@
 #include "..\\Engine\\ScriptFactory.h"
 roka::GameObject::GameObject()
 	:mState(EState::Active)
+	, mbDebugObject(false)
 	, mbMove(true)
 	, mLayerType(ELayerType::End)
 {
@@ -19,6 +20,7 @@ roka::GameObject::GameObject()
 
 roka::GameObject::GameObject(const GameObject& ref) :
 	Entity(ref),
+	mbDebugObject(ref.mbDebugObject),
 	mbMove(ref.mbMove),
 	mState(ref.mState)
 {
@@ -77,7 +79,7 @@ void roka::GameObject::Copy(GameObject* src)
 	Entity::Copy(src);
 	mbMove = src->mbMove;
 	mState = src->mState;
-
+	mbDebugObject = src->mbDebugObject;
 	for (auto& comp : src->mComponents)
 	{
 		std::shared_ptr<Component> newComp = GetComponent(comp->type);
