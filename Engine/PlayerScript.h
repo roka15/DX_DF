@@ -43,6 +43,9 @@ namespace roka
 		void RightBtnUp();
 		void UpBtnUp();
 		void DownBtnUp();
+		void NomalAtkBtnDown();
+		void JumpBtnDown();
+
 
 		EPlayerState GetState() { return mPlayerState; }
 		void EnableKeyInput() { mIsActiveInput = true; }
@@ -50,6 +53,8 @@ namespace roka
 
 	
 		GET_PROPERTY(GetState) EPlayerState player_state;
+	protected:
+		
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
@@ -61,6 +66,14 @@ namespace roka
 		std::weak_ptr<Transform> mTransform;
 		std::weak_ptr<MoveScript> mMoveScript;
 		std::weak_ptr<AvatarScript> mAvatar;
+
+		//test
+		double mLeftTime;
+		double mRightTime;
+		double mTime;
+		double mDiff;
+
+		float mCurDir;
 	};
 }
 

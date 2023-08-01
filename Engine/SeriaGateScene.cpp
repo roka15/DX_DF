@@ -57,6 +57,8 @@ void roka::SeriaGateScene::Update()
 		ps->DownBtnDown();
 	if (Input::GetKeyUp(EKeyCode::DOWN))
 		ps->DownBtnUp();
+	if (Input::GetKeyDown(EKeyCode::X))
+		ps->NomalAtkBtnDown();
 }
 
 void roka::SeriaGateScene::LateUpdate()
@@ -474,8 +476,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateDownThin = object::Instantiate<Image>(
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateDownThin->SetName(L"GateDownThin");
 			GateDownThin->ismove = false;
@@ -492,8 +493,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateUp = object::Instantiate<Image>(
 			Vector3(0.0f, 0.105f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.5f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.5f, 1.0f));
 		{
 			GateUp->SetName(L"GateUp");
 			GateUp->ismove = false;
@@ -510,8 +510,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateUpThin = object::Instantiate<Image>(
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateUpThin->SetName(L"GateUpThin");
 			GateUpThin->ismove = false;
@@ -528,8 +527,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateMidRightEft = object::Instantiate<Image>(
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidRightEft->SetName(L"GateMidRightEft");
 			GateMidRightEft->ismove = false;
@@ -546,8 +544,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateMidLeftEft = object::Instantiate<Image>(
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidLeftEft->SetName(L"GateMidLeftEft");
 			GateMidLeftEft->ismove = false;
@@ -564,8 +561,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateMidRightGlowEft = object::Instantiate<Image>(
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidRightGlowEft->SetName(L"GateMidRightGlowEft");
 			GateMidRightGlowEft->ismove = false;
@@ -582,8 +578,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Image> GateMidLeftGlowEft = object::Instantiate<Image>(
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::BackObject);
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidLeftGlowEft->SetName(L"GateMidLeftGlowEft");
 			GateMidLeftGlowEft->ismove = false;

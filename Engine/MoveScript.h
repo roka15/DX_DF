@@ -16,9 +16,12 @@ namespace roka
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-		void SetSpeed(float speed) { mSpeed = speed; }
+		void AddSpeed(float value) { mSpeed *= value; }
+		void ResetSpeed() { mSpeed = mOriginSpeed; }
+		void SetSpeed(float speed) { mOriginSpeed =mSpeed= speed; }
 		void SetDirX(float dir) { mDir.x = dir; }
 		void SetDirY(float dir) { mDir.y = dir; }
+		float GetDirX() { return mDir.x; }
 
 		bool IsStop() { return mDir.x == 0.0f && mDir.y == 0.0f; }
 
@@ -28,7 +31,7 @@ namespace roka
 		friend class FactoryBase;
 		friend class ScriptFactory;
 		float mSpeed;
-		
+		float mOriginSpeed;
 		Vector2 mDir;
 	};
 }

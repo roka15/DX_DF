@@ -39,7 +39,7 @@ namespace roka
 
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
-		//AddGameObject(ELayerType::Player, player);
+		AddGameObject(ELayerType::Player, player);
 		
 
 		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
@@ -170,6 +170,8 @@ namespace roka
 			ps->DownBtnDown();
 		if (Input::GetKeyUp(EKeyCode::DOWN))
 			ps->DownBtnUp();
+		if (Input::GetKeyDown(EKeyCode::X))
+			ps->NomalAtkBtnDown();
 	}
 
 	void PlayScene::LateUpdate()

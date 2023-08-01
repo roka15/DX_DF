@@ -14,6 +14,9 @@ namespace roka::enums
 		Nonne,
 		Idle,
 		Walk,
+		Run,
+		FallDown,
+		NomalAtk,
 		Skill,
 		End,
 	};

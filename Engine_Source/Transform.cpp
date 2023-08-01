@@ -104,12 +104,6 @@ namespace roka
     }
     float Transform::GetWorldZ()
     {
-        Matrix result = mWorld;
-        if (owner->parent != nullptr)
-        {
-            result *= owner->parent->GetComponent<Transform>()->mWorld;
-        }
-
-        return result._43;
+        return mWorld._43;
     }
 }
