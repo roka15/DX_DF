@@ -61,11 +61,6 @@ namespace roka
 	}
 	void Animator::Update()
 	{
-		GameObject* Owner = owner;
-		if (Owner->parent->parent->GetName().compare(L"Player") == 0)
-		{
-			int a = 0;
-		}
 		if (mbActive==false)
 			return;
 		

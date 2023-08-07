@@ -49,15 +49,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp">
       <Filter>Manager\SceneManager</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MeshRenderer.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
-      <Filter>GameObject\Component</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneSector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp">
@@ -69,9 +60,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Mesh.cpp">
       <Filter>Resource\Mesh</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp">
-      <Filter>Resource\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)NPK.cpp">
       <Filter>Resource\NPK</Filter>
     </ClCompile>
@@ -80,9 +68,6 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPool.cpp">
       <Filter>Common\ObjectPool</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp">
-      <Filter>GameObject\Component</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp">
       <Filter>Common\Factory\Base</Filter>
@@ -116,6 +101,27 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp">
       <Filter>GameObject\Component\Animator</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp">
+      <Filter>Resource\Shader\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ComputeShader.cpp">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
+      <Filter>GameObject\Component\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp">
+      <Filter>GameObject\Component\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MeshRenderer.cpp">
+      <Filter>GameObject\Component\MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp">
+      <Filter>GameObject\Component\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Rigidbody.cpp">
+      <Filter>GameObject\Component\Rigidbody</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,15 +185,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h">
       <Filter>Manager\SceneManager</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MeshRenderer.h">
-      <Filter>GameObject\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
-      <Filter>GameObject\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
-      <Filter>GameObject\Component</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneSector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h">
@@ -195,9 +192,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Material.h">
       <Filter>Resource\Material</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h">
-      <Filter>Resource\Shader</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)NPK.h">
       <Filter>Resource\NPK</Filter>
@@ -213,9 +207,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPool.h">
       <Filter>Common\ObjectPool</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h">
-      <Filter>GameObject\Component</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h">
       <Filter>Common\Factory\Base</Filter>
@@ -258,6 +249,27 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h">
       <Filter>GameObject\Component\Animator</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h">
+      <Filter>Resource\Shader\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ComputeShader.h">
+      <Filter>Resource\Shader\ComputeShader</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
+      <Filter>GameObject\Component\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h">
+      <Filter>GameObject\Component\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MeshRenderer.h">
+      <Filter>GameObject\Component\MeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h">
+      <Filter>GameObject\Component\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Rigidbody.h">
+      <Filter>GameObject\Component\Rigidbody</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -374,6 +386,27 @@
     </Filter>
     <Filter Include="GameObject\Component\Animator">
       <UniqueIdentifier>{dc57fcb0-25b6-472e-ae02-29f8e1c85abb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader\ComputeShader">
+      <UniqueIdentifier>{80af71b1-e86f-4269-87e1-18f0271e58a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader\Shader">
+      <UniqueIdentifier>{f9d6fd01-a4e9-4cf6-a79c-05339ebb6928}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Camera">
+      <UniqueIdentifier>{ba1f7318-a17e-46e7-ba29-4a4353924bd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Image">
+      <UniqueIdentifier>{ff80c532-6b1d-43ed-9d48-721b1ee79503}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\MeshRenderer">
+      <UniqueIdentifier>{283c297e-b1a9-46a0-8704-9d4e565eb3e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Transform">
+      <UniqueIdentifier>{c14d917e-303d-4276-b533-cd7a71b78081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Rigidbody">
+      <UniqueIdentifier>{0ff0500f-587a-4dd8-97ac-9ec6a24c7dc9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

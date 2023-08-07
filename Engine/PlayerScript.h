@@ -54,6 +54,7 @@ namespace roka
 		void DisableKeyInput() { mIsActiveInput = false; }
 
 		static void FallCompleteEvent(std::weak_ptr<void> ptr);
+		static void JumpDashCompleteEvent(std::weak_ptr<void> ptr);
 		GET_PROPERTY(GetState) EPlayerState player_state;
 	protected:
 		

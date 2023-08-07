@@ -15,6 +15,7 @@
 #include "NPK.h"
 #include "Prefab.h"
 #include "Input.h"
+#include "Renderer.h"
 
 #include "RokaTime.h"
 #include "Object.h"
@@ -1780,6 +1781,7 @@ void roka::SeriaGateScene::OnEnter()
 		camera->AddScript<CameraScript>();
 		std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 		cameraComp->TurnLayerMask(ELayerType::UI, false);
+		renderer::MainCamera = cameraComp;
 	}
 
 	std::shared_ptr<GameObject> UIcamera = object::Instantiate<GameObject>(

@@ -61,7 +61,16 @@ namespace roka
 		
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player,true);
-
+		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
+			Vector3(0.0f, 0.0f, -10.0f),
+			ELayerType::Player);
+		{
+			camera->SetName(L"camera");
+			camera->AddScript<CameraScript>();
+			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
+			cameraComp->TurnLayerMask(ELayerType::UI, false);
+			renderer::MainCamera = cameraComp;
+		}
 			/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
 			obj->SetName(L"player");
 			obj->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
@@ -118,16 +127,7 @@ namespace roka
 				obj->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 			}
 			*/
-		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.0f, -10.0f),
-			ELayerType::Player);
-		{
-			camera->SetName(L"camera");
-			camera->AddScript<CameraScript>();
-			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
-			cameraComp->TurnLayerMask(ELayerType::UI, false);
-			renderer::MainCamera = cameraComp;
-		}
+	
 		/*{
 			GameObject* player = new GameObject();
 			AddGameObject(ELayerType::Player, player);

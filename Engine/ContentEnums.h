@@ -20,6 +20,7 @@ namespace roka::enums
 		OnePlay,
 		Jump,
 		JumpHold,
+		JumpRun,
 		Skill,
 		
 		End,

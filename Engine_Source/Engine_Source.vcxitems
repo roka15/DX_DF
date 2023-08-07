@@ -22,6 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CommonInclude.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Component.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ComputeShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ConstantBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enums.h" />
@@ -49,6 +50,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PriorityQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RBT.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Renderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Rigidbody.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphics.h" />
@@ -76,6 +78,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Collider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Component.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ComputeShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ConstantBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp" />
@@ -98,6 +101,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RBT.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Rigidbody.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaMath.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaTime.cpp" />

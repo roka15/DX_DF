@@ -66,6 +66,8 @@ namespace roka
 	}
 	void Rigidbody::Update()
 	{
+		if (mbActive == false)
+			return;
 		Vector2 resolution = { (float)application.GetWidth(),(float)application.GetHeight() };
 
 		Vector2 mass = { mMass ,mMass };

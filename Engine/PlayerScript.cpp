@@ -87,11 +87,11 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump2");
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump3");
 	
-		avatar->SetCompleteEventAnimations(EPlayerState::Jump);
+		avatar->SetCompleteEventAnimation(EPlayerState::Jump,0,1);
 		
 		/*avatar->EndEventAnimation(EPlayerState::Jump, 1, std::bind([this]()->void { mRigid.lock()->SetGround(true); }));*/
 		avatar->SetStartEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { mMoveScript.lock()->is_active = false; }));
-		avatar->CompleteEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void {NextState(); }));
+		avatar->CompleteEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { NextState(); }));
 		mPlayerState = EPlayerState::Idle;
 		//현재 idle 상태 애니 재생.
 		avatar->PlayPartsMotion();
@@ -101,6 +101,7 @@ namespace roka
 
 
 		Time::RegisterEvent(L"PlayerFallCompEvent",&PlayerScript::FallCompleteEvent);
+		Time::RegisterEvent(L"PlayerJumpDashCompEvent", &PlayerScript::JumpDashCompleteEvent);
 	}
 	void PlayerScript::Update()
 	{
@@ -108,10 +109,10 @@ namespace roka
 	}
 	void PlayerScript::LateUpdate()
 	{
-		if (mPlayerState == EPlayerState::JumpHold
+		if (mPlayerState >= EPlayerState::Jump
 			&& mRigid.lock()->is_ground == true)
 		{
-			mPlayerState = EPlayerState::Jump;
+			mPlayerState = EPlayerState::Idle;
 			std::shared_ptr<AvatarScript> as = mAvatar.lock();
 			as->StartAni();
 			as->PlayPartsMotion(EPlayerState::Jump,2,false);
@@ -125,10 +126,13 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
 		mRightTime = 0.0;
 		
-		if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+		if (mPlayerState < EPlayerState::Jump)
 		{
+			if (ms->is_active == false)
+				ms->is_active = true;
 			if (mCurDir > 0.0f && mPlayerState == EPlayerState::Run)
 			{
 				mPlayerState = EPlayerState::Walk;
@@ -148,6 +152,22 @@ namespace roka
 			}
 			as->PlayPartsMotion();
 		}
+		else
+		{
+			if (mTime - mLeftTime <= mDiff)
+			{
+				as->PlayPartsMotion(EPlayerState::Run, 0, true);
+				rigid->is_active = false;
+				ms->AddSpeed(2.0f);
+				mPlayerState = EPlayerState::JumpRun;
+				Time::CallBackTimerInfo info = {};
+				info.endTime = 1.5;
+				std::wstring key = L"PlayerJumpDashCompEvent";
+				size_t str_length = key.size();
+				std::wcsncpy(info.key, key.c_str(), str_length);
+				Time::RequestEvent(info, owner->GetSharedPtr());
+			}
+		}
 		as->SettingLeftMaterial();
 		mCurDir = -1.0f;
 		ms->SetDirX(-1.0f);
@@ -157,11 +177,15 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
 		mLeftTime = 0.0;
 		
 	
-		if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+		if (mPlayerState < EPlayerState::Jump)
 		{
+			if (ms->is_active == false)
+				ms->is_active = true;
+
 			if (mCurDir < 0.0f && mPlayerState == EPlayerState::Run)
 			{
 				mPlayerState = EPlayerState::Walk;
@@ -181,6 +205,23 @@ namespace roka
 			}
 			as->PlayPartsMotion();
 		}
+		else
+		{
+			if (mTime - mRightTime <= mDiff)
+			{
+				as->PlayPartsMotion(EPlayerState::Run,0,true);
+				rigid->is_active = false;
+				ms->AddSpeed(2.0f);
+				mPlayerState = EPlayerState::JumpRun;
+				Time::CallBackTimerInfo info = {};
+				info.endTime = 1.5;
+				std::wstring key = L"PlayerJumpDashCompEvent";
+				size_t str_length = key.size();
+				std::wcsncpy(info.key, key.c_str(), str_length);
+				Time::RequestEvent(info, owner->GetSharedPtr());
+			}
+		}
+		
 		as->SettingRightMaterial();
 		mCurDir = 1.0f;
 		ms->SetDirX(1.0f);
@@ -190,8 +231,10 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
-		if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+		if (mPlayerState < EPlayerState::Jump)
 		{
+			if (ms->is_active == false)
+				ms->is_active = true;
 			if (mPlayerState != EPlayerState::Run)
 				mPlayerState = EPlayerState::Walk;
 			as->PlayPartsMotion();
@@ -203,8 +246,10 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
-		if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+		if (mPlayerState < EPlayerState::Jump)
 		{
+			if (ms->is_active == false)
+				ms->is_active = true;
 			if (mPlayerState != EPlayerState::Run)
 				mPlayerState = EPlayerState::Walk;
 			as->PlayPartsMotion();
@@ -216,27 +261,48 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
 		mLeftTime = mTime;
 		
-
-		if (Input::GetKey((EKeyCode)mUser->right_key))
+		if (mPlayerState == EPlayerState::JumpRun && mCurDir == -1.0f)
 		{
-			if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
-			{
-				mPlayerState = EPlayerState::Walk;
-				ms->ResetSpeed();
-			}
-			ms->SetDirX(1.0f);
-			as->SettingRightMaterial();
+			if (rigid->is_active == false)
+				rigid->is_active = true;
+			ms->SetDirX(0.0f);
+			ms->ResetSpeed();
+			as->PlayPartsMotion(EPlayerState::Jump, 1, false);
+			Time::CallBackTimerInfo info = {};
+			info.endTime = 0.0;
+			std::wstring key = L"PlayerFallCompEvent";
+			size_t str_length = key.size();
+			std::wcsncpy(info.key, key.c_str(), str_length);
+			Time::RequestEvent(info, owner->GetSharedPtr());
+			return;
 		}
 		else
-			ms->SetDirX(0.0f);
+		{
+			if (Input::GetKey((EKeyCode)mUser->right_key))
+			{
+				if (ms->is_active == false)
+					ms->is_active = true;
+				if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+				{
+					mPlayerState = EPlayerState::Walk;
+					ms->ResetSpeed();
+				}
+				ms->SetDirX(1.0f);
+				as->SettingRightMaterial();
+			}
+			else
+				ms->SetDirX(0.0f);
+		}
+		
 
 		
 		if (ms->is_stop)
 		{
 			//idle;
-			if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+			if (mPlayerState < EPlayerState::Jump)
 			{
 				mPlayerState = EPlayerState::Idle;
 				ms->ResetSpeed();
@@ -249,26 +315,46 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
-
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
 		mRightTime = mTime;
-		
-		if (Input::GetKey((EKeyCode)mUser->left_key))
+		if (mPlayerState == EPlayerState::JumpRun && mCurDir == 1.0f)
 		{
-			if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
-			{
-				mPlayerState = EPlayerState::Walk;
-				ms->ResetSpeed();
-			}
-			ms->SetDirX(-1.0f);
-			as->SettingLeftMaterial();
+			if (rigid->is_active == false)
+				rigid->is_active = true;
+			ms->SetDirX(0.0f);
+			ms->ResetSpeed();
+			as->PlayPartsMotion(EPlayerState::Jump, 1, false);
+			Time::CallBackTimerInfo info = {};
+			info.endTime = 0.0;
+			std::wstring key = L"PlayerFallCompEvent";
+			size_t str_length = key.size();
+			std::wcsncpy(info.key, key.c_str(), str_length);
+			Time::RequestEvent(info, owner->GetSharedPtr());
+			return;
 		}
 		else
-			ms->SetDirX(0.0f);
+		{
+			if (Input::GetKey((EKeyCode)mUser->left_key))
+			{
+				if (ms->is_active == false)
+					ms->is_active = true;
+				if (mPlayerState < EPlayerState::Jump)
+				{
+					mPlayerState = EPlayerState::Walk;
+					ms->ResetSpeed();
+				}
+				ms->SetDirX(-1.0f);
+				as->SettingLeftMaterial();
+			}
+			else
+				ms->SetDirX(0.0f);
+		}
+		
 
 		if (ms->is_stop)
 		{
 			//idle
-			if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+			if (mPlayerState < EPlayerState::Jump)
 			{
 				mPlayerState = EPlayerState::Idle;
 				ms->ResetSpeed();
@@ -285,14 +371,18 @@ namespace roka
 		
 
 		if (Input::GetKey((EKeyCode)mUser->down_key))
+		{
+			if (ms->is_active == false)
+				ms->is_active = true;
 			ms->SetDirY(-1.0f);
+		}
 		else
 			ms->SetDirY(0.0f);
 
 
 		if (ms->is_stop)
 		{
-			if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+			if (mPlayerState < EPlayerState::Jump)
 			{
 				//idle
 				mPlayerState = EPlayerState::Idle;
@@ -310,14 +400,18 @@ namespace roka
 		mLeftTime = 0.0;
 
 		if (Input::GetKey((EKeyCode)mUser->up_key))
+		{
+			if (ms->is_active == false)
+				ms->is_active = true;
 			ms->SetDirY(1.0f);
+		}
 		else
 			ms->SetDirY(0.0f);
 
 
 		if (ms->is_stop)
 		{
-			if (mPlayerState != EPlayerState::Jump && mPlayerState != EPlayerState::JumpHold)
+			if (mPlayerState < EPlayerState::Jump)
 			{
 				//idle
 				mPlayerState = EPlayerState::Idle;
@@ -337,12 +431,16 @@ namespace roka
 	{
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
-		if (mPlayerState == EPlayerState::Jump)
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		if (rigid->is_active == false)
+			rigid->is_active = true;
+		if (mPlayerState == EPlayerState::Jump || mPlayerState ==EPlayerState::JumpRun)
 		{
 			mPlayerState = EPlayerState::JumpHold;
 			as->PlayPartsMotion(EPlayerState::Jump, 1, false);
 			as->StopAni();
 			rigid->DecreaseGravity(true);
+			ms->ResetSpeed();
 			Time::CallBackTimerInfo info = {};
 			info.endTime = 1.5;
 			std::wstring key = L"PlayerFallCompEvent";
@@ -356,6 +454,7 @@ namespace roka
 			std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 			std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
 			std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+			
 			rigid->SetVelocity(Vector2(0.0f, 1400.0f));
 			rigid->disableGround();
 			rigid->SetLandingPoint(Vector2(tf->position.x, tf->position.y));
@@ -369,24 +468,32 @@ namespace roka
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
-		if (Input::GetAniKey() == false)
+		if (Input::GetKey(EKeyCode::SPACE))
 		{
 			mPlayerState = EPlayerState::Idle;
 		}
-		else if (Input::GetKey(EKeyCode::LEFT))
+		else
 		{
-			mPlayerState = EPlayerState::Walk;
-			as->SettingLeftMaterial();
+			if (Input::GetAniKey() == false)
+			{
+				mPlayerState = EPlayerState::Idle;
+			}
+			else if (Input::GetKey(EKeyCode::LEFT))
+			{
+				mPlayerState = EPlayerState::Walk;
+				as->SettingLeftMaterial();
+			}
+			else if (Input::GetKey(EKeyCode::RIGHT))
+			{
+				mPlayerState = EPlayerState::Walk;
+				as->SettingRightMaterial();
+			}
+			else if (Input::GetKey(EKeyCode::UP) || Input::GetKey(EKeyCode::DOWN))
+			{
+				mPlayerState = EPlayerState::Walk;
+			}
 		}
-		else if (Input::GetKey(EKeyCode::RIGHT))
-		{
-			mPlayerState = EPlayerState::Walk;
-			as->SettingRightMaterial();
-		}
-		else if (Input::GetKey(EKeyCode::UP) || Input::GetKey(EKeyCode::DOWN))
-		{
-			mPlayerState = EPlayerState::Walk;
-		}
+		
 
 		if (ms->is_active == false)
 		{
@@ -401,6 +508,25 @@ namespace roka
 		GameObject* owner = reinterpret_cast<GameObject*>(Ptr.get());
 		std::shared_ptr<PlayerScript> ps = owner->GetComponent<PlayerScript>();
 		ps->mRigid.lock()->CompleteFallEvent();
+	}
+
+	void PlayerScript::JumpDashCompleteEvent(std::weak_ptr<void> ptr)
+	{
+		std::shared_ptr<void> Ptr = ptr.lock();
+		GameObject* owner = reinterpret_cast<GameObject*>(Ptr.get());
+		std::shared_ptr<PlayerScript> ps = owner->GetComponent<PlayerScript>();
+		std::shared_ptr<AvatarScript> as = ps->mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = ps->mRigid.lock();
+		std::shared_ptr<MoveScript> ms = ps->mMoveScript.lock();
+
+		if ((ps->mCurDir == 1.0f && Input::GetKey(EKeyCode::RIGHT) && ps->mPlayerState == EPlayerState::JumpRun)
+	        || (ps->mCurDir == -1.0f && Input::GetKey(EKeyCode::LEFT) && ps->mPlayerState == EPlayerState::JumpRun))
+		{
+			rigid->is_active = true;
+			rigid->CompleteFallEvent();
+			ms->ResetSpeed();
+			as->PlayPartsMotion(EPlayerState::Jump, 1, false);
+		}
 	}
 	
 }
