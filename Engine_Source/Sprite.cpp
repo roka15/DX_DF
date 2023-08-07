@@ -1,6 +1,7 @@
 #include "Sprite.h"
 #include "Resources.h"
 #include "NPK.h"
+#include <string.h>
 namespace roka
 {
 	Sprite::Sprite() :
@@ -19,9 +20,13 @@ namespace roka
 		mCanvasSize = ref.mCanvasSize;
 		mImageSize = ref.mImageSize;
 		mOffset = ref.mOffset;
-
-		mNPKKey = ref.mNPKKey;
-		mPackKey = ref.mPackKey;
+		size_t size = ref.mNPKKey.size();
+		mNPKKey.resize(size);
+		std::wcsncpy(mNPKKey.data(), ref.mNPKKey.c_str(),size);
+		size = ref.mPackKey.size();
+		mPackKey.resize(size);
+		std::wcsncpy(mPackKey.data(), ref.mPackKey.c_str(),size);
+	
 		mIndex = ref.mIndex;
 	}
 	Sprite::~Sprite()

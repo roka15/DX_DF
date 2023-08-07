@@ -7,7 +7,8 @@ namespace roka
 		, mEvents{}
 		, mActiveAnimation()
 		, mFirstUpdateAnimation()
-		, mIsLoop(false)
+		, mbLoop(false)
+		, mbStop(false)
 	{
 	}
 	Animator::Animator(const Animator& ref) :Component(ref)
@@ -19,11 +20,15 @@ namespace roka
 		}
 		for (auto map : ref.mEvents)
 		{
-			mEvents.insert(std::make_pair(map.first, map.second));
+			mEvents.insert(std::make_pair(map.first, std::make_shared<Events>()));
+			mEvents[map.first]->completeEvent = map.second->completeEvent;
+			mEvents[map.first]->endEvent = map.second->endEvent;
+			mEvents[map.first]->startEvent = map.second->startEvent;
 		}
 		mActiveAnimation = ref.mActiveAnimation.lock();
 		mFirstUpdateAnimation = ref.mFirstUpdateAnimation.lock();
-		mIsLoop = ref.mIsLoop;
+		mbLoop = ref.mbLoop;
+		mbStop = ref.mbStop;
 	}
 	void Animator::Copy(Component* src)
 	{
@@ -36,11 +41,15 @@ namespace roka
 		}
 		for (auto map : source->mEvents)
 		{
-			mEvents.insert(std::make_pair(map.first, map.second));
+			mEvents.insert(std::make_pair(map.first, std::make_shared<Events>()));
+			mEvents[map.first]->completeEvent = map.second->completeEvent;
+			mEvents[map.first]->endEvent = map.second->endEvent;
+			mEvents[map.first]->startEvent = map.second->startEvent;
 		}
 		mActiveAnimation = source->mActiveAnimation.lock();
 		mFirstUpdateAnimation = source->mFirstUpdateAnimation.lock();
-		mIsLoop = source->mIsLoop;
+		mbLoop = source->mbLoop;
+		mbStop = source->mbStop;
 	}
 	Animator::~Animator()
 	{
@@ -50,17 +59,24 @@ namespace roka
 	}
 	void Animator::Update()
 	{
+		if (mbStop)
+			return;
 		GameObject* Owner = owner;
 		if (mActiveAnimation.expired() == true)
 			return;
 		mFirstUpdateAnimation = mActiveAnimation.lock();
-		if (mActiveAnimation.lock()->IsComplete() && mIsLoop)
-		{
-			std::shared_ptr<Events> events
-				= FindEvents(mActiveAnimation.lock()->GetKey());
-			if (events != nullptr)
-				events->completeEvent();
 
+		std::shared_ptr<Events> events
+			= FindEvents(mActiveAnimation.lock()->GetKey());
+		if (mActiveAnimation.lock()->IsComplete())
+		{
+			if (events != nullptr)
+			{
+				for (auto comp_event : events->completeEvent)
+				{
+					comp_event();
+				}
+			}
 			mActiveAnimation.lock()->Reset();
 		}
 		mActiveAnimation.lock()->LateUpdate();
@@ -124,13 +140,18 @@ namespace roka
 		std::shared_ptr<Events> events;
 		if (prevAnimation != nullptr)
 		{
-			if (prevAnimation == animation && mIsLoop == true)
+			if (prevAnimation == animation && mbLoop == true)
 			{
 				return;
 			}
 			events = FindEvents(prevAnimation->GetKey());
 			if (events != nullptr)
-				events->endEvent();
+			{
+				for (auto end_event : events->endEvent)
+				{
+					end_event();
+				}
+			}
 		}
 
 		if (animation != nullptr)
@@ -143,9 +164,13 @@ namespace roka
 		std::shared_ptr<Animation> ActiveAni = mActiveAnimation.lock();
 		events = FindEvents(ActiveAni->GetKey());
 		if (events)
-			events->startEvent();
-
-		mIsLoop = loop;
+		{
+			for (auto start_event : events->startEvent)
+			{
+				start_event();
+			}
+		}
+		mbLoop = loop;
 		ActiveAni->Reset();
 	}
 	bool Animator::Binds()
@@ -159,18 +184,23 @@ namespace roka
 	std::function<void()>& Animator::StartEvent(const std::wstring key)
 	{
 		std::shared_ptr<Events> events = FindEvents(key);
-
-		return events->startEvent.mEvent;
+		events->startEvent.push_back(Event());
+		size_t size = events->startEvent.size() - 1;
+		return events->startEvent[size].mEvent;
 	}
 	std::function<void()>& Animator::CompleteEvent(const std::wstring key)
 	{
 		std::shared_ptr<Events> events = FindEvents(key);
-		return events->completeEvent.mEvent;
+		events->completeEvent.push_back(Event());
+		size_t size = events->completeEvent.size() - 1;
+		return events->completeEvent[size].mEvent;
 	}
 	std::function<void()>& Animator::EndEvent(const std::wstring key)
 	{
 		std::shared_ptr<Events> events = FindEvents(key);
-		return events->endEvent.mEvent;
+		events->endEvent.push_back(Event());
+		size_t size = events->endEvent.size() - 1;
+		return events->endEvent[size].mEvent;
 	}
 	const Sprite& Animator::GetSprite()
 	{

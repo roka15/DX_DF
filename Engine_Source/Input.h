@@ -61,6 +61,15 @@ namespace roka
 			return mKeys[static_cast<UINT>(keyCode)].state == EKeyState::Up;
 		}
 		
+		static __forceinline bool GetAniKey()
+		{
+			for (auto key : mKeys)
+			{
+				if (key.state == EKeyState::Pressed || key.state == EKeyState::Down)
+					return true;
+			}
+			return false;
+		}
 		static __forceinline Vector2 GetMousePos() { return mMousePos; }
 
 	private:

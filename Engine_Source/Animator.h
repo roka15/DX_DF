@@ -27,9 +27,9 @@ namespace roka
 		};
 		struct Events
 		{
-			Event startEvent;
-			Event completeEvent;
-			Event endEvent;
+			std::vector<Event> startEvent;
+			std::vector<Event> completeEvent;
+			std::vector<Event> endEvent;
 		};
 
 		
@@ -44,6 +44,8 @@ namespace roka
 		std::shared_ptr<Animation> FindAnimation(const std::wstring& name);
 		std::shared_ptr<Animator::Events> FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop, float duration=0.0f);
+		void Stop() { mbStop = true; }
+		void Start() { mbStop = false; }
 		bool Binds();
 
 		std::function<void()>& StartEvent(const std::wstring key);
@@ -59,7 +61,8 @@ namespace roka
 		std::map<std::wstring, std::shared_ptr<Events>> mEvents;
 		std::weak_ptr<Animation> mActiveAnimation;
 		std::weak_ptr<Animation> mFirstUpdateAnimation;
-		bool mIsLoop;
+		bool mbLoop;
+		bool mbStop;
 	};
 }
 

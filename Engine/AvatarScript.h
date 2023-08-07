@@ -30,7 +30,17 @@ namespace roka
 		void SettingRightMaterial();
 		void SettingLeftMaterial();
 		void PlayPartsMotion();
-		
+		void PlayPartsMotion(EPlayerState state, int index, bool flag);
+		void SetCompleteEventAnimation(EPlayerState state, int prev_index, int next_index);
+		void SetCompleteEventAnimations(EPlayerState state);
+		void SetEndEventAnimations(EPlayerState state);
+
+		void CompleteEventAnimation(EPlayerState state, std::function<void()> func);
+		void CompleteEventAnimation(EPlayerState state, int prev_index, std::function<void()> func);
+		void EndEventAnimation(EPlayerState state, int index, std::function<void()> func);
+		void ConnectNextAnimations(EAvatarParts part, std::wstring prev_ani, std::wstring next_ani);
+		void StopAni();
+		void StartAni();
 		void SetUpdateFlag(bool flag) { mUpdateFlag = flag; }
 
 		SET_PROPERTY(SetUpdateFlag) bool update_flag;
@@ -39,7 +49,7 @@ namespace roka
 		friend class ScriptFactory;
 
 		bool mUpdateFlag;
-		std::map<EPlayerState, std::vector<std::pair<EAvatarParts,std::wstring>>> mStateAnis;
+		std::map<EPlayerState, std::map<EAvatarParts,std::vector<std::wstring>>> mStateAnis;
 		std::map<EAvatarParts, std::weak_ptr<GameObject>> mParts;
 	};
 

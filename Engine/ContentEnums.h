@@ -17,7 +17,10 @@ namespace roka::enums
 		Run,
 		FallDown,
 		NomalAtk,
+		OnePlay,
+		Jump,
 		Skill,
+		
 		End,
 	};
 

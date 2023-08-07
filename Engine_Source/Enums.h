@@ -13,6 +13,7 @@ namespace roka::enums
 		Script,
 		Camera,
 		Collider,
+		Rigidbody,
 		End,
 	};
 	enum class EScriptType
@@ -53,6 +54,7 @@ namespace roka::enums
 		Texture,
 		NPK,
 		Animation,
+		ComputeShader,
 		End,
 	};
 	enum class EFactoryType

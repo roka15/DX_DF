@@ -12,6 +12,7 @@ namespace roka
 	class MeshRenderer;
 	class MoveScript;
 	class AvatarScript;
+	class Rigidbody;
 
 	class PlayerScript :
 		public Script
@@ -36,7 +37,7 @@ namespace roka
 		// input system 적용시 사용
 		void LeftBtnDown();
 		void RightBtnDown();
-		void UpBtnDown();
+		void UpBtnDown();;
 		void DownBtnDown();
 
 		void LeftBtnUp();
@@ -46,6 +47,7 @@ namespace roka
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
 
+		void PlayIdle();
 
 		EPlayerState GetState() { return mPlayerState; }
 		void EnableKeyInput() { mIsActiveInput = true; }
@@ -66,6 +68,7 @@ namespace roka
 		std::weak_ptr<Transform> mTransform;
 		std::weak_ptr<MoveScript> mMoveScript;
 		std::weak_ptr<AvatarScript> mAvatar;
+		std::weak_ptr<Rigidbody> mRigid;
 
 		//test
 		double mLeftTime;

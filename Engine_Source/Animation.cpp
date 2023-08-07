@@ -23,8 +23,7 @@ namespace roka
 		mAtlas = ref.mAtlas;
 		for (const auto& copy_sprite : ref.mSprites)
 		{
-			Sprite sprite = copy_sprite;
-			mSprites.push_back(sprite);
+			mSprites.push_back(copy_sprite);
 		}
 		mDuration = ref.mDuration;
 		mIndex = 0;

@@ -5,6 +5,7 @@
 #include "Resources.h"
 
 #include "Transform.h"
+#include "Rigidbody.h"
 #include "MeshRenderer.h"
 #include "MoveScript.h"
 #include "AvatarScript.h"
@@ -55,6 +56,7 @@ namespace roka
 	{
 		mTransform = owner->GetComponent<Transform>();
 		mMoveScript = owner->GetComponent<MoveScript>();
+		mRigid = owner->GetComponent<Rigidbody>();
 		mAvatar = owner->GetChild<AvatarScript>()->GetComponent<AvatarScript>();
 		mUser->Initialize();
 
@@ -72,12 +74,23 @@ namespace roka
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAWalk", 0, 10, 0.05f);
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBARun", 18, 21, 0.05f);
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBANomalAtk", 109, 120, 0.05f);
+		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump1",76,80,0.185f);
+		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump2", 80, 83, 0.20755f);
+		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump3", 83, 86, 0.04f);
 
 		//player state 에 따라 재생할 애니 정보 등록
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
 		avatar->InsertStateAniInfo(EPlayerState::Walk, EAvatarParts::Base, L"PlayerBAWalk");
 		avatar->InsertStateAniInfo(EPlayerState::Run, EAvatarParts::Base, L"PlayerBARun");
 		avatar->InsertStateAniInfo(EPlayerState::NomalAtk, EAvatarParts::Base, L"PlayerBANomalAtk");
+		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump1");
+		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump2");
+		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump3");
+	
+		avatar->SetCompleteEventAnimations(EPlayerState::Jump);
+		
+		avatar->EndEventAnimation(EPlayerState::Jump, 1, std::bind([this]()->void { mRigid.lock()->SetGround(true); }));
+		avatar->CompleteEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void {PlayIdle(); }));
 		mPlayerState = EPlayerState::Idle;
 		//현재 idle 상태 애니 재생.
 		avatar->PlayPartsMotion();
@@ -281,6 +294,33 @@ namespace roka
 	}
 	void PlayerScript::JumpBtnDown()
 	{
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
+		if (mPlayerState == EPlayerState::Jump)
+		{
+			as->PlayPartsMotion(EPlayerState::Jump, 1, false);
+			as->StopAni();
+			rigid->DecreaseGravity(true);
+		}
+		else
+		{
+			mPlayerState = EPlayerState::Jump;
+			std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
+			rigid->SetVelocity(Vector2(0.0f, 1400.0f));
+			rigid->disableGround();
+		
+			as->PlayPartsMotion();
+		}
+	}
+
+	void PlayerScript::PlayIdle()
+	{
+		mPlayerState = EPlayerState::Idle;
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
+		rigid->SetGround(true);
+		as->PlayPartsMotion();
+	
 	}
 	
 }

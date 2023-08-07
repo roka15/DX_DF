@@ -19,12 +19,13 @@
 #include "Image.h"
 #include "ImageComponent.h"
 #include "Animator.h"
+#include "Rigidbody.h"
 #include "PlayerScript.h"
 #include "AvatarScript.h"
 #include "PartScript.h"
 #include "Collider2D.h"
 
-
+#include "ComputeShader.h"
 
 namespace roka
 {
@@ -36,6 +37,8 @@ namespace roka
 	}
 	void PlayScene::Initialize()
 	{
+		std::shared_ptr<ComputeShader> comShader = std::make_shared<ComputeShader>();
+		comShader->Create(L"PaintCS.hlsl", "main");
 		Scene::Initialize();
 	
 		/* player script text*/
@@ -51,6 +54,8 @@ namespace roka
 
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
+		//player->AddComponent<Rigidbody>()->IsGravity(true);
+		
 		//cd->SetSize(Vector2(0.05f, 0.2f));
 		AddGameObject(ELayerType::Player, player);
 		
@@ -185,6 +190,9 @@ namespace roka
 			ps->NomalAtkBtnDown();
 		if (Input::GetKeyDown(EKeyCode::G))
 			obj2->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
+
+		if (Input::GetKeyDown(EKeyCode::SPACE))
+			ps->JumpBtnDown();
 	}
 
 	void PlayScene::LateUpdate()

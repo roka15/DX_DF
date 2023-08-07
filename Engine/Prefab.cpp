@@ -11,6 +11,7 @@
 #include "MoveScript.h"
 #include "PlayerScript.h"
 #include "PartScript.h"
+#include "Rigidbody.h"
 namespace roka::prefab
 {
 	std::map<std::wstring, std::shared_ptr<roka::GameObject>> Prefabs = {};
@@ -221,6 +222,7 @@ namespace roka::prefab
 			//cd->SetSize(Vector2(1.0f, 1.0f));
 			cd->SetCenter(Vector2(-0.01f, -0.525f));
 			PlayerObject->AddScript<MoveScript>();
+			PlayerObject->AddComponent<Rigidbody>()->IsGravity(true);
 			PlayerObject->AddScript<PlayerScript>();
 		}
 
