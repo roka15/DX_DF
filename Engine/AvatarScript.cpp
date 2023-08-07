@@ -171,29 +171,23 @@ namespace roka
 			
 		}
 	}
-
-	void AvatarScript::SetEndEventAnimations(EPlayerState state)
+	
+	void AvatarScript::SetStartEventAnimation(EPlayerState state, int prev_index, std::function<void()> func)
 	{
-
 		auto itr = mStateAnis.find(state);
 		if (itr == mStateAnis.end())
 			return;
+
 		for (auto& map : itr->second)
 		{
 			EAvatarParts type = map.first;
 			size_t size = map.second.size();
-			for (size_t i = 0; i < size - 1; i++)
-			{
-				std::wstring prev_name = map.second[i];
-				std::wstring next_name = map.second[i + 1];
-
-				ConnectNextAnimations(type, prev_name, next_name);
-			}
-
+			std::wstring name = map.second[prev_index];
+			std::shared_ptr<Animator> ani = mParts[type].lock()->GetComponent<Animator>();
+			ani->StartEvent(name) = func;
 		}
 	}
 
-	
 	void AvatarScript::CompleteEventAnimation(EPlayerState state, std::function<void()> func)
 	{
 		auto itr = mStateAnis.find(state);
@@ -258,7 +252,7 @@ namespace roka
 		for (auto part : mParts)
 		{
 			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->Stop();
+			ani->is_active = false;
 		}
 	}
 
@@ -267,7 +261,7 @@ namespace roka
 		for (auto part : mParts)
 		{
 			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->Start();
+			ani->is_active = true;
 		}
 	}
 

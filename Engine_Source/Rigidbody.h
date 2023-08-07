@@ -19,11 +19,17 @@ namespace roka
 		virtual void Render();
 
 		void SetGround(bool flag) { mbGround = flag; }
+		bool GetGround() { return mbGround; }
 		void IsGravity(bool flag) { mbGravity = flag; }
 		void SetVelocity(Vector2 velocity);
 		void disableGround() { mbGround = false; }
+		void enableGround() { mbGround = true; }
 		void DecreaseGravity(bool flag);
-		static void CompleteFallEvent(void* ptr);
+		void CompleteFallEvent();
+		void SetLandingPoint(Vector2 pos) { mLandingPoint = pos; }
+		void AddLandingPoint(Vector2 add);
+
+		PROPERTY(GetGround, SetGround) bool is_ground;
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;
@@ -42,6 +48,7 @@ namespace roka
 		float mDecreaseGravity;
 		float mIncreaseGravity;
 		bool mbFall;
+		Vector2 mLandingPoint;
 	};
 }
 

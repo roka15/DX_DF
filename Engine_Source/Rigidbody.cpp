@@ -16,12 +16,12 @@ namespace roka
 		, mDecreaseGravity(1.0f)
 		, mIncreaseGravity(2.0f)
 		, mbFall(false)
+		, mLandingPoint(Vector2::Zero)
 	{
 		mLimitedVelocity.x = 200.0f;
 		mLimitedVelocity.y = 10000.0f;
 		mGravity = Vector2(0.0f, 980.0f);
 		mFriction = 100.0f;
-		Time::RegisterEvent(L"RgidFallCompEvent", 1.5, &Rigidbody::CompleteFallEvent, this);
 	}
 	Rigidbody::Rigidbody(const Rigidbody& ref) :Component(ref)
 	{
@@ -38,7 +38,6 @@ namespace roka
 		mDecreaseGravity = ref.mDecreaseGravity;
 		mIncreaseGravity = ref.mIncreaseGravity;
 		mbFall = ref.mbFall;
-		Time::RegisterEvent(L"RgidFallCompEvent", 1.5, &Rigidbody::CompleteFallEvent, this);
 	}
 	Rigidbody::~Rigidbody()
 	{
@@ -60,7 +59,6 @@ namespace roka
 		mDecreaseGravity = source->mDecreaseGravity;
 		mIncreaseGravity = source->mIncreaseGravity;
 		mbFall = source->mbFall;
-		Time::RegisterEvent(L"RgidFallCompEvent", 1.5, &Rigidbody::CompleteFallEvent, this);
 	}
 	void Rigidbody::Initialize()
 	{
@@ -152,9 +150,12 @@ namespace roka
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		Vector3 pos = tf->position;
 		pos = pos + mVelocity * Time::DeltaTime();
-		if (mbGround)
+
+		if (pos.y <= mLandingPoint.y)
 		{
+			mbGround = true;
 			mVelocity = Vector2::Zero;
+			pos.y = mLandingPoint.y;
 		}
 	
 		tf->position = pos;
@@ -182,7 +183,6 @@ namespace roka
 		{
 			mbFall = true;
 			mDecreaseGravity = 0.1f;
-			Time::ActiveEvent(L"RgidFallCompEvent",this);
 		}
 		else
 		{
@@ -192,11 +192,15 @@ namespace roka
 
 
 
-	void Rigidbody::CompleteFallEvent(void* ptr)
+	void Rigidbody::CompleteFallEvent()
 	{
-		Rigidbody* rigid = reinterpret_cast<Rigidbody*>(ptr);
-		rigid->mbFall = false;
-		rigid->mVelocity.y = -1.0f;
+		mbFall = false;
+		mVelocity.y = -1.0f;
+	}
+
+	void Rigidbody::AddLandingPoint(Vector2 add)
+	{
+		mLandingPoint += add;
 	}
 
 }

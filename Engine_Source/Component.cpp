@@ -19,6 +19,7 @@ namespace roka
 
 	void Component::Initialize()
 	{
+		mbActive = true;
 	}
 
 	void Component::Update()

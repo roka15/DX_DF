@@ -33,6 +33,7 @@ namespace roka
 		float mSpeed;
 		float mOriginSpeed;
 		Vector2 mDir;
+		bool mbStop;
 	};
 }
 

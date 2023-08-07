@@ -33,8 +33,8 @@ namespace roka
 		void PlayPartsMotion(EPlayerState state, int index, bool flag);
 		void SetCompleteEventAnimation(EPlayerState state, int prev_index, int next_index);
 		void SetCompleteEventAnimations(EPlayerState state);
-		void SetEndEventAnimations(EPlayerState state);
 
+		void SetStartEventAnimation(EPlayerState state, int prev_index, std::function<void()>func);
 		void CompleteEventAnimation(EPlayerState state, std::function<void()> func);
 		void CompleteEventAnimation(EPlayerState state, int prev_index, std::function<void()> func);
 		void EndEventAnimation(EPlayerState state, int index, std::function<void()> func);

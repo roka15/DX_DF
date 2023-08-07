@@ -28,9 +28,15 @@ namespace roka
 
 		EComponentType GetType() { return mType; }
 		GET_PROPERTY(GetType) EComponentType type;
+
+		void SetActive(bool flag) { mbActive = flag; }
+		bool GetActive() { return mbActive; }
+
+		PROPERTY(GetActive, SetActive) bool is_active;
 	protected:
 		EComponentType mType;
 		GameObject* mOwner;
+		bool mbActive;
 	};
 }
 

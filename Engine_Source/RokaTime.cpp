@@ -9,8 +9,8 @@ namespace roka
 	LARGE_INTEGER Time::mCpuFrequency = {};
 	LARGE_INTEGER Time::mPrevFrequency = {};
 	LARGE_INTEGER Time::mCurFrequency = {};
-	std::map<std::wstring, std::shared_ptr<Time::CallBackEvent>> Time::mEvents = {};
-	std::map<std::wstring, std::map<void*, bool>> Time::mEventActives = {};
+	std::map<std::wstring, Time::CallBackEvent> Time::mEvents = {};
+	std::queue<std::pair<Time::CallBackTimerInfo, std::weak_ptr<void>>> Time::mRequestEvent;
 	void Time::Initiailize()
 	{	 
 		// CPU 고유 진동수 가져오기
@@ -29,28 +29,32 @@ namespace roka
 		mDeltaTime = differnceFrequency / mCpuFrequency.QuadPart;
 
 		mPrevFrequency.QuadPart = mCurFrequency.QuadPart;
-
-		for (auto map1 : mEventActives)
+		size_t start_size = mRequestEvent.size();
+		size_t cur_size = 0;
+		while (mRequestEvent.empty() == false)
 		{
-			for (auto& map2 : map1.second)
-			{
-				if (map2.second == true)
-				{
-					std::wstring key = map1.first;
-					CallBackTimerInfo& info = mEvents[key]->info;
-					if (info.curTime >= info.endTime)
-					{
-						void* ptr = map2.first;
-						mEvents[key]->func(ptr);
+			if (start_size == cur_size)
+				break;
+			std::pair<CallBackTimerInfo, std::weak_ptr<void>> value = mRequestEvent.front();
+			mRequestEvent.pop();
 
-						info.curTime = 0.0f;
-						info.endTime = 0.0f;
-						map2.second = false;
-						continue;
-					}
-					info.curTime += DeltaTime();
-				}
+			CallBackTimerInfo& info = value.first;
+			std::weak_ptr<void> ptr = value.second;
+			if (ptr.expired() == true)
+				continue;
+			std::wstring key = info.key;
+			double endTime = info.endTime;
+			double curTime = info.curTime;
+
+			if (endTime <= curTime)
+			{
+				mEvents[key](ptr);
+				continue;
 			}
+
+			info.curTime += DeltaTime();
+			mRequestEvent.push(value);
+			cur_size++;
 		}
 	}	 
 		 
@@ -73,21 +77,18 @@ namespace roka
 		}
 	}
 
-	void Time::RegisterEvent(std::wstring key,double end,std::function<void(void*)> func, void* this_ptr)
+	void Time::RegisterEvent(std::wstring key,std::function<void(std::weak_ptr<void>)> func)
 	{
-		CallBackTimerInfo info = {};
-		info.endTime = end;
-		std::shared_ptr<CallBackEvent> callback = std::make_shared<CallBackEvent>();
-		callback->info = info;
-		callback->func = func;
+		CallBackEvent callback = func;
+		auto itr = mEvents.find(key);
+		if (itr != mEvents.end())
+			return;
 		mEvents.insert(std::make_pair(key, callback));
-		mEventActives.insert(std::make_pair(key, std::map<void*,bool>()));
-		mEventActives[key].insert(std::make_pair(this_ptr, false));
 	}
 
-	void Time::ActiveEvent(std::wstring key, void* ptr)
+	void Time::RequestEvent(CallBackTimerInfo info, std::weak_ptr<void> ptr)
 	{
-		mEventActives[key][ptr] = true; 
+		mRequestEvent.push(std::make_pair(info, ptr));
 	}
 
 }

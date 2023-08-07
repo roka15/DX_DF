@@ -1,6 +1,7 @@
 #pragma once
 #include "RokaEngine.h"
 
+#define WChar_t_MAX 256
 namespace roka
 {
 	class Time
@@ -11,28 +12,25 @@ namespace roka
 			double startTime;
 			double endTime;
 			double curTime;
+			wchar_t key[WChar_t_MAX];
 		};
-		class CallBackEvent
-		{
-		public:
-			CallBackTimerInfo info;
-			std::function<void(void*)> func;
-		};
+		
+		typedef std::function<void(std::weak_ptr<void>)> CallBackEvent;
 		static void Initiailize();
 		static void Update();
 		static void Render();
 
 		__forceinline static double DeltaTime() { return mDeltaTime; }
 
-		static void RegisterEvent(std::wstring key, double end, std::function<void(void*)> func,void* this_ptr);
-		static void ActiveEvent(std::wstring key, void* ptr);
+		static void RegisterEvent(std::wstring key, std::function<void(std::weak_ptr<void>)> func);
+		static void RequestEvent(CallBackTimerInfo info, std::weak_ptr<void> ptr);
 	private:
 		static double mDeltaTime;
 		static double mSecond;
 		static LARGE_INTEGER mCpuFrequency;
 		static LARGE_INTEGER mPrevFrequency;
 		static LARGE_INTEGER mCurFrequency;
-		static std::map<std::wstring, std::shared_ptr<CallBackEvent>> mEvents;
-		static std::map<std::wstring,std::map<void*, bool>> mEventActives;
+		static std::map<std::wstring, CallBackEvent> mEvents;
+		static std::queue<std::pair<CallBackTimerInfo, std::weak_ptr<void>>> mRequestEvent;
 	};
 }

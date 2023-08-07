@@ -1,5 +1,6 @@
 #include "Animator.h"
 #include "Sprite.h"
+#include "GameObject.h"
 namespace roka
 {
 	Animator::Animator() :Component(EComponentType::Animator)
@@ -8,7 +9,6 @@ namespace roka
 		, mActiveAnimation()
 		, mFirstUpdateAnimation()
 		, mbLoop(false)
-		, mbStop(false)
 	{
 	}
 	Animator::Animator(const Animator& ref) :Component(ref)
@@ -28,7 +28,6 @@ namespace roka
 		mActiveAnimation = ref.mActiveAnimation.lock();
 		mFirstUpdateAnimation = ref.mFirstUpdateAnimation.lock();
 		mbLoop = ref.mbLoop;
-		mbStop = ref.mbStop;
 	}
 	void Animator::Copy(Component* src)
 	{
@@ -49,19 +48,27 @@ namespace roka
 		mActiveAnimation = source->mActiveAnimation.lock();
 		mFirstUpdateAnimation = source->mFirstUpdateAnimation.lock();
 		mbLoop = source->mbLoop;
-		mbStop = source->mbStop;
 	}
 	Animator::~Animator()
 	{
 	}
 	void Animator::Initialize()
 	{
+		for (auto map : mAnimations)
+		{
+			map.second->SetAnimator(GetSharedPtr());
+		}
 	}
 	void Animator::Update()
 	{
-		if (mbStop)
-			return;
 		GameObject* Owner = owner;
+		if (Owner->parent->parent->GetName().compare(L"Player") == 0)
+		{
+			int a = 0;
+		}
+		if (mbActive==false)
+			return;
+		
 		if (mActiveAnimation.expired() == true)
 			return;
 		mFirstUpdateAnimation = mActiveAnimation.lock();

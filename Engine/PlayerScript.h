@@ -47,13 +47,13 @@ namespace roka
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
 
-		void PlayIdle();
+		void NextState();
 
 		EPlayerState GetState() { return mPlayerState; }
 		void EnableKeyInput() { mIsActiveInput = true; }
 		void DisableKeyInput() { mIsActiveInput = false; }
 
-	
+		static void FallCompleteEvent(std::weak_ptr<void> ptr);
 		GET_PROPERTY(GetState) EPlayerState player_state;
 	protected:
 		

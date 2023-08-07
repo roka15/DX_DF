@@ -30,7 +30,7 @@ namespace roka
 		void Reset();
 
 		void Create(std::wstring npk_key, std::wstring pack_key,std::wstring set_name, UINT start_index,UINT end_index);
-
+		void SetAnimator(std::shared_ptr<Animator> ani) { mAnimator = ani; }
 		void SetDuration(float duration) { mDuration = duration; }
 		float GetDuration() { return mDuration; }
 		bool IsComplete() { return mIsComplete; }

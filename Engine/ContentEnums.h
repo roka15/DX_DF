@@ -19,6 +19,7 @@ namespace roka::enums
 		NomalAtk,
 		OnePlay,
 		Jump,
+		JumpHold,
 		Skill,
 		
 		End,
