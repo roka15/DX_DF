@@ -109,7 +109,7 @@ namespace gui
 
 		std::shared_ptr<roka::Transform> tf = debugObj->GetComponent<roka::Transform>();
 		Vector3 pos = mesh.position;
-		pos.z -= 0.01f;
+		pos.z = -1.00f;
 		tf->SetPosition(pos);
 		tf->SetScale(mesh.scale);
 		tf->SetRotation(mesh.rotation);
