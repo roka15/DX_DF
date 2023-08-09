@@ -34,14 +34,17 @@ namespace roka
 		void SetDuration(float duration) { mDuration = duration; }
 		float GetDuration() { return mDuration; }
 		bool IsComplete() { return mIsComplete; }
+		void SetAtlas(std::shared_ptr<Texture> atlas) { mAtlas = atlas; }
 		const Sprite& GetSprite();
+		void SetPlayRange(std::pair<UINT, UINT> range) { mRange = range; }
 		PROPERTY(GetDuration,SetDuration) float duration;
 		GET_PROPERTY(IsComplete) bool is_complete;
+		SET_PROPERTY(SetPlayRange) std::pair<UINT, UINT> play_range;
 	private:
 		std::shared_ptr<Texture> mAtlas;
 		std::weak_ptr<Animator> mAnimator;
-		std::vector<Sprite> mSprites;
 		float mDuration;
+		std::pair<UINT, UINT> mRange;
 		int mIndex;
 		float mTime;
 		bool mIsComplete;

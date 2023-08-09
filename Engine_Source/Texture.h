@@ -11,6 +11,11 @@
 #pragma comment(lib,"..\\External\\DirectXTex\\Lib\\Release\\DirectXTex.lib")
 #endif
 
+namespace roka
+{
+	class Sprite;
+	using namespace math;
+}
 namespace roka::graphics
 {
 	class Texture :public Resource
@@ -23,7 +28,7 @@ namespace roka::graphics
 		void BindShader(EShaderStage stage, UINT startSlot);
 
 		bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindFlags);
-		void Create(const file::CSVInfo* csvs, const file::PackInfo* packs);
+		void Create(const file::PackInfo* packs);
 		void Clear();
 
 		size_t GetWidth() { return mDesc.Width; }
@@ -42,14 +47,18 @@ namespace roka::graphics
 		void SetRTV(Microsoft::WRL::ComPtr<ID3D11RenderTargetView> rtv) { mRTV = rtv; }
 		void SetDSV(Microsoft::WRL::ComPtr<ID3D11DepthStencilView> dsv) { mDSV = dsv; }
 
+		void AddSprite(Sprite sprite);
+		const Sprite GetSprite(int index);
+		void SpriteRatioValue(Vector2 ratio);
 		SET_PROPERTY(SetDesc) D3D11_TEXTURE2D_DESC desc;
 		GET_PROPERTY(GetView) D3D11_SHADER_RESOURCE_VIEW_DESC view_desc;
 		GET_PROPERTY(GetTexture) Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	protected:
-		void CreateCanvasBaseTexture(std::vector<std::pair<int, int>> canvas_sizes,int count);
+		void CreateCanvasBaseTexture();
 		std::shared_ptr<Texture> CreateTexture(void* data, size_t size);
-		void CombineTextures(std::vector<std::shared_ptr<Texture>> textures, int count, const file::CSVInfo* csv, const file::PackInfo* pack);
+		void CombineTextures(std::vector<std::shared_ptr<Texture>> textures);
 	private:
+		std::vector<Sprite> mSprites;
 		ScratchImage mImage;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> mTexture;
 	

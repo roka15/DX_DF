@@ -1,7 +1,6 @@
 #include "Texture.h"
 #include "RokaGraphicDevice_Dx11.h"
-
-
+#include "Sprite.h"
 
 namespace roka::graphics
 {
@@ -120,7 +119,7 @@ namespace roka::graphics
 		}
 		return true;
 	}
-	void Texture::Create(const file::CSVInfo* csvs, const file::PackInfo* packs)
+	void Texture::Create(const file::PackInfo* packs)
 	{
 		std::vector<std::shared_ptr<Texture>> textures;
 		int count = packs->binbuf.size();
@@ -129,10 +128,11 @@ namespace roka::graphics
 			textures.push_back(CreateTexture(packs->binbuf[i]->buffer, packs->binbuf[i]->length));
 		}
 
-
-		Vector2 canvas = Vector2(csvs->canvas[0].first, csvs->canvas[0].second);
-		Vector2 imagesize = Vector2(csvs->size[0].first, csvs->size[0].second);
-		Vector2 offset = Vector2(csvs->pos[0].first, csvs->pos[0].second);
+		Sprite sprite0 = mSprites[0];
+		sprite0.canvas_size;
+		Vector2 canvas = sprite0.canvas_size;
+		Vector2 imagesize = sprite0.image_size;
+		Vector2 offset = sprite0.offset;
 
 		if (canvas.x * count == imagesize.x && canvas.y == imagesize.y)
 		{
@@ -142,8 +142,8 @@ namespace roka::graphics
 			return;
 		}
 
-		CreateCanvasBaseTexture(csvs->canvas, count);
-		CombineTextures(textures, count, csvs, packs);
+		CreateCanvasBaseTexture();
+		CombineTextures(textures);
 	}
 
 	void Texture::Clear()
@@ -156,15 +156,30 @@ namespace roka::graphics
 		GetDevice()->BindShaderResource(EShaderStage::CS, 0, &rsv);
 		GetDevice()->BindShaderResource(EShaderStage::PS, 0, &rsv);
 	}
-	void  Texture::CreateCanvasBaseTexture(std::vector<std::pair<int, int>> canvas_sizes, int count)
+	void Texture::AddSprite(Sprite sprite)
+	{
+		mSprites.push_back(sprite);
+	}
+	const Sprite Texture::GetSprite(int index)
+	{
+		return mSprites[index]; 
+	}
+	void Texture::SpriteRatioValue(Vector2 ratio)
+	{
+		for (auto& sprite : mSprites)
+		{
+			sprite.SetRatioValue(ratio);
+		}
+	}
+	void  Texture::CreateCanvasBaseTexture()
 	{
 		Vector2 length = { };
 		int height = 0;
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < mSprites.size(); i++)
 		{
-			length.x += canvas_sizes[i].first;
-			if (canvas_sizes[i].second > height)
-				height = canvas_sizes[i].second;
+			length.x += mSprites[i].canvas_size.x;
+			if (mSprites[i].canvas_size.y > height)
+				height = mSprites[i].canvas_size.y;
 		}
 		length.y = height;
 
@@ -325,14 +340,14 @@ namespace roka::graphics
 
 		return texture;
 	}
-	void Texture::CombineTextures(std::vector<std::shared_ptr<Texture>> textures, int count, const file::CSVInfo* csv, const file::PackInfo* pack)
+	void Texture::CombineTextures(std::vector<std::shared_ptr<Texture>> textures)
 	{
 		Vector2 LeftTop = { 0,0 };
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < mSprites.size(); i++)
 		{
-			Vector2 canvas = Vector2(csv->canvas[i].first, csv->canvas[i].second);
-			Vector2 imagesize = Vector2(csv->size[i].first, csv->size[i].second);
-			Vector2 offset = Vector2(csv->pos[i].first, csv->pos[i].second);
+			Vector2 canvas = mSprites[i].canvas_size;
+			Vector2 imagesize = mSprites[i].image_size;
+			Vector2 offset =mSprites[i].offset;
 			Microsoft::WRL::ComPtr<ID3D11Texture2D> src = textures[i]->GetTexture();
 
 			D3D11_BOX box;

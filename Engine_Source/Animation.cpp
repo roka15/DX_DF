@@ -11,24 +11,22 @@ namespace roka
 	Animation::Animation() :Resource(enums::EResourceType::Animation)
 		, mAtlas(nullptr)
 		, mAnimator()
-		, mSprites{}
 		, mIndex(-1)
 		, mTime(0.0f)
 		, mIsComplete(false)
 		, mDuration(0.0f)
+		, mRange(std::make_pair(0, 0))
 	{
 	}
-	Animation::Animation(const Animation& ref):Resource(ref)
+	Animation::Animation(const Animation& ref) :Resource(ref)
 	{
 		mAtlas = ref.mAtlas;
-		for (const auto& copy_sprite : ref.mSprites)
-		{
-			mSprites.push_back(copy_sprite);
-		}
 		mDuration = ref.mDuration;
 		mIndex = 0;
 		mTime = 0;
 		mIsComplete = false;
+		mRange.first = ref.mRange.first;
+		mRange.second = ref.mRange.second;
 	}
 	Animation::~Animation()
 	{
@@ -47,9 +45,9 @@ namespace roka
 		{
 			mIndex++;
 			mTime = 0.0f;
-			if (mSprites.size() <= mIndex)
+			if (mRange.second <= mIndex)
 			{
-				mIndex = mSprites.size() - 1;
+				mIndex = mRange.second-1;
 				mIsComplete = true;
 			}
 		}
@@ -63,10 +61,11 @@ namespace roka
 			return;
 		mAtlas->BindShader(graphics::EShaderStage::PS, 12);
 		renderer::AnimationCB data = {};
-		data.SpriteLeftTop = mSprites[mIndex].lefttop;
-		data.SpriteOffset = mSprites[mIndex].offset;
-		data.SpriteSize = mSprites[mIndex].image_size;
-		data.CanvasSize = mSprites[mIndex].canvas_size;
+		Sprite sprite = mAtlas->GetSprite(mIndex);
+		data.SpriteLeftTop = sprite.lefttop;
+		data.SpriteOffset = sprite.offset;
+		data.SpriteSize = sprite.image_size;
+		data.CanvasSize = sprite.canvas_size;
 
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Animation];
 		cb->SetData(&data);
@@ -78,32 +77,10 @@ namespace roka
 	{
 		mTime = 0.0f;
 		mIsComplete = false;
-		mIndex = 0;
+		mIndex = mRange.first;
 	}
 	void Animation::Create(std::wstring npk_key, std::wstring pack_key, std::wstring set_name, UINT start_index, UINT end_index)
 	{
-		Vector2 LeftTop = {};
-		float width = 0;
-		float height = 0;
-		
-		for (int i = start_index; i < end_index; i++)
-		{
-			Sprite sprite;
-			sprite.lefttop = LeftTop;
-			sprite.Create(npk_key, pack_key, i);
-
-			LeftTop.x += sprite.canvas_size.x;
-			if (height < sprite.canvas_size.y)
-				height = sprite.canvas_size.y;
-			mSprites.push_back(sprite);
-		}
-		width = LeftTop.x;
-
-		for (auto& sprite : mSprites)
-		{
-			sprite.SetRatioValue(Vector2(width, height));
-		}
-
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(npk_key);
 		if (npk == nullptr)
 			return;
@@ -114,6 +91,6 @@ namespace roka
 	}
 	const Sprite& Animation::GetSprite()
 	{
-		return mSprites[mIndex];
+		return  mAtlas->GetSprite(mIndex);
 	}
 }

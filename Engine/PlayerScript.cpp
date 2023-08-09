@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "RokaTime.h"
 #include "Resources.h"
+#include "NPK.h"
 
 #include "Transform.h"
 #include "Rigidbody.h"
@@ -74,9 +75,16 @@ namespace roka
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAWalk", 0, 10, 0.05f);
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBARun", 18, 21, 0.05f);
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBANomalAtk", 109, 120, 0.05f);
-		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump1",76,80,0.185f);
-		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump2", 80, 83, 0.20755f);
-		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump3", 83, 86, 0.04f);
+		
+		std::shared_ptr<NPK> baseskin_npk = Resources::Find<NPK>(L"baseskin");
+		std::shared_ptr<Texture> jump_texture = baseskin_npk->CreateAtlas(mUser->base_avartar, 76, 85, L"PlayerBAJump");
+		
+		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump1", 0, 4, 0.185f);
+		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump2", 4, 7, 0.20755f);
+		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump3", 7, 9, 0.04f);
+		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump1",76,80,0.185f);
+		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump2", 80, 83, 0.20755f);
+		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump3", 83, 86, 0.04f);
 
 		//player state 에 따라 재생할 애니 정보 등록
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
@@ -158,10 +166,10 @@ namespace roka
 			{
 				as->PlayPartsMotion(EPlayerState::Run, 0, true);
 				rigid->is_active = false;
-				ms->AddSpeed(2.0f);
+				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
 				Time::CallBackTimerInfo info = {};
-				info.endTime = 1.5;
+				info.endTime = 1.0;
 				std::wstring key = L"PlayerJumpDashCompEvent";
 				size_t str_length = key.size();
 				std::wcsncpy(info.key, key.c_str(), str_length);
@@ -211,10 +219,10 @@ namespace roka
 			{
 				as->PlayPartsMotion(EPlayerState::Run,0,true);
 				rigid->is_active = false;
-				ms->AddSpeed(2.0f);
+				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
 				Time::CallBackTimerInfo info = {};
-				info.endTime = 1.5;
+				info.endTime = 1.0;
 				std::wstring key = L"PlayerJumpDashCompEvent";
 				size_t str_length = key.size();
 				std::wcsncpy(info.key, key.c_str(), str_length);

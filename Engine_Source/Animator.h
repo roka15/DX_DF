@@ -41,6 +41,7 @@ namespace roka
 		virtual void Render();
 
 		void Create(std::wstring npk_name,std::wstring pack_name,std::wstring set_name,int start_index,int end_index,float duration);
+		void Create(std::shared_ptr<Texture> atlas, std::wstring set_name, int start_index, int end_index, float duration);
 		std::shared_ptr<Animation> FindAnimation(const std::wstring& name);
 		std::shared_ptr<Animator::Events> FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop, float duration=0.0f);

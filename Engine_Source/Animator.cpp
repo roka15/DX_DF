@@ -107,6 +107,26 @@ namespace roka
 		animation->SetKey(set_name);
 		animation->duration = duration;
 		animation->Create(npk_name, pack_name, set_name, start_index, end_index);
+		animation->play_range = std::make_pair(0,end_index-start_index);
+		mAnimations.insert(std::make_pair(set_name, animation));
+
+		std::shared_ptr<Events> events = FindEvents(set_name);
+		if (events != nullptr)
+			return;
+		events = std::make_shared<Events>();
+		mEvents.insert(std::make_pair(set_name, events));
+	}
+	void Animator::Create(std::shared_ptr<Texture> atlas, std::wstring set_name, int start_index, int end_index, float duration)
+	{
+		std::shared_ptr<Animation> animation = FindAnimation(set_name);
+		if (animation != nullptr)
+			return;
+
+		animation = std::make_shared<Animation>();
+		animation->SetKey(set_name);
+		animation->duration = duration;
+		animation->SetAtlas(atlas);
+		animation->play_range = std::make_pair(start_index, end_index);
 		mAnimations.insert(std::make_pair(set_name, animation));
 
 		std::shared_ptr<Events> events = FindEvents(set_name);

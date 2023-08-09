@@ -1,5 +1,6 @@
 #include "AvatarScript.h"
 #include "Resources.h"
+#include "Texture.h"
 #include "Prefab.h"
 #include "Image.h"
 #include "SceneManager.h"
@@ -55,6 +56,12 @@ namespace roka
 		std::shared_ptr<GameObject> part = mParts[type].lock();
 		std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
 		ani->Create(npk_name, pack_name, set_name, start, end, duration);
+	}
+	void AvatarScript::CreatePartAni(EAvatarParts type, std::shared_ptr<Texture> atlas, std::wstring set_name, UINT start, UINT end, float duration)
+	{
+		std::shared_ptr<GameObject> part = mParts[type].lock();
+		std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
+		ani->Create(atlas,set_name,start,end,duration);
 	}
 	void AvatarScript::InsertStateAniInfo(EPlayerState state, EAvatarParts part, std::wstring ani_name)
 	{

@@ -3,9 +3,14 @@
 #include "ContentEnums.h"
 namespace roka
 {
+	namespace graphics
+	{
+		class Texture;
+	}
 	class Image;
 	class Transform;
 	using namespace enums;
+	using namespace graphics;
 	class AvatarScript :
 		public Script
 	{
@@ -26,6 +31,7 @@ namespace roka
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other) {}
 
 		void CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name,std::wstring set_name, UINT start, UINT end, float duration);
+		void CreatePartAni(EAvatarParts type, std::shared_ptr<Texture> atlas,std::wstring set_name, UINT start, UINT end, float duration);
 		void InsertStateAniInfo(EPlayerState state,EAvatarParts part, std::wstring ani_name);
 		void SettingRightMaterial();
 		void SettingLeftMaterial();

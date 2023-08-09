@@ -64,7 +64,6 @@
     <ClInclude Include="PartScript.h">
       <Filter>Contents\Script\PartScript</Filter>
     </ClInclude>
-    <ClInclude Include="Ground.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -121,7 +120,6 @@
     <ClCompile Include="PartScript.cpp">
       <Filter>Contents\Script\PartScript</Filter>
     </ClCompile>
-    <ClCompile Include="Ground.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">

@@ -1,7 +1,7 @@
 #include "NPK.h"
 #include "RokaGraphicDevice_Dx11.h"
 #include "Resources.h"
-
+#include "Sprite.h"
 namespace roka
 {
 	roka::file::NPKSystem NPK::mNPKSystem;
@@ -50,20 +50,19 @@ namespace roka
 		texture = std::make_shared<Texture>();
 
 		roka::file::PackInfo* pack = mPacks[roka::file::ws2s(name)];
-		file::CSVInfo use_csv = {};
 		file::PackInfo use_pack = {};
-		use_csv.canvas.push_back(csv->canvas[index]);
-		use_csv.name = csv->name;
-		use_csv.pos.push_back(csv->pos[index]);
-		use_csv.size.push_back(csv->size[index]);
+		Sprite sprite = {};
+		sprite.Create(key, name, index);
+		texture->AddSprite(sprite);
+
 		use_pack.name = pack->name;
 		file::FileInfo* fileData = new file::FileInfo(*(pack->binbuf[index]));
 		use_pack.binbuf.push_back(fileData);
 
-		texture->Create(&use_csv, &use_pack);
+		texture->Create(&use_pack);
+		texture->SpriteRatioValue(sprite.canvas_size);
 
 		Resources::Insert(texture_name, texture);
-
 		return texture;
 	}
 
@@ -73,23 +72,35 @@ namespace roka
 		std::wstring texture_name = set_name + L"AtlasTexture";
 		file::CSVInfo csv = {};
 		file::PackInfo pack = {};
-		auto csv_itr = mCsvs.find(file::ws2s(pack_name));
+
+		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 		auto pack_itr = mPacks.find(file::ws2s(pack_name));
 		int count = end_index - start_index;
-
+		Vector2 LeftTop = {};
+		float width = 0;
+		float height = 0;
 		for (int i = start_index; i < end_index; i++)
 		{
-			csv.canvas.push_back(csv_itr->second->canvas[i]);
-			csv.name = csv_itr->second->name;
-			csv.pos.push_back(csv_itr->second->pos[i]);
-			csv.size.push_back(csv_itr->second->size[i]);
+			Sprite sprite;
+			sprite.lefttop = LeftTop;
+			sprite.Create(GetKey(), pack_name, i);
+			LeftTop.x += sprite.canvas_size.x;
+			if (height < sprite.canvas_size.y)
+				height = sprite.canvas_size.y;
+
+			texture->AddSprite(sprite);
+
+
 			pack.name = pack_itr->second->name;
 			file::FileInfo* fileData = new file::FileInfo(*(pack_itr->second->binbuf[i]));
 			pack.binbuf.push_back(fileData);
-		}
 
-		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
-		texture->Create(&csv, &pack);
+
+		}
+		width = LeftTop.x;
+
+		texture->Create(&pack);
+		texture->SpriteRatioValue(Vector2(width, height));
 
 		Resources::Insert(texture_name, texture);
 		return texture;

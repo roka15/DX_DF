@@ -176,7 +176,6 @@
     <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GridScript.h" />
-    <ClInclude Include="Ground.h" />
     <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MoveScript.h" />
@@ -199,7 +198,6 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FactoryManager.cpp" />
     <ClCompile Include="GridScript.cpp" />
-    <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HendonmyreScene.cpp" />
     <ClCompile Include="MoveScript.cpp" />
     <ClCompile Include="PartScript.cpp" />
