@@ -23,6 +23,7 @@
 #include "PlayerScript.h"
 #include "AvatarScript.h"
 #include "PartScript.h"
+#include "SkillScript.h"
 #include "Collider2D.h"
 
 #include "ComputeShader.h"
@@ -59,8 +60,30 @@ namespace roka
 		//cd->SetSize(Vector2(0.05f, 0.2f));
 		AddGameObject(ELayerType::Player, player);
 		
+		//경직
+		std::shared_ptr<GameObject> skill01 = object::Instantiate<GameObject>(
+			Vector3(2.0f,1.0f,0.0f),
+			Vector3::Zero,
+			Vector3(1.0f,1.0f,1.0f),
+			ELayerType::Monster);
+		skill01->SetName(L"skill01");
+		skill01->AddComponent<Collider2D>();
+		//skill01->AddComponent<SkillScript>()->stun_type = EStunState::Stagger;
+		
+
+		//다운
+		std::shared_ptr<GameObject> skill02 = object::Instantiate<GameObject>(
+			Vector3(2.0f, -1.0f, 0.0f),
+			Vector3::Zero,
+			Vector3(0.5f, 0.5f, 1.0f),
+			ELayerType::Monster);
+		skill02->SetName(L"skill02");
+		skill02->AddComponent<Collider2D>();
+		//skill02->AddComponent<SkillScript>()->stun_type = EStunState::Down;
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player,true);
+		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
+
 		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),
 			ELayerType::Player);

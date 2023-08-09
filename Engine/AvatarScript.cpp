@@ -259,7 +259,7 @@ namespace roka
 		for (auto part : mParts)
 		{
 			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->is_active = false;
+			ani->Stop();
 		}
 	}
 
@@ -268,7 +268,16 @@ namespace roka
 		for (auto part : mParts)
 		{
 			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->is_active = true;
+			ani->Play();
+		}
+	}
+
+	void AvatarScript::AddSpriteIndex()
+	{
+		for (auto part : mParts)
+		{
+			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
+			ani->NextSprite();
 		}
 	}
 

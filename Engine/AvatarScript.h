@@ -47,6 +47,7 @@ namespace roka
 		void ConnectNextAnimations(EAvatarParts part, std::wstring prev_ani, std::wstring next_ani);
 		void StopAni();
 		void StartAni();
+		void AddSpriteIndex();
 		void SetUpdateFlag(bool flag) { mUpdateFlag = flag; }
 
 		SET_PROPERTY(SetUpdateFlag) bool update_flag;

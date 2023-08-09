@@ -29,9 +29,9 @@ namespace roka
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-		virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other) {}
-		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other) {}
-		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other) {}
+		virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other);
+		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other);
+		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other);
 
 		void Move();
 		// input system 적용시 사용
@@ -46,6 +46,9 @@ namespace roka
 		void DownBtnUp();
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
+
+		void StunStagger(EStunState stun);
+		void StunDown();
 
 		void NextState();
 
@@ -78,6 +81,8 @@ namespace roka
 		double mDiff;
 
 		float mCurDir;
+
+		
 	};
 }
 

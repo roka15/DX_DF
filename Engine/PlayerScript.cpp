@@ -4,12 +4,17 @@
 #include "RokaTime.h"
 #include "Resources.h"
 #include "NPK.h"
+#include "CollisionManager.h"
 
 #include "Transform.h"
 #include "Rigidbody.h"
+#include "Animator.h"
 #include "MeshRenderer.h"
+#include "Collider2D.h"
 #include "MoveScript.h"
 #include "AvatarScript.h"
+#include "SkillScript.h"
+
 
 #include "User.h"
 
@@ -82,9 +87,10 @@ namespace roka
 		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump1", 0, 4, 0.185f);
 		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump2", 4, 7, 0.20755f);
 		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump3", 7, 9, 0.04f);
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump1",76,80,0.185f);
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump2", 80, 83, 0.20755f);
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAJump3", 83, 86, 0.04f);
+	    
+		std::shared_ptr<Texture> stun_texter = baseskin_npk->CreateAtlas(mUser->base_avartar, 128, 134, L"PlayerBAStun");
+		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAStunStagger", 0, 4, 0.1f);
+		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAStunDown", 4, 7, 0.1f);
 
 		//player state 에 따라 재생할 애니 정보 등록
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
@@ -94,7 +100,7 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump1");
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump2");
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump3");
-	
+		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunStagger");
 		avatar->SetCompleteEventAnimation(EPlayerState::Jump,0,1);
 		
 		/*avatar->EndEventAnimation(EPlayerState::Jump, 1, std::bind([this]()->void { mRigid.lock()->SetGround(true); }));*/
@@ -127,6 +133,34 @@ namespace roka
 		}
 	}
 	void PlayerScript::Render()
+	{
+	}
+
+	void PlayerScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
+	{
+		GameObject* owner = other->owner;
+		std::shared_ptr<SkillScript> ss = owner->GetComponent<SkillScript>();
+		if (ss == nullptr)
+			return;
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		ms->SetActive(false);
+		switch (ss->stun_type)
+		{
+		case EStunState::Stagger:
+			StunStagger(ss->stun_type);
+			break;
+		case EStunState::Down:
+			StunDown();
+			break;
+		}
+		
+	}
+
+	void PlayerScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
+	{
+	}
+
+	void PlayerScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
 	}
 
@@ -469,6 +503,25 @@ namespace roka
 			as->PlayPartsMotion();
 			ms->ResetSpeed();
 		}
+	}
+
+	void PlayerScript::StunStagger(EStunState stun)
+	{
+		std::shared_ptr<Collider2D> collider = owner->GetComponent<Collider2D>();
+		double befor_time = collider->time;
+		double cur_time = CollisionManager::GetColliderTimer();
+		double condition = 0.5f;
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		as->StopAni();
+		as->PlayPartsMotion(mPlayerState,(UINT)stun-1,false);
+		if (cur_time - befor_time <= condition)
+		{
+			as->AddSpriteIndex();
+		}
+	}
+
+	void PlayerScript::StunDown()
+	{
 	}
 
 	void PlayerScript::NextState()

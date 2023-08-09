@@ -5,6 +5,7 @@
 #include "PlayerScript.h"
 #include "AvatarScript.h"
 #include "PartScript.h"
+#include "SkillScript.h"
 namespace roka
 {
 	void ScriptFactory::Initialize()
@@ -35,6 +36,16 @@ namespace roka
 		{
 			PartScript* ps = dynamic_cast<PartScript*>(script);
 			return std::shared_ptr<PartScript>(new PartScript(*ps));
+		};
+		mFactories[EScriptType::Part] = [](Script* script)
+		{
+			PartScript* ps = dynamic_cast<PartScript*>(script);
+			return std::shared_ptr<PartScript>(new PartScript(*ps));
+		};
+		mFactories[EScriptType::SkillBase] = [](Script* script)
+		{
+			SkillScript* ss = dynamic_cast<SkillScript*>(script);
+			return std::shared_ptr<SkillScript>(new SkillScript(*ss));
 		};
 	}
 	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)

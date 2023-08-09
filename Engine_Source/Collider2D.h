@@ -29,11 +29,16 @@ namespace roka
 		Vector2 GetCenter() { return mCenter; }
 
 		UINT GetColliderID() { return mColliderID; }
+		
+		void SetTime(double time) { mTime = time; }
+		double GetTime() { return mTime; }
 
 		PROPERTY(GetSize, SetSize) Vector2 size;
 		PROPERTY(GetCenter, SetCenter) Vector2 center;
 
 		GET_PROPERTY(GetColliderID) UINT collider_id;
+		PROPERTY(GetTime,SetTime) double time;
+
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;
@@ -47,6 +52,7 @@ namespace roka
 		Vector2 mSize;
 		Vector2 mCenter;
 		bool mbCollision;
+		double mTime;
 	};
 }
 

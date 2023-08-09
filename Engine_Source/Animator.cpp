@@ -63,7 +63,8 @@ namespace roka
 	{
 		if (mbActive==false)
 			return;
-		
+		if (mbStop == false)
+			return;
 		if (mActiveAnimation.expired() == true)
 			return;
 		mFirstUpdateAnimation = mActiveAnimation.lock();
@@ -194,6 +195,10 @@ namespace roka
 		}
 		mbLoop = loop;
 		ActiveAni->Reset();
+	}
+	void Animator::PlayAnimation(const std::wstring& name)
+	{
+		PlayAnimation(name, false, 0.0f);
 	}
 	bool Animator::Binds()
 	{

@@ -64,6 +64,9 @@
     <ClInclude Include="PartScript.h">
       <Filter>Contents\Script\PartScript</Filter>
     </ClInclude>
+    <ClInclude Include="SkillScript.h">
+      <Filter>Contents\Script\SkillScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -119,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="PartScript.cpp">
       <Filter>Contents\Script\PartScript</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillScript.cpp">
+      <Filter>Contents\Script\SkillScript</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +184,9 @@
     </Filter>
     <Filter Include="Contents\Script\Ground">
       <UniqueIdentifier>{1c62c7f6-2c97-40fc-bd4d-57e930fbce37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript">
+      <UniqueIdentifier>{cc36197d-40a4-47ab-af81-6ec91fd62257}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

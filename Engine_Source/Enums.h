@@ -25,6 +25,7 @@ namespace roka::enums
 		Player,
 		Avatar,
 		Part,
+		SkillBase,
 		End,
 	};
 

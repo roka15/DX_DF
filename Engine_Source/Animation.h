@@ -37,6 +37,7 @@ namespace roka
 		void SetAtlas(std::shared_ptr<Texture> atlas) { mAtlas = atlas; }
 		const Sprite& GetSprite();
 		void SetPlayRange(std::pair<UINT, UINT> range) { mRange = range; }
+		void AddIndex();
 		PROPERTY(GetDuration,SetDuration) float duration;
 		GET_PROPERTY(IsComplete) bool is_complete;
 		SET_PROPERTY(SetPlayRange) std::pair<UINT, UINT> play_range;

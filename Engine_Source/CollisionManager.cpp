@@ -3,16 +3,20 @@
 
 #include "Collider2D.h"
 #include "Transform.h"
+#include "RokaTime.h"
 namespace roka
 {
 	std::bitset<LAYER_MAX>  CollisionManager::mMatrix[LAYER_MAX] = {};
 	std::map<UINT64, bool> CollisionManager::mCollisionMap = {};
+	double CollisionManager::mTime;
 
 	void CollisionManager::Initialize()
 	{
 	}
 	void CollisionManager::Update()
 	{
+		mTime += Time::DeltaTime();
+
 		for (UINT column = 0; column < (UINT)ELayerType::End; column++)
 		{
 			for (UINT row = 0; row < (UINT)ELayerType::End; row++)
@@ -76,6 +80,8 @@ namespace roka
 			{
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
+				left->time = mTime;
+				right->time = mTime;
 			}
 			else
 			{

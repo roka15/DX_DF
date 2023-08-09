@@ -45,6 +45,7 @@ namespace roka
 		std::shared_ptr<Animation> FindAnimation(const std::wstring& name);
 		std::shared_ptr<Animator::Events> FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop, float duration=0.0f);
+		void PlayAnimation(const std::wstring& name);
 		bool Binds();
 		std::shared_ptr<Animator> GetSharedPtr() { return shared_from_this(); }
 
@@ -53,6 +54,10 @@ namespace roka
 		std::function<void()>& EndEvent(const std::wstring key);
 
 		const class Sprite& GetSprite();
+
+		void Stop() { mbStop = true; }
+		void Play() { mbStop = false; }
+		void NextSprite() { mActiveAnimation.lock()->AddIndex(); }
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;
@@ -62,6 +67,7 @@ namespace roka
 		std::weak_ptr<Animation> mActiveAnimation;
 		std::weak_ptr<Animation> mFirstUpdateAnimation;
 		bool mbLoop;
+		bool mbStop;
 	};
 }
 

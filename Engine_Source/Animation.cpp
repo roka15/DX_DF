@@ -93,4 +93,10 @@ namespace roka
 	{
 		return  mAtlas->GetSprite(mIndex);
 	}
+	void Animation::AddIndex()
+	{
+		mIndex++;
+		if (mIndex >= mRange.second)
+			mIndex = mRange.first;
+	}
 }

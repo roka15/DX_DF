@@ -11,7 +11,7 @@ namespace roka::enums
 
 	enum class EPlayerState
 	{
-		Nonne,
+		None,
 		Idle,
 		Walk,
 		Run,
@@ -21,8 +21,18 @@ namespace roka::enums
 		Jump,
 		JumpHold,
 		JumpRun,
+		Stun,
 		Skill,
 		
+		End,
+	};
+	enum class EStunState
+	{
+		None,
+		Stagger,
+		Down,
+		HardStagger,
+		HardDown,
 		End,
 	};
 
