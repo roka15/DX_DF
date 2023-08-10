@@ -29,6 +29,8 @@ namespace roka
 		void SetLandingPoint(Vector2 pos) { mLandingPoint = pos; }
 		void AddLandingPoint(Vector2 add);
 
+		void AddForce(Vector2 force) { mForce += force; }
+
 		PROPERTY(GetGround, SetGround) bool is_ground;
 	private:
 		friend class FactoryBase;

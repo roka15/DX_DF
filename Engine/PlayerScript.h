@@ -51,6 +51,7 @@ namespace roka
 		void StunDown();
 
 		void NextState();
+		void DownEvent();
 
 		EPlayerState GetState() { return mPlayerState; }
 		void EnableKeyInput() { mIsActiveInput = true; }
@@ -67,6 +68,7 @@ namespace roka
 		friend class ScriptFactory;
 
 		EPlayerState mPlayerState;
+		EStunState mStunState;
 		bool mIsActiveInput;
 
 		std::unique_ptr<info::User> mUser;

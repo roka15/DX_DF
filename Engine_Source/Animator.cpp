@@ -61,11 +61,7 @@ namespace roka
 	}
 	void Animator::Update()
 	{
-		std::shared_ptr<GameObject> parrent
-			= owner->parent->parent;
-		if (parrent->GetName().compare(L"Player")==0)
-			int a = 0;
-		if (mbActive==false)
+		if (mbActive == false)
 			return;
 		if (mbStop == true)
 			return;
@@ -84,7 +80,10 @@ namespace roka
 					comp_event();
 				}
 			}
-			mActiveAnimation.lock()->Reset();
+			if (mbLoop == true)
+				mActiveAnimation.lock()->Reset();
+			else
+				mbStop = true;
 		}
 		mActiveAnimation.lock()->LateUpdate();
 	}
@@ -116,7 +115,7 @@ namespace roka
 		animation->SetKey(set_name);
 		animation->duration = duration;
 		animation->Create(npk_name, pack_name, set_name, start_index, end_index);
-		animation->play_range = std::make_pair(0,end_index-start_index);
+		animation->play_range = std::make_pair(0, end_index - start_index);
 		mAnimations.insert(std::make_pair(set_name, animation));
 
 		std::shared_ptr<Events> events = FindEvents(set_name);
@@ -202,13 +201,14 @@ namespace roka
 			}
 		}
 		mbLoop = loop;
+	    mbStop = false;
 		ActiveAni->Reset();
 	}
 	void Animator::PlayAnimation(const std::wstring& name)
 	{
 		PlayAnimation(name, false, 0.0f);
 	}
-	void Animator::PlayAniSprite(const std::wstring& name,int index)
+	void Animator::PlayAniSprite(const std::wstring& name, int index)
 	{
 		std::map<std::wstring, std::shared_ptr<Events>>::iterator  event_itr;
 		if (mActiveAnimation.expired() == false)
@@ -280,6 +280,6 @@ namespace roka
 	{
 		if (mActiveAnimation.expired() == true)
 			return;
-		 mActiveAnimation.lock()->AddIndex(); 
+		mActiveAnimation.lock()->AddIndex();
 	}
 }

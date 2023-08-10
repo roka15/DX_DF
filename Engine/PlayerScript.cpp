@@ -25,6 +25,7 @@ namespace roka
 	PlayerScript::PlayerScript() :Script(EScriptType::Player)
 		, mUser(std::make_unique<User>())
 		, mPlayerState(EPlayerState::Idle)
+		, mStunState(EStunState::None)
 		, mIsActiveInput(true)
 	{
 		mLeftTime = 0.0;
@@ -41,6 +42,7 @@ namespace roka
 		mTime = 0.0;
 		mDiff = 0.1;
 		mCurDir = 0.0f;
+		mStunState = EStunState::None;
 	}
 	PlayerScript::~PlayerScript()
 	{
@@ -57,6 +59,7 @@ namespace roka
 		mTime = 0.0;
 		mDiff = 0.1;
 		mCurDir = 0.0f;
+		mStunState = EStunState::None;
 	}
 	void PlayerScript::Initialize()
 	{
@@ -88,9 +91,12 @@ namespace roka
 		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump2", 4, 7, 0.20755f);
 		avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump3", 7, 9, 0.04f);
 
-		std::shared_ptr<Texture> stun_texter = baseskin_npk->CreateAtlas(mUser->base_avartar, 128, 134, L"PlayerBAStun");
-		avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunStagger", 0, 4, 0.1f);
-		avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunDown", 4, 7, 0.1f);
+		std::shared_ptr<Texture> stun_texter = baseskin_npk->CreateAtlas(mUser->base_avartar, 128, 135, L"PlayerBAStun");
+		avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunStagger", 0, 2, 0.1f);
+		avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunDownStagger", 2, 4, 0.15f);
+		avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunDown", 4, 7, 0.15f);
+
+		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAStanding", 53, 54, 0.5f);
 
 		//player state 에 따라 재생할 애니 정보 등록
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
@@ -101,11 +107,17 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump2");
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump3");
 		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunStagger");
-		avatar->SetCompleteEventAnimation(EPlayerState::Jump, 0, 1);
+		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunDownStagger");
+		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunDown");
+		avatar->InsertStateAniInfo(EPlayerState::Standing, EAvatarParts::Base, L"PlayerBAStanding");
 
+		avatar->SetCompleteEventAnimation(EPlayerState::Jump, 0, 1);
+		
 		/*avatar->EndEventAnimation(EPlayerState::Jump, 1, std::bind([this]()->void { mRigid.lock()->SetGround(true); }));*/
 		avatar->SetStartEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { mMoveScript.lock()->is_active = false; }));
 		avatar->CompleteEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { NextState(); }));
+		avatar->CompleteEventAnimation(EPlayerState::Stun, 2, std::bind([this]()->void { DownEvent(); }));
+		avatar->CompleteEventAnimation(EPlayerState::Standing, 0, std::bind([this]()->void {NextState(); }));
 		mPlayerState = EPlayerState::Idle;
 		//현재 idle 상태 애니 재생.
 		avatar->PlayPartsMotion();
@@ -124,15 +136,44 @@ namespace roka
 	}
 	void PlayerScript::LateUpdate()
 	{
-		if (mPlayerState >= EPlayerState::Jump &&
-			mPlayerState <= EPlayerState::JumpRun && 
-			mRigid.lock()->is_ground == true)
+		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		if (rigid->is_ground == true)
 		{
-			mPlayerState = EPlayerState::Idle;
-			std::shared_ptr<AvatarScript> as = mAvatar.lock();
-			as->StartAni();
-			as->PlayPartsMotion(EPlayerState::Jump, 2, false);
+			if (mPlayerState >= EPlayerState::Jump &&
+				mPlayerState <= EPlayerState::JumpRun)
+			{
+				mPlayerState = EPlayerState::Idle;
+				as->StartAni();
+				as->PlayPartsMotion(EPlayerState::Jump, 2, false);
+			}
+
+			if (mPlayerState == EPlayerState::Stun &&
+				mStunState == EStunState::Down)
+			{	
+				mPlayerState = EPlayerState::None;
+				as->PlayPartsMotion(EPlayerState::Stun, 2, false);
+			}
+
+			if (mPlayerState == EPlayerState::Standing)
+			{
+				//퀵스
+				if (mStunState == EStunState::Down)
+				{
+					if (Input::GetKeyDown(EKeyCode::C))
+					{
+						mStunState = EStunState::None;
+						EnableKeyInput();
+						as->PlayPartsMotion();
+						return;
+					}
+				}
+			}
 		}
+
+
+
 	}
 	void PlayerScript::Render()
 	{
@@ -140,12 +181,17 @@ namespace roka
 
 	void PlayerScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 	{
-		GameObject* owner = other->owner;
-		std::shared_ptr<SkillScript> ss = owner->GetComponent<SkillScript>();
+		GameObject* other_owner = other->owner;
+		std::shared_ptr<SkillScript> ss = other_owner->GetComponent<SkillScript>();
 		if (ss == nullptr)
 			return;
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
-		ms->SetActive(false);
+		mPlayerState = EPlayerState::Stun;
+		DisableKeyInput();
+		ms->Stop();
+		ms->ResetSpeed();
+
+		mStunState = ss->stun_type;
 		switch (ss->stun_type)
 		{
 		case EStunState::Stagger:
@@ -529,15 +575,11 @@ namespace roka
 	void PlayerScript::StunStagger(EStunState stun)
 	{
 		std::shared_ptr<Collider2D> collider = owner->GetComponent<Collider2D>();
-		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		double befor_time = collider->time;
 		double cur_time = CollisionManager::GetColliderTimer();
 		double condition = 5.0f;
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
-		mPlayerState = EPlayerState::Stun;
-		DisableKeyInput();
-		ms->Stop();
-		ms->ResetSpeed();
+
 		as->StopAni();
 		as->PlayPartsSprite(mPlayerState, (UINT)stun - 1);
 		if (cur_time - befor_time <= condition)
@@ -554,6 +596,20 @@ namespace roka
 
 	void PlayerScript::StunDown()
 	{
+		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
+		as->PlayPartsMotion(EPlayerState::Stun, 1, false);
+
+		if (mCurDir > 0)
+		{
+			rigid->AddForce(Vector2(-30.0f, 60 * 980.0f));
+		}
+		else if (mCurDir < 0)
+		{
+			rigid->AddForce(Vector2(30.0f, 60 * 980.0f));
+		}
+		rigid->disableGround();
+
 	}
 
 	void PlayerScript::NextState()
@@ -596,6 +652,18 @@ namespace roka
 		as->PlayPartsMotion();
 	}
 
+	void PlayerScript::DownEvent()
+	{
+		mPlayerState = EPlayerState::Standing;
+		Time::CallBackTimerInfo info = {};
+		info.endTime = 1.0;
+		std::wstring key = L"PlayerStunCompEvent";
+		size_t str_length = key.size();
+		std::wcsncpy(info.key, key.c_str(), str_length);
+		Time::RequestEvent(info, owner->GetSharedPtr());
+	}
+
+
 	void PlayerScript::FallCompleteEvent(std::weak_ptr<void> ptr)
 	{
 		std::shared_ptr<void> Ptr = ptr.lock();
@@ -629,9 +697,24 @@ namespace roka
 		std::shared_ptr<PlayerScript> ps = obj->GetComponent<PlayerScript>();
 		std::shared_ptr<MoveScript> ms = ps->mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = ps->mAvatar.lock();
+
+		if (ps->mStunState == EStunState::None)
+			return;
 		ps->EnableKeyInput();
 		as->StartAni();
-		ps->NextState();
+		
+		switch (ps->mStunState)
+		{
+		case EStunState::Stagger:
+			ps->NextState();
+			break;
+		case EStunState::Down:
+			//스탠딩 모션 후 일어나기.
+			ps->mPlayerState = EPlayerState::Standing;
+			as->PlayPartsMotion();
+			break;
+		}
+		ps->mStunState = EStunState::None;
 	}
 
 }

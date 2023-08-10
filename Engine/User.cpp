@@ -36,8 +36,9 @@ namespace roka::info
 		mCharacterInfo->fame = 1000;
 		mCharacterInfo->fatigue = 156;
 		mCharacterInfo->character_class_type = ECharacterClassType::Mage;
-
-		wcscpy(mCharacterInfo->base_skin_avatar,L"mg_body0019.img");
+		//mg_body0019.img
+		//mg_body80500.img
+		wcscpy(mCharacterInfo->base_skin_avatar,L"mg_body80500.img");
 
 		mKeysInfo->right = (UINT)EKeyCode::RIGHT;
 		mKeysInfo->left = (UINT)EKeyCode::LEFT;

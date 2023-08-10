@@ -22,6 +22,7 @@ namespace roka::enums
 		JumpHold,
 		JumpRun,
 		Stun,
+		Standing,
 		Skill,
 		
 		End,

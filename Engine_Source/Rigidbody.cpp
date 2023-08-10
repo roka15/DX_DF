@@ -18,10 +18,10 @@ namespace roka
 		, mbFall(false)
 		, mLandingPoint(Vector2::Zero)
 	{
-		mLimitedVelocity.x = 200.0f;
+		mLimitedVelocity.x = 1400.0f;
 		mLimitedVelocity.y = 10000.0f;
 		mGravity = Vector2(0.0f, 980.0f);
-		mFriction = 100.0f;
+		mFriction = 800.0f;
 	}
 	Rigidbody::Rigidbody(const Rigidbody& ref) :Component(ref)
 	{
@@ -80,8 +80,14 @@ namespace roka
 
 		Vector2 limit_velocity = mLimitedVelocity / resolution;
 
+		if (mForce != Vector2::Zero)
+		{
+			int a = 0;
+		}
 
-		mVelocity -= accelation * Time::DeltaTime();
+	
+
+		mVelocity += accelation * Time::DeltaTime();
 		if (mbGravity)
 		{
 			if (mbGround)
@@ -118,6 +124,7 @@ namespace roka
 		Vector2 sideVelocity = mVelocity - gravity;
 		if (limit_velocity.y < gravity.Length())
 		{
+			gravity.Normalize();
 			gravity *= limit_velocity.y;
 		}
 
@@ -133,18 +140,19 @@ namespace roka
 			//속도에 반대방향으로 마찰력이 적용된다.
 			Vector2 friction2 = -mVelocity;
 			friction2.Normalize();
-			friction2 = friction2 * friction * mass * Time::DeltaTime();
+			friction2 = friction2 * friction * 1.0f * Time::DeltaTime();
 
 			//마찰력으로 인한 속도 감소는 현재 속도보다 큰 경우
 			if (mbGround)
 			{
-				if (mVelocity.Length() < friction.Length())
+				if (mVelocity.Length() < friction2.Length())
 				{
 					mVelocity = Vector2::Zero;
 				}
 				else
 				{
-					mVelocity -= friction2;
+					//mAccelation += friction2;
+					mVelocity += friction2;
 				}
 			}
 		}
@@ -156,7 +164,7 @@ namespace roka
 		if (pos.y <= mLandingPoint.y)
 		{
 			mbGround = true;
-			mVelocity = Vector2::Zero;
+			mVelocity.y = 0.0f;
 			pos.y = mLandingPoint.y;
 		}
 	

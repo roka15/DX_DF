@@ -213,7 +213,13 @@ namespace roka
 			ps->DownBtnUp();
 		if (Input::GetKeyDown(EKeyCode::X))
 			ps->NomalAtkBtnDown();
-		
+
+		//if (Input::GetKeyDown(EKeyCode::F))
+		//{
+		//	obj->GetComponent<Rigidbody>()->AddForce(Vector2(30.0f, 60*980.0f));
+		//	obj->GetComponent<Rigidbody>()->disableGround();
+		//}
+		//
 		if (Input::GetKeyDown(EKeyCode::G))
 		{
 			test_num += 90;
