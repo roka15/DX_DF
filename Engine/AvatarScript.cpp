@@ -144,6 +144,22 @@ namespace roka
 		}
 	}
 
+	void AvatarScript::PlayPartsSprite(EPlayerState state, int index)
+	{
+		auto itr = mStateAnis.find(state);
+		if (itr == mStateAnis.end())
+			return;
+		for (auto& map : itr->second)
+		{
+			EAvatarParts type = map.first;
+			std::wstring ani_name = map.second[index];
+
+			std::shared_ptr<GameObject> part = mParts[type].lock();
+			std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
+			ani->PlayAniSprite(ani_name, index);
+		}
+	}
+
 	void AvatarScript::SetCompleteEventAnimation(EPlayerState state,int prev_index, int next_index)
 	{
 		auto itr = mStateAnis.find(state);

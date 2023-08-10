@@ -96,6 +96,8 @@ namespace roka
 	void Animation::AddIndex()
 	{
 		mIndex++;
+		if (mIndex == 3)
+			int a = 0;
 		if (mIndex >= mRange.second)
 			mIndex = mRange.first;
 	}

@@ -90,6 +90,10 @@ namespace roka
 	}
 	void Animator::LateUpdate()
 	{
+		if (mbActive == false)
+			return;
+		if (mbStop == true)
+			return;
 		if (mFirstUpdateAnimation.lock().get() != mActiveAnimation.lock().get())
 		{
 			mActiveAnimation.lock()->LateUpdate();
@@ -204,6 +208,41 @@ namespace roka
 	{
 		PlayAnimation(name, false, 0.0f);
 	}
+	void Animator::PlayAniSprite(const std::wstring& name,int index)
+	{
+		std::map<std::wstring, std::shared_ptr<Events>>::iterator  event_itr;
+		if (mActiveAnimation.expired() == false)
+		{
+			std::shared_ptr<Animation> active_ani = mActiveAnimation.lock();
+			std::wstring key = active_ani->GetKey();
+			event_itr = mEvents.find(key);
+			if (event_itr != mEvents.end())
+			{
+				std::shared_ptr<Events> events = event_itr->second;
+				for (auto endevent : events->endEvent)
+				{
+					endevent();
+				}
+			}
+		}
+
+		std::map<std::wstring, std::shared_ptr<Animation>>::iterator ani_itr = mAnimations.find(name);
+		if (ani_itr == mAnimations.end())
+		{
+			return;
+		}
+
+		mActiveAnimation = ani_itr->second;
+		event_itr = mEvents.find(name);
+		if (event_itr != mEvents.end())
+		{
+			std::shared_ptr<Events> events = event_itr->second;
+			for (auto startevent : events->startEvent)
+			{
+				startevent();
+			}
+		}
+	}
 	bool Animator::Binds()
 	{
 		std::shared_ptr<Animation> ani = mActiveAnimation.lock();
@@ -236,5 +275,11 @@ namespace roka
 	const Sprite& Animator::GetSprite()
 	{
 		return mActiveAnimation.lock()->GetSprite();
+	}
+	void Animator::NextSprite()
+	{
+		if (mActiveAnimation.expired() == true)
+			return;
+		 mActiveAnimation.lock()->AddIndex(); 
 	}
 }

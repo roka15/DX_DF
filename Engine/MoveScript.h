@@ -24,7 +24,7 @@ namespace roka
 		float GetDirX() { return mDir.x; }
 
 		bool IsStop() { return mDir.x == 0.0f && mDir.y == 0.0f; }
-
+		void Stop() { mDir.x = 0.0f; mDir.y = 0.0f; }
 		SET_PROPERTY(SetSpeed) float speed;
 		GET_PROPERTY(IsStop) bool is_stop;
 	private:

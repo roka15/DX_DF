@@ -58,6 +58,7 @@ namespace roka
 
 		static void FallCompleteEvent(std::weak_ptr<void> ptr);
 		static void JumpDashCompleteEvent(std::weak_ptr<void> ptr);
+		static void StunCompleteEvent(std::weak_ptr<void> ptr);
 		GET_PROPERTY(GetState) EPlayerState player_state;
 	protected:
 		
@@ -81,8 +82,6 @@ namespace roka
 		double mDiff;
 
 		float mCurDir;
-
-		
 	};
 }
 

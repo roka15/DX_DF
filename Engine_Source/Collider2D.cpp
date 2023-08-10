@@ -16,7 +16,8 @@ namespace roka
 		mPosition(Vector3::Zero),
 		mSize(Vector2::One),
 		mCenter(Vector2::Zero),
-		mbCollision(false)
+		mbCollision(false),
+		mTime(0.0)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -27,7 +28,8 @@ namespace roka
 		mPosition(ref.mPosition),
 		mColType(ref.mColType),
 		mSize(ref.mSize),
-		mCenter(ref.mCenter)
+		mCenter(ref.mCenter),
+		mTime(0.0)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -45,6 +47,7 @@ namespace roka
 		mCenter = source->mCenter;
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
+		mTime = 0.0;
 	}
 	Collider2D::~Collider2D()
 	{
@@ -77,7 +80,7 @@ namespace roka
 			pos.x += mCenter.x;
 			pos.y += mCenter.y;
 		}
-	
+
 		mPosition = pos;
 
 		roka::graphics::DebugMesh mesh = {};
