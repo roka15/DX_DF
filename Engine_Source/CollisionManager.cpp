@@ -55,7 +55,7 @@ namespace roka
 				std::shared_ptr<Collider2D> rightCol = rightObj->GetComponent<Collider2D>();
 				if (rightCol == nullptr)
 					continue;
-				
+
 				ColliderCollision(leftCol, rightCol);
 			}
 		}
@@ -121,17 +121,29 @@ namespace roka
 		Vector3 leftScale = Vector3(left->size.x, left->size.y, 1.0f);
 		Vector3 leftOffset = Vector3(left->center.x, left->center.y, 0.0f);
 		Matrix finalLeft = Matrix::CreateScale(leftScale);
-		leftOffset.x = (leftOffset.x * cos(leftTf->rotation.z)) - (leftOffset.y * sin(leftTf->rotation.z));
-		leftOffset.y = (leftOffset.x * sin(leftTf->rotation.z)) + (leftOffset.y * cos(leftTf->rotation.z));
-		finalLeft *= Matrix::CreateTranslation(leftOffset);
+		if (leftTf->rotation.z != 0.0f)
+		{
+			Vector3 tempOffset = leftOffset;
+			tempOffset.x = (leftOffset.x * cos(leftTf->rotation.z)) - (leftOffset.y * sin(leftTf->rotation.z));
+			tempOffset.y = (leftOffset.x * sin(leftTf->rotation.z)) + (leftOffset.y * cos(leftTf->rotation.z));
+			leftOffset = tempOffset;
+		}
+	/*	leftTranslate += leftOffset;
+		leftMat = Matrix::CreateTranslation(leftTranslate);*/
 		finalLeft *= leftMat;
 
 		Vector3 rightScale = Vector3(right->size.x, right->size.y, 1.0f);
 		Vector3 rightOffset = Vector3(right->center.x, right->center.y, 0.0f);
 		Matrix finalRight = Matrix::CreateScale(rightScale);
-		rightOffset.x = (rightOffset.x * cos(rightTf->rotation.z)) - (rightOffset.y * sin(rightTf->rotation.z));
-		rightOffset.y = (rightOffset.x * sin(rightTf->rotation.z)) + (rightOffset.y * cos(rightTf->rotation.z));
-	    finalRight *= Matrix::CreateTranslation(rightOffset);
+		if (rightTf->rotation.z != 0.0f)
+		{
+			Vector3 tempOffset = rightOffset;
+			tempOffset.x = (rightOffset.x * cos(rightTf->rotation.z)) - (rightOffset.y * sin(rightTf->rotation.z));
+			tempOffset.y = (rightOffset.x * sin(rightTf->rotation.z)) + (rightOffset.y * cos(rightTf->rotation.z));
+			rightOffset = tempOffset;
+		}
+		/*rightTranslate += rightOffset;
+		rightMat = Matrix::CreateTranslation(rightTranslate);*/
 		finalRight *= rightMat;
 
 		Axis[0] = Vector3::Transform(LocalPos[1], finalLeft);
@@ -151,22 +163,8 @@ namespace roka
 
 		Vector3 leftpos = {};
 		Vector3 rightpos = {};
-		if (leftTf->rotation.z == 0)
-		{
-			leftpos = leftTf->position;
-		}
-		else
-		{
-			leftpos = leftTf->position + leftOffset;
-		}
-		if (rightTf->rotation.z == 0)
-		{
-			rightpos = rightTf->position;
-		}
-		else
-		{
-			rightpos = rightTf->position + rightOffset;
-		}
+		leftpos = leftTf->position + leftOffset;
+		rightpos = rightTf->position + rightOffset;
 		Vector3 vc = leftpos - rightpos;
 		vc.z = 0.0f;
 
@@ -191,7 +189,7 @@ namespace roka
 		UINT col = -1;
 		UINT iLeft = (UINT)left;
 		UINT iRight = (UINT)right;
-		
+
 		if (iLeft <= iRight)
 		{
 			row = iLeft;

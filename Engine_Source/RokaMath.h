@@ -15,15 +15,15 @@
 
 #define XM_CONSTEXPR
 
-#define PI 3.141592
+#define PI 3.1415926
 
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
 namespace roka::math
 {
-    float Rad2Deg(const float radian);
-    float Deg2Rad(const float degree);
+    double Rad2Deg(const double radian);
+    double Deg2Rad(const double degree);
 
     struct Vector2;
     struct Vector4;

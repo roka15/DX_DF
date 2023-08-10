@@ -73,6 +73,10 @@ namespace roka
 
 			return comps;
 		}
+		const std::vector<std::shared_ptr<Script>>& GetScripts()
+		{
+			return mScripts;
+		}
 		std::shared_ptr<Script> GetScript(enums::EScriptType type)
 		{
 			for (std::shared_ptr<Script> script : mScripts)

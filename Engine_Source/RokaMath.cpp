@@ -241,11 +241,11 @@ namespace roka::math
 
 		return rct;
 	}
-	float Rad2Deg(const float radian)
+	double Rad2Deg(const double radian)
 	{
 		return radian * 180 / PI;
 	}
-	float Deg2Rad(const float degree)
+	double Deg2Rad(const double degree)
 	{
 		return degree * PI / 180;
 	}

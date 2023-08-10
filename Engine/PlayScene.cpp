@@ -30,6 +30,7 @@
 
 namespace roka
 {
+	static int test_num = 0;
 	PlayScene::PlayScene() :Scene(ESceneType::End)
 	{
 	}
@@ -68,7 +69,7 @@ namespace roka
 			ELayerType::Monster);
 		skill01->SetName(L"skill01");
 		skill01->AddComponent<Collider2D>();
-		//skill01->AddComponent<SkillScript>()->stun_type = EStunState::Stagger;
+		skill01->AddComponent<SkillScript>()->stun_type = EStunState::Stagger;
 		
 
 		//´Ù¿î
@@ -79,7 +80,7 @@ namespace roka
 			ELayerType::Monster);
 		skill02->SetName(L"skill02");
 		skill02->AddComponent<Collider2D>();
-		//skill02->AddComponent<SkillScript>()->stun_type = EStunState::Down;
+		skill02->AddComponent<SkillScript>()->stun_type = EStunState::Down;
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player,true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
@@ -190,6 +191,7 @@ namespace roka
 			= FindGameObject(ELayerType::Player,L"Player");
 		std::shared_ptr<GameObject> obj2
 			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
+	
 		std::shared_ptr<PlayerScript> ps
 			= obj->GetComponent<PlayerScript>();
 
@@ -211,9 +213,14 @@ namespace roka
 			ps->DownBtnUp();
 		if (Input::GetKeyDown(EKeyCode::X))
 			ps->NomalAtkBtnDown();
+		
 		if (Input::GetKeyDown(EKeyCode::G))
-			obj2->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
-
+		{
+			test_num += 90;
+			if (test_num > 360)
+				test_num = 0;
+			obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
+		}
 		if (Input::GetKeyDown(EKeyCode::SPACE))
 			ps->JumpBtnDown();
 	}

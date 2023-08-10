@@ -61,9 +61,13 @@ namespace roka
 	}
 	void Animator::Update()
 	{
+		std::shared_ptr<GameObject> parrent
+			= owner->parent->parent;
+		if (parrent->GetName().compare(L"Player")==0)
+			int a = 0;
 		if (mbActive==false)
 			return;
-		if (mbStop == false)
+		if (mbStop == true)
 			return;
 		if (mActiveAnimation.expired() == true)
 			return;

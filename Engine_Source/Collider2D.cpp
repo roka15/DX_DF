@@ -67,9 +67,17 @@ namespace roka
 		Vector3 pos = tf->position;
 
 		float rotationZ = tf->rotation.z;
-
-		pos.x += (mCenter.x * cos(rotationZ)) - (mCenter.y * sin(rotationZ));
-		pos.y += (mCenter.x * sin(rotationZ)) + (mCenter.y * cos(rotationZ));
+		if (rotationZ != 0.0f)
+		{
+			pos.x += (mCenter.x * cos(rotationZ)) - (mCenter.y * sin(rotationZ));
+			pos.y += (mCenter.x * sin(rotationZ)) + (mCenter.y * cos(rotationZ));
+		}
+		else
+		{
+			pos.x += mCenter.x;
+			pos.y += mCenter.y;
+		}
+	
 		mPosition = pos;
 
 		roka::graphics::DebugMesh mesh = {};
@@ -91,7 +99,7 @@ namespace roka
 	{
 		mbCollision = true;
 		const std::vector<std::shared_ptr<Script>>& scripts
-			= owner->GetComponents<Script>();
+			= owner->GetScripts();
 
 		for (const std::shared_ptr<Script>& script : scripts)
 		{
@@ -102,7 +110,7 @@ namespace roka
 	{
 		mbCollision = true;
 		const std::vector<std::shared_ptr<Script>>& scripts
-			= owner->GetComponents<Script>();
+			= owner->GetScripts();
 
 		for (const std::shared_ptr<Script>& script : scripts)
 		{
