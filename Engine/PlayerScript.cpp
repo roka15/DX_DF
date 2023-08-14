@@ -598,6 +598,7 @@ namespace roka
 	{
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
+		
 		as->PlayPartsMotion(EPlayerState::Stun, 1, false);
 
 		if (mCurDir > 0)
@@ -608,8 +609,9 @@ namespace roka
 		{
 			rigid->AddForce(Vector2(30.0f, 60 * 980.0f));
 		}
+		
 		rigid->disableGround();
-
+		
 	}
 
 	void PlayerScript::NextState()

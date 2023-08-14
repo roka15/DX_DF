@@ -161,7 +161,7 @@ roka::ELayerType roka::GameObject::GetLayerType()
 	if (parrent != nullptr)
 		return parrent->layer_type;
 
-	return layer_type;
+	return mLayerType;
 }
 
 roka::GameObject::~GameObject()

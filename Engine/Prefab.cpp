@@ -146,7 +146,7 @@ namespace roka::prefab
 			PartObject->SetName(L"PartObject");
 			PartObject->AddScript<PartScript>();
 
-			
+
 			std::shared_ptr<MeshRenderer>mr = PartObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
@@ -161,13 +161,14 @@ namespace roka::prefab
 		{
 			PlayerObject->SetName(L"PlayerObject");
 			PlayerObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
+			PlayerObject->layer_type = ELayerType::Player;
 			std::shared_ptr<roka::GameObject> AvatarParrent = object::Instantiate<roka::GameObject>(
 				Vector3::Zero,
 				Vector3::Zero,
 				Vector3::One);
 			{
 				AvatarParrent->SetName(L"AvatarParrentObj");
-				
+
 				PlayerObject->AddChild(AvatarParrent);
 
 				std::shared_ptr<roka::Image> Base = object::Instantiate<roka::Image>(PartObject);
@@ -217,10 +218,18 @@ namespace roka::prefab
 
 				AvatarParrent->AddScript<AvatarScript>();
 			}
-			std::shared_ptr<Collider2D> cd = PlayerObject->AddComponent<Collider2D>();
-			cd->SetSize(Vector2(0.1f, 0.2f));
+			std::shared_ptr<GameObject> colliderObj = object::Instantiate<GameObject>
+				(
+					Vector3::Zero,
+					Vector3::Zero,
+					Vector3::One
+				);
+			PlayerObject->AddChild(colliderObj);
+			std::shared_ptr<Collider2D> col = colliderObj->AddComponent<Collider2D>();
+			col->SetSize(Vector2(0.05f, 0.1f));
 			//cd->SetSize(Vector2(1.0f, 1.0f));
-			cd->SetCenter(Vector2(-0.01f, -0.525f));
+			col->SetCenter(Vector2(-0.01f, -0.525f));
+			
 			PlayerObject->AddScript<MoveScript>();
 			PlayerObject->AddComponent<Rigidbody>()->IsGravity(true);
 			PlayerObject->AddScript<PlayerScript>();

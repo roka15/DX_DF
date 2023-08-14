@@ -42,7 +42,7 @@ namespace roka
 		std::shared_ptr<ComputeShader> comShader = std::make_shared<ComputeShader>();
 		comShader->Create(L"PaintCS.hlsl", "main");
 		Scene::Initialize();
-	
+
 		/* player script text*/
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
 
@@ -57,20 +57,20 @@ namespace roka
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
 		//player->AddComponent<Rigidbody>()->IsGravity(true);
-		
+
 		//cd->SetSize(Vector2(0.05f, 0.2f));
 		AddGameObject(ELayerType::Player, player);
-		
+
 		//경직
 		std::shared_ptr<GameObject> skill01 = object::Instantiate<GameObject>(
-			Vector3(2.0f,1.0f,0.0f),
+			Vector3(2.0f, 1.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(1.0f,1.0f,1.0f),
+			Vector3(1.0f, 1.0f, 1.0f),
 			ELayerType::Monster);
 		skill01->SetName(L"skill01");
 		skill01->AddComponent<Collider2D>();
 		skill01->AddComponent<SkillScript>()->stun_type = EStunState::Stagger;
-		
+
 
 		//다운
 		std::shared_ptr<GameObject> skill02 = object::Instantiate<GameObject>(
@@ -82,7 +82,7 @@ namespace roka
 		skill02->AddComponent<Collider2D>();
 		skill02->AddComponent<SkillScript>()->stun_type = EStunState::Down;
 
-		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player,true);
+		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
 
 		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
@@ -95,16 +95,16 @@ namespace roka
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
 			renderer::MainCamera = cameraComp;
 		}
-			/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
-			obj->SetName(L"player");
-			obj->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
-			std::shared_ptr<MeshRenderer> mr = obj->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
-			std::shared_ptr<Animator> ani = obj->AddComponent<Animator>();
-			ani->Create(L"baseskin", L"mg_body80500.img", L"Idle", 10, 13,0.3f);
-			ani->Create(L"baseskin", L"mg_body80500.img", L"Right", 0, 9,0.1f);
-			ani->PlayAnimation(L"Idle", true);*/
+		/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
+		obj->SetName(L"player");
+		obj->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
+		std::shared_ptr<MeshRenderer> mr = obj->AddComponent<MeshRenderer>();
+		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+		mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+		std::shared_ptr<Animator> ani = obj->AddComponent<Animator>();
+		ani->Create(L"baseskin", L"mg_body80500.img", L"Idle", 10, 13,0.3f);
+		ani->Create(L"baseskin", L"mg_body80500.img", L"Right", 0, 9,0.1f);
+		ani->PlayAnimation(L"Idle", true);*/
 
 		/*std::shared_ptr<NPK> gate_npk = Resources::Find<NPK>(L"gate");
 		if (gate_npk == nullptr)
@@ -128,7 +128,7 @@ namespace roka
 		ani->PlayAnimation(L"SeriaDoorEffect", true, 0.5f);*/
 
 
-		
+
 
 		//ani->Create();
 
@@ -151,33 +151,33 @@ namespace roka
 				obj->GetComponent<Transform>()->SetRotation(Vector3(0.0f, 0.0f, degree));
 			}
 			*/
-	
-		/*{
-			GameObject* player = new GameObject();
-			AddGameObject(ELayerType::Player, player);
-			MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material=Resources::Find<Material>(L"SpriteMaterial");
 
-			Transform* tf = player->GetComponent<Transform>();
-			tf->position = Vector3(2.0f, 0.0f, 0.0f);
-			tf->scale = Vector3(2.0f, 2.0f, 1.0f);
-			{
-				std::shared_ptr<NPK> npk = Resources::Load<NPK>(L"mapnpk", L"..\\Resources\\npk\\map.npk");
-				std::shared_ptr<Texture> texture = npk->GetTexture(L"seriagate", 0);
-				Resources::Insert(L"seriagateTexture", texture);
-				mr->material->texture = texture;
-			}
-
-		}*/
-		/*	{
+			/*{
 				GameObject* player = new GameObject();
 				AddGameObject(ELayerType::Player, player);
 				MeshRenderer* mr = player->AddComponent<MeshRenderer>();
-				mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-				mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
-				player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.0f);
+				mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+				mr->material=Resources::Find<Material>(L"SpriteMaterial");
+
+				Transform* tf = player->GetComponent<Transform>();
+				tf->position = Vector3(2.0f, 0.0f, 0.0f);
+				tf->scale = Vector3(2.0f, 2.0f, 1.0f);
+				{
+					std::shared_ptr<NPK> npk = Resources::Load<NPK>(L"mapnpk", L"..\\Resources\\npk\\map.npk");
+					std::shared_ptr<Texture> texture = npk->GetTexture(L"seriagate", 0);
+					Resources::Insert(L"seriagateTexture", texture);
+					mr->material->texture = texture;
+				}
+
 			}*/
+			/*	{
+					GameObject* player = new GameObject();
+					AddGameObject(ELayerType::Player, player);
+					MeshRenderer* mr = player->AddComponent<MeshRenderer>();
+					mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+					mr->SetMaterial(Resources::Find<Material>(L"SpriteMaterial02"));
+					player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.0f);
+				}*/
 
 
 
@@ -186,12 +186,12 @@ namespace roka
 	void PlayScene::Update()
 	{
 		Scene::Update();
-		
-		std::shared_ptr<GameObject> obj 
-			= FindGameObject(ELayerType::Player,L"Player");
+
+		std::shared_ptr<GameObject> obj
+			= FindGameObject(ELayerType::Player, L"Player");
 		std::shared_ptr<GameObject> obj2
 			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
-	
+
 		std::shared_ptr<PlayerScript> ps
 			= obj->GetComponent<PlayerScript>();
 
@@ -225,7 +225,8 @@ namespace roka
 			test_num += 90;
 			if (test_num > 360)
 				test_num = 0;
-			obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
+			if (obj2 != nullptr)
+				obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
 		}
 		if (Input::GetKeyDown(EKeyCode::SPACE))
 			ps->JumpBtnDown();

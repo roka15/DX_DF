@@ -37,27 +37,38 @@ namespace roka
 		std::vector<std::shared_ptr<GameObject>> rights
 			= scene->GetGameObjects(right);
 
+		std::vector<std::shared_ptr<Collider2D>> leftCols = {};
+		std::vector<std::shared_ptr<Collider2D>> rightCols = {};
+
 		for (std::shared_ptr<GameObject>& leftObj : lefts)
 		{
 			if (leftObj->GetState() != GameObject::EState::Active)
 				continue;
 
-			std::shared_ptr<Collider2D> leftCol = leftObj->GetComponent<Collider2D>();
-			if (leftCol == nullptr)
+			FindCollider(leftObj, leftCols);
+			if (leftCols.size() == 0)
 				continue;
+
 			for (std::shared_ptr<GameObject>& rightObj : rights)
 			{
 				if (leftObj == rightObj)
 					continue;
 				if (rightObj->GetState() != GameObject::EState::Active)
 					continue;
-
-				std::shared_ptr<Collider2D> rightCol = rightObj->GetComponent<Collider2D>();
-				if (rightCol == nullptr)
+				FindCollider(rightObj, rightCols);
+				if (rightCols.size() == 0)
 					continue;
 
-				ColliderCollision(leftCol, rightCol);
+				for (int i = 0; i < leftCols.size(); i++)
+				{
+					for (int j = 0; j < rightCols.size(); j++)
+					{
+						ColliderCollision(leftCols[i], rightCols[j]);
+					}
+				}
+				rightCols.clear();
 			}
+			leftCols.clear();
 		}
 	}
 	void CollisionManager::ColliderCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
@@ -128,8 +139,8 @@ namespace roka
 			tempOffset.y = (leftOffset.x * sin(leftTf->rotation.z)) + (leftOffset.y * cos(leftTf->rotation.z));
 			leftOffset = tempOffset;
 		}
-	/*	leftTranslate += leftOffset;
-		leftMat = Matrix::CreateTranslation(leftTranslate);*/
+		/*	leftTranslate += leftOffset;
+			leftMat = Matrix::CreateTranslation(leftTranslate);*/
 		finalLeft *= leftMat;
 
 		Vector3 rightScale = Vector3(right->size.x, right->size.y, 1.0f);
@@ -206,5 +217,22 @@ namespace roka
 	{
 		mMatrix->reset();
 		mCollisionMap.clear();
+	}
+	void CollisionManager::FindCollider(std::shared_ptr<GameObject> obj, std::vector<std::shared_ptr<Collider2D>>& cols)
+	{
+		std::shared_ptr<Collider2D> col = obj->GetComponent<Collider2D>();
+		if (col != nullptr)
+			cols.push_back(col);
+
+		int cnt = obj->GetChildCont();
+		if (cnt == 0)
+			return;
+		std::vector<std::shared_ptr<GameObject>> objs = obj->GetChilds();
+		for (int i = 0; i < cnt; i++)
+		{
+			FindCollider(objs[i], cols);
+		}
+
+		return;
 	}
 }

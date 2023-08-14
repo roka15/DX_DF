@@ -7,6 +7,7 @@ namespace roka
 #define LAYER_MAX (UINT)ELayerType::End
 	
 	class Collider2D;
+	class GameObject;
 	class CollisionManager
 	{
 	public:
@@ -29,6 +30,7 @@ namespace roka
 		static void SetLayer(ELayerType left, ELayerType right, bool enable);
 		static void Clear();
 		static double GetColliderTimer() { return mTime; }
+		static void FindCollider(std::shared_ptr<GameObject> obj,std::vector<std::shared_ptr<Collider2D>>& cols);
 	private:
 		static std::bitset<LAYER_MAX> mMatrix[LAYER_MAX];
 		static std::map<UINT64, bool> mCollisionMap;

@@ -102,6 +102,48 @@ namespace roka
         cb->SetData(&trCB);
         cb->Bind(EShaderStage::VS);
     }
+    Vector3 Transform::GetPosition()
+    {
+        std::shared_ptr<GameObject> parent = owner->parent;
+        if (parent != nullptr)
+        {
+            Vector3 value = parent->GetComponent<Transform>()->position;
+            value += mPosition;
+            return value;
+        }
+        else
+        {
+            return mPosition;
+        }
+    }
+    Vector3 Transform::GetRotation()
+    {
+        std::shared_ptr<GameObject> parent = owner->parent;
+        if (parent != nullptr)
+        {
+            Vector3 value = parent->GetComponent<Transform>()->rotation;
+            value += mRotation;
+            return value;
+        }
+        else
+        {
+            return mRotation;
+        }
+    }
+    Vector3 Transform::GetScale()
+    {
+        std::shared_ptr<GameObject> parent = owner->parent;
+        if (parent != nullptr)
+        {
+            Vector3 value = parent->GetComponent<Transform>()->scale;
+            value += mScale;
+            return value;
+        }
+        else
+        {
+            return mScale;
+        }
+    }
     float Transform::GetWorldZ()
     {
         return mWorld._43;
