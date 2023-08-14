@@ -14,6 +14,7 @@ namespace roka
 		Component(EComponentType::Collider),
 		mTransform(),
 		mPosition(Vector3::Zero),
+		mRotationZ(0),
 		mSize(Vector2::One),
 		mCenter(Vector2::Zero),
 		mbCollision(false),
@@ -26,6 +27,7 @@ namespace roka
 		Component(ref),
 		mTransform(ref.mTransform.lock()),
 		mPosition(ref.mPosition),
+		mRotationZ(0),
 		mColType(ref.mColType),
 		mSize(ref.mSize),
 		mCenter(ref.mCenter),
@@ -48,6 +50,7 @@ namespace roka
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
 		mTime = 0.0;
+		mRotationZ = 0.0f;
 	}
 	Collider2D::~Collider2D()
 	{
@@ -69,6 +72,9 @@ namespace roka
 
 		Vector3 pos = tf->position;
 
+		Vector3 rotation = tf->rotation;
+		rotation.z += mRotationZ;
+
 		float rotationZ = tf->rotation.z;
 		if (rotationZ != 0.0f)
 		{
@@ -85,7 +91,7 @@ namespace roka
 
 		roka::graphics::DebugMesh mesh = {};
 		mesh.position = pos;
-		mesh.rotation = tf->rotation;
+		mesh.rotation = rotation;
 		mesh.scale = scale;
 		mesh.type = EColliderType::Rect;
 		if (mbCollision == true)

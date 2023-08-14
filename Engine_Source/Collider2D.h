@@ -23,10 +23,15 @@ namespace roka
 		void OnCollisionExit(std::shared_ptr<Collider2D> other);
 
 		void SetType(EColliderType type) { mColType = type; }
+		
+		
 		void SetSize(Vector2 size) { mSize = size; }
-		void SetCenter(Vector2 size) { mCenter = size; }
 		Vector2 GetSize() { return mSize; }
+		void SetCenter(Vector2 size) { mCenter = size; }
 		Vector2 GetCenter() { return mCenter; }
+		void SetRotation(float z) { mRotationZ = z; }
+		float GetRotation() { return mRotationZ; }
+		
 
 		UINT GetColliderID() { return mColliderID; }
 		
@@ -49,6 +54,7 @@ namespace roka
 		std::weak_ptr<Transform> mTransform;
 
 		Vector3 mPosition;
+		float mRotationZ;
 		Vector2 mSize;
 		Vector2 mCenter;
 		bool mbCollision;

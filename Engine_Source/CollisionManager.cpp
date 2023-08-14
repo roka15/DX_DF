@@ -124,8 +124,20 @@ namespace roka
 		std::shared_ptr<Transform> leftTf = left->owner->GetComponent<Transform>();
 		std::shared_ptr<Transform> rightTf = right->owner->GetComponent<Transform>();
 
-		Matrix leftMat = leftTf->GetMatrix();
-		Matrix rightMat = rightTf->GetMatrix();
+		Matrix scale = Matrix::CreateScale(leftTf->scale);
+		Matrix rotation = Matrix::CreateRotationX(leftTf->rotation.x);
+		rotation *= Matrix::CreateRotationY(leftTf->rotation.y);
+		rotation *= Matrix::CreateRotationZ(left->GetRotation()+leftTf->rotation.z);
+		Matrix position;
+		position.Translation(leftTf->position);
+		Matrix leftMat = scale*rotation*position;
+
+		scale = Matrix::CreateScale(rightTf->scale);
+		rotation = Matrix::CreateRotationX(rightTf->rotation.x);
+		rotation *= Matrix::CreateRotationY(rightTf->rotation.y);
+		rotation *= Matrix::CreateRotationZ(right->GetRotation() + rightTf->rotation.z);
+		position.Translation(rightTf->position);
+		Matrix rightMat = scale*rotation*position;
 
 		Vector3 Axis[4] = {};
 
