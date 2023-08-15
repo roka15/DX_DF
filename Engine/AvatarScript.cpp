@@ -10,6 +10,7 @@
 #include "MeshRenderer.h"
 #include "PlayerScript.h"
 #include "PartScript.h"
+#include "WeaponScript.h"
 
 
 namespace roka
@@ -19,8 +20,6 @@ namespace roka
 	}
 	AvatarScript::AvatarScript(const AvatarScript& ref) : Script(ref)
 	{
-		int a = 0;
-		mParts;
 	}
 	void AvatarScript::Copy(Component* src)
 	{
@@ -54,14 +53,14 @@ namespace roka
 	void AvatarScript::CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name, std::wstring set_name, UINT start, UINT end, float duration)
 	{
 		std::shared_ptr<GameObject> part = mParts[type].lock();
-		std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
-		ani->Create(npk_name, pack_name, set_name, start, end, duration);
+		std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
+		partScript->CreateAni(npk_name, pack_name, set_name, start, end, duration);
 	}
 	void AvatarScript::CreatePartAni(EAvatarParts type, std::shared_ptr<Texture> atlas, std::wstring set_name, UINT start, UINT end, float duration)
 	{
 		std::shared_ptr<GameObject> part = mParts[type].lock();
-		std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
-		ani->Create(atlas,set_name,start,end,duration);
+		std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
+		partScript->CreateAni(atlas, set_name, start, end, duration);
 	}
 	void AvatarScript::InsertStateAniInfo(EPlayerState state, EAvatarParts part, std::wstring ani_name)
 	{
@@ -86,8 +85,8 @@ namespace roka
 			EAvatarParts type = map.first;
 
 			std::shared_ptr<GameObject> part = mParts[type].lock();
-			std::shared_ptr<MeshRenderer> mr = part->GetComponent<MeshRenderer>();
-			mr->material->shader = Resources::Find<Shader>(L"AnimationShader");
+			std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
+			partScript->Right();
 		}
 	}
 
@@ -102,8 +101,8 @@ namespace roka
 			EAvatarParts type = map.first;
 
 			std::shared_ptr<GameObject> part = mParts[type].lock();
-			std::shared_ptr<MeshRenderer> mr = part->GetComponent<MeshRenderer>();
-			mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+			std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
+			partScript->Left();
 		}
 	}
 
@@ -120,11 +119,11 @@ namespace roka
 			std::wstring ani_name = map.second[0];
 
 			std::shared_ptr<GameObject> part = mParts[type].lock();
-			std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
+			std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
 			if (ps->player_state < EPlayerState::OnePlay)
-				ani->PlayAnimation(ani_name, true);
+				partScript->PlayPartMotion(ani_name, true);
 			else
-				ani->PlayAnimation(ani_name, false);
+				partScript->PlayPartMotion(ani_name, false);
 		}
 	}
 
@@ -139,8 +138,8 @@ namespace roka
 			std::wstring ani_name = map.second[index];
 
 			std::shared_ptr<GameObject> part = mParts[type].lock();
-			std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
-			ani->PlayAnimation(ani_name, flag);
+			std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
+			partScript->PlayPartMotion(ani_name, flag);
 		}
 	}
 
@@ -155,8 +154,8 @@ namespace roka
 			std::wstring ani_name = map.second[index];
 
 			std::shared_ptr<GameObject> part = mParts[type].lock();
-			std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
-			ani->PlayAniSprite(ani_name, index);
+			std::shared_ptr<PartScript> partScript = part->GetComponent<PartScript>();
+			partScript->PlayPartSprite(ani_name, index);
 		}
 	}
 
@@ -204,10 +203,14 @@ namespace roka
 		for (auto& map : itr->second)
 		{
 			EAvatarParts type = map.first;
-			size_t size = map.second.size();
-			std::wstring name = map.second[prev_index];
-			std::shared_ptr<Animator> ani = mParts[type].lock()->GetComponent<Animator>();
-			ani->StartEvent(name) = func;
+			if (type == EAvatarParts::Base)
+			{
+				size_t size = map.second.size();
+				std::wstring name = map.second[prev_index];
+				std::shared_ptr<PartScript> partScript = mParts[type].lock()->GetComponent<PartScript>();
+				partScript->ConnectEvent((UINT)Animator::EAniEventType::StartEvent, name, func);
+				return;
+			}
 		}
 	}
 
@@ -219,10 +222,14 @@ namespace roka
 		for (auto& map : itr->second)
 		{
 			EAvatarParts type = map.first;
-			size_t size = map.second.size();
-			std::wstring name = map.second[size - 1];
-			std::shared_ptr<Animator> ani = mParts[type].lock()->GetComponent<Animator>();
-			ani->CompleteEvent(name) = func;
+			if (type == EAvatarParts::Base)
+			{
+				size_t size = map.second.size();
+				std::wstring name = map.second[size - 1];
+				std::shared_ptr<PartScript> partScript = mParts[type].lock()->GetComponent<PartScript>();
+				partScript->ConnectEvent((UINT)Animator::EAniEventType::CompleteEvent, name, func);
+				return;
+			}
 		}
 	}
 
@@ -235,10 +242,13 @@ namespace roka
 		for (auto& map : itr->second)
 		{
 			EAvatarParts type = map.first;
-			size_t size = map.second.size();
-			std::wstring name = map.second[prev_index];
-			std::shared_ptr<Animator> ani = mParts[type].lock()->GetComponent<Animator>();
-			ani->CompleteEvent(name) = func;
+			if (type == EAvatarParts::Base)
+			{
+				std::wstring name = map.second[prev_index];
+				std::shared_ptr<PartScript> partScript = mParts[type].lock()->GetComponent<PartScript>();
+				partScript->ConnectEvent((UINT)Animator::EAniEventType::CompleteEvent, name, func);
+				return;
+			}
 		}
 	}
 
@@ -251,31 +261,30 @@ namespace roka
 		for (auto& map : itr->second)
 		{
 			EAvatarParts type = map.first;
-			size_t size = map.second.size();
-			std::wstring name = map.second[index];
-			std::shared_ptr<Animator> ani = mParts[type].lock()->GetComponent<Animator>();
-			ani->EndEvent(name) = func;
+			if (type == EAvatarParts::Base)
+			{
+				size_t size = map.second.size();
+				std::wstring name = map.second[index];
+				std::shared_ptr<PartScript> partScript = mParts[type].lock()->GetComponent<PartScript>();
+				partScript->ConnectEvent((UINT)Animator::EAniEventType::End, name, func);
+				return;
+			}
 		}
 	}
 
 
 	void AvatarScript::ConnectNextAnimations(EAvatarParts part, std::wstring prev_ani, std::wstring next_ani)
 	{
-		std::shared_ptr<Animator> ani = mParts[part].lock()->GetComponent<Animator>();
-		Animator* ani_ptr = ani.get();
-		ani->CompleteEvent(prev_ani) = std::bind([ani_ptr,next_ani]()->void{
-			if (ani_ptr == nullptr)
-				return;
-			ani_ptr->PlayAnimation(next_ani,false); 
-		});
+		std::shared_ptr<PartScript> partScript = mParts[part].lock()->GetComponent<PartScript>();
+		partScript->ConnectAnimations(prev_ani, next_ani);
 	}
 
 	void AvatarScript::StopAni()
 	{
 		for (auto part : mParts)
 		{
-			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->Stop();
+			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
+			partScript->Stop();
 		}
 	}
 
@@ -283,8 +292,8 @@ namespace roka
 	{
 		for (auto part : mParts)
 		{
-			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->Play();
+			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
+			partScript->Start();
 		}
 	}
 
@@ -292,8 +301,8 @@ namespace roka
 	{
 		for (auto part : mParts)
 		{
-			std::shared_ptr<Animator> ani = part.second.lock()->GetComponent<Animator>();
-			ani->NextSprite();
+			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
+			partScript->NextSprite();
 		}
 	}
 

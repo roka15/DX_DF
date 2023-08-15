@@ -32,6 +32,7 @@ namespace roka
 
 		void CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name,std::wstring set_name, UINT start, UINT end, float duration);
 		void CreatePartAni(EAvatarParts type, std::shared_ptr<Texture> atlas,std::wstring set_name, UINT start, UINT end, float duration);
+		
 		void InsertStateAniInfo(EPlayerState state,EAvatarParts part, std::wstring ani_name);
 		void SettingRightMaterial();
 		void SettingLeftMaterial();
@@ -49,14 +50,12 @@ namespace roka
 		void StopAni();
 		void StartAni();
 		void AddSpriteIndex();
-		void SetUpdateFlag(bool flag) { mUpdateFlag = flag; }
 
-		SET_PROPERTY(SetUpdateFlag) bool update_flag;
+		std::shared_ptr<GameObject> GetPart(EAvatarParts part) { mParts[part]; }
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
 
-		bool mUpdateFlag;
 		std::map<EPlayerState, std::map<EAvatarParts,std::vector<std::wstring>>> mStateAnis;
 		std::map<EAvatarParts, std::weak_ptr<GameObject>> mParts;
 	};

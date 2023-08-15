@@ -31,7 +31,8 @@ namespace roka::info
 		wchar_t pants_avatar[MAX_AVATAR];
 		wchar_t belt_avatar[MAX_AVATAR];
 		wchar_t shoes_avatar[MAX_AVATAR];
-		wchar_t weapon_avatar[MAX_AVATAR];
+		wchar_t weapon_avatar1[MAX_AVATAR];
+		wchar_t weapon_avatar2[MAX_AVATAR];
 	};
 	struct KeysInfo
 	{
@@ -58,6 +59,8 @@ namespace roka::info
 		const ECharacterClassType& GetClassType() { return mCharacterInfo->character_class_type; }
 		
 		std::wstring GetBaseAvatar() { return std::wstring(mCharacterInfo->base_skin_avatar); }
+		std::wstring GetWeaponAvatar1() { return std::wstring(mCharacterInfo->weapon_avatar1); }
+		std::wstring GetWeaponAvatar2() { return std::wstring(mCharacterInfo->weapon_avatar2); }
 
 		const UINT& GetRightKey() { return mKeysInfo->right; }
 		const UINT& GetLeftKey() { return mKeysInfo->left; }
@@ -72,6 +75,8 @@ namespace roka::info
 		GET_PROPERTY(GetClassType) ECharacterClassType class_type;
 
 		GET_PROPERTY(GetBaseAvatar) std::wstring base_avartar;
+		GET_PROPERTY(GetWeaponAvatar1) std::wstring weapon_avatar1;
+		GET_PROPERTY(GetWeaponAvatar2) std::wstring weapon_avatar2;
 
 		GET_PROPERTY(GetRightKey) UINT right_key;
 		GET_PROPERTY(GetLeftKey) UINT left_key;

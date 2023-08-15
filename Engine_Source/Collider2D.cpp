@@ -64,6 +64,8 @@ namespace roka
 	}
 	void Collider2D::LateUpdate()
 	{
+		if (is_active == false)
+			return;
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 
 		Vector3 scale = tf->scale;

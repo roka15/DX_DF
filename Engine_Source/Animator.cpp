@@ -17,13 +17,7 @@ namespace roka
 		{
 			std::shared_ptr<Animation> animation = std::make_shared<Animation>(*(map.second));
 			mAnimations.insert(std::make_pair(map.first, animation));
-		}
-		for (auto map : ref.mEvents)
-		{
 			mEvents.insert(std::make_pair(map.first, std::make_shared<Events>()));
-			mEvents[map.first]->completeEvent = map.second->completeEvent;
-			mEvents[map.first]->endEvent = map.second->endEvent;
-			mEvents[map.first]->startEvent = map.second->startEvent;
 		}
 		mActiveAnimation = ref.mActiveAnimation.lock();
 		mFirstUpdateAnimation = ref.mFirstUpdateAnimation.lock();
@@ -37,13 +31,7 @@ namespace roka
 		{
 			std::shared_ptr<Animation> animation = std::make_shared<Animation>(*(map.second));
 			mAnimations.insert(std::make_pair(map.first, animation));
-		}
-		for (auto map : source->mEvents)
-		{
-			mEvents.insert(std::make_pair(map.first, std::make_shared<Events>()));
-			mEvents[map.first]->completeEvent = map.second->completeEvent;
-			mEvents[map.first]->endEvent = map.second->endEvent;
-			mEvents[map.first]->startEvent = map.second->startEvent;
+			mEvents.insert(std::make_pair(map.first, std::shared_ptr<Events>()));
 		}
 		mActiveAnimation = source->mActiveAnimation.lock();
 		mFirstUpdateAnimation = source->mFirstUpdateAnimation.lock();
@@ -271,6 +259,18 @@ namespace roka
 		events->endEvent.push_back(Event());
 		size_t size = events->endEvent.size() - 1;
 		return events->endEvent[size].mEvent;
+	}
+	std::function<void()>& Animator::GetEvent(EAniEventType type, const std::wstring key)
+	{
+		switch (type)
+		{
+		case EAniEventType::StartEvent:
+			return StartEvent(key);
+		case EAniEventType::CompleteEvent:
+			return CompleteEvent(key);
+		case EAniEventType::EndEvent:
+			return EndEvent(key);
+		}
 	}
 	const Sprite& Animator::GetSprite()
 	{

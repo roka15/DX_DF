@@ -190,6 +190,7 @@
     <ClInclude Include="SkillScript.h" />
     <ClInclude Include="Slot.h" />
     <ClInclude Include="User.h" />
+    <ClInclude Include="WeaponScript.h" />
     <ClInclude Include="WestcoastScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +212,7 @@
     <ClCompile Include="SkillScript.cpp" />
     <ClCompile Include="Slot.cpp" />
     <ClCompile Include="User.cpp" />
+    <ClCompile Include="WeaponScript.cpp" />
     <ClCompile Include="WestcoastScene.cpp" />
   </ItemGroup>
   <ItemGroup>

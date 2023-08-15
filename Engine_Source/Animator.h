@@ -11,6 +11,13 @@ namespace roka
 		Animator(const Animator& ref);
 		virtual void Copy(Component* src)override;
 	public:
+		enum class EAniEventType
+		{
+		   StartEvent,
+		   CompleteEvent,
+		   EndEvent,
+		   End,
+		};
 		struct Event
 		{
 			void operator=(std::function<void()> func)
@@ -53,6 +60,8 @@ namespace roka
 		std::function<void()>& StartEvent(const std::wstring key);
 		std::function<void()>& CompleteEvent(const std::wstring key);
 		std::function<void()>& EndEvent(const std::wstring key);
+
+		std::function<void()>& GetEvent(EAniEventType type,const std::wstring key);
 
 		const class Sprite& GetSprite();
 

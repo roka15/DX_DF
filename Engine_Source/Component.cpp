@@ -4,13 +4,20 @@ namespace roka
 {
 	
 	Component::Component(EComponentType type):
-		mType(type)
+		mType(type),
+		mbActive(true)
 	{
 	}
 
 	Component::Component(const Component& ref)
 	{
 		mType = ref.mType;
+		mbActive = ref.mbActive;
+	}
+	void Component::Copy(Component* src)
+	{
+		mType = src->type;
+		mbActive = src->mbActive;
 	}
 
 	Component::~Component()
@@ -19,7 +26,6 @@ namespace roka
 
 	void Component::Initialize()
 	{
-		mbActive = true;
 	}
 
 	void Component::Update()
@@ -33,10 +39,4 @@ namespace roka
 	void Component::Render()
 	{
 	}
-
-	void Component::Copy(Component* src)
-	{
-		mType = src->type;
-	}
-
 }

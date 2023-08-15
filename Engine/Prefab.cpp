@@ -11,6 +11,7 @@
 #include "MoveScript.h"
 #include "PlayerScript.h"
 #include "PartScript.h"
+#include "WeaponScript.h"
 #include "Rigidbody.h"
 namespace roka::prefab
 {
@@ -181,8 +182,8 @@ namespace roka::prefab
 				std::shared_ptr<roka::Image> Pants = object::Instantiate<roka::Image>(PartObject);
 				std::shared_ptr<roka::Image> Belt = object::Instantiate<roka::Image>(PartObject);
 				std::shared_ptr<roka::Image> Shoes = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Weapon = object::Instantiate<roka::Image>(PartObject);
-
+				std::shared_ptr<roka::Image> Weapon = object::Instantiate<roka::Image>(AniObject);
+				
 
 				Base->SetName(L"Base");
 				Face->SetName(L"Face");
@@ -194,7 +195,8 @@ namespace roka::prefab
 				Belt->SetName(L"Belt");
 				Shoes->SetName(L"Shoes");
 				Weapon->SetName(L"Weapon");
-
+				
+				AvatarParrent->AddChild(Weapon);
 				AvatarParrent->AddChild(Base);
 				AvatarParrent->AddChild(Face);
 				AvatarParrent->AddChild(Hair);
@@ -204,8 +206,7 @@ namespace roka::prefab
 				AvatarParrent->AddChild(Pants);
 				AvatarParrent->AddChild(Belt);
 				AvatarParrent->AddChild(Shoes);
-				AvatarParrent->AddChild(Weapon);
-
+				
 				Base->GetComponent<PartScript>()->part_type = EAvatarParts::Base;
 				Face->GetComponent<PartScript>()->part_type = EAvatarParts::Face;
 				Hair->GetComponent<PartScript>()->part_type = EAvatarParts::Hair;
@@ -215,8 +216,24 @@ namespace roka::prefab
 				Pants->GetComponent<PartScript>()->part_type = EAvatarParts::Pants;
 				Belt->GetComponent<PartScript>()->part_type = EAvatarParts::Belt;
 				Shoes->GetComponent<PartScript>()->part_type = EAvatarParts::Shoes;
-				Weapon->GetComponent<PartScript>()->part_type = EAvatarParts::Weapon;
+				
+				
+				{
+					std::shared_ptr<WeaponScript> ws = Weapon->AddScript<WeaponScript>();
+					ws->part_type = EAvatarParts::Weapon;
 
+					std::shared_ptr<Collider2D> weapon_col = Weapon->AddComponent<Collider2D>();
+					weapon_col->SetSize(Vector2(0.05f, 0.1f));
+					weapon_col->SetCenter(Vector2(-0.01f, -0.525f));
+					weapon_col->is_active = false;
+					std::shared_ptr<roka::Image> Weapon2 = object::Instantiate<roka::Image>(AniObject);
+					Weapon2->SetName(L"Weapon2");
+					ws->RegisterSubPart(Weapon2);
+					Weapon->AddChild(Weapon2);
+					
+				}
+
+			
 				AvatarParrent->AddScript<AvatarScript>();
 			}
 			std::shared_ptr<Collider2D> col = PlayerObject->AddComponent<Collider2D>();
@@ -238,8 +255,12 @@ namespace roka::prefab
 	}
 	void NPKLoad()
 	{
-		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"baseskin");
-		if (npc_npk == nullptr)
-			npc_npk = Resources::Load<NPK>(L"baseskin", L"..\\Resources\\npk\\baseskin.npk");
+		const std::wstring path = L"..\\Resources\\npk\\";
+		std::shared_ptr<NPK> base_npk = Resources::Find<NPK>(L"baseskin");
+		std::shared_ptr<NPK> weapon_npk = Resources::Find<NPK>(L"weapon");
+		if (base_npk == nullptr)
+			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
+		if (weapon_npk == nullptr)
+			weapon_npk = Resources::Load<NPK>(L"weapon", path + L"weapon.npk");
 	}
 }

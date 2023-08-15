@@ -48,7 +48,6 @@ namespace roka
 
 		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
 		another_player->SetName(L"AnotherPlayer");
-		another_player->GetComponent<Collider2D>()->SetRotation(Deg2Rad(90.0f));
 		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
 		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
 		AddGameObject(ELayerType::Player, another_player);

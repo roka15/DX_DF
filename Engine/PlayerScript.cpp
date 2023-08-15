@@ -14,6 +14,7 @@
 #include "MoveScript.h"
 #include "AvatarScript.h"
 #include "SkillScript.h"
+#include "WeaponScript.h"
 
 
 #include "User.h"
@@ -69,16 +70,9 @@ namespace roka
 		mAvatar = owner->GetChild<AvatarScript>()->GetComponent<AvatarScript>();
 		mUser->Initialize();
 
-
-		/*std::shared_ptr<MeshRenderer> mesh = mMeshRenderer.lock();
-		mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mesh->material = Resources::Find<Material>(L"DefaultAniMaterial");*/
-
-
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
 		//해당 part의 애니 생성
-		//skill ani의 경우 start event = DisableKeyInput 함수 , end event = EnableKeyInput 함수 연결
-		//* 연결 함수 미구현 *
+#pragma region base part
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAIdle", 10, 14, 0.3f);
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAWalk", 0, 10, 0.05f);
 		avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBARun", 18, 21, 0.05f);
@@ -110,14 +104,22 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunDownStagger");
 		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunDown");
 		avatar->InsertStateAniInfo(EPlayerState::Standing, EAvatarParts::Base, L"PlayerBAStanding");
+#pragma endregion
+#pragma region weapon part
+		avatar->CreatePartAni(EAvatarParts::Weapon,L"weapon", mUser->weapon_avatar1, L"PlayerWAIdle", 0, 10, 0.2f);
+		//avatar->CreatePartAni(EAvatarParts::Weapon,L"weapon",mUser->weapon_avatar1,L"PlayerWAWalk")
+		
+		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Weapon, L"PlayerWAIdle");
+#pragma endregion
+
 
 		avatar->SetCompleteEventAnimation(EPlayerState::Jump, 0, 1);
-		
+
 		/*avatar->EndEventAnimation(EPlayerState::Jump, 1, std::bind([this]()->void { mRigid.lock()->SetGround(true); }));*/
 		avatar->SetStartEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { mMoveScript.lock()->is_active = false; }));
 		avatar->CompleteEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { NextState(); }));
 		avatar->CompleteEventAnimation(EPlayerState::Stun, 2, std::bind([this]()->void { DownEvent(); }));
-		avatar->CompleteEventAnimation(EPlayerState::Standing, 0, std::bind([this]()->void {NextState(); }));
+		avatar->CompleteEventAnimation(EPlayerState::Standing, 0, std::bind([this]()->void {EnableKeyInput(); NextState(); }));
 		mPlayerState = EPlayerState::Idle;
 		//현재 idle 상태 애니 재생.
 		avatar->PlayPartsMotion();
@@ -151,7 +153,7 @@ namespace roka
 
 			if (mPlayerState == EPlayerState::Stun &&
 				mStunState == EStunState::Down)
-			{	
+			{
 				mPlayerState = EPlayerState::None;
 				as->PlayPartsMotion(EPlayerState::Stun, 2, false);
 			}
@@ -164,8 +166,12 @@ namespace roka
 					if (Input::GetKeyDown(EKeyCode::C))
 					{
 						mStunState = EStunState::None;
-						EnableKeyInput();
 						as->PlayPartsMotion();
+						std::shared_ptr<Collider2D> col = owner->GetComponent<Collider2D>();
+						col->SetRotation(Deg2Rad(0.0f));
+						Vector2 center = col->center;
+						center.y += 0.2f;
+						col->center = center;
 						return;
 					}
 				}
@@ -598,7 +604,11 @@ namespace roka
 	{
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
-		
+		std::shared_ptr<Collider2D> col = owner->GetComponent<Collider2D>();
+		col->SetRotation(Deg2Rad(90.0f));
+		Vector2 center = col->center;
+		center.y -= 0.2f;
+		col->center = center;
 		as->PlayPartsMotion(EPlayerState::Stun, 1, false);
 
 		if (mCurDir > 0)
@@ -609,9 +619,9 @@ namespace roka
 		{
 			rigid->AddForce(Vector2(30.0f, 60 * 980.0f));
 		}
-		
+
 		rigid->disableGround();
-		
+
 	}
 
 	void PlayerScript::NextState()
@@ -632,17 +642,22 @@ namespace roka
 			else if (Input::GetKey(EKeyCode::LEFT) || Input::GetKeyDown(EKeyCode::LEFT))
 			{
 				mPlayerState = EPlayerState::Walk;
-				as->SettingLeftMaterial();
+				LeftBtnDown();
 			}
 			else if (Input::GetKey(EKeyCode::RIGHT) || Input::GetKeyDown(EKeyCode::RIGHT))
 			{
 				mPlayerState = EPlayerState::Walk;
-				as->SettingRightMaterial();
+				RightBtnDown();
 			}
-			else if (Input::GetKey(EKeyCode::UP) || Input::GetKeyDown(EKeyCode::UP)
-				|| Input::GetKey(EKeyCode::DOWN) || Input::GetKeyDown(EKeyCode::DOWN))
+			else if (Input::GetKey(EKeyCode::UP) || Input::GetKeyDown(EKeyCode::UP))
 			{
 				mPlayerState = EPlayerState::Walk;
+				UpBtnDown();
+			}
+			else if (Input::GetKey(EKeyCode::DOWN) || Input::GetKeyDown(EKeyCode::DOWN))
+			{
+				mPlayerState = EPlayerState::Walk;
+				DownBtnDown();
 			}
 		}
 
@@ -704,7 +719,7 @@ namespace roka
 			return;
 		ps->EnableKeyInput();
 		as->StartAni();
-		
+
 		switch (ps->mStunState)
 		{
 		case EStunState::Stagger:
@@ -714,6 +729,12 @@ namespace roka
 			//스탠딩 모션 후 일어나기.
 			ps->mPlayerState = EPlayerState::Standing;
 			as->PlayPartsMotion();
+
+			std::shared_ptr<Collider2D> col = obj->GetComponent<Collider2D>();
+			col->SetRotation(Deg2Rad(0.0f));
+			Vector2 center = col->center;
+			center.y += 0.2f;
+			col->center = center;
 			break;
 		}
 		ps->mStunState = EStunState::None;

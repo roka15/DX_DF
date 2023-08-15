@@ -67,6 +67,7 @@
     <ClInclude Include="SkillScript.h">
       <Filter>Contents\Script\SkillScript</Filter>
     </ClInclude>
+    <ClInclude Include="WeaponScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -126,6 +127,7 @@
     <ClCompile Include="SkillScript.cpp">
       <Filter>Contents\Script\SkillScript</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
