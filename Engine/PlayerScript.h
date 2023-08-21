@@ -60,6 +60,8 @@ namespace roka
 		static void FallCompleteEvent(std::weak_ptr<void> ptr);
 		static void JumpDashCompleteEvent(std::weak_ptr<void> ptr);
 		static void StunCompleteEvent(std::weak_ptr<void> ptr);
+
+		
 		GET_PROPERTY(GetState) EPlayerState player_state;
 	protected:
 		
@@ -76,6 +78,9 @@ namespace roka
 		std::weak_ptr<MoveScript> mMoveScript;
 		std::weak_ptr<AvatarScript> mAvatar;
 		std::weak_ptr<Rigidbody> mRigid;
+		std::weak_ptr<Collider2D> mTopCollider;
+		std::weak_ptr<Collider2D> mBottomCollider;
+	
 
 		//test
 		double mLeftTime;

@@ -6,6 +6,11 @@
 #include "RokaTime.h"
 namespace roka
 {
+	MoveScript::MoveScript(EScriptType type):Script(type)
+		, mSpeed(0.0f)
+		, mDir(Vector2::Zero)
+	{
+	}
 	MoveScript::MoveScript() :Script(EScriptType::Move)
 		, mSpeed(0.0f)
 		, mDir(Vector2::Zero)

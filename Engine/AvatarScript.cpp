@@ -134,6 +134,8 @@ namespace roka
 			return;
 		for (auto& map : itr->second)
 		{
+			if (map.second.size() <= index)
+				continue;
 			EAvatarParts type = map.first;
 			std::wstring ani_name = map.second[index];
 
@@ -166,6 +168,8 @@ namespace roka
 			return;
 		for (auto& map : itr->second)
 		{
+			if (map.second.size() == 1)
+				continue;
 			EAvatarParts type = map.first;
 			std::wstring prev_name = map.second[prev_index];
 			std::wstring next_name = map.second[next_index];

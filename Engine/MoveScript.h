@@ -5,7 +5,8 @@ namespace roka
 	using namespace math;
 	class MoveScript : public Script
 	{
-	private:
+	protected:
+		MoveScript(EScriptType type);
 		MoveScript();
 		MoveScript(const MoveScript& ref);
 		virtual void Copy(Component* src)override;
@@ -22,12 +23,13 @@ namespace roka
 		void SetDirX(float dir) { mDir.x = dir; }
 		void SetDirY(float dir) { mDir.y = dir; }
 		float GetDirX() { return mDir.x; }
+		float GetDirY() { return mDir.y; }
 
 		bool IsStop() { return mDir.x == 0.0f && mDir.y == 0.0f; }
 		void Stop() { mDir.x = 0.0f; mDir.y = 0.0f; }
 		SET_PROPERTY(SetSpeed) float speed;
 		GET_PROPERTY(IsStop) bool is_stop;
-	private:
+	protected:
 		friend class FactoryBase;
 		friend class ScriptFactory;
 		float mSpeed;

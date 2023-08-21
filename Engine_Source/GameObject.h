@@ -126,6 +126,18 @@ namespace roka
 		std::shared_ptr<GameObject> GetChild(std::wstring name);
 		std::vector<std::shared_ptr<GameObject>> GetChilds();
 		template <typename T>
+		std::vector<std::shared_ptr<T>> GetChilds()
+		{
+			std::vector<std::shared_ptr<T>> value = {};
+			for (auto& child : mChild)
+			{
+				std::shared_ptr<T> comp = child->GetComponent<T>();
+				if (comp != nullptr)
+					value.push_back(comp);
+			}
+			return value;
+		}
+		template <typename T>
 		std::shared_ptr<GameObject> GetChild()
 		{
 			for (auto& child : mChild)

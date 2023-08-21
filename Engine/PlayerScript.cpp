@@ -69,6 +69,10 @@ namespace roka
 		mRigid = owner->GetComponent<Rigidbody>();
 		mAvatar = owner->GetChild<AvatarScript>()->GetComponent<AvatarScript>();
 		mUser->Initialize();
+		std::vector<std::shared_ptr<Collider2D>> vec
+			= owner->GetChilds<Collider2D>();
+		mTopCollider = vec[0];
+		mBottomCollider = vec[1];
 
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
 		//해당 part의 애니 생성
@@ -96,6 +100,7 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
 		avatar->InsertStateAniInfo(EPlayerState::Walk, EAvatarParts::Base, L"PlayerBAWalk");
 		avatar->InsertStateAniInfo(EPlayerState::Run, EAvatarParts::Base, L"PlayerBARun");
+		avatar->InsertStateAniInfo(EPlayerState::JumpRun, EAvatarParts::Base, L"PlayerBARun");
 		avatar->InsertStateAniInfo(EPlayerState::NomalAtk, EAvatarParts::Base, L"PlayerBANomalAtk");
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump1");
 		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump2");
@@ -107,9 +112,22 @@ namespace roka
 #pragma endregion
 #pragma region weapon part
 		avatar->CreatePartAni(EAvatarParts::Weapon,L"weapon", mUser->weapon_avatar1, L"PlayerWAIdle", 0, 10, 0.2f);
-		//avatar->CreatePartAni(EAvatarParts::Weapon,L"weapon",mUser->weapon_avatar1,L"PlayerWAWalk")
-		
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAWalkAndRun", 0, 10, 0.05f);
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAJump", 11, 21, 0.1f);
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAJumpRun", 178, 179, 0.1f);
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADownStagger", 130,131, 0.2f);
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADown", 131, 135, 0.05f);
+
+
 		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Weapon, L"PlayerWAIdle");
+		avatar->InsertStateAniInfo(EPlayerState::Walk, EAvatarParts::Weapon, L"PlayerWAWalkAndRun");
+		avatar->InsertStateAniInfo(EPlayerState::Run, EAvatarParts::Weapon, L"PlayerWAWalkAndRun");
+		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Weapon, L"PlayerWAJump");
+		avatar->InsertStateAniInfo(EPlayerState::JumpRun, EAvatarParts::Weapon, L"PlayerWAJumpRun");
+		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Weapon, L"PlayerWAIdle");
+		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Weapon, L"PlayerWADownStagger");
+		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Weapon, L"PlayerWADown");
+		avatar->InsertStateAniInfo(EPlayerState::Standing, EAvatarParts::Weapon, L"PlayerWAIdle");
 #pragma endregion
 
 
@@ -167,11 +185,18 @@ namespace roka
 					{
 						mStunState = EStunState::None;
 						as->PlayPartsMotion();
-						std::shared_ptr<Collider2D> col = owner->GetComponent<Collider2D>();
-						col->SetRotation(Deg2Rad(0.0f));
-						Vector2 center = col->center;
-						center.y += 0.2f;
-						col->center = center;
+						std::vector<std::shared_ptr<Collider2D>> cols;
+						cols.push_back(mTopCollider.lock());
+						cols.push_back(mBottomCollider.lock());
+
+						float radian = Deg2Rad(0.0f);
+						for (int i = 0; i < cols.size(); i++)
+						{
+							cols[i]->SetRotation(radian);
+							Vector2 center = cols[i]->center;
+							center.y += 0.2f;
+							cols[i]->center = center;
+						}
 						return;
 					}
 				}
@@ -254,10 +279,10 @@ namespace roka
 		{
 			if (mTime - mLeftTime <= mDiff)
 			{
-				as->PlayPartsMotion(EPlayerState::Run, 0, true);
 				rigid->is_active = false;
 				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
+				as->PlayPartsMotion();
 				Time::CallBackTimerInfo info = {};
 				info.endTime = 1.0;
 				std::wstring key = L"PlayerJumpDashCompEvent";
@@ -308,10 +333,10 @@ namespace roka
 		{
 			if (mTime - mRightTime <= mDiff)
 			{
-				as->PlayPartsMotion(EPlayerState::Run, 0, true);
 				rigid->is_active = false;
 				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
+				as->PlayPartsMotion();
 				Time::CallBackTimerInfo info = {};
 				info.endTime = 1.0;
 				std::wstring key = L"PlayerJumpDashCompEvent";
@@ -580,7 +605,7 @@ namespace roka
 
 	void PlayerScript::StunStagger(EStunState stun)
 	{
-		std::shared_ptr<Collider2D> collider = owner->GetComponent<Collider2D>();
+		std::shared_ptr<Collider2D> collider = mTopCollider.lock();
 		double befor_time = collider->time;
 		double cur_time = CollisionManager::GetColliderTimer();
 		double condition = 5.0f;
@@ -604,12 +629,20 @@ namespace roka
 	{
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
-		std::shared_ptr<Collider2D> col = owner->GetComponent<Collider2D>();
-		col->SetRotation(Deg2Rad(90.0f));
-		Vector2 center = col->center;
-		center.y -= 0.2f;
-		col->center = center;
+		std::vector<std::shared_ptr<Collider2D>> cols;
+		cols.push_back(mTopCollider.lock());
+		cols.push_back(mBottomCollider.lock());
+
+		float radian = Deg2Rad(90.0f);
+		for (int i = 0; i < cols.size(); i++)
+		{
+			cols[i]->SetRotation(radian);
+			Vector2 center = cols[i]->center;
+			center.y -= 0.2f;
+			cols[i]->center = center;	
+		}
 		as->PlayPartsMotion(EPlayerState::Stun, 1, false);
+		
 
 		if (mCurDir > 0)
 		{
@@ -730,11 +763,18 @@ namespace roka
 			ps->mPlayerState = EPlayerState::Standing;
 			as->PlayPartsMotion();
 
-			std::shared_ptr<Collider2D> col = obj->GetComponent<Collider2D>();
-			col->SetRotation(Deg2Rad(0.0f));
-			Vector2 center = col->center;
-			center.y += 0.2f;
-			col->center = center;
+			std::vector<std::shared_ptr<Collider2D>> cols;
+			cols.push_back(ps->mTopCollider.lock());
+			cols.push_back(ps->mBottomCollider.lock());
+
+			float radian = Deg2Rad(0.0f);
+			for (int i = 0; i < cols.size(); i++)
+			{
+				cols[i]->SetRotation(radian);
+				Vector2 center = cols[i]->center;
+				center.y += 0.2f;
+				cols[i]->center = center;
+			}
 			break;
 		}
 		ps->mStunState = EStunState::None;

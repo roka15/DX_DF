@@ -22,11 +22,14 @@ namespace roka::enums
 		Camera,
 		Grid,
         Move,
+		TargetMove,
 		Player,
+		Monster,
 		Avatar,
 		Part,
 		SkillBase,
 		Weapon,
+		HitBox,
 		End,
 	};
 
