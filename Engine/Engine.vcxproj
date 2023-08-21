@@ -177,7 +177,9 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HendonmyreScene.h" />
+    <ClInclude Include="HitBoxScript.h" />
     <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="MonsterScript.h" />
     <ClInclude Include="MoveScript.h" />
     <ClInclude Include="PartScript.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -189,6 +191,7 @@
     <ClInclude Include="SeriaGateScene.h" />
     <ClInclude Include="SkillScript.h" />
     <ClInclude Include="Slot.h" />
+    <ClInclude Include="TargetMoveScript.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="WeaponScript.h" />
     <ClInclude Include="WestcoastScene.h" />
@@ -201,6 +204,8 @@
     <ClCompile Include="FactoryManager.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HendonmyreScene.cpp" />
+    <ClCompile Include="HitBoxScript.cpp" />
+    <ClCompile Include="MonsterScript.cpp" />
     <ClCompile Include="MoveScript.cpp" />
     <ClCompile Include="PartScript.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
@@ -211,6 +216,7 @@
     <ClCompile Include="SeriaGateScene.cpp" />
     <ClCompile Include="SkillScript.cpp" />
     <ClCompile Include="Slot.cpp" />
+    <ClCompile Include="TargetMoveScript.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="WeaponScript.cpp" />
     <ClCompile Include="WestcoastScene.cpp" />

@@ -17,6 +17,9 @@
 #include <filesystem> 
 #include <memory>
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "CommonInclude.h"
 #include "Enums.h"

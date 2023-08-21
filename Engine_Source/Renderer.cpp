@@ -4,6 +4,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "PaintShader.h"
 
 namespace roka::renderer
 {
@@ -91,6 +92,7 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"Player1Shader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State
@@ -445,11 +447,21 @@ namespace roka::renderer
 		animationinverterEftShader->bsstate = EBSType::OneOne;
 		roka::Resources::Insert(L"VerticalInverterEftAnimationShader", animationinverterEftShader);
 	
+		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
+		paintShader->Create(L"PaintCS.hlsl", "main");
+		Resources::Insert(L"PaintShader", paintShader);
+
 		//test
 		std::shared_ptr<Shader> playerShader = std::make_shared<Shader>();
 		playerShader->Create(EShaderStage::VS, L"VerticalInverterVS.hlsl", "main");
 		playerShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");
 		roka::Resources::Insert(L"Player1Shader", playerShader);
+	}
+	void LoadTexture()
+	{
+		std::shared_ptr<Texture> uavTexture = std::make_shared<Texture>();
+		uavTexture->Create(1024, 1024, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS);
+		Resources::Insert(L"PaintTexture", uavTexture);
 	}
 	void LoadMaterial()
 	{
@@ -961,14 +973,25 @@ namespace roka::renderer
 #pragma endregion
 
 #pragma endregion
-
+#pragma region paint material
+		{	
+			std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"PaintTexture");
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->shader = spriteShdaer;
+			material->SetTexture(texture);
+			material->render_mode = ERenderMode::Transparent;
+			Resources::Insert(L"PaintMaterial", material);
+		}
+#pragma endregion
 	}
 	void Initialize()
 	{
 		LoadMesh();
 		LoadBuffer();
 		LoadShader();
+		
 		SetupState();
+		LoadTexture();
 		LoadMaterial();
 	}
 	void Render()

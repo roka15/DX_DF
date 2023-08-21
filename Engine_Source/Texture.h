@@ -25,7 +25,9 @@ namespace roka::graphics
 		~Texture();
 
 		virtual HRESULT Load(const std::wstring& path)override;
-		void BindShader(EShaderStage stage, UINT startSlot);
+		void BindShaderResource(EShaderStage stage, UINT startSlot);
+		void BindUnorderedAccessViews(UINT slot);
+		void ClearUnorderedAccessViews(UINT slot);
 
 		bool Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindFlags);
 		void Create(const file::PackInfo* packs);
@@ -49,6 +51,9 @@ namespace roka::graphics
 
 		void AddSprite(Sprite sprite);
 		const Sprite GetSprite(int index);
+		const Sprite GetSprite();
+		void SetCurSpriteIndex(size_t index) { mCurSpriteIndex = index; }
+
 		void SpriteRatioValue(Vector2 ratio);
 		SET_PROPERTY(SetDesc) D3D11_TEXTURE2D_DESC desc;
 		GET_PROPERTY(GetView) D3D11_SHADER_RESOURCE_VIEW_DESC view_desc;
@@ -60,6 +65,7 @@ namespace roka::graphics
 	private:
 		std::vector<Sprite> mSprites;
 		ScratchImage mImage;
+		size_t mCurSpriteIndex;
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> mTexture;
 	
 		D3D11_SHADER_RESOURCE_VIEW_DESC mSRVDesc;

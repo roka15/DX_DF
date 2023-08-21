@@ -59,9 +59,10 @@ namespace roka
 	{
 		if (mAtlas == nullptr)
 			return;
-		mAtlas->BindShader(graphics::EShaderStage::PS, 12);
+		mAtlas->BindShaderResource(graphics::EShaderStage::PS, 12);
 		renderer::AnimationCB data = {};
 		Sprite sprite = mAtlas->GetSprite(mIndex);
+		mAtlas->SetCurSpriteIndex(mIndex);
 		data.SpriteLeftTop = sprite.lefttop;
 		data.SpriteOffset = sprite.offset;
 		data.SpriteSize = sprite.image_size;

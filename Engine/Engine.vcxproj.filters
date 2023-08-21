@@ -67,7 +67,18 @@
     <ClInclude Include="SkillScript.h">
       <Filter>Contents\Script\SkillScript</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponScript.h" />
+    <ClInclude Include="MonsterScript.h">
+      <Filter>Contents\Script\MonsterScript</Filter>
+    </ClInclude>
+    <ClInclude Include="HitBoxScript.h">
+      <Filter>Contents\Script\HitBoxScript</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponScript.h">
+      <Filter>Contents\Script\WeaponScript</Filter>
+    </ClInclude>
+    <ClInclude Include="TargetMoveScript.h">
+      <Filter>Contents\Script\MoveScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -127,7 +138,18 @@
     <ClCompile Include="SkillScript.cpp">
       <Filter>Contents\Script\SkillScript</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponScript.cpp" />
+    <ClCompile Include="MonsterScript.cpp">
+      <Filter>Contents\Script\MonsterScript</Filter>
+    </ClCompile>
+    <ClCompile Include="HitBoxScript.cpp">
+      <Filter>Contents\Script\HitBoxScript</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponScript.cpp">
+      <Filter>Contents\Script\WeaponScript</Filter>
+    </ClCompile>
+    <ClCompile Include="TargetMoveScript.cpp">
+      <Filter>Contents\Script\MoveScript</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -189,6 +211,15 @@
     </Filter>
     <Filter Include="Contents\Script\SkillScript">
       <UniqueIdentifier>{cc36197d-40a4-47ab-af81-6ec91fd62257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript">
+      <UniqueIdentifier>{658ec8d0-1e5d-41df-a674-68ae1ced7955}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\HitBoxScript">
+      <UniqueIdentifier>{09790a15-7216-42d7-a261-a82f228c5c80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\WeaponScript">
+      <UniqueIdentifier>{22f49daa-afc7-4afa-aab2-5e25fb75f174}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

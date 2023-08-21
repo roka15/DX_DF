@@ -21,12 +21,15 @@
 #include "Animator.h"
 #include "Rigidbody.h"
 #include "PlayerScript.h"
+#include "MonsterScript.h"
 #include "AvatarScript.h"
 #include "PartScript.h"
 #include "SkillScript.h"
 #include "Collider2D.h"
+#include "HitBoxScript.h"
 
 #include "ComputeShader.h"
+#include "PaintShader.h"
 
 namespace roka
 {
@@ -39,22 +42,47 @@ namespace roka
 	}
 	void PlayScene::Initialize()
 	{
-		std::shared_ptr<ComputeShader> comShader = std::make_shared<ComputeShader>();
-		comShader->Create(L"PaintCS.hlsl", "main");
 		Scene::Initialize();
+
+
+		std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
+		paintShader->SetTarget(paintTexture);
+		paintShader->OnExcute();
+
+		std::shared_ptr<Image> smile = object::Instantiate<Image>();
+		smile->SetName(L"Smile");
+		AddGameObject(ELayerType::BackObject, smile);
+		std::shared_ptr<MeshRenderer> mr = smile->AddComponent<MeshRenderer>();
+		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		mr->SetMaterial(Resources::Find<Material>(L"PaintMaterial"));
+		smile->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		std::shared_ptr<Collider2D> cd = smile->AddComponent<Collider2D>();
+
+		
 
 		/* player script text*/
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
-
+		
 		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
 		another_player->SetName(L"AnotherPlayer");
 		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
+		std::vector<std::shared_ptr<HitBoxScript>> vec = another_player->GetChilds<HitBoxScript>();
+		for (auto& value : vec)
+		{
+			value->hitbox_owner = another_player;
+		}
 		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
 		AddGameObject(ELayerType::Player, another_player);
 
 
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
+		vec = player->GetChilds<HitBoxScript>();
+		for (auto& value : vec)
+		{
+			value->hitbox_owner = player;
+		}
 		//player->AddComponent<Rigidbody>()->IsGravity(true);
 
 		//cd->SetSize(Vector2(0.05f, 0.2f));
@@ -68,6 +96,9 @@ namespace roka
 			ELayerType::Monster);
 		skill01->SetName(L"skill01");
 		skill01->AddComponent<Collider2D>();
+		std::shared_ptr<HitBoxScript> hitbox = skill01->AddScript<HitBoxScript>();
+		hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
+		hitbox->hitbox_owner = skill01;
 		skill01->AddComponent<SkillScript>()->stun_type = EStunState::Stagger;
 
 
@@ -79,7 +110,17 @@ namespace roka
 			ELayerType::Monster);
 		skill02->SetName(L"skill02");
 		skill02->AddComponent<Collider2D>();
+		hitbox = skill02->AddScript<HitBoxScript>();
+		hitbox->hitbox = HitBoxScript::EHitBoxType::Bottom;
+		hitbox->hitbox_owner = skill02;
 		skill02->AddComponent<SkillScript>()->stun_type = EStunState::Down;
+
+
+		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
+		std::shared_ptr<GameObject> monster1 = object::Instantiate<GameObject>(monsterOrigin);
+		monster1->GetComponent<Transform>()->position=Vector3(2.0f, 0.0f, 0.0f);
+		monster1->GetComponent<MonsterScript>()->SetTarget(player);
+		AddGameObject(ELayerType::Monster,monster1);
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);

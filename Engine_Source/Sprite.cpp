@@ -14,6 +14,14 @@ namespace roka
 		mIndex(0)
 	{
 	}
+	Sprite::Sprite(Vector2 canvasSize, Vector2 imageSize, Vector2 leftTop, Vector2 offset, UINT index)
+	{
+		mCanvasSize = canvasSize;
+		mImageSize = imageSize;
+		mLeftTop = leftTop;
+		mOffset = offset;
+		mIndex = index;
+	}	
 	Sprite::Sprite(const Sprite& ref)
 	{
 		mLeftTop = ref.mLeftTop;

@@ -46,6 +46,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ObjectPoolManager.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)PaintShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PngReader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PriorityQueue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RBT.h" />
@@ -98,6 +99,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)ObjectPoolManager.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)PaintShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PngReader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RBT.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Renderer.cpp" />

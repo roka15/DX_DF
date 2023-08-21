@@ -27,7 +27,7 @@ HRESULT roka::graphics::Material::Load(const std::wstring& path)
 void roka::graphics::Material::Binds()
 {
 	if (mTexture != nullptr)
-		mTexture->BindShader(EShaderStage::PS, 0);
+		mTexture->BindShaderResource(EShaderStage::PS, 0);
 	if (mShader != nullptr)
 		mShader->Binds();
 }

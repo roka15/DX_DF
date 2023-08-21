@@ -6,6 +6,9 @@ namespace roka::graphics
 	ComputeShader::ComputeShader()
 		:Resource(enums::EResourceType::ComputeShader)
 	{
+		mThreadGroupCountX = 32;
+		mThreadGroupCountY = 32;
+		mThreadGroupCountZ = 1;
 	}
 	ComputeShader::~ComputeShader()
 	{
@@ -20,8 +23,22 @@ namespace roka::graphics
 
 		ID3DBlob* errorBlob = nullptr;
 		GetDevice()->CompileFromfile(fullPath, methodName, "cs_5_0", mCSBlob.GetAddressOf());
-		GetDevice()->CreateComputeShader(mCSBlob.Get(), mCSBlob->GetBufferSize(), mCS.GetAddressOf());
+		GetDevice()->CreateComputeShader(mCSBlob->GetBufferPointer(), mCSBlob->GetBufferSize(), mCS.GetAddressOf());
 
 		return true;
+	}
+	void ComputeShader::OnExcute()
+	{
+		Binds();
+		GetDevice()->BindComputeShader(mCS.Get());
+		GetDevice()->Dispatch(mGroupX, mGroupY, mGroupZ);
+
+		Clear();
+	}
+	void ComputeShader::Binds()
+	{
+	}
+	void ComputeShader::Clear()
+	{
 	}
 }

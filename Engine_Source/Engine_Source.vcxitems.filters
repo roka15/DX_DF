@@ -123,6 +123,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Rigidbody.cpp">
       <Filter>GameObject\Component\Rigidbody</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PaintShader.cpp">
+      <Filter>Resource\Shader\PaintShader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -271,6 +274,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Rigidbody.h">
       <Filter>GameObject\Component\Rigidbody</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PaintShader.h">
+      <Filter>Resource\Shader\PaintShader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -407,6 +413,9 @@
     </Filter>
     <Filter Include="GameObject\Component\Rigidbody">
       <UniqueIdentifier>{0ff0500f-587a-4dd8-97ac-9ec6a24c7dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Shader\PaintShader">
+      <UniqueIdentifier>{7ffab7cb-4477-4366-b14a-574804bd0e3c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

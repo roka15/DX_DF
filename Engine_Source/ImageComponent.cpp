@@ -48,6 +48,9 @@ namespace roka
 	}
 	bool ImageComponent::Binds()
 	{
+		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
+		if (mr->material->IsNullTexture()==false)
+			return true;
 		if (mSprite == nullptr)
 			return false;
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(mSprite->npk_key);
@@ -56,7 +59,7 @@ namespace roka
 		std::shared_ptr<Texture> texture = npk->GetTexture(mSprite->pack_key, mSprite->index);
 		if (texture == nullptr)
 			texture = npk->Create(mSprite->pack_key, mSprite->index);
-		texture->BindShader(EShaderStage::PS, 0);
+		texture->BindShaderResource(EShaderStage::PS, 0);
 		return true;
 	}
 	void ImageComponent::SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index)

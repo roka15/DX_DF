@@ -190,7 +190,7 @@ namespace roka::graphics
 		{
 			return false;
 		}
-		return false;
+		return true;
 	}
 	bool GraphicDevice_Dx11::CreateSamplerState(D3D11_SAMPLER_DESC* pSamplerDesc, ID3D11SamplerState** ppSamplerState)
 	{
@@ -338,6 +338,10 @@ namespace roka::graphics
 			break;
 		}
 	}
+	void GraphicDevice_Dx11::BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessView, const UINT* pUAVInitialCounts)
+	{
+		mContext->CSSetUnorderedAccessViews(slot, 1, ppUnorderedAccessView, pUAVInitialCounts);
+	}
 	void GraphicDevice_Dx11::BindSampler(EShaderStage stage, UINT StartSlot, ID3D11SamplerState** ppSamplers)
 	{
 		switch (stage)
@@ -389,6 +393,16 @@ namespace roka::graphics
 	void GraphicDevice_Dx11::BindPixelShader(ID3D11PixelShader* ps)
 	{
 		mContext->PSSetShader(ps, 0, 0);
+	}
+
+	void GraphicDevice_Dx11::BindComputeShader(ID3D11ComputeShader* cs)
+	{
+		mContext->CSSetShader(cs, 0, 0);
+	}
+
+	void GraphicDevice_Dx11::Dispatch(UINT ThreadGroupCountX, UINT ThreadGroupCountY, UINT ThreadGroupCountZ)
+	{
+		mContext->Dispatch(ThreadGroupCountX, ThreadGroupCountY, ThreadGroupCountZ);
 	}
 
 

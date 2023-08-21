@@ -9,6 +9,7 @@ namespace roka::graphics
 		:Resource(enums::EResourceType::Texture)
 		, mImage{}
 		, mTexture(nullptr)
+		, mCurSpriteIndex(0)
 		, mRTV(nullptr)
 		, mSRV(nullptr)
 		, mDSV(nullptr)
@@ -52,15 +53,32 @@ namespace roka::graphics
 			, mImage.GetMetadata()
 			, mSRV.GetAddressOf()
 		);
+		size_t width = mImage.GetMetadata().width;
+		size_t height = mImage.GetMetadata().height;
+
+		Sprite sprite(Vector2(width,height),Vector2(width,height));
+		
+		mSprites.push_back(sprite);
 
 		mSRV->GetResource((ID3D11Resource**)mTexture.GetAddressOf());
 
 		return S_OK;
 	}
 
-	void Texture::BindShader(EShaderStage stage, UINT startSlot)
+	void Texture::BindShaderResource(EShaderStage stage, UINT startSlot)
 	{
 		GetDevice()->BindShaderResource(stage, startSlot, mSRV.GetAddressOf());
+	}
+	void Texture::BindUnorderedAccessViews(UINT slot)
+	{
+		UINT i = -1;
+		GetDevice()->BindUnorderedAccess(slot, mUAV.GetAddressOf(), &i);
+	}
+	void Texture::ClearUnorderedAccessViews(UINT slot)
+	{
+		ID3D11UnorderedAccessView* p = nullptr;
+		UINT i = -1;
+		GetDevice()->BindUnorderedAccess(slot, &p, &i);
 	}
 	bool Texture::Create(UINT width, UINT height, DXGI_FORMAT format, UINT bindFlags)
 	{
@@ -68,6 +86,7 @@ namespace roka::graphics
 		{
 			mDesc.BindFlags = bindFlags;
 			mDesc.Usage = D3D11_USAGE_DEFAULT;
+			mDesc.Format = format;
 			mDesc.CPUAccessFlags = 0;
 			mDesc.Width = width;
 			mDesc.Height = height;
@@ -76,6 +95,10 @@ namespace roka::graphics
 			mDesc.SampleDesc.Quality = 0;
 			mDesc.MipLevels = 0;
 			mDesc.MiscFlags = 0;
+
+			Sprite sprite(Vector2(width, height), Vector2(width, height));
+
+			mSprites.push_back(sprite);
 
 			if (!GetDevice()->CreateTexture2D(&mDesc, nullptr, mTexture.GetAddressOf()))
 				return false;
@@ -163,6 +186,10 @@ namespace roka::graphics
 	const Sprite Texture::GetSprite(int index)
 	{
 		return mSprites[index]; 
+	}
+	const Sprite Texture::GetSprite()
+	{
+		return mSprites[mCurSpriteIndex];
 	}
 	void Texture::SpriteRatioValue(Vector2 ratio)
 	{

@@ -33,6 +33,8 @@ namespace roka
 
 	void Application::Initialize()
 	{
+		srand(time(NULL));
+
 		Time::Initiailize();
 		Input::Initialize();
 		
