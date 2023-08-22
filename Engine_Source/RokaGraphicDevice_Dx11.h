@@ -27,7 +27,9 @@ namespace roka::graphics
 		bool CreateShaderResourceView(ID3D11Resource* pResource, const D3D11_SHADER_RESOURCE_VIEW_DESC* pDesc, ID3D11ShaderResourceView** ppSRView);
 		bool CreateRenderTargetView(ID3D11Resource* pResource, const D3D11_RENDER_TARGET_VIEW_DESC* pDesc, ID3D11RenderTargetView** ppRTView);
 		bool CreateUnordedAccessView(ID3D11Resource* pResource, const D3D11_UNORDERED_ACCESS_VIEW_DESC* pDesc, ID3D11UnorderedAccessView** ppUAView);
+		
 
+		
 		void BindInputLayout(ID3D11InputLayout* pInputLayout);
 		void BindPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY Topology);
 		void BindVertexBuffer(UINT StartSlot, ID3D11Buffer* const* ppVertexBuffers, const UINT* pStrides, const UINT* pOffsets);
@@ -39,6 +41,7 @@ namespace roka::graphics
 	    void SetConstantBuffer(ID3D11Buffer* buffer, void* data, UINT size);
 		void BindConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer);
 		void BindsConstantBuffer(EShaderStage stage, ECBType type, ID3D11Buffer* buffer);
+		void BindBuffer(ID3D11Buffer* buffer, void* data, UINT size);
 		void BindShaderResource(EShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV);
 		void BindUnorderedAccess(UINT slot, ID3D11UnorderedAccessView** ppUnorderedAccessView, const UINT* pUAVInitialCounts);
 

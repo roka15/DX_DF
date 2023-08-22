@@ -14,6 +14,7 @@ namespace roka::enums
 		Camera,
 		Collider,
 		Rigidbody,
+		Light,
 		End,
 	};
 	enum class EScriptType
@@ -47,6 +48,7 @@ namespace roka::enums
 		Player,
 		Monster,
 		FrontObject,
+		Light,
 		UI,
 		End,
 	};
@@ -82,5 +84,12 @@ namespace roka::enums
 		RIGHT,
 		UP,
 		DOWN
+	};
+	enum class ELightType
+	{
+		Directional,
+		Point,
+		Spot,
+		End,
 	};
 }

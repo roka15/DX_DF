@@ -18,6 +18,7 @@
 #include "TestPool.h"
 #include "Image.h"
 #include "ImageComponent.h"
+#include "Light.h"
 #include "Animator.h"
 #include "Rigidbody.h"
 #include "PlayerScript.h"
@@ -59,6 +60,12 @@ namespace roka
 		smile->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
 		std::shared_ptr<Collider2D> cd = smile->AddComponent<Collider2D>();
 
+		std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
+		light->SetName(L"light");
+		AddGameObject(ELayerType::Light, light);
+		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
+		lightComp->SetType(ELightType::Directional);
+		lightComp->SetColor(Vector4(1.0f, 0.0f, 1.0f, 1.0f));
 		
 
 		/* player script text*/

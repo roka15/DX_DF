@@ -32,6 +32,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Image.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ImageComponent.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Layer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Light.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)LRU_Queue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Material.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryPool.h" />
@@ -67,6 +68,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SingleTon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StructBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
@@ -87,6 +89,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Image.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ImageComponent.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Layer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Light.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Material.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryPool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Mesh.cpp" />
@@ -117,6 +120,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SingleTon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StructBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />

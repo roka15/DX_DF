@@ -1,15 +1,19 @@
 #include "Renderer.h"
+#include "GameObject.h"
 #include "Resources.h"
 #include "Texture.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Shader.h"
+#include "StructBuffer.h"
 #include "PaintShader.h"
+#include "Light.h"
+
 
 namespace roka::renderer
 {
 	using namespace roka::graphics;
-
+	
 	ConstantBuffer* constantBuffer[(UINT)ECBType::End] = {};
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];
 
@@ -17,6 +21,9 @@ namespace roka::renderer
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
 	Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
 
+	std::vector<std::shared_ptr<GameObject>> lights = {};
+	StructBuffer* lightsBuffer = nullptr;
+	
 	std::vector<std::shared_ptr<roka::Camera>> cameras = {};
 	std::shared_ptr<roka::Camera> MainCamera = nullptr;
 
@@ -387,6 +394,8 @@ namespace roka::renderer
 		constantBuffer[(UINT)ECBType::Animation] = new roka::graphics::ConstantBuffer(ECBType::Animation);
 		constantBuffer[(UINT)ECBType::Animation]->Create(sizeof(AnimationCB));
 
+		lightsBuffer = new StructBuffer();
+		lightsBuffer->Create(sizeof(LightAttribute), 2, ESRVType::None);
 	}
 	void LoadShader()
 	{
@@ -994,8 +1003,24 @@ namespace roka::renderer
 		LoadTexture();
 		LoadMaterial();
 	}
+	void BindLights()
+	{
+		std::vector<LightAttribute> lightsAttributes = {};
+		for (std::shared_ptr<GameObject>& obj : lights)
+		{
+			std::shared_ptr<Light> light = obj->GetComponent<Light>();
+			LightAttribute attribute = light->GetAttribute();
+			lightsAttributes.push_back(attribute);
+		}
+
+		lightsBuffer->SetData(lightsAttributes.data(), lightsAttributes.size());
+		lightsBuffer->Bind(EShaderStage::VS, 13);
+		lightsBuffer->Bind(EShaderStage::PS, 13);
+	}
 	void Render()
 	{
+		BindLights();
+
 		for (std::shared_ptr<Camera> camera : cameras)
 		{
 			if (camera == nullptr)
@@ -1004,6 +1029,7 @@ namespace roka::renderer
 			camera->Render();
 		}
 		cameras.clear();
+		lights.clear();
 	}
 	void Release()
 	{
@@ -1017,6 +1043,10 @@ namespace roka::renderer
 		}
 		cameras.clear();
 		MainCamera.reset();
+
+		lights.clear();
+		delete lightsBuffer;
+		lightsBuffer = nullptr;
 	}
 	void PushDebugMeshAttribute(DebugMesh mesh)
 	{

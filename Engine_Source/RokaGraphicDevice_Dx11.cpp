@@ -310,6 +310,13 @@ namespace roka::graphics
 		mContext->PSSetConstantBuffers((UINT)type, 1, &buffer);
 		mContext->CSSetConstantBuffers((UINT)type, 1, &buffer);
 	}
+	void GraphicDevice_Dx11::BindBuffer(ID3D11Buffer* buffer, void* data, UINT size)
+	{
+		D3D11_MAPPED_SUBRESOURCE sub = {};
+		mContext->Map(buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &sub);
+		memcpy(sub.pData, data, size);
+		mContext->Unmap(buffer, 0);
+	}
 	void GraphicDevice_Dx11::BindShaderResource(EShaderStage stage, UINT startSlot, ID3D11ShaderResourceView** ppSRV)
 	{
 		switch (stage)

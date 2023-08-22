@@ -3,8 +3,13 @@
 #include "RokaGraphicDevice_Dx11.h"
 #include "ConstantBuffer.h"
 #include "Camera.h"
+
 using namespace roka::math;
 using namespace roka::graphics;
+namespace roka
+{
+	class GameObject;
+}
 namespace roka::renderer
 {
 	struct Vertex
@@ -37,6 +42,7 @@ namespace roka::renderer
 		Vector2 SpriteSize;
 		Vector2 SpriteOffset;
 		Vector2 CanvasSize;
+		UINT animationType;
 	};
 	
 
@@ -45,11 +51,14 @@ namespace roka::renderer
 	extern Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerStates[(UINT)ERSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthstencilStates[(UINT)EDSType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11BlendState> blendStates[(UINT)EBSType::End];
+
+	extern std::vector<std::shared_ptr<GameObject>> lights;
 	extern std::vector<std::shared_ptr<roka::Camera>> cameras;
 	extern std::shared_ptr<roka::Camera> MainCamera;
 	extern std::vector<DebugMesh> debugMeshs;
 
 	void Initialize();
+	void BindLights();
 	void Render();
 	void Release();
 	void PushDebugMeshAttribute(DebugMesh mesh);

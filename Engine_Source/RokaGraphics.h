@@ -85,6 +85,11 @@ namespace roka::graphics
 		C32,
 		None,
 	};
+	enum class ESRVType
+	{
+		None,
+		End,
+	};
 	struct GpuBuffer
 	{
 		Microsoft::WRL::ComPtr<ID3D11Buffer> buffer;
@@ -108,6 +113,17 @@ namespace roka::graphics
 		float duration;
 		float time;
 		math::Vector4 color;
+	};
+	struct LightAttribute
+	{
+		math::Vector4 color;
+		math::Vector4 position;
+		math::Vector4 direction;
+
+		enums::ELightType type;
+		float radius;
+		float angle;
+		int pad;
 	};
 }
 

@@ -6,6 +6,7 @@
 #include "Collider2D.h"
 #include "Animator.h"
 #include "Rigidbody.h"
+#include "Light.h"
 namespace roka
 {
 	void ComponentFactory::Initialize()
@@ -37,6 +38,10 @@ namespace roka
 		mFactories[EComponentType::Rigidbody] = [](Component* component) {
 			Rigidbody* rg = dynamic_cast<Rigidbody*>(component);
 			return std::shared_ptr<Rigidbody>(new Rigidbody(*rg));
+		};
+		mFactories[EComponentType::Light] = [](Component* component) {
+			Light* rg = dynamic_cast<Light*>(component);
+			return std::shared_ptr<Light>(new Light(*rg));
 		};
 	}
 

@@ -126,6 +126,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PaintShader.cpp">
       <Filter>Resource\Shader\PaintShader</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Light.cpp">
+      <Filter>GameObject\Component\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)StructBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -277,6 +283,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PaintShader.h">
       <Filter>Resource\Shader\PaintShader</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Light.h">
+      <Filter>GameObject\Component\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)StructBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -416,6 +428,9 @@
     </Filter>
     <Filter Include="Resource\Shader\PaintShader">
       <UniqueIdentifier>{7ffab7cb-4477-4366-b14a-574804bd0e3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Light">
+      <UniqueIdentifier>{f9ba6abe-e768-4fdd-b196-4429545a4fc8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
