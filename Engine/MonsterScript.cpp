@@ -90,27 +90,41 @@ namespace roka
 
 		if (obj->active == GameObject::EState::Dead)
 			return;
+
 		std::shared_ptr<MonsterScript> ms = obj->GetComponent<MonsterScript>();
 		std::shared_ptr<TargetMoveScript> ts = obj->GetComponent<TargetMoveScript>();
+
+		Time::CallBackTimerInfo info = {};
+		info.endTime = ms->mNextStateCoolTime;
+		std::wstring key = L"MonsterRandomStateEvent";
+		std::wcsncpy(info.key, key.c_str(), key.size());
+
 		if (obj->active == GameObject::EState::Active)
 		{
+			if (ts->is_stop == false)
+			{
+				//이동이 안끝났는데 다음 event 물색중이면 time event 다시 요청하고 종료.
+				Time::RequestEvent(info, ptr);
+				return;
+			}
+				
 			while (1)
 			{
 				int range = (int)EMonsterState::Death - 1;
 				EMonsterState state = (EMonsterState)(rand() % range + 1);
 	
-				if (state == EMonsterState::Walk || state == EMonsterState::Skill)
-				{
-					//이전 state가 walk 인데 지금도 walk가 된 경우.
-					if (ms->mState == state)
-						continue;
-					//이미 움직이는 중.
-					if (state == EMonsterState::Walk)
-					{
-						if(ts->is_stop == false)
-						continue;
-					}
-				}
+				//if (state == EMonsterState::Walk || state == EMonsterState::Skill)
+				//{
+				//	//이전 state가 walk 인데 지금도 walk가 된 경우.
+				//	if (ms->mState == state)
+				//		continue;
+				//	//이미 움직이는 중.
+				//	if (state == EMonsterState::Walk)
+				//	{
+				//		if(ts->is_stop == false)
+				//		continue;
+				//	}
+				//}
 				ms->mState = state;
 				break;
 			}
@@ -128,19 +142,10 @@ namespace roka
 				int a = 0;
 			}
 			break;
-			case EMonsterState::Death:
-			{
-				int a = 0;
-			}
-			break;
 			}
 
 		}
 
-		Time::CallBackTimerInfo info = {};
-		info.endTime = ms->mNextStateCoolTime;
-		std::wstring key = L"MonsterRandomStateEvent";
-		std::wcsncpy(info.key, key.c_str(), key.size());
 		Time::RequestEvent(info, ptr);
 	}
 	void MonsterScript::Ready()
@@ -181,31 +186,21 @@ namespace roka
 			Distance.x /= AspectRatioX / 2.0f;
 			Distance.y /= AspectRatioY / 2.0f;
 
+			FinalTargetPos.x = myPos.x + Distance.x;
+			FinalTargetPos.y = myPos.y + Distance.y;
+			
+		
+			Distance.Normalize();
+			DirX = Distance.x;
+			DirY = Distance.y;
 
-
-			DirX = targetPos.x - myPos.x;
-			DirY = targetPos.y - myPos.y;
-
-			if (Distance.x > 0.0f)
+			if (Distance.x == 0.0f)
 			{
-				FinalTargetPos.x = myPos.x + Distance.x;
-				DirX = 1.0f;
+				DirX = 0.0f;
 			}
-			else if (Distance.x <= 0.0f)
+			if (Distance.y == 0.0f)
 			{
-				FinalTargetPos.x = myPos.x - Distance.x;
-				DirX = -1.0f;
-			}
-
-			if (Distance.y > 0.0f)
-			{
-				FinalTargetPos.y = myPos.y + Distance.y;
-				DirY = 1.0f;
-			}
-			else if (Distance.y <= 0.0f)
-			{
-				FinalTargetPos.y = myPos.y - Distance.y;
-				DirY = -1.0f;
+				DirY = 0.0f;
 			}
 
 			Viewport view;
@@ -228,8 +223,7 @@ namespace roka
 			else
 				break;
 		}
-		
-
+	
 		std::shared_ptr<TargetMoveScript> ts = owner->GetComponent<TargetMoveScript>();
 		ts->SetDirX(DirX);
 		ts->SetDirY(DirY);

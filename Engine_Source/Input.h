@@ -70,6 +70,15 @@ namespace roka
 			}
 			return false;
 		}
+		static __forceinline bool GetAniKeyDown()
+		{
+			for (auto key : mKeys)
+			{
+				if (key.state == EKeyState::Down)
+					return true;
+			}
+			return false;
+		}
 		static __forceinline Vector2 GetMousePos() { return mMousePos; }
 
 	private:

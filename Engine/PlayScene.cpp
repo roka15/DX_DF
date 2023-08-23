@@ -61,11 +61,22 @@ namespace roka
 		std::shared_ptr<Collider2D> cd = smile->AddComponent<Collider2D>();
 
 		std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
+		light->SetName(L"main_light");
+		AddGameObject(ELayerType::Light, light);
+		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
+		lightComp->SetType(ELightType::Directional);
+		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		
+
+        //point light
+		/*std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
 		light->SetName(L"light");
 		AddGameObject(ELayerType::Light, light);
 		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 		lightComp->SetType(ELightType::Directional);
-		lightComp->SetColor(Vector4(1.0f, 0.0f, 1.0f, 1.0f));
+		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		lightComp->SetType(ELightType::Point);
+		lightComp->SetRadius(3.0f);*/
 		
 
 		/* player script text*/
@@ -125,6 +136,7 @@ namespace roka
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		std::shared_ptr<GameObject> monster1 = object::Instantiate<GameObject>(monsterOrigin);
+		monster1->SetName(L"Monster1");
 		monster1->GetComponent<Transform>()->position=Vector3(2.0f, 0.0f, 0.0f);
 		monster1->GetComponent<MonsterScript>()->SetTarget(player);
 		AddGameObject(ELayerType::Monster,monster1);
@@ -142,6 +154,20 @@ namespace roka
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
 			renderer::MainCamera = cameraComp;
 		}
+
+		std::shared_ptr<GameObject> monster_skill = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);
+		AddGameObject(ELayerType::Light,monster_skill);
+		std::shared_ptr<Transform> tf = monster_skill->GetComponent<Transform>();
+		tf->position = Vector3(1.0f, 0.0f, 0.0f);
+		std::shared_ptr<MeshRenderer> mesh = monster_skill->GetComponent<MeshRenderer>();
+		mesh->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+		std::shared_ptr<Animator> ani = monster_skill->GetComponent<Animator>();
+		
+		std::shared_ptr<NPK> monster_eft = Resources::Find<NPK>(L"monster_eft");
+		std::shared_ptr<Texture> monsterskill_texture = monster_eft->CreateAtlas(L"laser009_eft.img",0,20,L"monster_skill");
+		ani->Create(monsterskill_texture, L"monsterskill", 0, 20, 0.1f);
+		ani->PlayAnimation(L"monsterskill",true);
+
 		/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
 		obj->SetName(L"player");
 		obj->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);

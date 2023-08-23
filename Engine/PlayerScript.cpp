@@ -664,15 +664,11 @@ namespace roka
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		if (Input::GetKey(EKeyCode::SPACE))
 		{
-			mPlayerState = EPlayerState::Idle;
+			//mPlayerState = EPlayerState::Idle;
 		}
 		else
 		{
-			if (Input::GetAniKey() == false)
-			{
-				mPlayerState = EPlayerState::Idle;
-			}
-			else if (Input::GetKey(EKeyCode::LEFT) || Input::GetKeyDown(EKeyCode::LEFT))
+			if (Input::GetKey(EKeyCode::LEFT) || Input::GetKeyDown(EKeyCode::LEFT))
 			{
 				mPlayerState = EPlayerState::Walk;
 				LeftBtnDown();
@@ -691,6 +687,10 @@ namespace roka
 			{
 				mPlayerState = EPlayerState::Walk;
 				DownBtnDown();
+			}
+			else if (Input::GetAniKeyDown() == false)
+			{
+				mPlayerState = EPlayerState::Idle;
 			}
 		}
 
@@ -762,7 +762,6 @@ namespace roka
 			//스탠딩 모션 후 일어나기.
 			ps->mPlayerState = EPlayerState::Standing;
 			as->PlayPartsMotion();
-
 			std::vector<std::shared_ptr<Collider2D>> cols;
 			cols.push_back(ps->mTopCollider.lock());
 			cols.push_back(ps->mBottomCollider.lock());

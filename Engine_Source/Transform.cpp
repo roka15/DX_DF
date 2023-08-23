@@ -64,7 +64,9 @@ namespace roka
         Matrix position; 
   
         position.Translation(mPosition);
-
+        
+        if (owner->GetName().compare(L"Monster1") == 0)
+            int a = 0;
         mWorld = scale * rotation * position;
 
         std::shared_ptr<GameObject> parent = owner->parent;

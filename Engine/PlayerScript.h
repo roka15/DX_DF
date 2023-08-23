@@ -82,7 +82,6 @@ namespace roka
 		std::weak_ptr<Collider2D> mBottomCollider;
 	
 
-		//test
 		double mLeftTime;
 		double mRightTime;
 		double mTime;

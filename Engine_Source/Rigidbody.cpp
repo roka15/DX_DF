@@ -161,7 +161,7 @@ namespace roka
 		Vector3 pos = tf->position;
 		pos = pos + mVelocity * Time::DeltaTime();
 
-		if (pos.y <= mLandingPoint.y)
+		if (mbGround==false && pos.y <= mLandingPoint.y)
 		{
 			mbGround = true;
 			mVelocity.y = 0.0f;

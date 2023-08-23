@@ -30,46 +30,42 @@ namespace roka
 			return;
 		if (mbActive == false)
 			return;
+		if (IsStop() == true)
+		{
+			if (mTargetPos != Vector2::Zero)
+				mTargetPos = Vector2::Zero;
+			return;
+		}
+
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		Vector3 pos = tf->position;
-
 		pos.x += mDir.x * mSpeed * Time::DeltaTime();
-		pos.y += mDir.y * mSpeed * Time::DeltaTime();
+		pos.y += mDir.y * mSpeed* Time::DeltaTime();
 
-		int true_cnt = 0;
 		if (mDir.x > 0.0f)
 		{
 			if (mTargetPos.x <= pos.x)
-				true_cnt++;
+				mDir.x = 0.0f;
 		}
 		else if (mDir.x < 0.0f)
 		{
 			if (mTargetPos.x >= pos.x)
-				true_cnt++;
+			{
+				mDir.x = 0.0f;
+			}
 		}
-		else if (mDir.y != 0.0f && mDir.x == 0.0f)
-			true_cnt++;
 
 		if (mDir.y > 0.0f)
 		{
-			if (mTargetPos.y <= pos.y)
-				true_cnt++;
+			if (pos.y >= mTargetPos.y)
+				mDir.y = 0.0f;
 		}
 		else if (mDir.y < 0.0f)
 		{
-			if (mTargetPos.y >= pos.y)
-				true_cnt++;
+			if (pos.y <= mTargetPos.y)
+				mDir.y = 0.0f;
 		}
-		else if (mDir.x != 0.0f && mDir.y == 0.0f)
-			true_cnt++;
 
-
-		if (true_cnt == 2)
-		{
-			mDir.x = 0.0f;
-			mDir.y = 0.0f;
-			mTargetPos = Vector2::Zero;
-		}
 
 		tf->position = pos;
 

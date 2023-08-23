@@ -305,12 +305,14 @@ namespace roka::prefab
 		std::shared_ptr<NPK> base_npk = Resources::Find<NPK>(L"baseskin");
 		std::shared_ptr<NPK> weapon_npk = Resources::Find<NPK>(L"weapon");
 		std::shared_ptr<NPK> monster_npk = Resources::Find<NPK>(L"monster");
+		std::shared_ptr<NPK> monsterEft_npk = Resources::Find<NPK>(L"monster_eft");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
 			weapon_npk = Resources::Load<NPK>(L"weapon", path + L"weapon.npk");
 		if (monster_npk == nullptr)
 			monster_npk = Resources::Load<NPK>(L"monster", path + L"monster.npk");
-
+		if (monsterEft_npk == nullptr)
+			monsterEft_npk = Resources::Load<NPK>(L"monster_eft", path + L"monster_eft.npk");
 	}
 }
