@@ -61,6 +61,11 @@ namespace roka
 			= FindEvents(mActiveAnimation.lock()->GetKey());
 		if (mActiveAnimation.lock()->IsComplete())
 		{
+			if (mbLoop == true)
+				mActiveAnimation.lock()->Reset();
+			else
+				mbStop = true;
+
 			if (events != nullptr)
 			{
 				for (auto comp_event : events->completeEvent)
@@ -68,11 +73,8 @@ namespace roka
 					comp_event();
 				}
 			}
-			if (mbLoop == true)
-				mActiveAnimation.lock()->Reset();
-			else
-				mbStop = true;
 		}
+		
 		mActiveAnimation.lock()->LateUpdate();
 	}
 	void Animator::LateUpdate()
@@ -194,6 +196,7 @@ namespace roka
 	}
 	void Animator::PlayAnimation(const std::wstring& name)
 	{
+		mbStop = false;
 		PlayAnimation(name, false, 0.0f);
 	}
 	void Animator::PlayAniSprite(const std::wstring& name, int index)

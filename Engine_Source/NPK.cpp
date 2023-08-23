@@ -73,6 +73,9 @@ namespace roka
 		file::CSVInfo csv = {};
 		file::PackInfo pack = {};
 
+		std::shared_ptr<Texture> find = Resources::Find<Texture>(L"texture_name");
+		if (find != nullptr)
+			return find;
 		std::shared_ptr<Texture> texture = std::make_shared<Texture>();
 		auto pack_itr = mPacks.find(file::ws2s(pack_name));
 		int count = end_index - start_index;

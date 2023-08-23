@@ -1,5 +1,6 @@
 #include "Prefab.h"
 #include "NPK.h"
+#include "RokaMath.h"
 #include "Resources.h"
 #include "Object.h"
 #include "Image.h"
@@ -163,11 +164,14 @@ namespace roka::prefab
 			std::shared_ptr<MonsterScript> monster = Spider_MonsterObject->AddScript<MonsterScript>();
 			std::shared_ptr<TargetMoveScript> ms = Spider_MonsterObject->AddScript<TargetMoveScript>();
 			std::shared_ptr<Rigidbody> rigid = Spider_MonsterObject->AddComponent<Rigidbody>();
+
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
 			Spider_MonsterObject->AddChild(TopColObject);
 			std::shared_ptr<Collider2D> col = TopColObject->AddComponent<Collider2D>();
 			col->SetSize(Vector2(0.13f, 0.08f));
 			col->SetCenter(Vector2(-0.05f, 0.1f));
+			
+		
 			std::shared_ptr<HitBoxScript> hitbox = TopColObject->AddScript<HitBoxScript>();
 			hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
 			hitbox->hitbox_owner = Spider_MonsterObject;
@@ -180,6 +184,23 @@ namespace roka::prefab
 			hitbox = BottomColObject->AddScript<HitBoxScript>();
 			hitbox->hitbox = HitBoxScript::EHitBoxType::Bottom;
 			hitbox->hitbox_owner = Spider_MonsterObject;
+
+			std::shared_ptr<GameObject> skill = object::Instantiate<GameObject>(AniObject);
+			Spider_MonsterObject->AddChild(skill);
+			skill->SetName(L"skill01");
+			skill->active = GameObject::EState::Paused;
+			skill->GetComponent<MeshRenderer>()->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			std::shared_ptr<Animator> ani = skill->GetComponent<Animator>();
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"monster_skill");
+			ani->Create(texture, L"monster_skill", 0, 20, 0.1f);
+			ani->PlayAnimation(L"monster_skill", true);
+			std::shared_ptr<Transform> tf = skill->GetComponent<Transform>();
+			tf->position = Vector3(1.75f, 0.025f,0.0f);
+			tf->scale = Vector3(4.0f, 1.0f, 1.0f);
+
+			MonsterScript::SetColCenter(Vector2(0.085f, -0.1f), Vector2(-0.05f, -0.1f));
+			MonsterScript::SetShooterPos(Vector2(-1.75f, 0.025f), Vector2(1.75f, 0.025f));
 		}
 
 		std::shared_ptr<roka::GameObject> PlayerObject = object::Instantiate<roka::GameObject>(

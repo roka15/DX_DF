@@ -155,18 +155,6 @@ namespace roka
 			renderer::MainCamera = cameraComp;
 		}
 
-		std::shared_ptr<GameObject> monster_skill = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);
-		AddGameObject(ELayerType::Light,monster_skill);
-		std::shared_ptr<Transform> tf = monster_skill->GetComponent<Transform>();
-		tf->position = Vector3(1.0f, 0.0f, 0.0f);
-		std::shared_ptr<MeshRenderer> mesh = monster_skill->GetComponent<MeshRenderer>();
-		mesh->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-		std::shared_ptr<Animator> ani = monster_skill->GetComponent<Animator>();
-		
-		std::shared_ptr<NPK> monster_eft = Resources::Find<NPK>(L"monster_eft");
-		std::shared_ptr<Texture> monsterskill_texture = monster_eft->CreateAtlas(L"laser009_eft.img",0,20,L"monster_skill");
-		ani->Create(monsterskill_texture, L"monsterskill", 0, 20, 0.1f);
-		ani->PlayAnimation(L"monsterskill",true);
 
 		/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);
 		obj->SetName(L"player");

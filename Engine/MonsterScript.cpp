@@ -4,10 +4,12 @@
 #include "Application.h"
 #include "RokaMath.h"
 #include "Camera.h"
+#include "Resources.h"
 
 #include "Animator.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "Collider2D.h"
 #include "MoveScript.h"
 #include "TargetMoveScript.h"
 
@@ -16,12 +18,20 @@ extern roka::Application application;
 namespace roka
 {
 	using namespace math;
-	MonsterScript::MonsterScript() :Script(EScriptType::Monster)
+	Vector2 MonsterScript::mLeftColCenter = Vector2::Zero;
+	Vector2 MonsterScript::mRightColCenter = Vector2::Zero;
+
+	Vector2 MonsterScript::mLeftShooterPos = Vector2::Zero;
+	Vector2 MonsterScript::mRightShooterPos = Vector2::Zero;
+
+	MonsterScript::MonsterScript() :Script(EScriptType::Monster),
+		mbNextState(true)
 	{
 	}
 
 	MonsterScript::MonsterScript(const MonsterScript& ref) : Script(ref)
 	{
+		mbNextState = true;
 	}
 
 	void MonsterScript::Copy(Component* src)
@@ -29,6 +39,7 @@ namespace roka
 		MonsterScript* source = dynamic_cast<MonsterScript*>(src);
 		if (source == nullptr)
 			return;
+		mbNextState = true;
 	}
 
 	MonsterScript::~MonsterScript()
@@ -44,7 +55,25 @@ namespace roka
 
 		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Idle", 0, 5, 0.2f);
 		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Walk", 5, 13, 0.2f);
-
+		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_start", 28, 38, 0.1f);
+		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_middle", 39, 44, 0.1f);
+		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_end", 45, 46, 0.1f);
+		
+		ani->CompleteEvent(L"web_spider_Skill1_start") = std::bind([this]()->void {
+			std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
+			skill->active = GameObject::EState::Active;
+			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+			ani->PlayAnimation(L"web_spider_Skill1_middle", false);
+			});
+		ani->CompleteEvent(L"web_spider_Skill1_middle") = std::bind([this]()->void {
+			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+			ani->PlayAnimation(L"web_spider_Skill1_end", false);
+			});
+		ani->CompleteEvent(L"web_spider_Skill1_end") = std::bind([this]()->void {
+			EnableNextState();
+			std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
+			skill->active = GameObject::EState::Paused;
+			});
 		ani->PlayAnimation(L"web_spider_Idle", true);
 
 		Time::RegisterEvent(L"MonsterRandomStateEvent", MonsterScript::RandomState);
@@ -57,7 +86,7 @@ namespace roka
 			Ready();
 		}
 		std::shared_ptr<TargetMoveScript> ts = owner->GetComponent<TargetMoveScript>();
-		if (ts->is_stop)
+		if (ts->is_stop && mbNextState)
 		{
 			mState = EMonsterState::Idle;
 			Idle();
@@ -99,9 +128,9 @@ namespace roka
 		std::wstring key = L"MonsterRandomStateEvent";
 		std::wcsncpy(info.key, key.c_str(), key.size());
 
-		if (obj->active == GameObject::EState::Active)
+ 		if (obj->active == GameObject::EState::Active)
 		{
-			if (ts->is_stop == false)
+			if (ts->is_stop == false|| ms->mbNextState == false)
 			{
 				//이동이 안끝났는데 다음 event 물색중이면 time event 다시 요청하고 종료.
 				Time::RequestEvent(info, ptr);
@@ -139,7 +168,7 @@ namespace roka
 				break;
 			case EMonsterState::Skill:
 			{
-				int a = 0;
+				ms->Attack();
 			}
 			break;
 			}
@@ -203,6 +232,46 @@ namespace roka
 				DirY = 0.0f;
 			}
 
+			std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
+			if (DirX < 0.0f)
+			{
+				if (mCurDirType == EDir4Type::LEFT)
+					return;
+				mCurDirType = EDir4Type::LEFT;
+				mr->material = Resources::Find<Material>(L"DefaultVInverterAniMaterial");
+				std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
+				
+				for (auto col : cols)
+				{
+					Vector2 pos = col->GetCenter();
+					pos.x = mLeftColCenter.x;
+					col->SetCenter(pos);
+				}
+				std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
+				std::shared_ptr<Transform> tf = skill->GetComponent<Transform>();
+				Vector3 pos = tf->position;
+				float z = tf->position.z;
+				tf->position = Vector3(mLeftShooterPos.x, mLeftShooterPos.y, z);
+			}
+			else if (DirX > 0.0f)
+			{
+				if (mCurDirType == EDir4Type::RIGHT)
+					return;
+				mCurDirType == EDir4Type::RIGHT;
+				mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+				std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
+				for (auto col : cols)
+				{
+					Vector2 pos = col->GetCenter();
+					pos.x = mRightColCenter.x;
+					col->SetCenter(pos);
+				}
+				std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
+				std::shared_ptr<Transform> tf = skill->GetComponent<Transform>();
+				float z = tf->position.z;
+				tf->position = Vector3(mRightShooterPos.x,mRightShooterPos.y,z);
+			}
+
 			Viewport view;
 			view.width = AspectRatioX;
 			view.height = AspectRatioY;
@@ -230,5 +299,16 @@ namespace roka
 		ts->SetSpeed(mSpeed);
 		ts->SetTargetPos(Vector2(FinalTargetPos.x, FinalTargetPos.y));
 	}
+	void MonsterScript::Attack()
+	{
+		Skill01();
+	}
+	void MonsterScript::Skill01()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"web_spider_Skill1_start", false);
+		DisableNextState();
+	}
+	
 }
 
