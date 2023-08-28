@@ -58,6 +58,8 @@ namespace roka
 			cur_size++;
 		}
 		start_size = mRequestEvent.size();
+		if (start_size != 0)
+			int a = 0;
 		cur_size = 0;
 		while (mRequestEvent.empty() == false)
 		{

@@ -2,12 +2,15 @@
 
 #include "GameObject.h"
 #include "RokaTime.h"
+#include "Prefab.h"
 
 #include "Animator.h"
 #include "Transform.h"
 #include "MeshRenderer.h"
+#include "Collider2D.h"
 
 #include "SkillScript.h"
+#include "MonsterSkillScript.h"
 #include "TargetMoveScript.h"
 
 namespace roka
@@ -31,26 +34,75 @@ namespace roka
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Idle", 0, 7, 0.2f);
 		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Walk", 8, 13, 0.2f);
-		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Skill01_start", 27, 37, 0.2f);
+		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Skill01_start", 27, 37, 0.1f);
 		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Skill01_middle", 43, 45, 3.0f);
-		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Skill01_end", 25, 26, 0.2f);
+		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Skill01_end", 25, 27, 0.2f);
 		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_NomalAttack1", 15, 19, 0.2f);
 		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_NomalAttack2", 20, 26, 0.2f);
 
 		ani->CompleteEvent(L"tairang_Skill01_start") = std::bind([this]()->void
 			{
-				std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-				ani->PlayAnimation(L"tairang_Skill01_middle", false);
-				Skill01SetPos();
+				std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft01"];
+				owner->AddChild(obj);
+				std::vector<std::shared_ptr<Animator>> anis = obj->GetChildComponents<Animator>();
+				for (auto& ani : anis)
+				{
+					std::shared_ptr<MeshRenderer> ms = ani->owner->GetComponent<MeshRenderer>();
+					ms->is_active = true;
+					ani->Play();
+				}
+				/*std::shared_ptr<GameObject> HitBoxObject = owner->GetChild(L"skill01");
+				std::shared_ptr<Collider2D> col = HitBoxObject->GetComponent<Collider2D>();
+				col->EnableRender();*/
+
+			/*	std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft01"];
+				owner->RemoveChild(obj);
+				std::vector<std::shared_ptr<Animator>> anis = obj->GetChildComponents<Animator>();
+				for (auto& ani : anis)
+					ani->is_active = false;*/
+
+				Time::CallBackTimerInfo info = {};
+				info.endTime = 1.3f;
+				Time::RequestEvent(info, std::bind([this]()->void {
+					std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+					ani->PlayAnimation(L"tairang_Skill01_middle", false);
+					Skill01SetPos();
+					std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft01"];
+					owner->RemoveChild(obj);
+					}));
+
+				info = {};
+				info.endTime = 2.8f;
+				Time::RequestEvent(info, std::bind([this]()->void {
+					std::shared_ptr<MeshRenderer> ms = owner->GetComponent<MeshRenderer>();
+					ms->is_active = false; 
+					std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft02"];
+					std::shared_ptr<GameObject> aniObj = obj->GetChild(L"Eft01_2");
+					std::shared_ptr<Animator> ani = aniObj->GetComponent<Animator>();
+					ani->PlayAnimation(L"tairang_abyssbombsmall", false);
+					}));
+			});
+		ani->StartEvent(L"tairang_Skill01_middle")= std::bind([this]()->void
+			{
+				std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft02"];
+				owner->AddChild(obj);
+				std::vector<std::shared_ptr<Animator>> anis = obj->GetChildComponents<Animator>();
+				for (auto& ani : anis)
+				{
+					std::shared_ptr<MeshRenderer> ms = ani->owner->GetComponent<MeshRenderer>();
+					ms->is_active = true;
+					ani->Play();
+				}
 			});
 		ani->CompleteEvent(L"tairang_Skill01_middle") = std::bind([this]()->void
 			{
+				std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft02"];
+				owner->RemoveChild(obj);
 				std::shared_ptr<TargetMoveScript> tm = owner->GetComponent<TargetMoveScript>();
 				tm->ResetSpeed();
-				std::shared_ptr<MeshRenderer> ms = owner->GetComponent<MeshRenderer>();
-				ms->is_active = false;
+
 				Time::CallBackTimerInfo info = {};
-				info.endTime = 1.5f;
+				info.endTime = 1.0f;
 				Time::RequestEvent(info, std::bind([this]()->void {
 					std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 					ani->PlayAnimation(L"tairang_Skill01_end"); })
@@ -62,14 +114,36 @@ namespace roka
 				std::shared_ptr<MeshRenderer> ms = owner->GetComponent<MeshRenderer>();
 				ms->is_active = true;
 				std::shared_ptr<SkillScript> skill = owner->GetChild(L"skill01")->GetComponent<SkillScript>();
+
 				Vector2 pos = skill->startPos;
 				std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 				Vector3 myPos = tf->position;
 				myPos.x = pos.x;
 				myPos.y = pos.y;
 				tf->position = myPos;
+				std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft03"];
+				owner->AddChild(obj);
+				std::vector<std::shared_ptr<Animator>> anis = obj->GetChildComponents<Animator>();
+				for (auto& ani : anis)
+				{
+					std::shared_ptr<MeshRenderer> ms = ani->owner->GetComponent<MeshRenderer>();
+					ms->is_active = true;
+					ani->Play();
+				}
+				/*std::shared_ptr<GameObject> HitBoxObject = owner->GetChild(L"skill01");
+				std::shared_ptr<Collider2D> col = HitBoxObject->GetComponent<Collider2D>();
+				col->EnableColCheck();*/
+			});
+		ani->CompleteEvent(L"tairang_Skill01_end") = std::bind([this]()->void
+			{
+				std::shared_ptr<GameObject> obj = prefab::Prefabs[L"TairangSkillEft03"];
+				owner->RemoveChild(obj);
 				EnableNextState();
 				Idle();
+				std::shared_ptr<GameObject> HitBoxObject = owner->GetChild(L"skill01");
+			/*	std::shared_ptr<Collider2D> col = HitBoxObject->GetComponent<Collider2D>();
+				col->DisableColCheck();*/
+				HitBoxObject->GetComponent<SkillScript>()->End();
 			});
 		RegisterSkillInfo(L"tairang_Skill01_start", L"tairang_Skill01_end");
 
@@ -130,8 +204,10 @@ namespace roka
 	{
 		
 		std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
+		
 		std::shared_ptr<SkillScript> skillScript = skill->GetComponent<SkillScript>();
 		skillScript->Play(mCurDirType);
+		
 		
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		mCurSkillKey = mSkillStartKey[0];

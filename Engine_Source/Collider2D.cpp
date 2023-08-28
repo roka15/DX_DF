@@ -19,7 +19,8 @@ namespace roka
 		mCenter(Vector2::Zero),
 		mbCollision(false),
 		mbRender(true),
-		mTime(0.0)
+		mTime(0.0),
+		mbColCehck(true)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -33,7 +34,8 @@ namespace roka
 		mSize(ref.mSize),
 		mCenter(ref.mCenter),
 		mTime(0.0),
-		mbRender(ref.mbRender)
+		mbRender(ref.mbRender),
+		mbColCehck(true)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -54,7 +56,9 @@ namespace roka
 		mTime = 0.0;
 		mRotationZ = 0.0f;
 		mbRender = source->mbRender;
+		mbColCehck = true;
 	}
+
 	Collider2D::~Collider2D()
 	{
 	}
@@ -113,6 +117,8 @@ namespace roka
 	}
 	void Collider2D::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 	{
+		if (mbColCehck == false)
+			return;
 		mbCollision = true;
 		const std::vector<std::shared_ptr<Script>>& scripts
 			= owner->GetScripts();
@@ -124,6 +130,8 @@ namespace roka
 	}
 	void Collider2D::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	{
+		if (mbColCehck == false)
+			return;
 		mbCollision = true;
 		const std::vector<std::shared_ptr<Script>>& scripts
 			= owner->GetScripts();
@@ -135,6 +143,8 @@ namespace roka
 	}
 	void Collider2D::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
+		if (mbColCehck == false)
+			return;
 		mbCollision = false;
 		const std::vector<std::shared_ptr<Script>>& scripts
 			= owner->GetComponents<Script>();

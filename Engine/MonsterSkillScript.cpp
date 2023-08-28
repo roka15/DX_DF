@@ -5,6 +5,7 @@
 #include "Collider2D.h"
 
 #include "MonsterScript.h"
+#include "SpiderMonsterScript.h"
 
 namespace roka
 {
@@ -51,6 +52,6 @@ namespace roka
 		std::shared_ptr<GameObject> parrent = owner->GetParent();
 		if (parrent == nullptr)return;
 		std::shared_ptr<MonsterScript> monster = parrent->GetComponent<MonsterScript>();
-		monster->SkillEnd();
+			monster->SkillEnd();
 	}
 }

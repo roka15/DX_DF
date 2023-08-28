@@ -60,7 +60,7 @@ namespace roka
 			return nullptr;
 		}
 		template <typename T>
-		const std::vector<std::shared_ptr<T>>& GetComponents()
+		const std::vector<std::shared_ptr<T>> GetComponents()
 		{
 			std::vector<std::shared_ptr<T>> comps;
 
@@ -70,6 +70,28 @@ namespace roka
 				component = std::dynamic_pointer_cast<T>(comp);
 				if (component != nullptr)
 					comps.push_back(component);
+			}
+
+			return comps;
+		}
+		template <typename T>
+		const std::vector<std::shared_ptr<T>> GetChildComponents()
+		{
+			std::vector<std::shared_ptr<T>> comps;
+
+			std::shared_ptr<T> component;
+			for (auto& comp : mComponents)
+			{
+				component = std::dynamic_pointer_cast<T>(comp);
+				if (component != nullptr)
+					comps.push_back(component);
+			}
+
+			for (auto& child : mChild)
+			{
+				const std::vector<std::shared_ptr<T>>& child_comps = child->GetChildComponents<T>();
+				for (auto& comp : child_comps)
+					comps.push_back(comp);
 			}
 
 			return comps;

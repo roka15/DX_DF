@@ -48,19 +48,19 @@ namespace roka
 		Scene::Initialize();
 
 
-		std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
-		std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
-		paintShader->SetTarget(paintTexture);
-		paintShader->OnExcute();
+		//std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
+		//std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
+		//paintShader->SetTarget(paintTexture);
+		//paintShader->OnExcute();
 
-		std::shared_ptr<Image> smile = object::Instantiate<Image>();
-		smile->SetName(L"Smile");
-		AddGameObject(ELayerType::BackObject, smile);
-		std::shared_ptr<MeshRenderer> mr = smile->AddComponent<MeshRenderer>();
-		mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
-		mr->SetMaterial(Resources::Find<Material>(L"PaintMaterial"));
-		smile->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
-		std::shared_ptr<Collider2D> cd = smile->AddComponent<Collider2D>();
+		//std::shared_ptr<Image> smile = object::Instantiate<Image>();
+		//smile->SetName(L"Smile");
+		//AddGameObject(ELayerType::BackObject, smile);
+		//std::shared_ptr<MeshRenderer> mr = smile->AddComponent<MeshRenderer>();
+		//mr->SetMesh(Resources::Find<Mesh>(L"RectMesh"));
+		//mr->SetMaterial(Resources::Find<Material>(L"PaintMaterial"));
+		//smile->GetComponent<Transform>()->SetPosition(Vector3(0.0f, 0.0f, 0.0f));
+		//std::shared_ptr<Collider2D> cd = smile->AddComponent<Collider2D>();
 
 		std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
 		light->SetName(L"main_light");
@@ -126,15 +126,15 @@ namespace roka
 		std::shared_ptr<GameObject> skill02 = object::Instantiate<GameObject>(
 			Vector3(2.0f, -1.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(0.5f, 0.5f, 1.0f),
+			Vector3(1.5f, 0.2f, 1.0f),
 			ELayerType::Monster);
 		skill02->SetName(L"skill02");
 		skill02->AddComponent<Collider2D>();
 		hitbox = skill02->AddScript<HitBoxScript>();
 		hitbox->hitbox = HitBoxScript::EHitBoxType::Bottom;
 		hitbox->hitbox_owner = skill02;
-		skill02->AddComponent<SkillScript>()->stun_type = EStunState::Down;
-
+		std::shared_ptr<SkillScript>skillScript = skill02->AddComponent<SkillScript>();
+		skillScript->stun_type = EStunState::Down;
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		pool::NormalMonsterPool* pool = pool::NormalMonsterPool::GetInstance();

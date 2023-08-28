@@ -74,7 +74,10 @@ namespace roka
 				}
 			}
 		}
-		
+
+		if (mbStop == true)
+			return;
+
 		mActiveAnimation.lock()->LateUpdate();
 	}
 	void Animator::LateUpdate()

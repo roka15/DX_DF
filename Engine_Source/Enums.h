@@ -50,6 +50,7 @@ namespace roka::enums
 	{
 		Grid,
 		BackObject,
+		Skill,
 		Player,
 		Monster,
 		FrontObject,

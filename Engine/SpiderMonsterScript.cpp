@@ -12,6 +12,7 @@
 
 #include "Resources.h"
 #include "Application.h"
+#include "RokaTime.h"
 
 
 extern roka::Application application;
@@ -53,6 +54,8 @@ namespace roka
 			ani->PlayAnimation(L"web_spider_Skill1_middle", false);
 			});
 		ani->CompleteEvent(L"web_spider_Skill1_end") = std::bind([this]()->void {
+			std::shared_ptr<MeshRenderer> ms = owner->GetComponent<MeshRenderer>();
+			ms->is_active = true;
 			EnableNextState();
 			});
 

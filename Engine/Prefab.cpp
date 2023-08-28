@@ -167,6 +167,7 @@ namespace roka::prefab
 			std::shared_ptr<MeshRenderer>mr = AniEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material->render_mode = ERenderMode::Transparent;
 		}
 
 
@@ -238,10 +239,13 @@ namespace roka::prefab
 			std::shared_ptr<TairangMonsterScript> monster = Tairang_MonsterObject->AddScript<TairangMonsterScript>();
 			std::shared_ptr<TargetMoveScript> ms = Tairang_MonsterObject->AddScript<TargetMoveScript>();
 			std::shared_ptr<Rigidbody> rigid = Tairang_MonsterObject->AddComponent<Rigidbody>();
+			std::shared_ptr<Transform> tf = Tairang_MonsterObject->GetComponent<Transform>();
+			tf->position = Vector3(0.0f, 0.0f, 0.1f);
 		}
 		std::shared_ptr<GameObject> SpiderSkillObject01 = object::Instantiate<GameObject>(AniObject);
 		{
 			SpiderSkillObject01->SetName(L"skill01");
+			
 			Spider_MonsterObject->AddChild(SpiderSkillObject01);
 			std::shared_ptr<Collider2D> col = SpiderSkillObject01->AddComponent<Collider2D>();
 			std::shared_ptr<MonsterSkillScript> skill = SpiderSkillObject01->AddScript<MonsterSkillScript>();
@@ -255,6 +259,7 @@ namespace roka::prefab
 			ani->Create(texture, L"monster_skill01", 0, 20, 0.1f);
 
 			tf->scale = Vector3(5.0f, 1.0f, 1.0f);
+			tf->position = Vector3(0.0f, 0.0f, 0.1f);
 
 			col->is_active = false;
 			col->DisableRender();
@@ -272,6 +277,151 @@ namespace roka::prefab
 			skill->deleteTime = 1.5f;
 			skill->startKey = L"monster_skill01";
 		}
+		std::shared_ptr<GameObject> TairangSkillEft01 = object::Instantiate<GameObject>();
+		{
+			TairangSkillEft01->SetName(L"TairangSkillEft01");
+			std::shared_ptr<Transform> tf = TairangSkillEft01->GetComponent<Transform>();
+			tf->scale = Vector3(1.0f, 1.0f, 1.0f);
+
+			std::shared_ptr<GameObject> TairangSkillEft01_1 = object::Instantiate<GameObject>(AniEftObject);
+			std::shared_ptr<GameObject> TairangSkillEft01_2 = object::Instantiate<GameObject>(AniEftObject);
+			std::shared_ptr<GameObject> TairangSkillEft01_3 = object::Instantiate<GameObject>(AniEftObject);
+			TairangSkillEft01->AddChild(TairangSkillEft01_1);
+			TairangSkillEft01->AddChild(TairangSkillEft01_2);
+			TairangSkillEft01->AddChild(TairangSkillEft01_3);
+
+			tf = TairangSkillEft01_1->GetComponent<Transform>();
+			Vector3 pos = tf->position;
+			pos.z -= 0.1f;
+			tf->position = pos;
+
+			std::shared_ptr<Animator> ani1 = TairangSkillEft01_1->GetComponent<Animator>();
+			std::shared_ptr<Animator> ani2 = TairangSkillEft01_2->GetComponent<Animator>();
+			std::shared_ptr<Animator> ani3 = TairangSkillEft01_3->GetComponent<Animator>();
+
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"tairnag_eft");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"attack3slashglow.img", 0, 12, L"tairang_attack3slagshglow");
+			ani1->Create(texture, L"tairang_attack3slagshglow", 0, 12, 0.08f);
+			ani1->PlayAnimation(L"tairang_attack3slagshglow", true);
+			ani1->Stop();
+			Animator* ani_ptr = ani1.get();
+			ani1->CompleteEvent(L"tairang_attack3slagshglow") = std::bind([ani_ptr]()->void {
+				std::shared_ptr<MeshRenderer> ms = ani_ptr->owner->GetComponent<MeshRenderer>();
+				ms->is_active = false;
+				ani_ptr->Stop();
+				});
+		
+
+			texture = npk->CreateAtlas(L"attack3trail.img", 0, 12, L"tairang_attack3trail");
+			ani2->Create(texture, L"tairang_attack3trail", 0, 12, 0.08f);
+			ani2->PlayAnimation(L"tairang_attack3trail", true);
+			ani2->Stop();
+			ani_ptr = ani2.get();
+			ani2->CompleteEvent(L"tairang_attack3trail") = std::bind([ani_ptr]()->void {
+				std::shared_ptr<MeshRenderer> ms = ani_ptr->owner->GetComponent<MeshRenderer>();
+				ms->is_active = false;
+				ani_ptr->Stop();
+				});
+		}
+		std::shared_ptr<GameObject> TairangSkillEft02 = object::Instantiate<GameObject>();
+		{
+			TairangSkillEft02->SetName(L"TairangSkillEft02");
+			std::shared_ptr<Transform> tf = TairangSkillEft02->GetComponent<Transform>();
+			tf->scale = Vector3(1.0f, 1.0f, 1.0f);
+		
+			std::shared_ptr<GameObject> TairangSkillEft01_1 = object::Instantiate<GameObject>(AniEftObject);
+			std::shared_ptr<GameObject> TairangSkillEft01_2 = object::Instantiate<GameObject>(AniEftObject);
+
+			TairangSkillEft01_1->SetName(L"Eft01_1");
+			TairangSkillEft01_2->SetName(L"Eft01_2");
+			TairangSkillEft02->AddChild(TairangSkillEft01_1);
+			TairangSkillEft02->AddChild(TairangSkillEft01_2);
+	
+			tf = TairangSkillEft01_1->GetComponent<Transform>();
+			tf->position = Vector3(-0.15f, 0.15f, 0.0f);
+			tf->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
+
+			tf = TairangSkillEft01_2->GetComponent<Transform>();
+			tf->position = Vector3(0.05f, 0.2f, 0.0f);
+			
+			std::shared_ptr<Animator> ani1 = TairangSkillEft01_1->GetComponent<Animator>();
+			std::shared_ptr<Animator> ani2 = TairangSkillEft01_2->GetComponent<Animator>();
+
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"tairnag_eft");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"attack3line.img", 0, 3, L"tairang_attack3line");
+			ani1->Create(texture, L"tairang_attack3line", 0, 3, 0.1f);
+			ani1->PlayAnimation(L"tairang_attack3line", true);
+			ani1->Stop();
+			Animator* ani_ptr = ani1.get();
+			ani1->CompleteEvent(L"tairang_attack3line") = std::bind([ani_ptr]()->void {
+				std::shared_ptr<MeshRenderer> ms = ani_ptr->owner->GetComponent<MeshRenderer>();
+				ms->is_active = false;
+				ani_ptr->Stop();
+				});
+
+			texture = npk->CreateAtlas(L"attack3booster.img", 0, 12, L"tairang_attack3booster");
+			ani2->Create(texture, L"tairang_attack3booster", 0, 12, 0.2f);
+			texture = npk->CreateAtlas(L"abyssbombsmall.img", 0, 12, L"tairang_abyssbombsmall");
+			ani2->Create(texture, L"tairang_abyssbombsmall", 0, 12, 0.13f);
+			ani2->PlayAnimation(L"tairang_attack3booster", true);
+			ani2->Stop();
+			ani_ptr = ani2.get();
+
+			ani2->StartEvent(L"tairang_abyssbombsmall")= std::bind([ani_ptr]()->void {
+				std::shared_ptr<Transform> tf = ani_ptr->owner->GetComponent<Transform>();
+				tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+				Vector3 pos = Vector3(-0.03f, 0.1f, 0.0f);
+				tf->position = pos;
+				});
+
+			ani2->CompleteEvent(L"tairang_abyssbombsmall") = std::bind([ani_ptr]()->void {
+				std::shared_ptr<MeshRenderer> ms = ani_ptr->owner->GetComponent<MeshRenderer>();
+				ms->is_active = false;
+				ani_ptr->Stop();
+				std::shared_ptr<Transform> tf = ani_ptr->owner->GetComponent<Transform>();
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
+				tf->position = Vector3(0.05f, 0.2f, 0.0f);
+				ani_ptr->PlayAnimation(L"tairang_attack3booster", true);
+				ani_ptr->Stop();
+				});
+
+		
+		}
+
+		std::shared_ptr<GameObject> TairangSkillEft03 = object::Instantiate<GameObject>();
+		{
+			TairangSkillEft03->SetName(L"TairangSkillEft03");
+			std::shared_ptr<Transform> tf = TairangSkillEft03->GetComponent<Transform>();
+			tf->scale = Vector3(1.0f, 1.0f, 1.0f);
+
+			std::shared_ptr<GameObject> TairangSkillEft01_1 = object::Instantiate<GameObject>(AniEftObject);
+			std::shared_ptr<GameObject> TairangSkillEft01_2 = object::Instantiate<GameObject>(AniEftObject);
+
+			TairangSkillEft03->AddChild(TairangSkillEft01_1);
+			TairangSkillEft03->AddChild(TairangSkillEft01_2);
+
+			tf = TairangSkillEft01_1->GetComponent<Transform>();
+			tf->position = Vector3(-0.0f, -0.25f, 2.0f);
+			tf->scale = Vector3(0.5f, 0.1f, 1.0f);
+			tf = TairangSkillEft01_2->GetComponent<Transform>();
+			tf->position = Vector3(0.0f, 0.0f, 0.0f);
+
+			std::shared_ptr<Animator> ani1 = TairangSkillEft01_1->GetComponent<Animator>();
+
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"tairnag_eft");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"bearas1crackn.img", 0, 16, L"tairang_bearas1crackn");
+			ani1->Create(texture, L"tairang_bearas1crackn", 0, 16, 0.01f);
+			ani1->PlayAnimation(L"tairang_bearas1crackn", true);
+			ani1->Stop();
+			Animator* ani_ptr = ani1.get();
+			ani1->CompleteEvent(L"tairang_bearas1crackn") = std::bind([ani_ptr]()->void {
+				std::shared_ptr<MeshRenderer> ms = ani_ptr->owner->GetComponent<MeshRenderer>();
+				ms->is_active = false;
+				ani_ptr->Stop();
+				});
+
+		}
+
 
 		std::shared_ptr<GameObject> TairangeSkillObject01 = object::Instantiate<GameObject>(AniObject);
 		{
@@ -284,29 +434,23 @@ namespace roka::prefab
 			std::shared_ptr<Transform> tf = TairangeSkillObject01->GetComponent<Transform>();
 			std::shared_ptr<Animator> ani = TairangeSkillObject01->GetComponent<Animator>();
 
-/*
-			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
-			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"monster_skill01");
-			ani->Create(texture, L"monster_skill01", 0, 20, 0.1f);
 
-			tf->scale = Vector3(1.0f, 1.0f, 1.0f);
-
-			col->is_active = false;
-			col->DisableRender();
+			//col->is_active = false;
+			//col->DisableRender();
 
 			mr->is_active = false;
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
 
-			hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
+			hitbox->hitbox = HitBoxScript::EHitBoxType::Bottom;
 			hitbox->hitbox_owner = SpiderSkillObject01;
 
 			skill->stun_type = EStunState::HardStagger;
-			skill->distance = Vector2(8.5f, 0.025f);
-			skill->range = Vector2(3.0f, 0.05f);
-			skill->startPos = Vector2(2.15f, 0.025f);
+			skill->distance = Vector2(0.0f,-0.0f);
+			skill->range = Vector2(0.5f, 0.05f);
+			skill->startPos = Vector2(0.0f, 0.0f);
 			
-			skill->startKey = L"monster_skill01";*/
-			skill->deleteTime = 5.5f;
+			skill->startKey =L"";
+			skill->deleteTime = 0.0f;
 		}
 
 		std::shared_ptr<roka::GameObject> PlayerObject = object::Instantiate<roka::GameObject>(
@@ -425,6 +569,10 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(Spider_MonsterObject->GetName(), Spider_MonsterObject));
 		Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
 		Prefabs.insert(std::make_pair(PlayerObject->GetName(), PlayerObject));
+		Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
+		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
+		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));
+		
 	}
 	void Release()
 	{
@@ -450,6 +598,6 @@ namespace roka::prefab
 		if (tairang_npk == nullptr)
 			tairang_npk = Resources::Load<NPK>(L"tairang", path + L"tairang.npk");
 		if (tairangEft_npk == nullptr)
-			tairangEft_npk = Resources::Load<NPK>(L"tairnag_eft", path + L"tairang.npk");
+			tairangEft_npk = Resources::Load<NPK>(L"tairnag_eft", path + L"tairang_eft.npk");
 	}
 }

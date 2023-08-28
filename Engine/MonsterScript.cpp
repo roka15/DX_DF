@@ -165,7 +165,7 @@ namespace roka
 				ms->mState = state;
 				break;
 			}
-			ms->mState = EMonsterState::Skill;
+		//	ms->mState = EMonsterState::Skill;
 			ms->mSkillStateCnt++;
 			switch (ms->mState)
 			{

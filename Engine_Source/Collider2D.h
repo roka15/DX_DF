@@ -40,6 +40,9 @@ namespace roka
 		void EnableRender() { mbRender = true; }
 		void DisableRender() { mbRender = false; }
 
+		void EnableColCheck() { mbColCehck = true; }
+		void DisableColCheck() { mbColCehck = false; }
+
 		PROPERTY(GetSize, SetSize) Vector2 size;
 		PROPERTY(GetCenter, SetCenter) Vector2 center;
 
@@ -62,6 +65,7 @@ namespace roka
 		bool mbCollision;
 		double mTime;
 		bool mbRender;
+		bool mbColCehck;
 	};
 }
 

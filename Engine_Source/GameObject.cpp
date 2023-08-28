@@ -22,7 +22,8 @@ roka::GameObject::GameObject(const GameObject& ref) :
 	Entity(ref),
 	mbDebugObject(ref.mbDebugObject),
 	mbMove(ref.mbMove),
-	mState(ref.mState)
+	mState(ref.mState),
+	mLayerType(ref.mLayerType)
 {
 	for (auto& comp : ref.mComponents)
 	{

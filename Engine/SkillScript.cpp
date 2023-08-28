@@ -53,9 +53,11 @@ namespace roka
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		//test
 		if (ani != nullptr)
+			if(mStartKey.size()!=0)
 			ani->PlayAnimation(mStartKey, false);
 
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
+		if(mr!=nullptr)
 		mr->is_active = true;
 		std::shared_ptr<Collider2D>col = owner->GetComponent<Collider2D>();
 
@@ -82,7 +84,8 @@ namespace roka
 		float z = tf->position.x;
 		tf->position = Vector3(startPos.x, startPos.y, z);
 
-
+		if (mDeleteTime == 0.0f)
+			return;
 		Time::CallBackTimerInfo  info = {};
 		info.endTime = mDeleteTime;
 		std::wstring key = L"SkillEndEvent";
@@ -94,6 +97,7 @@ namespace roka
 	void SkillScript::End()
 	{
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
+		if (mr != nullptr)
 		mr->is_active = false;
 		std::shared_ptr<Collider2D> col = owner->GetComponent<Collider2D>();
 		//test
