@@ -40,7 +40,8 @@ namespace roka
 	void MeshRenderer::Render()
 	{
 		GameObject* Owner = GetOwner();
-
+		if (is_active == false)
+			return;
 		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
 		std::shared_ptr<Animator> animator = owner->GetComponent<Animator>();
 		int flag = 0;

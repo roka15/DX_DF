@@ -158,6 +158,8 @@ namespace roka
 		std::shared_ptr<Animation> prevAnimation = mActiveAnimation.lock();
 		std::shared_ptr<Animation> animation = FindAnimation(name);
 		std::shared_ptr<Events> events;
+		if (animation == nullptr)
+			return;
 		if (prevAnimation != nullptr)
 		{
 			if (prevAnimation == animation && mbLoop == true)

@@ -57,6 +57,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaGraphics.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaRandom.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaTime.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Input.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyResource.h" />
@@ -109,6 +110,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Rigidbody.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaGraphicDevice_Dx11.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaMath.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RokaRandom.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaTime.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Input.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyResource.cpp" />

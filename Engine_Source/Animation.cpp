@@ -47,7 +47,10 @@ namespace roka
 			mTime = 0.0f;
 			if (mRange.second <= mIndex)
 			{
-				mIndex = mRange.second-1;
+				if (mRange.first == mRange.second)
+					mIndex = mRange.second;
+				else
+					mIndex = mRange.second - 1;
 				mIsComplete = true;
 			}
 		}

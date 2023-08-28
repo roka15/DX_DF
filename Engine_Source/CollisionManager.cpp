@@ -233,7 +233,9 @@ namespace roka
 	void CollisionManager::FindCollider(std::shared_ptr<GameObject> obj, std::vector<std::shared_ptr<Collider2D>>& cols)
 	{
 		std::shared_ptr<Collider2D> col = obj->GetComponent<Collider2D>();
-		if (col != nullptr)
+		if (col != nullptr &&
+			(col->owner->active == GameObject::EState::Active &&
+				col->is_active == true))
 			cols.push_back(col);
 
 		int cnt = obj->GetChildCont();

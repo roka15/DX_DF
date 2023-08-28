@@ -11,6 +11,8 @@
 #include "NPK.h"
 #include "Object.h"
 #include "CollisionManager.h"
+#include "NormalMonsterPool.h"
+#include "AnimationObjectPool.h"
 
 #include "MoveScript.h"
 #include "ObjectPool.h"
@@ -66,9 +68,9 @@ namespace roka
 		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 		lightComp->SetType(ELightType::Directional);
 		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-		
 
-        //point light
+
+		//point light
 		/*std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
 		light->SetName(L"light");
 		AddGameObject(ELayerType::Light, light);
@@ -77,11 +79,11 @@ namespace roka
 		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 		lightComp->SetType(ELightType::Point);
 		lightComp->SetRadius(3.0f);*/
-		
+
 
 		/* player script text*/
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
-		
+
 		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
 		another_player->SetName(L"AnotherPlayer");
 		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
@@ -135,12 +137,26 @@ namespace roka
 
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
-		std::shared_ptr<GameObject> monster1 = object::Instantiate<GameObject>(monsterOrigin);
-		monster1->SetName(L"Monster1");
-		monster1->GetComponent<Transform>()->position=Vector3(2.0f, 0.0f, 0.0f);
-		monster1->GetComponent<MonsterScript>()->SetTarget(player);
-		AddGameObject(ELayerType::Monster,monster1);
+		pool::NormalMonsterPool* pool = pool::NormalMonsterPool::GetInstance();
+		for (int i = 0; i < 3; i++)
+		{
+			std::shared_ptr<GameObject> monster = pool::NormalMonsterPool::GetInstance()->GetPool(L"SpiderMonster")->Spawn();
 
+			monster->SetName(L"Monster" + std::to_wstring(i));
+			monster->GetComponent<Transform>()->position = Vector3(0.5f * i, 0.0f, 0.0f);
+			monster->GetComponent<MonsterScript>()->SetTarget(player);
+			AddGameObject(ELayerType::Monster, monster);
+		}
+
+		std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
+		{
+			std::shared_ptr<GameObject> monster = object::Instantiate<GameObject>(TairangOrigin);
+			monster->SetName(L"Tiarang");
+			monster->GetComponent<Transform>()->position = Vector3(-1.0f, 0.0f, 0.0f);
+			monster->GetComponent<MonsterScript>()->SetTarget(player);
+			AddGameObject(ELayerType::Monster, monster);
+		}
+		
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
 
@@ -154,6 +170,7 @@ namespace roka
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
 			renderer::MainCamera = cameraComp;
 		}
+
 
 
 		/*std::shared_ptr<GameObject> obj = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f), ELayerType::Player);

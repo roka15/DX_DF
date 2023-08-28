@@ -42,8 +42,6 @@ namespace roka
 
 		roka::renderer::Initialize();
 		roka::prefab::Initialize();
-		//test 나중에 object pool manager 만들면 변경
-		//object::pool::ObjectPool<GameObject>::Initialize(prefab::Prefabs[L"TestObject"], 10);
 		SceneManager::Initialize();
 
 		
@@ -75,7 +73,6 @@ namespace roka
 	{
 		SceneManager::Release();
 		renderer::Release();
-		//object::pool::ObjectPool<GameObject>::Release();
 		prefab::Release();
 	}
 

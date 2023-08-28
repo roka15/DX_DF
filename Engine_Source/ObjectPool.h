@@ -41,7 +41,6 @@ namespace roka::pool
 			for (int i = 0; i < temp_min; i++)
 			{
 				T* obj = new T();
-				obj->Initialize();
 				mpools.push(obj);
 			}
 
@@ -57,7 +56,6 @@ namespace roka::pool
 			for (int i = 0; i < temp_min; i++)
 			{
 				T* obj = new T(*(_origin.get()));
-				obj->Initialize();
 				mpools.push(obj);
 			}
 		}
@@ -90,6 +88,7 @@ namespace roka::pool
 			std::shared_ptr<T> obj(data, [this](T* obj)->void { DeSpawn(obj); });
 			mpools.pop();
 			obj->SetState(GameObject::EState::Active);
+			obj->Initialize();
 			return obj;
 		}
 		void DeSpawn(T* _obj)

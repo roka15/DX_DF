@@ -58,8 +58,38 @@ void roka::HitBoxScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 
 void roka::HitBoxScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
 {
+	std::shared_ptr<HitBoxScript> otherHitBox = other->owner->GetComponent<HitBoxScript>();
+	if (otherHitBox == nullptr)
+		return;
+	if (mHitBoxType == otherHitBox->hitbox)
+	{
+		std::vector<std::shared_ptr<Script>> scripts = mHitBoxOwner.lock()->GetScripts();
+
+		for (auto script : scripts)
+		{
+			std::shared_ptr<HitBoxScript> hitbox = std::dynamic_pointer_cast<HitBoxScript>(script);
+			if (hitbox != nullptr)
+				continue;
+			script->OnCollisionStay(other);
+		}
+	}
 }
 
 void roka::HitBoxScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 {
+	std::shared_ptr<HitBoxScript> otherHitBox = other->owner->GetComponent<HitBoxScript>();
+	if (otherHitBox == nullptr)
+		return;
+	if (mHitBoxType == otherHitBox->hitbox)
+	{
+		std::vector<std::shared_ptr<Script>> scripts = mHitBoxOwner.lock()->GetScripts();
+
+		for (auto script : scripts)
+		{
+			std::shared_ptr<HitBoxScript> hitbox = std::dynamic_pointer_cast<HitBoxScript>(script);
+			if (hitbox != nullptr)
+				continue;
+			script->OnCollisionExit(other);
+		}
+	}
 }

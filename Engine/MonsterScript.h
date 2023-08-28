@@ -9,10 +9,12 @@ namespace roka
 	{
 	protected:
 		MonsterScript();
+		MonsterScript(EScriptType type);
+		MonsterScript(EScriptType type,const UINT ActiveSkillStateMaxCnt,const Vector2 leftColCenter,const Vector2 rightColCenter);
 		MonsterScript(const MonsterScript& ref);
-		void Copy(Component* src);
+		virtual void Copy(Component* src)override;
 	public:
-		~MonsterScript();
+		virtual ~MonsterScript();
 
 		enum class EMonsterState
 		{
@@ -33,21 +35,30 @@ namespace roka
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other)override;
         
 		static void RandomState(std::weak_ptr<void> ptr);
+		
 
 		virtual void Ready();
 		virtual void Idle();
 		virtual void Move();
 		virtual void Attack();
+		virtual void AttackEnd();
 
-		void Skill01();
+		virtual void SkillEnd();
+
+		void RegisterSkillInfo(std::wstring start, std::wstring end);
 		
 		void SetTarget(std::shared_ptr<GameObject> target) { mTarget = target; }
 
 		void EnableNextState() { mbNextState = true; }
 		void DisableNextState() { mbNextState = false; }
-	public:
-		static void SetColCenter(Vector2 left, Vector2 right) { mLeftColCenter = left; mRightColCenter = right; }
-		static void SetShooterPos(Vector2 left, Vector2 right) { mLeftShooterPos = left; mRightShooterPos = right; }
+
+		virtual void LeftSetting();
+		virtual void RightSetting();
+
+		virtual void SetTargetPos(Vector2& outDir,Vector2& outTargetPos);
+
+		EMonsterState GetState() { return mState; }
+		GET_PROPERTY(GetState) EMonsterState state;
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
@@ -55,16 +66,22 @@ namespace roka
 		std::weak_ptr<GameObject> mTarget;
 		EMonsterState mState;
 
-		static Vector2 mLeftColCenter;
-		static Vector2 mRightColCenter;
+		const Vector2 mLeftColCenter;
+		const Vector2 mRightColCenter;
 
-		static Vector2 mLeftShooterPos;
-		static Vector2 mRightShooterPos;
+		
 
 		double mNextStateCoolTime;
 		float mSpeed;
 		bool mbNextState;
 		EDir4Type mCurDirType;
+
+		const UINT mSkillStateCntMax;
+		UINT mSkillStateCnt;
+
+		std::wstring mCurSkillKey;
+		std::vector<std::wstring> mSkillStartKey;
+		std::map<std::wstring, std::wstring> mSkillEndKey;
 	};
 }
 

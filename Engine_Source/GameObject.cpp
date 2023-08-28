@@ -155,6 +155,34 @@ std::vector<std::shared_ptr<roka::GameObject>> roka::GameObject::GetChilds()
 	return vec;
 }
 
+void roka::GameObject::RemoveChild(std::wstring key)
+{
+	for (auto& child : mChild)
+	{
+		if (child->GetName().compare(key) == 0) 
+		{
+			child.reset();
+		}
+	}
+	mChild.erase(std::remove(mChild.begin(), mChild.end(), nullptr), mChild.end());
+}
+
+void roka::GameObject::RemoveChild(std::shared_ptr<GameObject> obj)
+{
+	auto itr = mChild.begin();
+	while (itr != mChild.end()) 
+	{
+		if ((*itr)==obj) 
+		{
+			itr = mChild.erase(itr); 
+		}
+		else 
+		{
+			++itr;
+		}
+	}
+}
+
 roka::ELayerType roka::GameObject::GetLayerType()
 {
 	std::shared_ptr<GameObject> parrent = mParent.lock();
@@ -173,7 +201,8 @@ void roka::GameObject::Initialize()
 {
 	for (auto& child : mChild)
 	{
-		child->parent = GetSharedPtr();
+		std::shared_ptr<GameObject> this_ptr = GetSharedPtr();
+		child->parent = this_ptr;
 		child->Initialize();
 	}
 	for (std::shared_ptr<Component>& comp : mComponents)
@@ -188,6 +217,8 @@ void roka::GameObject::Initialize()
 
 void roka::GameObject::Update()
 {
+	if (active != EState::Active)
+		return;
 	for (std::shared_ptr<Component>& comp : mComponents)
 	{
 		comp->Update();
@@ -205,6 +236,8 @@ void roka::GameObject::Update()
 
 void roka::GameObject::LateUpdate()
 {
+	if (active != EState::Active)
+		return;
 	for (std::shared_ptr<Component>& comp : mComponents)
 	{
 		comp->LateUpdate();
@@ -221,7 +254,8 @@ void roka::GameObject::LateUpdate()
 
 void roka::GameObject::Render()
 {
-
+	if (active != EState::Active)
+		return;
 	std::shared_ptr<MeshRenderer> mr = nullptr;
 	for (std::shared_ptr<Component>& comp : mComponents)
 	{

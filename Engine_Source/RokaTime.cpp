@@ -10,7 +10,8 @@ namespace roka
 	LARGE_INTEGER Time::mPrevFrequency = {};
 	LARGE_INTEGER Time::mCurFrequency = {};
 	std::map<std::wstring, Time::CallBackEvent> Time::mEvents = {};
-	std::queue<std::pair<Time::CallBackTimerInfo, std::weak_ptr<void>>> Time::mRequestEvent;
+	std::queue<std::pair<Time::CallBackTimerInfo, std::weak_ptr<void>>> Time::mRequestRegisterEvent;
+	std::queue<std::pair<Time::CallBackTimerInfo, std::function<void()>>> Time::mRequestEvent;
 	void Time::Initiailize()
 	{	 
 		// CPU 고유 진동수 가져오기
@@ -29,14 +30,14 @@ namespace roka
 		mDeltaTime = differnceFrequency / mCpuFrequency.QuadPart;
 
 		mPrevFrequency.QuadPart = mCurFrequency.QuadPart;
-		size_t start_size = mRequestEvent.size();
+		size_t start_size = mRequestRegisterEvent.size();
 		size_t cur_size = 0;
-		while (mRequestEvent.empty() == false)
+		while (mRequestRegisterEvent.empty() == false)
 		{
 			if (start_size == cur_size)
 				break;
-			std::pair<CallBackTimerInfo, std::weak_ptr<void>> value = mRequestEvent.front();
-			mRequestEvent.pop();
+			std::pair<CallBackTimerInfo, std::weak_ptr<void>> value = mRequestRegisterEvent.front();
+			mRequestRegisterEvent.pop();
 
 			CallBackTimerInfo& info = value.first;
 			std::weak_ptr<void> ptr = value.second;
@@ -52,6 +53,27 @@ namespace roka
 				continue;
 			}
 
+			info.curTime += DeltaTime();
+			mRequestRegisterEvent.push(value);
+			cur_size++;
+		}
+		start_size = mRequestEvent.size();
+		cur_size = 0;
+		while (mRequestEvent.empty() == false)
+		{
+			if (start_size == cur_size)
+				break;
+			std::pair<CallBackTimerInfo,std::function<void()>> value = mRequestEvent.front();
+			mRequestEvent.pop();
+			CallBackTimerInfo& info = value.first;
+			std::function<void()> func = value.second;
+			double endTime = info.endTime;
+			double curTime = info.curTime;
+			if (endTime <= curTime)
+			{
+				func();
+				continue;
+			}
 			info.curTime += DeltaTime();
 			mRequestEvent.push(value);
 			cur_size++;
@@ -88,7 +110,12 @@ namespace roka
 
 	void Time::RequestEvent(CallBackTimerInfo info, std::weak_ptr<void> ptr)
 	{
-		mRequestEvent.push(std::make_pair(info, ptr));
+		mRequestRegisterEvent.push(std::make_pair(info, ptr));
+	}
+
+	void Time::RequestEvent(CallBackTimerInfo info, std::function<void()> func)
+	{
+		mRequestEvent.push(std::make_pair(info, func));
 	}
 
 }

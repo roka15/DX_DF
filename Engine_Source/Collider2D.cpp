@@ -18,6 +18,7 @@ namespace roka
 		mSize(Vector2::One),
 		mCenter(Vector2::Zero),
 		mbCollision(false),
+		mbRender(true),
 		mTime(0.0)
 	{
 		mColliderNumber++;
@@ -31,7 +32,8 @@ namespace roka
 		mColType(ref.mColType),
 		mSize(ref.mSize),
 		mCenter(ref.mCenter),
-		mTime(0.0)
+		mTime(0.0),
+		mbRender(ref.mbRender)
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
@@ -51,6 +53,7 @@ namespace roka
 		mColliderID = mColliderNumber;
 		mTime = 0.0;
 		mRotationZ = 0.0f;
+		mbRender = source->mbRender;
 	}
 	Collider2D::~Collider2D()
 	{
@@ -65,6 +68,8 @@ namespace roka
 	void Collider2D::LateUpdate()
 	{
 		if (is_active == false)
+			return;
+		if (mbRender == false)
 			return;
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 

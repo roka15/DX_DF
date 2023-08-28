@@ -37,6 +37,8 @@ namespace roka
 		
 		void SetTime(double time) { mTime = time; }
 		double GetTime() { return mTime; }
+		void EnableRender() { mbRender = true; }
+		void DisableRender() { mbRender = false; }
 
 		PROPERTY(GetSize, SetSize) Vector2 size;
 		PROPERTY(GetCenter, SetCenter) Vector2 center;
@@ -59,6 +61,7 @@ namespace roka
 		Vector2 mCenter;
 		bool mbCollision;
 		double mTime;
+		bool mbRender;
 	};
 }
 

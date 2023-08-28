@@ -47,7 +47,7 @@ namespace roka
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
 
-		void StunStagger(EStunState stun);
+		void StunStagger(EStunState stun,float endtime);
 		void StunDown();
 
 		void NextState();

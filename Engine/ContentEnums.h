@@ -30,12 +30,29 @@ namespace roka::enums
 	enum class EStunState
 	{
 		None,
-		Stagger,
-		Down,
-		HardStagger,
-		HardDown,
+		Stagger=1,
+		Down=2,
+		HardStagger=4,
+		HardDown=8,
 		End,
 	};
+	enum class EAttackType
+	{
+		None,
+		Straight,
+		TargetPos,
+		RandomPos,
+		End,
+	};
+	enum class ESkillType
+	{
+		None,
+		Buff,
+		DeBuff,
+		Attack,
+		End,
+	};
+	
 
 	enum class EAvatarParts
 	{

@@ -64,12 +64,6 @@
     <ClInclude Include="PartScript.h">
       <Filter>Contents\Script\PartScript</Filter>
     </ClInclude>
-    <ClInclude Include="SkillScript.h">
-      <Filter>Contents\Script\SkillScript</Filter>
-    </ClInclude>
-    <ClInclude Include="MonsterScript.h">
-      <Filter>Contents\Script\MonsterScript</Filter>
-    </ClInclude>
     <ClInclude Include="HitBoxScript.h">
       <Filter>Contents\Script\HitBoxScript</Filter>
     </ClInclude>
@@ -78,6 +72,33 @@
     </ClInclude>
     <ClInclude Include="TargetMoveScript.h">
       <Filter>Contents\Script\MoveScript</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterScript.h">
+      <Filter>Contents\Script\MonsterScript\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SpiderMonsterScript.h">
+      <Filter>Contents\Script\MonsterScript\Nomal Monster\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalMonsterScript.h">
+      <Filter>Contents\Script\MonsterScript\Nomal Monster\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="NamedMonsterScript.h">
+      <Filter>Contents\Script\MonsterScript\Named Monster\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalMonsterPool.h">
+      <Filter>Contents\ObjectPool\NormalMonsterPool</Filter>
+    </ClInclude>
+    <ClInclude Include="TairangMonsterScript.h">
+      <Filter>Contents\Script\MonsterScript\Named Monster\Tairang</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterSkillScript.h">
+      <Filter>Contents\Script\SkillScript\MonsterSkillScript</Filter>
+    </ClInclude>
+    <ClInclude Include="SkillScript.h">
+      <Filter>Contents\Script\SkillScript\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationObjectPool.h">
+      <Filter>Contents\ObjectPool\AnimationObjectPool</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -135,12 +156,6 @@
     <ClCompile Include="PartScript.cpp">
       <Filter>Contents\Script\PartScript</Filter>
     </ClCompile>
-    <ClCompile Include="SkillScript.cpp">
-      <Filter>Contents\Script\SkillScript</Filter>
-    </ClCompile>
-    <ClCompile Include="MonsterScript.cpp">
-      <Filter>Contents\Script\MonsterScript</Filter>
-    </ClCompile>
     <ClCompile Include="HitBoxScript.cpp">
       <Filter>Contents\Script\HitBoxScript</Filter>
     </ClCompile>
@@ -149,6 +164,33 @@
     </ClCompile>
     <ClCompile Include="TargetMoveScript.cpp">
       <Filter>Contents\Script\MoveScript</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterScript.cpp">
+      <Filter>Contents\Script\MonsterScript\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SpiderMonsterScript.cpp">
+      <Filter>Contents\Script\MonsterScript\Nomal Monster\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalMonsterScript.cpp">
+      <Filter>Contents\Script\MonsterScript\Nomal Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="NamedMonsterScript.cpp">
+      <Filter>Contents\Script\MonsterScript\Named Monster\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalMonsterPool.cpp">
+      <Filter>Contents\ObjectPool\NormalMonsterPool</Filter>
+    </ClCompile>
+    <ClCompile Include="TairangMonsterScript.cpp">
+      <Filter>Contents\Script\MonsterScript\Named Monster\Tairang</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterSkillScript.cpp">
+      <Filter>Contents\Script\SkillScript\MonsterSkillScript</Filter>
+    </ClCompile>
+    <ClCompile Include="SkillScript.cpp">
+      <Filter>Contents\Script\SkillScript\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationObjectPool.cpp">
+      <Filter>Contents\ObjectPool\AnimationObjectPool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +262,45 @@
     </Filter>
     <Filter Include="Contents\Script\WeaponScript">
       <UniqueIdentifier>{22f49daa-afc7-4afa-aab2-5e25fb75f174}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Nomal Monster">
+      <UniqueIdentifier>{1375173e-57a8-43ce-989c-022bfa8ce630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Nomal Monster\Spider">
+      <UniqueIdentifier>{5056ab33-848a-47de-88fe-83abffb05a4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Base">
+      <UniqueIdentifier>{e4f26611-4456-4d8c-b1c1-a91084b48a8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Nomal Monster\Base">
+      <UniqueIdentifier>{efb14849-7634-46fe-8b9c-e5d78ca8235f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\ObjectPool">
+      <UniqueIdentifier>{7e260dde-bac2-4870-b689-bac6e702305c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\ObjectPool\NormalMonsterPool">
+      <UniqueIdentifier>{f40c1968-e66f-444e-9f65-f18a1fe05fa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Named Monster">
+      <UniqueIdentifier>{7c594060-e0af-4753-9a5f-4b53701295ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Named Monster\Tairang">
+      <UniqueIdentifier>{3e7e386b-e277-464b-bb88-7f3c03903143}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\MonsterScript\Named Monster\Base">
+      <UniqueIdentifier>{9a997620-db2f-42ae-b77f-d256b88e974a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\ObjectPool\AnimationObjectPool">
+      <UniqueIdentifier>{4a6accde-1acd-4aec-9ee7-91d17f000dd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\MonsterSkillScript">
+      <UniqueIdentifier>{41f01de6-6d0a-420d-a98f-56a07b14f469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\Base">
+      <UniqueIdentifier>{6857e66a-45b2-4d4d-8bdc-111692b6fbf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{da2540d1-414e-4906-9063-f70f7185b166}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

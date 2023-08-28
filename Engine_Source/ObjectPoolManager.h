@@ -21,6 +21,7 @@ namespace roka::pool
             
 			return itr->second.get();
 		}
+	
 	protected:
 		ObjectPoolManager() {}
 		virtual ~ObjectPoolManager() 
@@ -35,14 +36,13 @@ namespace roka::pool
 		{
 			mPools.clear();
 		}
-
 		bool AddPool(std::wstring key, std::shared_ptr<Origin> origin)
 		{
 			if (mPools.find(key) != mPools.end())
 				return false;
-			mPools.insert(std::make_pair(key,std::unique_ptr<ObjectPool<Origin>>(new ObjectPool<Origin>())));
-			mPools[key]->Initialize(origin,mPoolSize);
-		
+			mPools.insert(std::make_pair(key, std::unique_ptr<ObjectPool<Origin>>(new ObjectPool<Origin>())));
+			mPools[key]->Initialize(origin, mPoolSize);
+
 			return true;
 		}
 	private:

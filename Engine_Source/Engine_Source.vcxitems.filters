@@ -84,9 +84,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)SingleTon.cpp">
       <Filter>Common\Singleton</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp">
-      <Filter>Manager\ObjectPoolManager</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)MemoryPool.cpp">
       <Filter>Common\MemoryPool</Filter>
     </ClCompile>
@@ -132,6 +129,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)StructBuffer.cpp">
       <Filter>Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp">
+      <Filter>Manager\ObjectPoolManager\EX</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RokaRandom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -232,9 +233,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SingleTon.h">
       <Filter>Common\Singleton</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h">
-      <Filter>Manager\ObjectPoolManager</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)MemoryPool.h">
       <Filter>Common\MemoryPool</Filter>
     </ClInclude>
@@ -289,6 +287,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)StructBuffer.h">
       <Filter>Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h">
+      <Filter>Manager\ObjectPoolManager\EX</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RokaRandom.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -431,6 +433,12 @@
     </Filter>
     <Filter Include="GameObject\Component\Light">
       <UniqueIdentifier>{f9ba6abe-e768-4fdd-b196-4429545a4fc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\ObjectPoolManager\EX">
+      <UniqueIdentifier>{9acb3952-1224-4324-9587-ebaf9f4f1691}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Random">
+      <UniqueIdentifier>{9eaef568-c5e6-4579-b77c-1af20504b0eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

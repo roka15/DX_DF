@@ -24,6 +24,7 @@ namespace roka
 
 		static void RegisterEvent(std::wstring key, std::function<void(std::weak_ptr<void>)> func);
 		static void RequestEvent(CallBackTimerInfo info, std::weak_ptr<void> ptr);
+		static void RequestEvent(CallBackTimerInfo info, std::function<void()> func);
 	private:
 		static double mDeltaTime;
 		static double mSecond;
@@ -31,6 +32,7 @@ namespace roka
 		static LARGE_INTEGER mPrevFrequency;
 		static LARGE_INTEGER mCurFrequency;
 		static std::map<std::wstring, CallBackEvent> mEvents;
-		static std::queue<std::pair<CallBackTimerInfo, std::weak_ptr<void>>> mRequestEvent;
+		static std::queue<std::pair<CallBackTimerInfo, std::weak_ptr<void>>> mRequestRegisterEvent;
+		static std::queue<std::pair<CallBackTimerInfo, std::function<void()>>> mRequestEvent;
 	};
 }

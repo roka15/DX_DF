@@ -11,12 +11,16 @@
 #include "AvatarScript.h"
 #include "MoveScript.h"
 #include "PlayerScript.h"
-#include "MonsterScript.h"
 #include "PartScript.h"
 #include "WeaponScript.h"
 #include "HitBoxScript.h"
+#include "SkillScript.h"
+#include "MonsterSkillScript.h"
 #include "TargetMoveScript.h"
 #include "Rigidbody.h"
+#include "MonsterScript.h"
+#include "SpiderMonsterScript.h"
+#include "TairangMonsterScript.h"
 namespace roka::prefab
 {
 	std::map<std::wstring, std::shared_ptr<roka::GameObject>> Prefabs = {};
@@ -152,6 +156,47 @@ namespace roka::prefab
 			mr->material->shader->bsstate = EBSType::AlphaBlend;
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
+		std::shared_ptr<roka::Image> AniEftObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			AniEftObject->SetName(L"AniEftObject");
+			AniEftObject->AddComponent<Animator>();
+
+			std::shared_ptr<MeshRenderer>mr = AniEftObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+		}
+
+
+		std::shared_ptr<roka::Image> ColAniObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			ColAniObject->SetName(L"ColAniObject");
+			ColAniObject->AddComponent<Animator>();
+
+			std::shared_ptr<MeshRenderer>mr = ColAniObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->material->shader->bsstate = EBSType::AlphaBlend;
+			mr->material->render_mode = ERenderMode::Transparent;
+		}
+		std::shared_ptr<roka::Image> ColAniEftObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			ColAniEftObject->SetName(L"ColAniEftObject");
+			ColAniEftObject->AddComponent<Animator>();
+
+			std::shared_ptr<MeshRenderer>mr = ColAniEftObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+		}
+
 		std::shared_ptr<roka::Image> PartObject = object::Instantiate<roka::Image>(AniObject);
 		{
 			PartObject->SetName(L"PartObject");
@@ -161,9 +206,10 @@ namespace roka::prefab
 		{
 			Spider_MonsterObject->SetName(L"Spider_MonsterObject");
 			Spider_MonsterObject->GetComponent<Transform>()->scale = Vector3(2.0f, 2.0f, 1.0f);
-			std::shared_ptr<MonsterScript> monster = Spider_MonsterObject->AddScript<MonsterScript>();
+			std::shared_ptr<SpiderMonsterScript> monster = Spider_MonsterObject->AddScript<SpiderMonsterScript>();
 			std::shared_ptr<TargetMoveScript> ms = Spider_MonsterObject->AddScript<TargetMoveScript>();
 			std::shared_ptr<Rigidbody> rigid = Spider_MonsterObject->AddComponent<Rigidbody>();
+
 
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
 			Spider_MonsterObject->AddChild(TopColObject);
@@ -184,23 +230,83 @@ namespace roka::prefab
 			hitbox = BottomColObject->AddScript<HitBoxScript>();
 			hitbox->hitbox = HitBoxScript::EHitBoxType::Bottom;
 			hitbox->hitbox_owner = Spider_MonsterObject;
+		}
+		std::shared_ptr<GameObject> Tairang_MonsterObject = object::Instantiate<GameObject>(AniObject);
+		{
+			Tairang_MonsterObject->SetName(L"Tairang_MonsterObject");
+			Tairang_MonsterObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
+			std::shared_ptr<TairangMonsterScript> monster = Tairang_MonsterObject->AddScript<TairangMonsterScript>();
+			std::shared_ptr<TargetMoveScript> ms = Tairang_MonsterObject->AddScript<TargetMoveScript>();
+			std::shared_ptr<Rigidbody> rigid = Tairang_MonsterObject->AddComponent<Rigidbody>();
+		}
+		std::shared_ptr<GameObject> SpiderSkillObject01 = object::Instantiate<GameObject>(AniObject);
+		{
+			SpiderSkillObject01->SetName(L"skill01");
+			Spider_MonsterObject->AddChild(SpiderSkillObject01);
+			std::shared_ptr<Collider2D> col = SpiderSkillObject01->AddComponent<Collider2D>();
+			std::shared_ptr<MonsterSkillScript> skill = SpiderSkillObject01->AddScript<MonsterSkillScript>();
+			std::shared_ptr<HitBoxScript> hitbox = SpiderSkillObject01->AddScript<HitBoxScript>();
+			std::shared_ptr<MeshRenderer> mr = SpiderSkillObject01->GetComponent<MeshRenderer>();
+			std::shared_ptr<Transform> tf = SpiderSkillObject01->GetComponent<Transform>();
+			std::shared_ptr<Animator> ani = SpiderSkillObject01->GetComponent<Animator>();
 
-			std::shared_ptr<GameObject> skill = object::Instantiate<GameObject>(AniObject);
-			Spider_MonsterObject->AddChild(skill);
-			skill->SetName(L"skill01");
-			skill->active = GameObject::EState::Paused;
-			skill->GetComponent<MeshRenderer>()->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			std::shared_ptr<Animator> ani = skill->GetComponent<Animator>();
 			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
-			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"monster_skill");
-			ani->Create(texture, L"monster_skill", 0, 20, 0.1f);
-			ani->PlayAnimation(L"monster_skill", true);
-			std::shared_ptr<Transform> tf = skill->GetComponent<Transform>();
-			tf->position = Vector3(1.75f, 0.025f,0.0f);
-			tf->scale = Vector3(4.0f, 1.0f, 1.0f);
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"monster_skill01");
+			ani->Create(texture, L"monster_skill01", 0, 20, 0.1f);
 
-			MonsterScript::SetColCenter(Vector2(0.085f, -0.1f), Vector2(-0.05f, -0.1f));
-			MonsterScript::SetShooterPos(Vector2(-1.75f, 0.025f), Vector2(1.75f, 0.025f));
+			tf->scale = Vector3(5.0f, 1.0f, 1.0f);
+
+			col->is_active = false;
+			col->DisableRender();
+
+			mr->is_active = false;
+			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+
+			hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
+			hitbox->hitbox_owner = SpiderSkillObject01;
+
+			skill->stun_type = EStunState::HardStagger;
+			skill->distance = Vector2(8.5f, 0.025f);
+			skill->range = Vector2(3.0f, 0.05f);
+			skill->startPos = Vector2(2.15f, 0.025f);
+			skill->deleteTime = 1.5f;
+			skill->startKey = L"monster_skill01";
+		}
+
+		std::shared_ptr<GameObject> TairangeSkillObject01 = object::Instantiate<GameObject>(AniObject);
+		{
+			TairangeSkillObject01->SetName(L"skill01");
+			Tairang_MonsterObject->AddChild(TairangeSkillObject01);
+			//std::shared_ptr<Collider2D> col = TairangeSkillObject01->AddComponent<Collider2D>();
+			std::shared_ptr<MonsterSkillScript> skill = TairangeSkillObject01->AddScript<MonsterSkillScript>();
+			std::shared_ptr<HitBoxScript> hitbox = TairangeSkillObject01->AddScript<HitBoxScript>();
+			std::shared_ptr<MeshRenderer> mr = TairangeSkillObject01->GetComponent<MeshRenderer>();
+			std::shared_ptr<Transform> tf = TairangeSkillObject01->GetComponent<Transform>();
+			std::shared_ptr<Animator> ani = TairangeSkillObject01->GetComponent<Animator>();
+
+/*
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"monster_skill01");
+			ani->Create(texture, L"monster_skill01", 0, 20, 0.1f);
+
+			tf->scale = Vector3(1.0f, 1.0f, 1.0f);
+
+			col->is_active = false;
+			col->DisableRender();
+
+			mr->is_active = false;
+			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+
+			hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
+			hitbox->hitbox_owner = SpiderSkillObject01;
+
+			skill->stun_type = EStunState::HardStagger;
+			skill->distance = Vector2(8.5f, 0.025f);
+			skill->range = Vector2(3.0f, 0.05f);
+			skill->startPos = Vector2(2.15f, 0.025f);
+			
+			skill->startKey = L"monster_skill01";*/
+			skill->deleteTime = 5.5f;
 		}
 
 		std::shared_ptr<roka::GameObject> PlayerObject = object::Instantiate<roka::GameObject>(
@@ -313,7 +419,11 @@ namespace roka::prefab
 
 		Prefabs.insert(std::make_pair(TestObject->GetName(), TestObject));
 		Prefabs.insert(std::make_pair(AniObject->GetName(), AniObject));
+		Prefabs.insert(std::make_pair(AniEftObject->GetName(), AniEftObject));
+		Prefabs.insert(std::make_pair(ColAniObject->GetName(), ColAniObject));
+		Prefabs.insert(std::make_pair(ColAniEftObject->GetName(), ColAniEftObject));
 		Prefabs.insert(std::make_pair(Spider_MonsterObject->GetName(), Spider_MonsterObject));
+		Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
 		Prefabs.insert(std::make_pair(PlayerObject->GetName(), PlayerObject));
 	}
 	void Release()
@@ -327,6 +437,8 @@ namespace roka::prefab
 		std::shared_ptr<NPK> weapon_npk = Resources::Find<NPK>(L"weapon");
 		std::shared_ptr<NPK> monster_npk = Resources::Find<NPK>(L"monster");
 		std::shared_ptr<NPK> monsterEft_npk = Resources::Find<NPK>(L"monster_eft");
+		std::shared_ptr<NPK> tairang_npk = Resources::Find<NPK>(L"tairnag");
+		std::shared_ptr<NPK> tairangEft_npk = Resources::Find<NPK>(L"tairnag_eft");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -335,5 +447,9 @@ namespace roka::prefab
 			monster_npk = Resources::Load<NPK>(L"monster", path + L"monster.npk");
 		if (monsterEft_npk == nullptr)
 			monsterEft_npk = Resources::Load<NPK>(L"monster_eft", path + L"monster_eft.npk");
+		if (tairang_npk == nullptr)
+			tairang_npk = Resources::Load<NPK>(L"tairang", path + L"tairang.npk");
+		if (tairangEft_npk == nullptr)
+			tairangEft_npk = Resources::Load<NPK>(L"tairnag_eft", path + L"tairang.npk");
 	}
 }

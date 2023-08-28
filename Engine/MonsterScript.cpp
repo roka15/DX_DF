@@ -18,18 +18,40 @@ extern roka::Application application;
 namespace roka
 {
 	using namespace math;
-	Vector2 MonsterScript::mLeftColCenter = Vector2::Zero;
-	Vector2 MonsterScript::mRightColCenter = Vector2::Zero;
-
-	Vector2 MonsterScript::mLeftShooterPos = Vector2::Zero;
-	Vector2 MonsterScript::mRightShooterPos = Vector2::Zero;
 
 	MonsterScript::MonsterScript() :Script(EScriptType::Monster),
-		mbNextState(true)
+		mbNextState(true),
+	    mLeftColCenter(Vector2::Zero),
+		mRightColCenter(Vector2::Zero),
+		mSkillStateCntMax(0),
+		mSkillStateCnt(0)
 	{
 	}
 
-	MonsterScript::MonsterScript(const MonsterScript& ref) : Script(ref)
+	MonsterScript::MonsterScript(EScriptType type):Script(type),
+		mbNextState(true),
+		mLeftColCenter(Vector2::Zero),
+		mRightColCenter(Vector2::Zero),
+		mSkillStateCntMax(0),
+		mSkillStateCnt(0)
+	{
+	}
+
+	MonsterScript::MonsterScript(EScriptType type, const UINT ActiveSkillStateMaxCnt, const Vector2 leftColCenter, const Vector2 rightColCenter):Script(type),
+		mbNextState(true),
+		mLeftColCenter(leftColCenter),
+		mRightColCenter(rightColCenter),
+		mSkillStateCntMax(ActiveSkillStateMaxCnt),
+		mSkillStateCnt(0)
+	{
+	}
+
+	MonsterScript::MonsterScript(const MonsterScript& ref) : Script(ref),
+		mbNextState(true),
+		mLeftColCenter(ref.mLeftColCenter),
+		mRightColCenter(ref.mRightColCenter),
+		mSkillStateCntMax(ref.mSkillStateCntMax),
+		mSkillStateCnt(0)
 	{
 		mbNextState = true;
 	}
@@ -40,6 +62,7 @@ namespace roka
 		if (source == nullptr)
 			return;
 		mbNextState = true;
+		mSkillStateCnt = 0;
 	}
 
 	MonsterScript::~MonsterScript()
@@ -51,32 +74,9 @@ namespace roka
 		mState = EMonsterState::Ready;
 		mNextStateCoolTime = 5.0;
 		mSpeed = 0.25f;
-		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Idle", 0, 5, 0.2f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Walk", 5, 13, 0.2f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_start", 28, 38, 0.1f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_middle", 39, 44, 0.1f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_end", 45, 46, 0.1f);
-		
-		ani->CompleteEvent(L"web_spider_Skill1_start") = std::bind([this]()->void {
-			std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
-			skill->active = GameObject::EState::Active;
-			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-			ani->PlayAnimation(L"web_spider_Skill1_middle", false);
-			});
-		ani->CompleteEvent(L"web_spider_Skill1_middle") = std::bind([this]()->void {
-			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-			ani->PlayAnimation(L"web_spider_Skill1_end", false);
-			});
-		ani->CompleteEvent(L"web_spider_Skill1_end") = std::bind([this]()->void {
-			EnableNextState();
-			std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
-			skill->active = GameObject::EState::Paused;
-			});
-		ani->PlayAnimation(L"web_spider_Idle", true);
-
+	
 		Time::RegisterEvent(L"MonsterRandomStateEvent", MonsterScript::RandomState);
+		mCurDirType = EDir4Type::RIGHT;
 	}
 
 	void MonsterScript::Update()
@@ -86,11 +86,19 @@ namespace roka
 			Ready();
 		}
 		std::shared_ptr<TargetMoveScript> ts = owner->GetComponent<TargetMoveScript>();
-		if (ts->is_stop && mbNextState)
+
+		switch (mState)
 		{
-			mState = EMonsterState::Idle;
-			Idle();
+		case EMonsterState::Walk:
+			if (ts->is_stop)
+				Idle();
+			break;
+		case EMonsterState::Skill:
+			if (mbNextState)
+				Idle();
+			break;
 		}
+
 	}
 
 	void MonsterScript::LateUpdate()
@@ -128,36 +136,37 @@ namespace roka
 		std::wstring key = L"MonsterRandomStateEvent";
 		std::wcsncpy(info.key, key.c_str(), key.size());
 
- 		if (obj->active == GameObject::EState::Active)
+		if (obj->active == GameObject::EState::Active)
 		{
-			if (ts->is_stop == false|| ms->mbNextState == false)
+			if (ts->is_stop == false || ms->mbNextState == false)
 			{
 				//이동이 안끝났는데 다음 event 물색중이면 time event 다시 요청하고 종료.
 				Time::RequestEvent(info, ptr);
 				return;
 			}
-				
+			
 			while (1)
 			{
 				int range = (int)EMonsterState::Death - 1;
 				EMonsterState state = (EMonsterState)(rand() % range + 1);
-	
-				//if (state == EMonsterState::Walk || state == EMonsterState::Skill)
-				//{
-				//	//이전 state가 walk 인데 지금도 walk가 된 경우.
-				//	if (ms->mState == state)
-				//		continue;
-				//	//이미 움직이는 중.
-				//	if (state == EMonsterState::Walk)
-				//	{
-				//		if(ts->is_stop == false)
-				//		continue;
-				//	}
-				//}
+
+				if (ms->mState == state)
+					continue;
+				if (state == EMonsterState::Skill)
+				{
+					if (ms->mSkillStateCnt >= ms->mSkillStateCntMax)
+					{
+						ms->mState = state;
+						ms->mSkillStateCnt = 0;
+						break;
+					}
+					else continue;
+				}
 				ms->mState = state;
 				break;
 			}
-
+			ms->mState = EMonsterState::Skill;
+			ms->mSkillStateCnt++;
 			switch (ms->mState)
 			{
 			case EMonsterState::Idle:
@@ -188,126 +197,99 @@ namespace roka
 	}
 	void MonsterScript::Idle()
 	{
-		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		ani->PlayAnimation(L"web_spider_Idle", true);
+		
 	}
 	void MonsterScript::Move()
 	{
-		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		ani->PlayAnimation(L"web_spider_Walk", true);
+		Vector2 Dir = Vector2::Zero;
+		Vector2 TargetPos = Vector2::Zero;
 
-		Vector3 targetPos = mTarget.lock()->GetComponent<Transform>()->position;
-		Vector3 myPos = owner->GetComponent<Transform>()->position;
-		Vector3 FinalTargetPos = {};
+		SetTargetPos(Dir, TargetPos);
 
-		UINT AspectRatioX = application.GetWidth();
-		UINT AspectRatioY = application.GetHeight();
-		float DirX = 0.0f;
-		float DirY = 0.0f;
-		while (1)
+		Vector3 PlayerPos =mTarget.lock()->GetComponent<Transform>()->position;
+		Vector3 MyPos = owner->GetComponent<Transform>()->position;
+		Vector3 lookat = PlayerPos - MyPos;
+
+		if (fabs(TargetPos.x - MyPos.x) <= 0.05f)
 		{
-			Vector2 Distance = { (float)(rand() % AspectRatioX),(float)(rand() % AspectRatioY) };
-			if (Distance.x < AspectRatioX / 2.0f)
-				Distance.x *= -1;
-			if (Distance.y < AspectRatioY / 2.0f)
-				Distance.y *= -1;
-
-			Distance.x /= AspectRatioX / 2.0f;
-			Distance.y /= AspectRatioY / 2.0f;
-
-			FinalTargetPos.x = myPos.x + Distance.x;
-			FinalTargetPos.y = myPos.y + Distance.y;
-			
-		
-			Distance.Normalize();
-			DirX = Distance.x;
-			DirY = Distance.y;
-
-			if (Distance.x == 0.0f)
+			if (fabs(TargetPos.y - MyPos.y) <= 0.05f);
 			{
-				DirX = 0.0f;
+				mState = EMonsterState::Idle;
+				Idle();
+				return;
 			}
-			if (Distance.y == 0.0f)
-			{
-				DirY = 0.0f;
-			}
+		}
 
-			std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-			if (DirX < 0.0f)
+		if (lookat.x < 0.0f)
+		{
+			if (mCurDirType != EDir4Type::LEFT)
 			{
-				if (mCurDirType == EDir4Type::LEFT)
-					return;
+				std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 				mCurDirType = EDir4Type::LEFT;
 				mr->material = Resources::Find<Material>(L"DefaultVInverterAniMaterial");
-				std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
-				
-				for (auto col : cols)
-				{
-					Vector2 pos = col->GetCenter();
-					pos.x = mLeftColCenter.x;
-					col->SetCenter(pos);
-				}
-				std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
-				std::shared_ptr<Transform> tf = skill->GetComponent<Transform>();
-				Vector3 pos = tf->position;
-				float z = tf->position.z;
-				tf->position = Vector3(mLeftShooterPos.x, mLeftShooterPos.y, z);
+				LeftSetting();
 			}
-			else if (DirX > 0.0f)
-			{
-				if (mCurDirType == EDir4Type::RIGHT)
-					return;
-				mCurDirType == EDir4Type::RIGHT;
-				mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
-				std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
-				for (auto col : cols)
-				{
-					Vector2 pos = col->GetCenter();
-					pos.x = mRightColCenter.x;
-					col->SetCenter(pos);
-				}
-				std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
-				std::shared_ptr<Transform> tf = skill->GetComponent<Transform>();
-				float z = tf->position.z;
-				tf->position = Vector3(mRightShooterPos.x,mRightShooterPos.y,z);
-			}
-
-			Viewport view;
-			view.width = AspectRatioX;
-			view.height = AspectRatioY;
-			view.x = 0;
-			view.y = 0;
-			view.minDepth = 0.0f;
-			view.maxDepth = 1.0f;
-
-			Vector3 projectPos = view.Project(FinalTargetPos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
-
-			if (projectPos.x > AspectRatioX ||
-				projectPos.x < 0.0f ||
-				projectPos.y >AspectRatioY ||
-				projectPos.y < 0.0f)
-			{
-				continue;
-			}
-			else
-				break;
 		}
-	
+		else if (lookat.x > 0.0f)
+		{
+			if (mCurDirType != EDir4Type::RIGHT)
+			{
+				std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
+				mCurDirType = EDir4Type::RIGHT;
+				mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+				RightSetting();
+			}
+		}
+		
 		std::shared_ptr<TargetMoveScript> ts = owner->GetComponent<TargetMoveScript>();
-		ts->SetDirX(DirX);
-		ts->SetDirY(DirY);
+		ts->SetDirX(Dir.x);
+		ts->SetDirY(Dir.y);
 		ts->SetSpeed(mSpeed);
-		ts->SetTargetPos(Vector2(FinalTargetPos.x, FinalTargetPos.y));
+		ts->SetTargetPos(TargetPos);
 	}
 	void MonsterScript::Attack()
 	{
-		Skill01();
 	}
-	void MonsterScript::Skill01()
+	void MonsterScript::AttackEnd()
+	{
+		SkillEnd();
+	}
+	void MonsterScript::SkillEnd()
 	{
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		ani->PlayAnimation(L"web_spider_Skill1_start", false);
-		DisableNextState();
+		std::wstring endkey = mSkillEndKey[mCurSkillKey];
+		ani->PlayAnimation(endkey, false);
+	}
+	void MonsterScript::RegisterSkillInfo(std::wstring start, std::wstring end)
+	{
+		mSkillStartKey.push_back(start);
+		mSkillEndKey.insert(std::make_pair(start, end));
+	}
+	void MonsterScript::LeftSetting()
+	{
+		std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
+
+		for (auto col : cols)
+		{
+			Vector2 pos = col->GetCenter();
+			pos.x = mLeftColCenter.x;
+			col->SetCenter(pos);
+		}
+	}
+	void MonsterScript::RightSetting()
+	{
+		std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
+
+		for (auto col : cols)
+		{
+			Vector2 pos = col->GetCenter();
+			pos.x = mRightColCenter.x;
+			col->SetCenter(pos);
+		}
+
+	}
+	void MonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
+	{
 	}
 	
 }

@@ -24,6 +24,7 @@ namespace roka
 		virtual void LateUpdate();
 		virtual void Render();
 
+
 		virtual void Copy(GameObject* src);
 
 		template <typename T>
@@ -151,6 +152,8 @@ namespace roka
 			return nullptr;
 		}
 
+		void RemoveChild(std::wstring key);
+		void RemoveChild(std::shared_ptr<GameObject> obj);
 		UINT GetChildCont() { return mChild.size(); }
 
 

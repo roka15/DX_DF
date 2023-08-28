@@ -37,8 +37,19 @@ namespace roka
 			return;
 		}
 
+		
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		Vector3 pos = tf->position;
+
+		if (fabs(mTargetPos.x - pos.x) <= 0.05f)
+		{
+			if (fabs(mTargetPos.y - pos.y) <= 0.05f)
+			{
+				mDir = Vector2::Zero;
+				mTargetPos = Vector2::Zero;
+				return;
+			}
+		}
 		pos.x += mDir.x * mSpeed * Time::DeltaTime();
 		pos.y += mDir.y * mSpeed* Time::DeltaTime();
 

@@ -111,11 +111,11 @@ namespace roka
 		avatar->InsertStateAniInfo(EPlayerState::Standing, EAvatarParts::Base, L"PlayerBAStanding");
 #pragma endregion
 #pragma region weapon part
-		avatar->CreatePartAni(EAvatarParts::Weapon,L"weapon", mUser->weapon_avatar1, L"PlayerWAIdle", 0, 10, 0.2f);
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAIdle", 0, 10, 0.2f);
 		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAWalkAndRun", 0, 10, 0.05f);
 		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAJump", 11, 21, 0.1f);
 		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAJumpRun", 178, 179, 0.1f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADownStagger", 130,131, 0.2f);
+		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADownStagger", 130, 131, 0.2f);
 		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADown", 131, 135, 0.05f);
 
 
@@ -217,30 +217,88 @@ namespace roka
 		if (ss == nullptr)
 			return;
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
-		mPlayerState = EPlayerState::Stun;
-		DisableKeyInput();
-		ms->Stop();
-		ms->ResetSpeed();
-
-		mStunState = ss->stun_type;
+		bool flag = false;
+		EPlayerState befor_state = mPlayerState;
+		
 		switch (ss->stun_type)
 		{
 		case EStunState::Stagger:
-			StunStagger(ss->stun_type);
+			mPlayerState = EPlayerState::Stun;
+			StunStagger(ss->stun_type,0.5f);
+			flag = true;
 			break;
 		case EStunState::Down:
+			mPlayerState = EPlayerState::Stun;
 			StunDown();
+			flag = true;
 			break;
 		}
-
+		if (flag == true)
+		{
+			DisableKeyInput();
+			ms->Stop();
+			ms->ResetSpeed();
+			mStunState = ss->stun_type;
+		}
+		else
+		{
+			mPlayerState = befor_state;
+		}
 	}
 
 	void PlayerScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	{
+		GameObject* other_owner = other->owner;
+		std::shared_ptr<SkillScript> ss = other_owner->GetComponent<SkillScript>();
+		if (ss == nullptr)
+			return;
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		bool flag = false;
+		EPlayerState befor_state = mPlayerState;
+		if (mPlayerState != EPlayerState::Stun)
+		{
+			mPlayerState = EPlayerState::Stun;
+			switch (ss->stun_type)
+			{
+			case EStunState::HardStagger:
+				if (mStunState == ss->stun_type)
+					break;
+				StunStagger(ss->stun_type,0.25f);
+				flag = true;
+				break;
+			}
+
+			if (flag == true)
+			{
+				DisableKeyInput();
+				ms->Stop();
+				ms->ResetSpeed();
+				mStunState = ss->stun_type;
+			}
+			else
+			{
+				mPlayerState = befor_state;
+			}
+		}
+		
 	}
 
 	void PlayerScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
+		GameObject* other_owner = other->owner;
+		std::shared_ptr<SkillScript> ss = other_owner->GetComponent<SkillScript>();
+		if (ss == nullptr)
+			return;
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		bool flag = false;
+		
+		switch ((UINT)mStunState)
+		{
+		case (UINT)EStunState::Stagger|(UINT)EStunState::HardStagger:
+			/*ps->EnableKeyInput();
+			as->StartAni();*/
+			break;
+		}
 	}
 
 	void PlayerScript::LeftBtnDown()
@@ -603,7 +661,7 @@ namespace roka
 		}
 	}
 
-	void PlayerScript::StunStagger(EStunState stun)
+	void PlayerScript::StunStagger(EStunState stun, float endtime)
 	{
 		std::shared_ptr<Collider2D> collider = mTopCollider.lock();
 		double befor_time = collider->time;
@@ -612,13 +670,14 @@ namespace roka
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 
 		as->StopAni();
-		as->PlayPartsSprite(mPlayerState, (UINT)stun - 1);
+		as->PlayPartsSprite(mPlayerState, (UINT)EStunState::Stagger - 1);
 		if (cur_time - befor_time <= condition)
 		{
 			as->AddSpriteIndex();
 		}
+
 		Time::CallBackTimerInfo info = {};
-		info.endTime = 0.5f;
+		info.endTime = endtime;
 		std::wstring key = L"PlayerStunCompEvent";
 		size_t str_length = key.size();
 		std::wcsncpy(info.key, key.c_str(), str_length);
@@ -639,10 +698,10 @@ namespace roka
 			cols[i]->SetRotation(radian);
 			Vector2 center = cols[i]->center;
 			center.y -= 0.2f;
-			cols[i]->center = center;	
+			cols[i]->center = center;
 		}
 		as->PlayPartsMotion(EPlayerState::Stun, 1, false);
-		
+
 
 		if (mCurDir > 0)
 		{
@@ -756,8 +815,10 @@ namespace roka
 		switch (ps->mStunState)
 		{
 		case EStunState::Stagger:
+		case EStunState::HardStagger:
 			ps->NextState();
 			break;
+
 		case EStunState::Down:
 			//스탠딩 모션 후 일어나기.
 			ps->mPlayerState = EPlayerState::Standing;

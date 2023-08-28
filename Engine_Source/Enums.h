@@ -25,12 +25,17 @@ namespace roka::enums
         Move,
 		TargetMove,
 		Player,
-		Monster,
 		Avatar,
 		Part,
 		SkillBase,
+		SkillMonster,
 		Weapon,
 		HitBox,
+		Monster,
+		NormalMonster,
+		SpiderMonster,
+		NamedMonster,
+		TairangMonster,
 		End,
 	};
 
