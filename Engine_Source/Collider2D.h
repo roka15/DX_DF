@@ -58,6 +58,7 @@ namespace roka
 		EColliderType mColType;
 		std::weak_ptr<Transform> mTransform;
 
+
 		Vector3 mPosition;
 		float mRotationZ;
 		Vector2 mSize;

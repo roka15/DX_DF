@@ -69,4 +69,20 @@ namespace roka::enums
 		Weapon,
 		End,
 	};
+	
+	enum class EPortalType
+	{
+		None,
+		Direct,
+		Select,
+		End,
+	};
+
+	enum class EMapType
+	{
+		None,
+		SeriaRoom,
+		PlayTestScene,
+		End,
+	};
 }

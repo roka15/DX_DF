@@ -20,6 +20,8 @@ namespace roka
 		void Destroy(); 
 
 		void Present();
+
+		void ClearTarget();
 		void SetWindow(HWND hwnd, UINT width, UINT height);
 
 		UINT GetWidth() { return mWidth; }

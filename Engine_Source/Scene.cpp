@@ -48,6 +48,10 @@ namespace roka
 
 	void Scene::OnExit()
 	{
+		for (Layer& layer : mLayers)
+		{
+			layer.Clear();
+		}
 	}
 
 	void Scene::OnEnter()

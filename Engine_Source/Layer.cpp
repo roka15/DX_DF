@@ -60,7 +60,11 @@ namespace roka
 	{
 		mGameObjects.push_back(gameObj);
 	}
-	std::shared_ptr<GameObject> Layer::FindGameObject(std::wstring name)
+    void Layer::Clear()
+    {
+		mGameObjects.clear();
+    }
+    std::shared_ptr<GameObject> Layer::FindGameObject(std::wstring name)
 	{
 		for (auto obj : mGameObjects)
 		{

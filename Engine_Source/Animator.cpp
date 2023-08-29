@@ -59,6 +59,7 @@ namespace roka
 
 		std::shared_ptr<Events> events
 			= FindEvents(mActiveAnimation.lock()->GetKey());
+	
 		if (mActiveAnimation.lock()->IsComplete())
 		{
 			if (mbLoop == true)

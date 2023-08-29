@@ -36,6 +36,7 @@ namespace roka::enums
 		SpiderMonster,
 		NamedMonster,
 		TairangMonster,
+		Portal,
 		End,
 	};
 
@@ -55,6 +56,7 @@ namespace roka::enums
 		Monster,
 		FrontObject,
 		Light,
+		Portal,
 		UI,
 		End,
 	};

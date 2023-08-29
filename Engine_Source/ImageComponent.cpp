@@ -54,9 +54,11 @@ namespace roka
 		if (mSprite == nullptr)
 			return false;
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(mSprite->npk_key);
+		
 		if (npk == nullptr)
 			return false;
 		std::shared_ptr<Texture> texture = npk->GetTexture(mSprite->pack_key, mSprite->index);
+	
 		if (texture == nullptr)
 			texture = npk->Create(mSprite->pack_key, mSprite->index);
 		texture->BindShaderResource(EShaderStage::PS, 0);

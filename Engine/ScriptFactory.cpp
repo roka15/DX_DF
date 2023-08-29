@@ -11,6 +11,7 @@
 #include "MonsterSkillScript.h"
 #include "WeaponScript.h"
 #include "HitBoxScript.h"
+#include "PortalScript.h"
 
 #include "MonsterScript.h"
 #include "NormalMonsterScript.h"
@@ -77,7 +78,12 @@ namespace roka
 			HitBoxScript* hs = dynamic_cast<HitBoxScript*>(script);
 			return std::shared_ptr<HitBoxScript>(new HitBoxScript(*hs));
 		};
-
+		mFactories[EScriptType::Portal] = [](Script* script)
+		{
+			PortalScript* hs = dynamic_cast<PortalScript*>(script);
+			return std::shared_ptr<PortalScript>(new PortalScript(*hs));
+		};
+		
 		mFactories[EScriptType::NormalMonster] = [](Script* script)
 		{
 			NormalMonsterScript* hs = dynamic_cast<NormalMonsterScript*>(script);

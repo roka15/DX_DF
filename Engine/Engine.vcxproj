@@ -189,6 +189,7 @@
     <ClInclude Include="PartScript.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PortalScript.h" />
     <ClInclude Include="Prefab.h" />
     <ClInclude Include="RokaInclude.h" />
     <ClInclude Include="ScriptFactory.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="PartScript.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PortalScript.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="ScriptFactory.cpp" />
     <ClCompile Include="SelectCharacterScene.cpp" />

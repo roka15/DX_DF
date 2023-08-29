@@ -48,6 +48,70 @@ namespace roka
 		Scene::Initialize();
 
 
+		
+	}
+
+	void PlayScene::Update()
+	{
+		Scene::Update();
+
+		std::shared_ptr<GameObject> obj
+			= FindGameObject(ELayerType::Player, L"Player");
+		std::shared_ptr<GameObject> obj2
+			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
+
+		std::shared_ptr<PlayerScript> ps
+			= obj->GetComponent<PlayerScript>();
+
+		if (Input::GetKeyDown(EKeyCode::LEFT))
+			ps->LeftBtnDown();
+		if (Input::GetKeyUp(EKeyCode::LEFT))
+			ps->LeftBtnUp();
+		if (Input::GetKeyDown(EKeyCode::RIGHT))
+			ps->RightBtnDown();
+		if (Input::GetKeyUp(EKeyCode::RIGHT))
+			ps->RightBtnUp();
+		if (Input::GetKeyDown(EKeyCode::UP))
+			ps->UpBtnDown();
+		if (Input::GetKeyUp(EKeyCode::UP))
+			ps->UpBtnUp();
+		if (Input::GetKeyDown(EKeyCode::DOWN))
+			ps->DownBtnDown();
+		if (Input::GetKeyUp(EKeyCode::DOWN))
+			ps->DownBtnUp();
+		if (Input::GetKeyDown(EKeyCode::X))
+			ps->NomalAtkBtnDown();
+
+		//if (Input::GetKeyDown(EKeyCode::F))
+		//{
+		//	obj->GetComponent<Rigidbody>()->AddForce(Vector2(30.0f, 60*980.0f));
+		//	obj->GetComponent<Rigidbody>()->disableGround();
+		//}
+		//
+		if (Input::GetKeyDown(EKeyCode::G))
+		{
+			test_num += 90;
+			if (test_num > 360)
+				test_num = 0;
+			if (obj2 != nullptr)
+				obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
+		}
+		if (Input::GetKeyDown(EKeyCode::SPACE))
+			ps->JumpBtnDown();
+	}
+
+	void PlayScene::LateUpdate()
+	{
+		Scene::LateUpdate();
+	}
+
+	void PlayScene::Render()
+	{
+		Scene::Render();
+	}
+	void PlayScene::OnEnter()
+	{
+
 		//std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
 		//std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
 		//paintShader->SetTarget(paintTexture);
@@ -156,7 +220,7 @@ namespace roka
 			monster->GetComponent<MonsterScript>()->SetTarget(player);
 			AddGameObject(ELayerType::Monster, monster);
 		}
-		
+
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
 
@@ -257,68 +321,11 @@ namespace roka
 					player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.0f);
 				}*/
 
-
-
 	}
-
-	void PlayScene::Update()
+	void PlayScene::OnExit()
 	{
-		Scene::Update();
-
-		std::shared_ptr<GameObject> obj
-			= FindGameObject(ELayerType::Player, L"Player");
-		std::shared_ptr<GameObject> obj2
-			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
-
-		std::shared_ptr<PlayerScript> ps
-			= obj->GetComponent<PlayerScript>();
-
-		if (Input::GetKeyDown(EKeyCode::LEFT))
-			ps->LeftBtnDown();
-		if (Input::GetKeyUp(EKeyCode::LEFT))
-			ps->LeftBtnUp();
-		if (Input::GetKeyDown(EKeyCode::RIGHT))
-			ps->RightBtnDown();
-		if (Input::GetKeyUp(EKeyCode::RIGHT))
-			ps->RightBtnUp();
-		if (Input::GetKeyDown(EKeyCode::UP))
-			ps->UpBtnDown();
-		if (Input::GetKeyUp(EKeyCode::UP))
-			ps->UpBtnUp();
-		if (Input::GetKeyDown(EKeyCode::DOWN))
-			ps->DownBtnDown();
-		if (Input::GetKeyUp(EKeyCode::DOWN))
-			ps->DownBtnUp();
-		if (Input::GetKeyDown(EKeyCode::X))
-			ps->NomalAtkBtnDown();
-
-		//if (Input::GetKeyDown(EKeyCode::F))
-		//{
-		//	obj->GetComponent<Rigidbody>()->AddForce(Vector2(30.0f, 60*980.0f));
-		//	obj->GetComponent<Rigidbody>()->disableGround();
-		//}
-		//
-		if (Input::GetKeyDown(EKeyCode::G))
-		{
-			test_num += 90;
-			if (test_num > 360)
-				test_num = 0;
-			if (obj2 != nullptr)
-				obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
-		}
-		if (Input::GetKeyDown(EKeyCode::SPACE))
-			ps->JumpBtnDown();
 	}
-
-	void PlayScene::LateUpdate()
-	{
-		Scene::LateUpdate();
-	}
-
-	void PlayScene::Render()
-	{
-		Scene::Render();
-	}
+	
 	void PlayScene::Loading()
 	{
 	}

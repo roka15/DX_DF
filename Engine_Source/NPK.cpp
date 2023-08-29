@@ -73,7 +73,7 @@ namespace roka
 		file::CSVInfo csv = {};
 		file::PackInfo pack = {};
 
-		std::shared_ptr<Texture> find = Resources::Find<Texture>(L"texture_name");
+		std::shared_ptr<Texture> find = Resources::Find<Texture>(texture_name);
 		if (find != nullptr)
 			return find;
 		std::shared_ptr<Texture> texture = std::make_shared<Texture>();

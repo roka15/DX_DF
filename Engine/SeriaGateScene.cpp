@@ -17,9 +17,17 @@
 #include "Input.h"
 #include "Renderer.h"
 
+#include "Collider2D.h"
+#include "HitBoxScript.h"
+#include "PortalScript.h"
+
+
 #include "RokaTime.h"
 #include "Object.h"
 #include "Image.h"
+#include "Light.h"
+
+#include "CollisionManager.h"
 roka::SeriaGateScene::SeriaGateScene() :Scene(ESceneType::DefaultVillage)
 {
 }
@@ -38,28 +46,30 @@ void roka::SeriaGateScene::Update()
 	Scene::Update();
 	std::shared_ptr<GameObject> obj
 		= FindGameObject(ELayerType::Player, L"Player");
+	if (obj != nullptr)
+	{
+		std::shared_ptr<PlayerScript> ps
+			= obj->GetComponent<PlayerScript>();
 
-	std::shared_ptr<PlayerScript> ps
-		= obj->GetComponent<PlayerScript>();
-
-	if (Input::GetKeyDown(EKeyCode::LEFT))
-		ps->LeftBtnDown();
-	if (Input::GetKeyUp(EKeyCode::LEFT))
-		ps->LeftBtnUp();
-	if (Input::GetKeyDown(EKeyCode::RIGHT))
-		ps->RightBtnDown();
-	if (Input::GetKeyUp(EKeyCode::RIGHT))
-		ps->RightBtnUp();
-	if (Input::GetKeyDown(EKeyCode::UP))
-		ps->UpBtnDown();
-	if (Input::GetKeyUp(EKeyCode::UP))
-		ps->UpBtnUp();
-	if (Input::GetKeyDown(EKeyCode::DOWN))
-		ps->DownBtnDown();
-	if (Input::GetKeyUp(EKeyCode::DOWN))
-		ps->DownBtnUp();
-	if (Input::GetKeyDown(EKeyCode::X))
-		ps->NomalAtkBtnDown();
+		if (Input::GetKeyDown(EKeyCode::LEFT))
+			ps->LeftBtnDown();
+		if (Input::GetKeyUp(EKeyCode::LEFT))
+			ps->LeftBtnUp();
+		if (Input::GetKeyDown(EKeyCode::RIGHT))
+			ps->RightBtnDown();
+		if (Input::GetKeyUp(EKeyCode::RIGHT))
+			ps->RightBtnUp();
+		if (Input::GetKeyDown(EKeyCode::UP))
+			ps->UpBtnDown();
+		if (Input::GetKeyUp(EKeyCode::UP))
+			ps->UpBtnUp();
+		if (Input::GetKeyDown(EKeyCode::DOWN))
+			ps->DownBtnDown();
+		if (Input::GetKeyUp(EKeyCode::DOWN))
+			ps->DownBtnUp();
+		if (Input::GetKeyDown(EKeyCode::X))
+			ps->NomalAtkBtnDown();
+	}
 }
 
 void roka::SeriaGateScene::LateUpdate()
@@ -81,6 +91,12 @@ void roka::SeriaGateScene::OnEnter()
 {
 	Scene::OnEnter();
 
+	std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
+	light->SetName(L"main_light");
+	AddGameObject(ELayerType::Light, light);
+	std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
+	lightComp->SetType(ELightType::Directional);
+	lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	{
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
@@ -157,7 +173,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
 			std::shared_ptr<Animator> ani = bglight->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"bglight",L"SeriaRoom_Light" ,0, 3, 1.0f);
+			ani->Create(L"seria_room", L"bglight", L"SeriaRoom_Light", 0, 3, 1.0f);
 			ani->PlayAnimation(L"SeriaRoom_Light", true);
 		}
 		std::shared_ptr<Image> bglight_reflect = object::Instantiate<Image>(
@@ -174,6 +190,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<ImageComponent> imageComp = bglight_reflect->GetComponent<ImageComponent>();
 			imageComp->SetSprite(L"seria_room", L"bglightreflect", 0);
 		}
+
 #pragma endregion
 
 #pragma region front tree
@@ -413,7 +430,7 @@ void roka::SeriaGateScene::OnEnter()
 			ani->PlayAnimation(L"SeriaLeaf01", true);
 		}
 #pragma endregion
-
+	
 #pragma region gate
 		std::shared_ptr<Image> MGateRight = object::Instantiate<Image>(
 			Vector3(0.8f, -1.3f, 0.1f),
@@ -1017,626 +1034,626 @@ void roka::SeriaGateScene::OnEnter()
 		}
 #pragma endregion
 
-#pragma region inventory ui
-		std::shared_ptr<GameObject> inven_base = object::Instantiate<GameObject>(
-			Vector3(3.0f, 0.0f, 0.0f),
-			Vector3::Zero,
-			Vector3(1.4f, 3.0f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base->SetName(L"InvenBase");
-			inven_base->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBaseMaterial01");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 175);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-		}
-
-		std::shared_ptr<Transform> inven_parrent = inven_base->GetComponent<Transform>();
-
-		std::shared_ptr<GameObject> inven_base2 = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.24f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.95f, 0.35f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base2->SetName(L"InvenBase2");
-			inven_base2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBaseMaterial02");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 0);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-		
-			inven_base->AddChild(inven_base2);
-		}
-
-		std::shared_ptr<GameObject> inven_base3 = object::Instantiate<GameObject>(
-			Vector3(0.0f, -0.19f, 0.1f),
-			Vector3::Zero,
-			Vector3(0.95f, 0.42f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3->SetName(L"InvenBase3");
-			inven_base3->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBaseMaterial04");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 39);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3);
-		}
-
-		std::shared_ptr<GameObject> inven_base4 = object::Instantiate<GameObject>(
-			Vector3(0.0f, -0.45f, 0.0f),
-			Vector3::Zero,
-			Vector3(0.95f, 0.09f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base4->SetName(L"InvenBase4");
-			inven_base4->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base4->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBaseMaterial03");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 27);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base4);
-		}
-
-		std::shared_ptr<GameObject> inven_bar = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.48f, 0.0f),
-			Vector3::Zero,
-			Vector3(1.0f, 0.05f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_bar->SetName(L"InvenBar");
-			inven_bar->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_bar->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"BarMaterial01");
-			mr->material->texture = tooltip_npk->GetTexture(L"tooltip.img", 3);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_bar);
-		}
-#pragma region base2 ui 
-		std::shared_ptr<GameObject> inven_base2_tab = object::Instantiate<GameObject>(
-			Vector3(-0.05f, 0.43f, 0.0f),
-			Vector3::Zero,
-			Vector3(0.9f, 0.045f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base2_tab->SetName(L"inven_base2_tab");
-			inven_base2_tab->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base2_tab->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBasetab01");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 203);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base2_tab);
-		}
-		std::shared_ptr<GameObject> inven_base2_eft = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.21f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.4f, 0.4f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base2_eft->SetName(L"inven_base2_eft");
-			inven_base2_eft->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base2_eft->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBaseEftMaterial");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 178);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base2_eft);
-		}
-		std::shared_ptr<GameObject> inven_player = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.18f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.23f, 0.19f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_player->SetName(L"inven_player");
-			inven_player->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_player->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenPlayerMaterial");
-			mr->material->texture = mbskin_npk->GetTexture(L"mg_body80500.img", 10);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_player);
-		}
-		std::shared_ptr<GameObject> inven_useitem_slot = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.32f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.9f, 0.172f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_useitem_slot->SetName(L"InvenUseItemSlot01");
-			inven_useitem_slot->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenUseItemSlot01");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 21);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_useitem_slot);
-		}
-		std::shared_ptr<GameObject> inven_useitem_slot2 = object::Instantiate<GameObject>(
-			Vector3(0.27f, 0.263f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.125f, 0.057f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_useitem_slot2->SetName(L"InvenUseItemSlot02");
-			inven_useitem_slot2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenUseItemSlot02");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 19);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_useitem_slot2);
-		}
-		std::shared_ptr<GameObject> inven_useitem_slot3 = object::Instantiate<GameObject>(
-			Vector3(0.39f, 0.205f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.125f, 0.057f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_useitem_slot3->SetName(L"InvenUseItemSlot03");
-			inven_useitem_slot3->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot3->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenUseItemSlot03");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 20);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_useitem_slot3);
-		}
-		std::shared_ptr<GameObject> inven_useitem_slot4 = object::Instantiate<GameObject>(
-			Vector3(0.27f, 0.205f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.125f, 0.057f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_useitem_slot4->SetName(L"InvenUseItemSlot04");
-			inven_useitem_slot4->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot4->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenUseItemSlot04");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 122);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_useitem_slot4);
-		}
-
-		std::shared_ptr<GameObject> inven_book1 = object::Instantiate<GameObject>(
-			Vector3(-0.42f, 0.095f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.065f, 0.038f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_book1->SetName(L"inven_book1");
-			inven_book1->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_book1->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBook01");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 50);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_book1);
-		}
-		std::shared_ptr<GameObject> inven_book2 = object::Instantiate<GameObject>(
-			Vector3(-0.35f, 0.095f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.065f, 0.038f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_book2->SetName(L"inven_book2");
-			inven_book2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_book2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBook02");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 128);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_book2);
-		}
-		std::shared_ptr<GameObject> inven_book3 = object::Instantiate<GameObject>(
-			Vector3(-0.28f, 0.095f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.065f, 0.038f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_book3->SetName(L"inven_book3");
-			inven_book3->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_book3->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBook03");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 134);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_book3);
-		}
-		std::shared_ptr<GameObject> inven_book4 = object::Instantiate<GameObject>(
-			Vector3(0.42f, 0.095f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.065f, 0.038f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_book4->SetName(L"inven_book4");
-			inven_book4->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_book4->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBook04");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 172);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_book4);
-		}
-
-#pragma endregion
-
-#pragma region base3 ui
-		std::shared_ptr<GameObject> inven_base3_tab = object::Instantiate<GameObject>(
-			Vector3(-0.045f, 0.035f, 0.0f),
-			Vector3::Zero,
-			Vector3(0.9f, 0.045f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3_tab->SetName(L"inven_base3_tab");
-			inven_base3_tab->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3_tab->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBasetab02");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 202);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3_tab);
-		}
-		std::shared_ptr<GameObject> inven_icon1 = object::Instantiate<GameObject>(
-			Vector3(-0.42f, -0.473f, -0.0001f),
-			Vector3::Zero,
-			Vector3(0.08f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_icon1->SetName(L"inven_icon1");
-			inven_icon1->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_icon1->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenIcon01");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 4);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_icon1);
-		}
-		std::shared_ptr<GameObject> inven_icon2 = object::Instantiate<GameObject>(
-			Vector3(0.06f, -0.473f, 0.0f),
-			Vector3::Zero,
-			Vector3(0.08f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_icon2->SetName(L"inven_icon2");
-			inven_icon2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_icon2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenIcon02");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 8);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_icon2);
-		}
-	    startx = -0.4f;
-		starty = -0.32f;
-		for (int i = 0; i < 7; i++)
-		{
-			for (int j = 0; j < 8; j++)
-			{
-				int index = i * 8 + j;
-				float x = startx + 0.115 * j;
-				float y = starty + 0.051 * i;
-				std::shared_ptr<GameObject> inven_slot = object::Instantiate<GameObject>(
-					Vector3(x, y, -0.001f),
-					Vector3::Zero,
-					Vector3(0.12f, 0.0525f, 1.0f),
-					ELayerType::UI
-					);
-				{
-					std::wstring name = L"inven_slot" + index;
-					inven_slot->SetName(name);
-					inven_slot->ismove = false;
-					std::shared_ptr<MeshRenderer> mr = inven_slot->AddComponent<MeshRenderer>();
-					mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-					mr->material = Resources::Find<Material>(L"InvenSlotMaterial01");
-					mr->material->texture = inven_npk->GetTexture(L"inventory.img", 49);
-					mr->material->render_mode = graphics::ERenderMode::Transparent;
-					inven_base->AddChild(inven_slot);
-				}
-			}
-		}
-		std::shared_ptr<GameObject> inven_base3_icon1 = object::Instantiate<GameObject>(
-			Vector3(-0.06f, -0.37f, -0.0f),
-			Vector3::Zero,
-			Vector3(0.5f, 0.0125f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3_icon1->SetName(L"inven_base3_icon1");
-			inven_base3_icon1->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3_icon1->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBase3Icon01");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 2);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3_icon1);
-		}
-		std::shared_ptr<GameObject> inven_base3_icon2 = object::Instantiate<GameObject>(
-			Vector3(-0.075f, -0.37f, -0.001f),
-			Vector3::Zero,
-			Vector3(0.45f, 0.005f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3_icon2->SetName(L"inven_base3_icon2");
-			inven_base3_icon2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3_icon2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBase3Icon02");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 1);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3_icon2);
-		}
-		std::shared_ptr<GameObject> inven_base3_icon3 = object::Instantiate<GameObject>(
-			Vector3(0.23f, -0.368f, -0.0f),
-			Vector3::Zero,
-			Vector3(0.07f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3_icon3->SetName(L"inven_base3_icon3");
-			inven_base3_icon3->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3_icon3->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBase3Icon03");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 95);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3_icon3);
-		}
-		std::shared_ptr<GameObject> inven_base3_icon4 = object::Instantiate<GameObject>(
-			Vector3(0.31f, -0.368f, -0.0f),
-			Vector3::Zero,
-			Vector3(0.07f, 0.041f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3_icon4->SetName(L"inven_base3_icon4");
-			inven_base3_icon4->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3_icon4->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBase3Icon04");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 79);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3_icon4);
-		}
-		std::shared_ptr<GameObject> inven_base3_icon5 = object::Instantiate<GameObject>(
-			Vector3(0.4f, -0.368f, -0.0f),
-			Vector3::Zero,
-			Vector3(0.07f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			inven_base3_icon5->SetName(L"inven_base3_icon5");
-			inven_base3_icon5->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = inven_base3_icon5->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"InvenBase3Icon05");
-			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 74);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			inven_base->AddChild(inven_base3_icon5);
-		}
-#pragma endregion
-
-#pragma endregion
-
-#pragma region skill tool tip
-		std::shared_ptr<GameObject> skill_tooltip_base = object::Instantiate<GameObject>(
-			Vector3(-1.0f, 0.0f, -0.01f),
-			Vector3::Zero,
-			Vector3(4.7f, 3.5f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_base->SetName(L"SkillTooltipBase");
-			skill_tooltip_base->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_base->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipBaseMaterial01");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 0);
-			//mr->material->render_mode = graphics::ERenderMode::Transparent;
-		}
-
-		std::shared_ptr<Transform> skill_tooltip_parrent = skill_tooltip_base->GetComponent<Transform>();
-		std::shared_ptr<GameObject> skill_tooltip_bar = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.5f, -0.01f),
-			Vector3::Zero,
-			Vector3(1.00f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_bar->SetName(L"SkillTooltipBar");
-			skill_tooltip_bar->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_bar->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"BarMaterial01");
-			mr->material->texture = tooltip_npk->GetTexture(L"tooltip.img", 3);
-			//mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_bar);
-		}
-
-		std::shared_ptr<GameObject> skill_tooltip_base2 = object::Instantiate<GameObject>(
-			Vector3(0.3465f, 0.3f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.295f, 0.32f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_base2->SetName(L"SkillTooltipBase2");
-			skill_tooltip_base2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_base2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipBaseMaterial02");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 71);
-			//mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_base2);
-		}
-
-		std::shared_ptr<GameObject> skill_tooltip_icon1 = object::Instantiate<GameObject>(
-			Vector3(-0.43f, 0.45f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.12f, 0.045f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_icon1->SetName(L"SkillTooltipIcon1");
-			skill_tooltip_icon1->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon1->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial01");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 1);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_icon1);
-		}
-		std::shared_ptr<GameObject> skill_tooltip_icon2 = object::Instantiate<GameObject>(
-			Vector3(-0.31f, 0.45f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.12f, 0.045f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_icon2->SetName(L"SkillTooltipIcon2");
-			skill_tooltip_icon2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial02");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 5);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_icon2);
-		}
-		std::shared_ptr<GameObject> skill_tooltip_icon3 = object::Instantiate<GameObject>(
-			Vector3(-0.365f, 0.39f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.23f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_icon3->SetName(L"SkillTooltipIcon3");
-			skill_tooltip_icon3->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon3->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial03");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 9);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_icon3);
-		}
-		std::shared_ptr<GameObject> skill_tooltip_icon4 = object::Instantiate<GameObject>(
-			Vector3(-0.13f, 0.39f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.23f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_icon4->SetName(L"SkillTooltipIcon4");
-			skill_tooltip_icon4->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon4->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial04");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 13);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_icon4);
-		}
-
-		//초기화 버튼 캡처 편집 npk 만들기
-		/*std::shared_ptr<GameObject> skill_tooltip_icon5 = object::Instantiate<GameObject>(
-			Vector3(-0.13f, 0.39f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.23f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_icon5->SetName(L"SkillTooltipIcon5");
-			skill_tooltip_icon5->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon5->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial04");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 13);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			std::shared_ptr<Transform> tf = skill_tooltip_icon5->GetComponent<Transform>();
-			tf->parent = skill_tooltip_parrent;
-		}*/
-		//자동찍기 버튼 캡처 편집 npk
-	/*	std::shared_ptr<GameObject> skill_tooltip_icon5 = object::Instantiate<GameObject>(
-			Vector3(-0.13f, 0.39f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.23f, 0.04f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_icon5->SetName(L"SkillTooltipIcon5");
-			skill_tooltip_icon5->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon5->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial04");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 13);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			std::shared_ptr<Transform> tf = skill_tooltip_icon5->GetComponent<Transform>();
-			tf->parent = skill_tooltip_parrent;
-		}*/
-
-		std::shared_ptr<GameObject> skill_tooltip_skill1 = object::Instantiate<GameObject>(
-			Vector3(-0.13f, 0.2f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.05f, 0.08f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_skill1->SetName(L"SkillTooltipSkill1");
-			skill_tooltip_skill1->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_skill1->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipSkillMaterial01");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 34);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			std::shared_ptr<Transform> tf = skill_tooltip_skill1->GetComponent<Transform>();
-			skill_tooltip_base->AddChild(skill_tooltip_skill1);
-		}
-
-		std::shared_ptr<GameObject> skill_tooltip_skill2 = object::Instantiate<GameObject>(
-			Vector3(-0.13f, 0.05f, -0.01f),
-			Vector3::Zero,
-			Vector3(0.05f, 0.08f, 1.0f),
-			ELayerType::UI
-			);
-		{
-			skill_tooltip_skill2->SetName(L"SkillTooltipSkill2");
-			skill_tooltip_skill2->ismove = false;
-			std::shared_ptr<MeshRenderer> mr = skill_tooltip_skill2->AddComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SkillTooltipSkillMaterial01");
-			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 34);
-			mr->material->render_mode = graphics::ERenderMode::Transparent;
-			skill_tooltip_base->AddChild(skill_tooltip_skill2);
-		}
-
-
-#pragma endregion
+//#pragma region inventory ui
+//		std::shared_ptr<GameObject> inven_base = object::Instantiate<GameObject>(
+//			Vector3(3.0f, 0.0f, 0.0f),
+//			Vector3::Zero,
+//			Vector3(1.4f, 3.0f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base->SetName(L"InvenBase");
+//			inven_base->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBaseMaterial01");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 175);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//		}
+//
+//		std::shared_ptr<Transform> inven_parrent = inven_base->GetComponent<Transform>();
+//
+//		std::shared_ptr<GameObject> inven_base2 = object::Instantiate<GameObject>(
+//			Vector3(0.0f, 0.24f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.95f, 0.35f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base2->SetName(L"InvenBase2");
+//			inven_base2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBaseMaterial02");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 0);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//		
+//			inven_base->AddChild(inven_base2);
+//		}
+//
+//		std::shared_ptr<GameObject> inven_base3 = object::Instantiate<GameObject>(
+//			Vector3(0.0f, -0.19f, 0.1f),
+//			Vector3::Zero,
+//			Vector3(0.95f, 0.42f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3->SetName(L"InvenBase3");
+//			inven_base3->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBaseMaterial04");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 39);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3);
+//		}
+//
+//		std::shared_ptr<GameObject> inven_base4 = object::Instantiate<GameObject>(
+//			Vector3(0.0f, -0.45f, 0.0f),
+//			Vector3::Zero,
+//			Vector3(0.95f, 0.09f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base4->SetName(L"InvenBase4");
+//			inven_base4->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base4->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBaseMaterial03");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 27);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base4);
+//		}
+//
+//		std::shared_ptr<GameObject> inven_bar = object::Instantiate<GameObject>(
+//			Vector3(0.0f, 0.48f, 0.0f),
+//			Vector3::Zero,
+//			Vector3(1.0f, 0.05f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_bar->SetName(L"InvenBar");
+//			inven_bar->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_bar->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"BarMaterial01");
+//			mr->material->texture = tooltip_npk->GetTexture(L"tooltip.img", 3);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_bar);
+//		}
+//#pragma region base2 ui 
+//		std::shared_ptr<GameObject> inven_base2_tab = object::Instantiate<GameObject>(
+//			Vector3(-0.05f, 0.43f, 0.0f),
+//			Vector3::Zero,
+//			Vector3(0.9f, 0.045f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base2_tab->SetName(L"inven_base2_tab");
+//			inven_base2_tab->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base2_tab->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBasetab01");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 203);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base2_tab);
+//		}
+//		std::shared_ptr<GameObject> inven_base2_eft = object::Instantiate<GameObject>(
+//			Vector3(0.0f, 0.21f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.4f, 0.4f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base2_eft->SetName(L"inven_base2_eft");
+//			inven_base2_eft->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base2_eft->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBaseEftMaterial");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 178);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base2_eft);
+//		}
+//		std::shared_ptr<GameObject> inven_player = object::Instantiate<GameObject>(
+//			Vector3(0.0f, 0.18f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.23f, 0.19f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_player->SetName(L"inven_player");
+//			inven_player->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_player->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenPlayerMaterial");
+//			mr->material->texture = mbskin_npk->GetTexture(L"mg_body80500.img", 10);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_player);
+//		}
+//		std::shared_ptr<GameObject> inven_useitem_slot = object::Instantiate<GameObject>(
+//			Vector3(0.0f, 0.32f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.9f, 0.172f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_useitem_slot->SetName(L"InvenUseItemSlot01");
+//			inven_useitem_slot->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenUseItemSlot01");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 21);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_useitem_slot);
+//		}
+//		std::shared_ptr<GameObject> inven_useitem_slot2 = object::Instantiate<GameObject>(
+//			Vector3(0.27f, 0.263f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.125f, 0.057f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_useitem_slot2->SetName(L"InvenUseItemSlot02");
+//			inven_useitem_slot2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenUseItemSlot02");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 19);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_useitem_slot2);
+//		}
+//		std::shared_ptr<GameObject> inven_useitem_slot3 = object::Instantiate<GameObject>(
+//			Vector3(0.39f, 0.205f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.125f, 0.057f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_useitem_slot3->SetName(L"InvenUseItemSlot03");
+//			inven_useitem_slot3->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot3->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenUseItemSlot03");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 20);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_useitem_slot3);
+//		}
+//		std::shared_ptr<GameObject> inven_useitem_slot4 = object::Instantiate<GameObject>(
+//			Vector3(0.27f, 0.205f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.125f, 0.057f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_useitem_slot4->SetName(L"InvenUseItemSlot04");
+//			inven_useitem_slot4->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_useitem_slot4->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenUseItemSlot04");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 122);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_useitem_slot4);
+//		}
+//
+//		std::shared_ptr<GameObject> inven_book1 = object::Instantiate<GameObject>(
+//			Vector3(-0.42f, 0.095f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.065f, 0.038f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_book1->SetName(L"inven_book1");
+//			inven_book1->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_book1->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBook01");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 50);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_book1);
+//		}
+//		std::shared_ptr<GameObject> inven_book2 = object::Instantiate<GameObject>(
+//			Vector3(-0.35f, 0.095f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.065f, 0.038f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_book2->SetName(L"inven_book2");
+//			inven_book2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_book2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBook02");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 128);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_book2);
+//		}
+//		std::shared_ptr<GameObject> inven_book3 = object::Instantiate<GameObject>(
+//			Vector3(-0.28f, 0.095f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.065f, 0.038f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_book3->SetName(L"inven_book3");
+//			inven_book3->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_book3->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBook03");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 134);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_book3);
+//		}
+//		std::shared_ptr<GameObject> inven_book4 = object::Instantiate<GameObject>(
+//			Vector3(0.42f, 0.095f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.065f, 0.038f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_book4->SetName(L"inven_book4");
+//			inven_book4->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_book4->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBook04");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 172);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_book4);
+//		}
+//
+//#pragma endregion
+//
+//#pragma region base3 ui
+//		std::shared_ptr<GameObject> inven_base3_tab = object::Instantiate<GameObject>(
+//			Vector3(-0.045f, 0.035f, 0.0f),
+//			Vector3::Zero,
+//			Vector3(0.9f, 0.045f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3_tab->SetName(L"inven_base3_tab");
+//			inven_base3_tab->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3_tab->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBasetab02");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 202);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3_tab);
+//		}
+//		std::shared_ptr<GameObject> inven_icon1 = object::Instantiate<GameObject>(
+//			Vector3(-0.42f, -0.473f, -0.0001f),
+//			Vector3::Zero,
+//			Vector3(0.08f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_icon1->SetName(L"inven_icon1");
+//			inven_icon1->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_icon1->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenIcon01");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 4);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_icon1);
+//		}
+//		std::shared_ptr<GameObject> inven_icon2 = object::Instantiate<GameObject>(
+//			Vector3(0.06f, -0.473f, 0.0f),
+//			Vector3::Zero,
+//			Vector3(0.08f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_icon2->SetName(L"inven_icon2");
+//			inven_icon2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_icon2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenIcon02");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 8);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_icon2);
+//		}
+//	    startx = -0.4f;
+//		starty = -0.32f;
+//		for (int i = 0; i < 7; i++)
+//		{
+//			for (int j = 0; j < 8; j++)
+//			{
+//				int index = i * 8 + j;
+//				float x = startx + 0.115 * j;
+//				float y = starty + 0.051 * i;
+//				std::shared_ptr<GameObject> inven_slot = object::Instantiate<GameObject>(
+//					Vector3(x, y, -0.001f),
+//					Vector3::Zero,
+//					Vector3(0.12f, 0.0525f, 1.0f),
+//					ELayerType::UI
+//					);
+//				{
+//					std::wstring name = L"inven_slot" + index;
+//					inven_slot->SetName(name);
+//					inven_slot->ismove = false;
+//					std::shared_ptr<MeshRenderer> mr = inven_slot->AddComponent<MeshRenderer>();
+//					mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//					mr->material = Resources::Find<Material>(L"InvenSlotMaterial01");
+//					mr->material->texture = inven_npk->GetTexture(L"inventory.img", 49);
+//					mr->material->render_mode = graphics::ERenderMode::Transparent;
+//					inven_base->AddChild(inven_slot);
+//				}
+//			}
+//		}
+//		std::shared_ptr<GameObject> inven_base3_icon1 = object::Instantiate<GameObject>(
+//			Vector3(-0.06f, -0.37f, -0.0f),
+//			Vector3::Zero,
+//			Vector3(0.5f, 0.0125f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3_icon1->SetName(L"inven_base3_icon1");
+//			inven_base3_icon1->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3_icon1->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBase3Icon01");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 2);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3_icon1);
+//		}
+//		std::shared_ptr<GameObject> inven_base3_icon2 = object::Instantiate<GameObject>(
+//			Vector3(-0.075f, -0.37f, -0.001f),
+//			Vector3::Zero,
+//			Vector3(0.45f, 0.005f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3_icon2->SetName(L"inven_base3_icon2");
+//			inven_base3_icon2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3_icon2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBase3Icon02");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 1);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3_icon2);
+//		}
+//		std::shared_ptr<GameObject> inven_base3_icon3 = object::Instantiate<GameObject>(
+//			Vector3(0.23f, -0.368f, -0.0f),
+//			Vector3::Zero,
+//			Vector3(0.07f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3_icon3->SetName(L"inven_base3_icon3");
+//			inven_base3_icon3->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3_icon3->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBase3Icon03");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 95);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3_icon3);
+//		}
+//		std::shared_ptr<GameObject> inven_base3_icon4 = object::Instantiate<GameObject>(
+//			Vector3(0.31f, -0.368f, -0.0f),
+//			Vector3::Zero,
+//			Vector3(0.07f, 0.041f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3_icon4->SetName(L"inven_base3_icon4");
+//			inven_base3_icon4->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3_icon4->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBase3Icon04");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 79);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3_icon4);
+//		}
+//		std::shared_ptr<GameObject> inven_base3_icon5 = object::Instantiate<GameObject>(
+//			Vector3(0.4f, -0.368f, -0.0f),
+//			Vector3::Zero,
+//			Vector3(0.07f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			inven_base3_icon5->SetName(L"inven_base3_icon5");
+//			inven_base3_icon5->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = inven_base3_icon5->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"InvenBase3Icon05");
+//			mr->material->texture = inven_npk->GetTexture(L"inventory.img", 74);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			inven_base->AddChild(inven_base3_icon5);
+//		}
+//#pragma endregion
+//
+//#pragma endregion
+//
+//#pragma region skill tool tip
+//		std::shared_ptr<GameObject> skill_tooltip_base = object::Instantiate<GameObject>(
+//			Vector3(-1.0f, 0.0f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(4.7f, 3.5f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_base->SetName(L"SkillTooltipBase");
+//			skill_tooltip_base->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_base->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipBaseMaterial01");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 0);
+//			//mr->material->render_mode = graphics::ERenderMode::Transparent;
+//		}
+//
+//		std::shared_ptr<Transform> skill_tooltip_parrent = skill_tooltip_base->GetComponent<Transform>();
+//		std::shared_ptr<GameObject> skill_tooltip_bar = object::Instantiate<GameObject>(
+//			Vector3(0.0f, 0.5f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(1.00f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_bar->SetName(L"SkillTooltipBar");
+//			skill_tooltip_bar->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_bar->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"BarMaterial01");
+//			mr->material->texture = tooltip_npk->GetTexture(L"tooltip.img", 3);
+//			//mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_bar);
+//		}
+//
+//		std::shared_ptr<GameObject> skill_tooltip_base2 = object::Instantiate<GameObject>(
+//			Vector3(0.3465f, 0.3f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.295f, 0.32f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_base2->SetName(L"SkillTooltipBase2");
+//			skill_tooltip_base2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_base2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipBaseMaterial02");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 71);
+//			//mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_base2);
+//		}
+//
+//		std::shared_ptr<GameObject> skill_tooltip_icon1 = object::Instantiate<GameObject>(
+//			Vector3(-0.43f, 0.45f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.12f, 0.045f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_icon1->SetName(L"SkillTooltipIcon1");
+//			skill_tooltip_icon1->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon1->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial01");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 1);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_icon1);
+//		}
+//		std::shared_ptr<GameObject> skill_tooltip_icon2 = object::Instantiate<GameObject>(
+//			Vector3(-0.31f, 0.45f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.12f, 0.045f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_icon2->SetName(L"SkillTooltipIcon2");
+//			skill_tooltip_icon2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial02");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 5);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_icon2);
+//		}
+//		std::shared_ptr<GameObject> skill_tooltip_icon3 = object::Instantiate<GameObject>(
+//			Vector3(-0.365f, 0.39f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.23f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_icon3->SetName(L"SkillTooltipIcon3");
+//			skill_tooltip_icon3->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon3->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial03");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 9);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_icon3);
+//		}
+//		std::shared_ptr<GameObject> skill_tooltip_icon4 = object::Instantiate<GameObject>(
+//			Vector3(-0.13f, 0.39f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.23f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_icon4->SetName(L"SkillTooltipIcon4");
+//			skill_tooltip_icon4->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon4->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial04");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 13);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_icon4);
+//		}
+//
+//		//초기화 버튼 캡처 편집 npk 만들기
+//		/*std::shared_ptr<GameObject> skill_tooltip_icon5 = object::Instantiate<GameObject>(
+//			Vector3(-0.13f, 0.39f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.23f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_icon5->SetName(L"SkillTooltipIcon5");
+//			skill_tooltip_icon5->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon5->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial04");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 13);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			std::shared_ptr<Transform> tf = skill_tooltip_icon5->GetComponent<Transform>();
+//			tf->parent = skill_tooltip_parrent;
+//		}*/
+//		//자동찍기 버튼 캡처 편집 npk
+//	/*	std::shared_ptr<GameObject> skill_tooltip_icon5 = object::Instantiate<GameObject>(
+//			Vector3(-0.13f, 0.39f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.23f, 0.04f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_icon5->SetName(L"SkillTooltipIcon5");
+//			skill_tooltip_icon5->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_icon5->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipIconMaterial04");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 13);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			std::shared_ptr<Transform> tf = skill_tooltip_icon5->GetComponent<Transform>();
+//			tf->parent = skill_tooltip_parrent;
+//		}*/
+//
+//		std::shared_ptr<GameObject> skill_tooltip_skill1 = object::Instantiate<GameObject>(
+//			Vector3(-0.13f, 0.2f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.05f, 0.08f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_skill1->SetName(L"SkillTooltipSkill1");
+//			skill_tooltip_skill1->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_skill1->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipSkillMaterial01");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 34);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			std::shared_ptr<Transform> tf = skill_tooltip_skill1->GetComponent<Transform>();
+//			skill_tooltip_base->AddChild(skill_tooltip_skill1);
+//		}
+//
+//		std::shared_ptr<GameObject> skill_tooltip_skill2 = object::Instantiate<GameObject>(
+//			Vector3(-0.13f, 0.05f, -0.01f),
+//			Vector3::Zero,
+//			Vector3(0.05f, 0.08f, 1.0f),
+//			ELayerType::UI
+//			);
+//		{
+//			skill_tooltip_skill2->SetName(L"SkillTooltipSkill2");
+//			skill_tooltip_skill2->ismove = false;
+//			std::shared_ptr<MeshRenderer> mr = skill_tooltip_skill2->AddComponent<MeshRenderer>();
+//			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+//			mr->material = Resources::Find<Material>(L"SkillTooltipSkillMaterial01");
+//			mr->material->texture = tooltip_npk->GetTexture(L"newskillshop.img", 34);
+//			mr->material->render_mode = graphics::ERenderMode::Transparent;
+//			skill_tooltip_base->AddChild(skill_tooltip_skill2);
+//		}
+//
+//
+//#pragma endregion
 
 #pragma region obj
 		std::shared_ptr<Image> SeriaNPC = object::Instantiate<Image>(
@@ -1803,6 +1820,19 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<GridScript> script = grid->AddScript<GridScript>();
 		script->camera = UIcamera->GetComponent<Camera>();
 	}*/
+
+	std::shared_ptr<GameObject> portal01 = object::Instantiate<GameObject>(
+		Vector3(-0.0f, -1.8f, 0.0f),
+		Vector3::Zero,
+		Vector3(0.5f, 0.7f, 1.0f),
+		ELayerType::Portal
+		);
+	portal01->AddComponent<Collider2D>();
+	std::shared_ptr<PortalScript> portalscript = portal01->AddScript<PortalScript>();
+	portalscript->SetType(EMapType::PlayTestScene);
+
+
+	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal,true);
 }
 
 void roka::SeriaGateScene::Loading()

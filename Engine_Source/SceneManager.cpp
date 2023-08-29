@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 #include "..\\Engine\\Prefab.h"
+#include "Application.h"
+extern roka::Application application;
 namespace roka
 {
 	Scene* SceneManager::mActiveScene = nullptr;
@@ -38,6 +40,9 @@ namespace roka
 			return nullptr;
 		if (mActiveScene != nullptr)
 			mActiveScene->OnExit();
+
+		application.ClearTarget();
+
 		mActiveScene = itr->second;
 		mActiveScene->OnEnter();
 		return itr->second;

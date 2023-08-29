@@ -86,6 +86,11 @@ namespace roka
 		graphicDevice->Present();
 	}
 
+	void Application::ClearTarget()
+	{
+		graphicDevice->ClearTarget();
+	}
+
 	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
 	{
 		if (graphicDevice == nullptr)

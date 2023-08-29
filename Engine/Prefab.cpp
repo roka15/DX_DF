@@ -348,7 +348,7 @@ namespace roka::prefab
 			std::shared_ptr<Animator> ani2 = TairangSkillEft01_2->GetComponent<Animator>();
 
 			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"tairnag_eft");
-			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"attack3line.img", 0, 3, L"tairang_attack3line");
+			std::shared_ptr<Texture> texture= npk->CreateAtlas(L"attack3line.img", 0, 3, L"tairang_attack3line");
 			ani1->Create(texture, L"tairang_attack3line", 0, 3, 0.1f);
 			ani1->PlayAnimation(L"tairang_attack3line", true);
 			ani1->Stop();
