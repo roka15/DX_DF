@@ -16,6 +16,7 @@ namespace roka
 		, mIsComplete(false)
 		, mDuration(0.0f)
 		, mRange(std::make_pair(0, 0))
+		,mEventTime(0.0f)
 	{
 	}
 	Animation::Animation(const Animation& ref) :Resource(ref)
@@ -27,6 +28,7 @@ namespace roka
 		mIsComplete = false;
 		mRange.first = ref.mRange.first;
 		mRange.second = ref.mRange.second;
+		mEventTime = 0.0f;
 	}
 	Animation::~Animation()
 	{
@@ -40,7 +42,9 @@ namespace roka
 			return;
 
 		mTime += Time::DeltaTime();
-
+		mEventTime += Time::DeltaTime();
+		
+		EventFunc();
 		if (mDuration <= mTime)
 		{
 			mIndex++;
@@ -80,6 +84,7 @@ namespace roka
 	void Animation::Reset()
 	{
 		mTime = 0.0f;
+		mEventTime = 0.0f;
 		mIsComplete = false;
 		mIndex = mRange.first;
 	}
@@ -104,5 +109,18 @@ namespace roka
 			int a = 0;
 		if (mIndex >= mRange.second)
 			mIndex = mRange.first;
+	}
+	void Animation::EventFunc()
+	{
+		for (auto aniEvent : mEvents)
+		{
+			if (aniEvent.mTime == mEventTime)
+			{
+				if (aniEvent.mNormalFunc != nullptr)
+					aniEvent.mNormalFunc();
+				else if (aniEvent.mObjFunc != nullptr)
+					aniEvent.mObjFunc(aniEvent.mObject);
+			}
+		}
 	}
 }
