@@ -9,6 +9,8 @@
 
 #include "TargetMoveScript.h"
 #include "SkillScript.h"
+#include "SpiderLayserSkillScript.h"
+
 
 #include "Resources.h"
 #include "Application.h"
@@ -40,25 +42,14 @@ namespace roka
 	void SpiderMonsterScript::Initialize()
 	{
 		NormalMonsterScript::Initialize();
+
+		std::shared_ptr<SpiderLayserSkillScript> layerSkill = owner->AddScript<SpiderLayserSkillScript>();
+		mSkillList.push_back(layerSkill);
+
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Idle", 0, 5, 0.2f);
 		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Walk", 5, 13, 0.2f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_start", 28, 38, 0.1f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_middle", 39, 44, 0.1f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_end", 45, 46, 0.1f);
-
-		RegisterSkillInfo(L"web_spider_Skill1_start", L"web_spider_Skill1_end");
-
-		ani->CompleteEvent(L"web_spider_Skill1_start") = std::bind([this]()->void {
-			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-			ani->PlayAnimation(L"web_spider_Skill1_middle", false);
-			});
-		ani->CompleteEvent(L"web_spider_Skill1_end") = std::bind([this]()->void {
-			std::shared_ptr<MeshRenderer> ms = owner->GetComponent<MeshRenderer>();
-			ms->is_active = true;
-			EnableNextState();
-			});
-
+		
 		Idle();
 	}
 	void SpiderMonsterScript::Update()
@@ -105,7 +96,7 @@ namespace roka
 	{
 		NormalMonsterScript::Attack();
 	}
-	
+
 	void SpiderMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
 	{
 		Vector3 targetPos = mTarget.lock()->GetComponent<Transform>()->position;
@@ -177,13 +168,13 @@ namespace roka
 	}
 	void SpiderMonsterScript::Skill01()
 	{
-		std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
-		std::shared_ptr<SkillScript> skillScript = skill->GetComponent<SkillScript>();
-		skillScript->Play(mCurDirType);
-		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		//std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
+		std::shared_ptr<SkillScript> skillScript = mSkillList[0];
+		skillScript->Play();
+		/*std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		mCurSkillKey = mSkillStartKey[0];
 		ani->PlayAnimation(mSkillStartKey[0], false);
-		EnableNextState();
+		EnableNextState();*/
 	}
 	
 }

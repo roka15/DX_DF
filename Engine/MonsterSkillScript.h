@@ -13,7 +13,7 @@ namespace roka
 		virtual ~MonsterSkillScript() {}
 		virtual void Update()override;
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other)override;
-		virtual void Play(EDir4Type dir)override;
+		virtual void Play()override;
 		virtual void End()override;
 	private:
 		friend class FactoryBase;

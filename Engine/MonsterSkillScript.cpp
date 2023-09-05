@@ -38,9 +38,9 @@ namespace roka
 	void MonsterSkillScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
 	}
-	void MonsterSkillScript::Play(EDir4Type dir)
+	void MonsterSkillScript::Play()
 	{
-		SkillScript::Play(dir);
+		//SkillScript::Play(dir);
 		std::shared_ptr<GameObject> parrent = owner->GetParent();
 		if (parrent == nullptr)return;
 		std::shared_ptr<MonsterScript> monster = parrent->GetComponent<MonsterScript>();
@@ -52,6 +52,6 @@ namespace roka
 		std::shared_ptr<GameObject> parrent = owner->GetParent();
 		if (parrent == nullptr)return;
 		std::shared_ptr<MonsterScript> monster = parrent->GetComponent<MonsterScript>();
-			monster->SkillEnd();
+			//monster->SkillEnd();
 	}
 }

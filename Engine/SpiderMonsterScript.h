@@ -37,7 +37,6 @@ namespace roka
         friend class FactoryBase;
         friend class ScriptFactory;
     private:
-
     };
 }
 

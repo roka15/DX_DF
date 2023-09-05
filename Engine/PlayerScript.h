@@ -33,6 +33,8 @@ namespace roka
 		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other);
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other);
 
+		virtual void BeAttacked(float damage,EStunState stun);
+
 		void Move();
 		// input system 적용시 사용
 		void LeftBtnDown();

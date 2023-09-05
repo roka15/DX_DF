@@ -29,6 +29,7 @@ namespace roka
 		virtual void Move()override;
 		virtual void Attack()override;
 
+
 		virtual void SetTargetPos(Vector2& outDir, Vector2& outTargetPos)override;
 
 
@@ -41,11 +42,7 @@ namespace roka
 		friend class FactoryBase;
 		friend class ScriptFactory;
 	protected:
-		const Vector2 mLeftShooterPos;
-		const Vector2 mRightShooterPos;
-		
-		const Vector2 mSkillSize;
-		const Vector2 mSkillColCenter;
+	
 	};
 }
 

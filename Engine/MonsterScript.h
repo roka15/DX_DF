@@ -4,6 +4,9 @@
 namespace roka
 {
 	using namespace math;
+
+	class SkillScript;
+
 	class MonsterScript :
 		public Script
 	{
@@ -41,11 +44,7 @@ namespace roka
 		virtual void Idle();
 		virtual void Move();
 		virtual void Attack();
-		virtual void AttackEnd();
-
-		virtual void SkillEnd();
-
-		void RegisterSkillInfo(std::wstring start, std::wstring end);
+	
 		
 		void SetTarget(std::shared_ptr<GameObject> target) { mTarget = target; }
 
@@ -57,6 +56,7 @@ namespace roka
 
 		virtual void SetTargetPos(Vector2& outDir,Vector2& outTargetPos);
 
+		EDir4Type GetDir() { return mCurDirType; }
 		EMonsterState GetState() { return mState; }
 		GET_PROPERTY(GetState) EMonsterState state;
 	private:
@@ -79,9 +79,7 @@ namespace roka
 		const UINT mSkillStateCntMax;
 		UINT mSkillStateCnt;
 
-		std::wstring mCurSkillKey;
-		std::vector<std::wstring> mSkillStartKey;
-		std::map<std::wstring, std::wstring> mSkillEndKey;
+		std::vector<std::shared_ptr<SkillScript>> mSkillList;
 	};
 }
 

@@ -42,7 +42,8 @@ void roka::HitBoxScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 	std::shared_ptr<HitBoxScript> otherHitBox = other->owner->GetComponent<HitBoxScript>();
 	if (otherHitBox == nullptr)
 		return;
-	if (mHitBoxType == otherHitBox->hitbox)
+	if (mHitBoxType == otherHitBox->hitbox&&
+		owner->layer_type == ELayerType::Skill)
 	{
 		std::vector<std::shared_ptr<Script>> scripts = mHitBoxOwner.lock()->GetScripts();
 
@@ -61,7 +62,8 @@ void roka::HitBoxScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	std::shared_ptr<HitBoxScript> otherHitBox = other->owner->GetComponent<HitBoxScript>();
 	if (otherHitBox == nullptr)
 		return;
-	if (mHitBoxType == otherHitBox->hitbox)
+	if (mHitBoxType == otherHitBox->hitbox &&
+		owner->layer_type == ELayerType::Skill)
 	{
 		std::vector<std::shared_ptr<Script>> scripts = mHitBoxOwner.lock()->GetScripts();
 
@@ -80,7 +82,8 @@ void roka::HitBoxScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	std::shared_ptr<HitBoxScript> otherHitBox = other->owner->GetComponent<HitBoxScript>();
 	if (otherHitBox == nullptr)
 		return;
-	if (mHitBoxType == otherHitBox->hitbox)
+	if (mHitBoxType == otherHitBox->hitbox &&
+		owner->layer_type == ELayerType::Skill)
 	{
 		std::vector<std::shared_ptr<Script>> scripts = mHitBoxOwner.lock()->GetScripts();
 

@@ -30,14 +30,20 @@ namespace roka
         EHitBoxType GetHitBoxType() { return mHitBoxType; }
 
         void SetHitBoxOwner(std::shared_ptr<GameObject> owner) { mHitBoxOwner = owner; }
+        std::shared_ptr<GameObject> GetHitBoxOwner() { return mHitBoxOwner.lock(); }
+       /* void SetStunType(EStunState type) { mStunType = type; }
+        EStunState GetStunType() { return mStunType; }*/
 
         PROPERTY(GetHitBoxType, SetHitBoxType)EHitBoxType hitbox;
-        SET_PROPERTY(SetHitBoxOwner) std::weak_ptr<GameObject> hitbox_owner;
+        //PROPERTY(GetStunType, SetStunType) EStunState stun;
+        PROPERTY(GetHitBoxOwner,SetHitBoxOwner) std::shared_ptr<GameObject> hitbox_owner;
     private:
         friend class FactoryBase;
         friend class ScriptFactory;
 
         EHitBoxType mHitBoxType;
+       // EStunState mStunType;
+
         std::weak_ptr<GameObject> mHitBoxOwner;
     };
 }

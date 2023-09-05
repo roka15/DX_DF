@@ -7,8 +7,7 @@
 
 #include "AvatarScript.h"
 #include "PartScript.h"
-#include "SkillScript.h"
-#include "MonsterSkillScript.h"
+
 #include "WeaponScript.h"
 #include "HitBoxScript.h"
 #include "PortalScript.h"
@@ -18,6 +17,11 @@
 #include "SpiderMonsterScript.h"
 #include "NamedMonsterScript.h"
 #include "TairangMonsterScript.h"
+
+#include "SkillScript.h"
+#include "LayserSkillScript.h"
+#include "SpiderLayserSkillScript.h"
+#include "MonsterSkillScript.h"
 namespace roka
 {
 	void ScriptFactory::Initialize()
@@ -62,6 +66,16 @@ namespace roka
 		{
 			SkillScript* ss = dynamic_cast<SkillScript*>(script);
 			return std::shared_ptr<SkillScript>(new SkillScript(*ss));
+		};
+		mFactories[EScriptType::SkillLayser] = [](Script* script)
+		{
+			LayserSkillScript* ss = dynamic_cast<LayserSkillScript*>(script);
+			return std::shared_ptr<LayserSkillScript>(new LayserSkillScript(*ss));
+		};
+		mFactories[EScriptType::SkillSpiderLayser] = [](Script* script)
+		{
+			SpiderLayserSkillScript* ss = dynamic_cast<SpiderLayserSkillScript*>(script);
+			return std::shared_ptr<SpiderLayserSkillScript>(new SpiderLayserSkillScript(*ss));
 		};
 		mFactories[EScriptType::SkillMonster] = [](Script* script)
 		{

@@ -64,6 +64,7 @@ namespace roka
 	}
 	void PlayerScript::Initialize()
 	{
+		owner->layer_type = ELayerType::Player;
 		mTransform = owner->GetComponent<Transform>();
 		mMoveScript = owner->GetComponent<MoveScript>();
 		mRigid = owner->GetComponent<Rigidbody>();
@@ -212,7 +213,7 @@ namespace roka
 
 	void PlayerScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 	{
-		GameObject* other_owner = other->owner;
+		/*GameObject* other_owner = other->owner;
 		std::shared_ptr<SkillScript> ss = other_owner->GetComponent<SkillScript>();
 		if (ss == nullptr)
 			return;
@@ -243,12 +244,12 @@ namespace roka
 		else
 		{
 			mPlayerState = befor_state;
-		}
+		}*/
 	}
 
 	void PlayerScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	{
-		GameObject* other_owner = other->owner;
+		/*GameObject* other_owner = other->owner;
 		std::shared_ptr<SkillScript> ss = other_owner->GetComponent<SkillScript>();
 		if (ss == nullptr)
 			return;
@@ -279,7 +280,7 @@ namespace roka
 			{
 				mPlayerState = befor_state;
 			}
-		}
+		}*/
 		
 	}
 
@@ -298,6 +299,48 @@ namespace roka
 			/*ps->EnableKeyInput();
 			as->StartAni();*/
 			break;
+		}
+	}
+
+	void PlayerScript::BeAttacked(float damage,EStunState stun)
+	{
+		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		bool flag = false;
+		EPlayerState befor_state = mPlayerState;
+		if (mPlayerState != EPlayerState::Stun)
+		{
+			mPlayerState = EPlayerState::Stun;
+			switch (stun)
+			{
+			case EStunState::Stagger:
+				mPlayerState = EPlayerState::Stun;
+				StunStagger(stun, 0.5f);
+				flag = true;
+				break;
+			case EStunState::Down:
+				mPlayerState = EPlayerState::Stun;
+				StunDown();
+				flag = true;
+				break;
+			case EStunState::HardStagger:
+				if (mStunState == stun)
+					break;
+				StunStagger(stun, 0.25f);
+				flag = true;
+				break;
+			}
+		}
+
+		if (flag == true)
+		{
+			DisableKeyInput();
+			ms->Stop();
+			ms->ResetSpeed();
+			mStunState = stun;
+		}
+		else
+		{
+			mPlayerState = befor_state;
 		}
 	}
 

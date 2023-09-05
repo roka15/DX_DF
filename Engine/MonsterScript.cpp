@@ -12,6 +12,7 @@
 #include "Collider2D.h"
 #include "MoveScript.h"
 #include "TargetMoveScript.h"
+#include "PlayerScript.h"
 
 
 extern roka::Application application;
@@ -71,6 +72,7 @@ namespace roka
 
 	void MonsterScript::Initialize()
 	{
+		owner->layer_type = ELayerType::Monster;
 		mState = EMonsterState::Ready;
 		mNextStateCoolTime = 5.0;
 		mSpeed = 0.25f;
@@ -165,7 +167,8 @@ namespace roka
 				ms->mState = state;
 				break;
 			}
-		//	ms->mState = EMonsterState::Skill;
+			//test
+			ms->mState = EMonsterState::Skill;
 			ms->mSkillStateCnt++;
 			switch (ms->mState)
 			{
@@ -250,21 +253,7 @@ namespace roka
 	void MonsterScript::Attack()
 	{
 	}
-	void MonsterScript::AttackEnd()
-	{
-		SkillEnd();
-	}
-	void MonsterScript::SkillEnd()
-	{
-		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		std::wstring endkey = mSkillEndKey[mCurSkillKey];
-		ani->PlayAnimation(endkey, false);
-	}
-	void MonsterScript::RegisterSkillInfo(std::wstring start, std::wstring end)
-	{
-		mSkillStartKey.push_back(start);
-		mSkillEndKey.insert(std::make_pair(start, end));
-	}
+
 	void MonsterScript::LeftSetting()
 	{
 		std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
