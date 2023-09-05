@@ -25,7 +25,7 @@ namespace roka::pool
 				delete obj;
 			}
 			mpools.~queue();
-			if (mOrigin.lock() != nullptr)
+			if (mOrigin != nullptr)
 			{
 				mOrigin.reset();
 			}
@@ -44,13 +44,13 @@ namespace roka::pool
 				mpools.push(obj);
 			}
 
-			mOrigin = mpools.front();
+			mOrigin = std::make_shared<T>(*(mpools.front()));
 		}
 		void Initialize(std::shared_ptr<T> _origin, size_t _capacity = 100, size_t _max_capacity = 500)
 		{
 			mcapacity = _capacity;
 			mlimit_capacity = _max_capacity;
-			mOrigin = _origin;
+			mOrigin = std::make_shared<T>(*(_origin));
 			int temp_min = mcapacity < mlimit_capacity ? mcapacity : mlimit_capacity;
 
 			for (int i = 0; i < temp_min; i++)
@@ -68,7 +68,7 @@ namespace roka::pool
 				delete obj;
 			}
 			mpools.~queue();
-			if (mOrigin.lock() != nullptr)
+			if (mOrigin != nullptr)
 			{
 				//해제는 origin 생성한 곳에서 하도록 하는게 좋을 듯.
 				//prefab 인 경우 prefab 관리하는 곳에서 release 하도록 할려고 하는데
@@ -99,7 +99,7 @@ namespace roka::pool
 			/*T* obj = dynamic_cast<T*>(_obj);
 			if (obj == nullptr)
 				return;*/
-			std::shared_ptr<T> ptr = mOrigin.lock();
+			std::shared_ptr<T> ptr = mOrigin;
 			_obj->Copy(ptr.get());
 			_obj->SetState(GameObject::EState::Paused);
 			mpools.push(_obj);
@@ -117,7 +117,7 @@ namespace roka::pool
 				T* obj = nullptr;
 				for (int i = mcapacity; i < add_cnt; i++)
 				{
-					std::shared_ptr<T> ptr = mOrigin.lock();
+					std::shared_ptr<T> ptr = mOrigin;
 					obj = new T(*(ptr.get()));
 					mpools.push(obj);
 				}
@@ -132,7 +132,7 @@ namespace roka::pool
 	    size_t mcapacity;
 	    size_t mlimit_capacity;
 	    std::queue<T*> mpools;
-	    std::weak_ptr<T> mOrigin;
+	    std::shared_ptr<T> mOrigin;
 	};
 }
 
