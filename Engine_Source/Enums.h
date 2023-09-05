@@ -28,6 +28,8 @@ namespace roka::enums
 		Avatar,
 		Part,
 		SkillBase,
+		SkillLayser,
+		SkillSpiderLayser,
 		SkillMonster,
 		Weapon,
 		HitBox,

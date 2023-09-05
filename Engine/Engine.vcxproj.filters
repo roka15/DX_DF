@@ -103,6 +103,12 @@
     <ClInclude Include="PortalScript.h">
       <Filter>Contents\Script\PortalScript</Filter>
     </ClInclude>
+    <ClInclude Include="LayserSkillScript.h">
+      <Filter>Contents\Script\SkillScript\Base\TypeBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SpiderLayserSkillScript.h">
+      <Filter>Contents\Script\SkillScript\NormalMonsterSkill\Spider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -197,6 +203,12 @@
     </ClCompile>
     <ClCompile Include="PortalScript.cpp">
       <Filter>Contents\Script\PortalScript</Filter>
+    </ClCompile>
+    <ClCompile Include="LayserSkillScript.cpp">
+      <Filter>Contents\Script\SkillScript\Base\TypeBase</Filter>
+    </ClCompile>
+    <ClCompile Include="SpiderLayserSkillScript.cpp">
+      <Filter>Contents\Script\SkillScript\NormalMonsterSkill\Spider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +322,21 @@
     </Filter>
     <Filter Include="Contents\Script\PortalScript">
       <UniqueIdentifier>{d2bc9dd9-15ed-43c1-a1c1-4e275a2ea3b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\NormalMonsterSkill">
+      <UniqueIdentifier>{d0714876-160c-4bfd-bee7-271ecee32fc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\NormalMonsterSkill\Spider">
+      <UniqueIdentifier>{785ca910-c59f-4a26-b357-07a2efb499c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\NamedMonsterSkill">
+      <UniqueIdentifier>{d932522b-0e9b-419d-b8d3-9ae1dd05a0ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\NamedMonsterSkill\Tairang">
+      <UniqueIdentifier>{e100c645-34b5-43b1-8835-ae4e18e4055e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\Base\TypeBase">
+      <UniqueIdentifier>{1dc980a3-7467-4bf9-a342-47daa1c27eb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

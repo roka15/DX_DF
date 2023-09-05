@@ -179,6 +179,7 @@
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="HitBoxScript.h" />
+    <ClInclude Include="LayserSkillScript.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MonsterScript.h" />
     <ClInclude Include="MonsterSkillScript.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="SeriaGateScene.h" />
     <ClInclude Include="SkillScript.h" />
     <ClInclude Include="Slot.h" />
+    <ClInclude Include="SpiderLayserSkillScript.h" />
     <ClInclude Include="SpiderMonsterScript.h" />
     <ClInclude Include="TairangMonsterScript.h" />
     <ClInclude Include="TargetMoveScript.h" />
@@ -214,6 +216,7 @@
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HendonmyreScene.cpp" />
     <ClCompile Include="HitBoxScript.cpp" />
+    <ClCompile Include="LayserSkillScript.cpp" />
     <ClCompile Include="MonsterScript.cpp" />
     <ClCompile Include="MonsterSkillScript.cpp" />
     <ClCompile Include="MoveScript.cpp" />
@@ -230,6 +233,7 @@
     <ClCompile Include="SeriaGateScene.cpp" />
     <ClCompile Include="SkillScript.cpp" />
     <ClCompile Include="Slot.cpp" />
+    <ClCompile Include="SpiderLayserSkillScript.cpp" />
     <ClCompile Include="SpiderMonsterScript.cpp" />
     <ClCompile Include="TairangMonsterScript.cpp" />
     <ClCompile Include="TargetMoveScript.cpp" />
