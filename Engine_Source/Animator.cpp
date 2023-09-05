@@ -42,10 +42,8 @@ namespace roka
 	}
 	void Animator::Initialize()
 	{
-		for (auto map : mAnimations)
-		{
-			map.second->SetAnimator(GetSharedPtr());
-		}
+		mAnimations.clear();
+		mEvents.clear();
 	}
 	void Animator::Update()
 	{
@@ -110,6 +108,7 @@ namespace roka
 		animation->duration = duration;
 		animation->Create(npk_name, pack_name, set_name, start_index, end_index);
 		animation->play_range = std::make_pair(0, end_index - start_index);
+		animation->SetAnimator(GetSharedPtr());
 		mAnimations.insert(std::make_pair(set_name, animation));
 
 		std::shared_ptr<Events> events = FindEvents(set_name);
@@ -129,6 +128,7 @@ namespace roka
 		animation->duration = duration;
 		animation->SetAtlas(atlas);
 		animation->play_range = std::make_pair(start_index, end_index);
+		animation->SetAnimator(GetSharedPtr());
 		mAnimations.insert(std::make_pair(set_name, animation));
 
 		std::shared_ptr<Events> events = FindEvents(set_name);

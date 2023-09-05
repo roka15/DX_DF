@@ -11,7 +11,7 @@ namespace roka
 	Animation::Animation() :Resource(enums::EResourceType::Animation)
 		, mAtlas(nullptr)
 		, mAnimator()
-		, mIndex(-1)
+		, mIndex(0)
 		, mTime(0.0f)
 		, mIsComplete(false)
 		, mDuration(0.0f)
