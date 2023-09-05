@@ -6,7 +6,7 @@ namespace roka
 	{
 	public:
 		PlayScene();
-		~PlayScene();
+		virtual ~PlayScene();
 		virtual void Initialize()override;
 		virtual void Update()override;
 		virtual void LateUpdate()override;

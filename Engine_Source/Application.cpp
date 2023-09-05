@@ -6,6 +6,9 @@
 #include "Resources.h"
 #include "..\\Engine\\FactoryManager.h"
 #include "..\\Engine\\Prefab.h"
+#include "ObjectPoolManager.h"
+#include "..\\Engine\\AnimationObjectPool.h"
+#include "..\\Engine\\NormalMonsterPool.h"
 #include "TestPool.h"
 #include "CollisionManager.h"
 namespace roka
@@ -45,6 +48,7 @@ namespace roka
 		SceneManager::Initialize();
 
 		
+		pool::AnimationObjectPool::GetInstance()->Initialize();
 	}
 
 	void Application::Update()
@@ -72,8 +76,11 @@ namespace roka
 	void Application::Release()
 	{
 		SceneManager::Release();
+		
 		renderer::Release();
 		prefab::Release();
+
+		pool::AnimationObjectPool::GetInstance()->Release();
 	}
 
 	void Application::Destroy()

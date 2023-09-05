@@ -7,8 +7,8 @@ namespace roka::pool
 	class NormalMonsterPool : public ObjectPoolManager<NormalMonsterPool, GameObject>
 	{
 	public:
-		virtual ~NormalMonsterPool() {}
-	private:
+		virtual ~NormalMonsterPool() { }
+	public:
 		virtual void Initialize()override
 		{
 			ObjectPoolManager<NormalMonsterPool, GameObject>::Initialize();
@@ -20,7 +20,7 @@ namespace roka::pool
 		}
 	private:
 		friend class Singleton<NormalMonsterPool>;
-		NormalMonsterPool() :ObjectPoolManager<NormalMonsterPool, GameObject>() { Initialize(); }
+		NormalMonsterPool() :ObjectPoolManager<NormalMonsterPool, GameObject>() { }
 
 	};
 }

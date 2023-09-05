@@ -6,8 +6,8 @@ namespace roka::pool
 	class AnimationObjectPool : public ObjectPoolManager<AnimationObjectPool, GameObject>
 	{
 	public:
-		virtual ~AnimationObjectPool() {}
-	private:
+		virtual ~AnimationObjectPool() {  }
+	public:
 		virtual void Initialize()override
 		{
 			ObjectPoolManager<AnimationObjectPool, GameObject>::Initialize();
@@ -22,7 +22,7 @@ namespace roka::pool
 		}
 	private:
 		friend class Singleton<AnimationObjectPool>;
-		AnimationObjectPool() :ObjectPoolManager<AnimationObjectPool, GameObject>() { Initialize(); }
+		AnimationObjectPool() :ObjectPoolManager<AnimationObjectPool, GameObject>() {  }
 	};
 }
 

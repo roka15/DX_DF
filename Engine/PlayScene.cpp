@@ -42,6 +42,7 @@ namespace roka
 	}
 	PlayScene::~PlayScene()
 	{
+		OnExit();
 	}
 	void PlayScene::Initialize()
 	{
@@ -111,7 +112,8 @@ namespace roka
 	}
 	void PlayScene::OnEnter()
 	{
-
+		pool::NormalMonsterPool::GetInstance()->Initialize();
+	
 		//std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
 		//std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
 		//paintShader->SetTarget(paintTexture);
@@ -202,7 +204,7 @@ namespace roka
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		pool::NormalMonsterPool* pool = pool::NormalMonsterPool::GetInstance();
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			std::shared_ptr<GameObject> monster = pool::NormalMonsterPool::GetInstance()->GetPool(L"SpiderMonster")->Spawn();
 
@@ -212,14 +214,14 @@ namespace roka
 			AddGameObject(ELayerType::Monster, monster);
 		}
 
-		std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
+	/*	std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
 		{
 			std::shared_ptr<GameObject> monster = object::Instantiate<GameObject>(TairangOrigin);
 			monster->SetName(L"Tiarang");
 			monster->GetComponent<Transform>()->position = Vector3(-1.0f, 0.0f, 0.0f);
 			monster->GetComponent<MonsterScript>()->SetTarget(player);
 			AddGameObject(ELayerType::Monster, monster);
-		}
+		}*/
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
@@ -324,6 +326,10 @@ namespace roka
 	}
 	void PlayScene::OnExit()
 	{
+		Scene::OnExit();
+		renderer::cameras.clear();
+		renderer::MainCamera.reset();
+		pool::NormalMonsterPool::GetInstance()->Release();
 	}
 	
 	void PlayScene::Loading()
