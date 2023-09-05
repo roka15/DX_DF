@@ -27,6 +27,7 @@ namespace roka
 		static void ColliderCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
 		static bool Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
 
+		static void DisableCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
 		static void SetLayer(ELayerType left, ELayerType right, bool enable);
 		static void Clear();
 		static double GetColliderTimer() { return mTime; }

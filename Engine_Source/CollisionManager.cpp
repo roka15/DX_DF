@@ -206,6 +206,24 @@ namespace roka
 		}
 		return true;
 	}
+	void CollisionManager::DisableCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
+	{
+		ColliderID id = {};
+		id.left = left->GetColliderID();
+		id.right = right->GetColliderID();
+
+		std::map<UINT64, bool>::iterator itr
+			= mCollisionMap.find(id.id);
+
+		if (itr == mCollisionMap.end())
+			return;
+		if (itr->second == false)
+			return;
+
+		itr->second = false;
+		left->OnCollisionExit(right);
+		right->OnCollisionExit(left);
+	}
 	void CollisionManager::SetLayer(ELayerType left, ELayerType right, bool enable)
 	{
 		UINT row = -1;
