@@ -11,18 +11,24 @@ namespace roka
 {
 	DelayedCollisionSkillScript::DelayedCollisionSkillScript():SkillScript(EScriptType::SkillDelayCollider),
 		mWarningFollowTime(0.0),
-		mWarningEnableTime(0.0)
+		mWarningEnableTime(0.0),
+		mWarningSize(Vector3::Zero),
+		mWarningCenter(Vector3::Zero)
 	{
 	}
 	DelayedCollisionSkillScript::DelayedCollisionSkillScript(EScriptType type):SkillScript(type),
 		mWarningFollowTime(0.0),
-		mWarningEnableTime(0.0)
+		mWarningEnableTime(0.0),
+		mWarningSize(Vector3::Zero),
+		mWarningCenter(Vector3::Zero)
 	{
 	}
 	DelayedCollisionSkillScript::DelayedCollisionSkillScript(const DelayedCollisionSkillScript& ref):SkillScript(ref)
 	{
 		mWarningFollowTime = ref.mWarningFollowTime;
 		mWarningEnableTime = 0.0;
+		mWarningSize = ref.mWarningSize;
+		mWarningCenter = ref.mWarningCenter;
 	}
 	void DelayedCollisionSkillScript::Copy(Component* src)
 	{
@@ -32,6 +38,8 @@ namespace roka
 			return;
 		mWarningFollowTime = source->mWarningFollowTime;
 		mWarningEnableTime = 0.0;
+		mWarningSize = source->mWarningSize;
+		mWarningCenter = source->mWarningCenter;
 	}
 	void DelayedCollisionSkillScript::Initialize()
 	{
@@ -80,7 +88,8 @@ namespace roka
 		Scene* ActiveScene = SceneManager::GetActiveScene();
 		pool::AnimationObjectPool* AniPool = pool::AnimationObjectPool::GetInstance();
 		mWarningObj = AniPool->GetPool(L"AniObject")->Spawn();
-
+		std::shared_ptr<Transform> warning_tf = mWarningObj->GetComponent<Transform>();
+		warning_tf->scale = mWarningSize;
 		ActiveScene->AddGameObject(ELayerType::Skill, mWarningObj);
 	}
 	void DelayedCollisionSkillScript::DeleteWarningObject()
@@ -106,6 +115,6 @@ namespace roka
 		Vector3 target_pos = target_tf->position;
 
 		std::shared_ptr<Transform> warning_tf = mWarningObj->GetComponent<Transform>();
-		warning_tf->position = target_pos;
+		warning_tf->position = mWarningCenter+target_pos;
 	}
 }

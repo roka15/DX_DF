@@ -27,6 +27,8 @@ namespace roka
 	void TairangSkill01Script::Initialize()
 	{
 		mWarningFollowTime = 0.5;
+		mWarningSize = Vector3(2.5f, 2.0f, 1.0f);
+		mWarningCenter = Vector3(0.0f, -0.32f, 0.0f);
 
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->Create(L"tairang", L"tairang_of_speed.img", L"tairang_Skill01_start", 27, 37, 0.1f);

@@ -47,6 +47,8 @@ namespace roka
 		double mWarningFollowTime;
 		double mWarningEnableTime;
 
+		Vector3 mWarningSize;
+		Vector3 mWarningCenter;
 	};
 }
 
