@@ -133,7 +133,15 @@ namespace roka
 				{
 					aniEvent.mObjFunc(aniEvent.mObject);
 				}
+				
 				mEventFlag[index] = true;
+				if (GetKey().compare(L"tairang_Skill01_start") == 0)
+				{
+					if (mEventFlag[2] == true)
+					{
+						int a = 0;
+					}
+				}
 			}
 			index++;
 		}

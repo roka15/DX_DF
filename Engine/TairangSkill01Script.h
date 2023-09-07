@@ -24,14 +24,19 @@ namespace roka
 		virtual void Play();
 		virtual void Exit();
 
-		virtual void Start()override {}
-		virtual void Middle()override {}
-		virtual void End()override {}
+		virtual void StartStartEvent();
+		virtual void MiddleStartEvent();
+		virtual void EndStartEvent();
+		virtual void StartCompleteEvent();
+		virtual void MiddleCompleteEvent();
+		virtual void EndCompleteEvent();
 
 		virtual void CreateColliderObject()override;
 		virtual void CreateWarningObject();
+		void CreateStartEftObject();
 
 		virtual void DeleteWarningObject();
+		void DeleteStartEftObject();
 
 		virtual void StopWarningAniEvent();
 
@@ -39,6 +44,8 @@ namespace roka
 		friend class FactoryBase;
 		friend class ScriptFactory;
 	protected:
+		std::vector<std::shared_ptr<GameObject>> mStartEftObject;
+		
 	};
 }
 
