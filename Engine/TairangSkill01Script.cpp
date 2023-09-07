@@ -46,12 +46,15 @@ namespace roka
 	}
 	void TairangSkill01Script::Update()
 	{
+		DelayedCollisionSkillScript::Update();
 	}
 	void TairangSkill01Script::LateUpdate()
 	{
+		DelayedCollisionSkillScript::LateUpdate();
 	}
 	void TairangSkill01Script::Render()
 	{
+		DelayedCollisionSkillScript::Render();
 	}
 	void TairangSkill01Script::Play()
 	{
