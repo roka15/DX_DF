@@ -9,6 +9,7 @@
 #include <bitset>
 #include <set> 
 #include <functional>
+#include <algorithm>
 
 #include <cmath> 
 #include <algorithm> 

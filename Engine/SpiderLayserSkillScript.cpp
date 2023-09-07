@@ -29,24 +29,19 @@ namespace roka
 	void SpiderLayserSkillScript::Initialize()
 	{
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_start", 28, 38, 0.1f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_middle", 39, 44, 0.1f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1_end", 45, 46, 0.1f);
-
+		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1", 28, 46, 0.1f);
 		
-		ani->CompleteEvent(L"web_spider_Skill1_start") = std::bind([this]()->void {
-			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-			ani->PlayAnimation(L"web_spider_Skill1_middle", false);
-			});
-		ani->CompleteEvent(L"web_spider_Skill1_middle") = std::bind([this]()->void {
-			std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-			ani->PlayAnimation(L"web_spider_Skill1_end", false);
-			});
-		ani->CompleteEvent(L"web_spider_Skill1_end") = std::bind([this]()->void {
+		std::shared_ptr<Animation> animation = ani->FindAnimation(L"web_spider_Skill1");
+		Animation::AnimationEvent timeEvent = {};
+		timeEvent.mNormalFunc = std::bind(&SpiderLayserSkillScript::CreateLayser, this);
+		timeEvent.mTime = 1.3f;
+		animation->AddTimeLineEvent(timeEvent);
+
+		ani->CompleteEvent(L"web_spider_Skill1") = std::bind([this]()->void {
 			Exit();
 			});
 
-		mStartKey = L"web_spider_Skill1_start";
+		mStartKey = L"web_spider_Skill1";
 	}
 	void SpiderLayserSkillScript::Update()
 	{
@@ -90,13 +85,29 @@ namespace roka
 	void SpiderLayserSkillScript::Play()
 	{
 		LayserSkillScript::Play();
-
+	}
+	void SpiderLayserSkillScript::Exit()
+	{
+		LayserSkillScript::Exit();
+	}
+	void SpiderLayserSkillScript::Start()
+	{
+	}
+	void SpiderLayserSkillScript::Middle()
+	{
+	}
+	void SpiderLayserSkillScript::End()
+	{
+	}
+	void SpiderLayserSkillScript::CreateLayser()
+	{
+		LayserSkillScript::CreateLayser();
 		std::shared_ptr<GameObject> layser = mLayserObj;
 		std::shared_ptr<Animator> OwnerAni = owner->GetComponent<Animator>();
 		std::shared_ptr<MonsterScript> OwnerMonsterScript = owner->GetComponent<MonsterScript>();
 		std::shared_ptr<Animation> start = OwnerAni->FindAnimation(mStartKey);
 		std::shared_ptr<Animator> LayserAni = layser->GetComponent<Animator>();
-		
+
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
 		std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"SkillspiderLayser");
 		LayserAni->Create(texture, L"SkillspiderLayser", 0, 20, 0.1f);
@@ -104,13 +115,13 @@ namespace roka
 		Animation::AnimationEvent AniEvent = {};
 		//AniEvent.
 		//start->AddTimeLineEvent()
-		LayserAni->PlayAnimation(L"SkillspiderLayser",false);
+		LayserAni->PlayAnimation(L"SkillspiderLayser", false);
 
 		EDir4Type dirType = OwnerMonsterScript->GetDir();
 		std::shared_ptr<Transform> layserTf = layser->GetComponent<Transform>();
-		layserTf->scale = Vector3(5.0f,0.25f,1.0f);
+		layserTf->scale = Vector3(5.0f, 0.25f, 1.0f);
 
-	
+
 		Vector2 center = Vector2::Zero;
 
 		Vector3 pos = Vector3::Zero;
@@ -133,23 +144,10 @@ namespace roka
 		colSize.x = 1.5f;
 		colSize.y = 0.05f;
 		layserCol->size = colSize;
-		
+
 		Vector2 colCenter = layserCol->center;
 		colCenter.x = center.x;
 		colCenter.y = pos.y;
 		layserCol->center = colCenter;
-	}
-	void SpiderLayserSkillScript::Exit()
-	{
-		LayserSkillScript::Exit();
-	}
-	void SpiderLayserSkillScript::Start()
-	{
-	}
-	void SpiderLayserSkillScript::Middle()
-	{
-	}
-	void SpiderLayserSkillScript::End()
-	{
 	}
 }

@@ -55,16 +55,6 @@ namespace roka
 	void LayserSkillScript::Play()
 	{
 		SkillScript::Play();
-		pool::AnimationObjectPool* AniPool = pool::AnimationObjectPool::GetInstance();
-		mLayserObj = AniPool->GetPool(L"ColAniEftObject")->Spawn();
-		owner->AddChild(mLayserObj);
-		mLayserObj->layer_type = ELayerType::Skill;
-
-		mStunType = EStunState::HardStagger;
-
-		std::shared_ptr<HitBoxScript> hitBox = mLayserObj->GetComponent<HitBoxScript>();
-		hitBox->hitbox = HitBoxScript::EHitBoxType::Top;
-		hitBox->hitbox_owner = owner->GetSharedPtr();
 	}
 	void LayserSkillScript::Exit()
 	{
@@ -82,5 +72,18 @@ namespace roka
 	
 		owner->RemoveChild(mLayserObj);
 		mLayserObj.reset();
+	}
+	void LayserSkillScript::CreateLayser()
+	{
+		pool::AnimationObjectPool* AniPool = pool::AnimationObjectPool::GetInstance();
+		mLayserObj = AniPool->GetPool(L"ColAniEftObject")->Spawn();
+		owner->AddChild(mLayserObj);
+		mLayserObj->layer_type = ELayerType::Skill;
+
+		mStunType = EStunState::HardStagger;
+
+		std::shared_ptr<HitBoxScript> hitBox = mLayserObj->GetComponent<HitBoxScript>();
+		hitBox->hitbox = HitBoxScript::EHitBoxType::Top;
+		hitBox->hitbox_owner = owner->GetSharedPtr();
 	}
 }

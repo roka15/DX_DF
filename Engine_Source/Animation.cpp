@@ -56,6 +56,7 @@ namespace roka
 				else
 					mIndex = mRange.second - 1;
 				mIsComplete = true;
+				std::replace(mEventFlag.begin(), mEventFlag.end(), true, false);
 			}
 		}
 	}
@@ -110,17 +111,31 @@ namespace roka
 		if (mIndex >= mRange.second)
 			mIndex = mRange.first;
 	}
+	void Animation::AddTimeLineEvent(AnimationEvent aniEvent)
+	{
+		mEvents.push_back(aniEvent);
+		mEventFlag.push_back(false);
+	}
 	void Animation::EventFunc()
 	{
+		int index = 0;
 		for (auto aniEvent : mEvents)
 		{
-			if (aniEvent.mTime == mEventTime)
+			if (mEventFlag[index] == true)
+				continue;
+			if (aniEvent.mTime <= mEventTime)
 			{
 				if (aniEvent.mNormalFunc != nullptr)
+				{
 					aniEvent.mNormalFunc();
+				}
 				else if (aniEvent.mObjFunc != nullptr)
+				{
 					aniEvent.mObjFunc(aniEvent.mObject);
+				}
+				mEventFlag[index] = true;
 			}
+			index++;
 		}
 	}
 }

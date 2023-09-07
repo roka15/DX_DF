@@ -66,7 +66,7 @@ namespace roka
 		GET_PROPERTY(IsComplete) bool is_complete;
 		SET_PROPERTY(SetPlayRange) std::pair<UINT, UINT> play_range;
 
-		void AddTimeLineEvent(AnimationEvent aniEvent) { mEvents.push_back(aniEvent); }
+		void AddTimeLineEvent(AnimationEvent aniEvent);
 	private:
 		void EventFunc();
 	private:
@@ -79,6 +79,7 @@ namespace roka
 		bool mIsComplete;
 
 		std::vector<AnimationEvent> mEvents;
+		std::vector<bool> mEventFlag;
 		float mEventTime;
 	};
 }
