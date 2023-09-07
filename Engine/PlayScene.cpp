@@ -214,14 +214,14 @@ namespace roka
 			AddGameObject(ELayerType::Monster, monster);
 		}
 
-	/*	std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
+		std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
 		{
 			std::shared_ptr<GameObject> monster = object::Instantiate<GameObject>(TairangOrigin);
 			monster->SetName(L"Tiarang");
 			monster->GetComponent<Transform>()->position = Vector3(-1.0f, 0.0f, 0.0f);
 			monster->GetComponent<MonsterScript>()->SetTarget(player);
 			AddGameObject(ELayerType::Monster, monster);
-		}*/
+		}
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);

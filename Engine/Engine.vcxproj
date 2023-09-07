@@ -174,6 +174,7 @@
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="ContentEnums.h" />
+    <ClInclude Include="DelayedCollisionSkillScript.h" />
     <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GridScript.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="SpiderLayserSkillScript.h" />
     <ClInclude Include="SpiderMonsterScript.h" />
     <ClInclude Include="TairangMonsterScript.h" />
+    <ClInclude Include="TairangSkill01Script.h" />
     <ClInclude Include="TargetMoveScript.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="WeaponScript.h" />
@@ -211,6 +213,7 @@
     <ClCompile Include="AvatarScript.cpp" />
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
+    <ClCompile Include="DelayedCollisionSkillScript.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FactoryManager.cpp" />
     <ClCompile Include="GridScript.cpp" />
@@ -236,6 +239,7 @@
     <ClCompile Include="SpiderLayserSkillScript.cpp" />
     <ClCompile Include="SpiderMonsterScript.cpp" />
     <ClCompile Include="TairangMonsterScript.cpp" />
+    <ClCompile Include="TairangSkill01Script.cpp" />
     <ClCompile Include="TargetMoveScript.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="WeaponScript.cpp" />

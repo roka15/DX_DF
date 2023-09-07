@@ -246,37 +246,6 @@ namespace roka::prefab
 			std::shared_ptr<Transform> tf = Tairang_MonsterObject->GetComponent<Transform>();
 			tf->position = Vector3(0.0f, 0.0f, 0.1f);
 		}
-		/*std::shared_ptr<GameObject> SpiderSkillObject01 = object::Instantiate<GameObject>(AniObject);
-		{
-			SpiderSkillObject01->SetName(L"skill01");
-			
-			Spider_MonsterObject->AddChild(SpiderSkillObject01);
-			std::shared_ptr<Collider2D> col = SpiderSkillObject01->AddComponent<Collider2D>();
-			std::shared_ptr<MonsterSkillScript> skill = SpiderSkillObject01->AddScript<MonsterSkillScript>();
-			std::shared_ptr<HitBoxScript> hitbox = SpiderSkillObject01->AddScript<HitBoxScript>();
-			std::shared_ptr<MeshRenderer> mr = SpiderSkillObject01->GetComponent<MeshRenderer>();
-			std::shared_ptr<Transform> tf = SpiderSkillObject01->GetComponent<Transform>();
-			std::shared_ptr<Animator> ani = SpiderSkillObject01->GetComponent<Animator>();
-
-			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
-			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"monster_skill01");
-			ani->Create(texture, L"monster_skill01", 0, 20, 0.1f);
-
-			tf->scale = Vector3(5.0f, 1.0f, 1.0f);
-			tf->position = Vector3(0.0f, 0.0f, 0.1f);
-
-			col->is_active = false;
-			col->DisableRender();
-
-			mr->is_active = false;
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-
-			hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
-			hitbox->hitbox_owner = SpiderSkillObject01;
-
-			skill->stun_type = EStunState::HardStagger;
-			skill->startKey = L"monster_skill01";
-		}*/
 		//std::shared_ptr<GameObject> TairangSkillEft01 = object::Instantiate<GameObject>();
 		//{
 		//	TairangSkillEft01->SetName(L"TairangSkillEft01");
@@ -562,6 +531,7 @@ namespace roka::prefab
 		std::shared_ptr<NPK> monsterEft_npk = Resources::Find<NPK>(L"monster_eft");
 		std::shared_ptr<NPK> tairang_npk = Resources::Find<NPK>(L"tairnag");
 		std::shared_ptr<NPK> tairangEft_npk = Resources::Find<NPK>(L"tairnag_eft");
+		std::shared_ptr<NPK> warning_npk = Resources::Find<NPK>(L"warning");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -574,5 +544,7 @@ namespace roka::prefab
 			tairang_npk = Resources::Load<NPK>(L"tairang", path + L"tairang.npk");
 		if (tairangEft_npk == nullptr)
 			tairangEft_npk = Resources::Load<NPK>(L"tairnag_eft", path + L"tairang_eft.npk");
+		if (warning_npk == nullptr)
+			warning_npk = Resources::Load<NPK>(L"warning", path + L"warning.npk");
 	}
 }

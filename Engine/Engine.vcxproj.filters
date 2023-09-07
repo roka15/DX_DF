@@ -103,11 +103,17 @@
     <ClInclude Include="PortalScript.h">
       <Filter>Contents\Script\PortalScript</Filter>
     </ClInclude>
-    <ClInclude Include="LayserSkillScript.h">
-      <Filter>Contents\Script\SkillScript\Base\TypeBase</Filter>
-    </ClInclude>
     <ClInclude Include="SpiderLayserSkillScript.h">
       <Filter>Contents\Script\SkillScript\NormalMonsterSkill\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="LayserSkillScript.h">
+      <Filter>Contents\Script\SkillScript\Base\TypeBase\Layser</Filter>
+    </ClInclude>
+    <ClInclude Include="DelayedCollisionSkillScript.h">
+      <Filter>Contents\Script\SkillScript\Base\TypeBase\DelayedCollision</Filter>
+    </ClInclude>
+    <ClInclude Include="TairangSkill01Script.h">
+      <Filter>Contents\Script\SkillScript\NamedMonsterSkill\Tairang</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -204,11 +210,17 @@
     <ClCompile Include="PortalScript.cpp">
       <Filter>Contents\Script\PortalScript</Filter>
     </ClCompile>
-    <ClCompile Include="LayserSkillScript.cpp">
-      <Filter>Contents\Script\SkillScript\Base\TypeBase</Filter>
-    </ClCompile>
     <ClCompile Include="SpiderLayserSkillScript.cpp">
       <Filter>Contents\Script\SkillScript\NormalMonsterSkill\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="LayserSkillScript.cpp">
+      <Filter>Contents\Script\SkillScript\Base\TypeBase\Layser</Filter>
+    </ClCompile>
+    <ClCompile Include="DelayedCollisionSkillScript.cpp">
+      <Filter>Contents\Script\SkillScript\Base\TypeBase\DelayedCollision</Filter>
+    </ClCompile>
+    <ClCompile Include="TairangSkill01Script.cpp">
+      <Filter>Contents\Script\SkillScript\NamedMonsterSkill\Tairang</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -337,6 +349,12 @@
     </Filter>
     <Filter Include="Contents\Script\SkillScript\Base\TypeBase">
       <UniqueIdentifier>{1dc980a3-7467-4bf9-a342-47daa1c27eb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\Base\TypeBase\Layser">
+      <UniqueIdentifier>{d89e9fb9-4a52-4648-86d9-5f39be7cf6c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\SkillScript\Base\TypeBase\DelayedCollision">
+      <UniqueIdentifier>{c41bd470-a02c-4046-893a-becc9a6baf52}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
