@@ -96,7 +96,10 @@ namespace roka
 	{
 		NormalMonsterScript::Attack();
 	}
-
+	void SpiderMonsterScript::Skill()
+	{
+		NormalMonsterScript::Skill();
+	}
 	void SpiderMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
 	{
 		Vector3 targetPos = mTarget.lock()->GetComponent<Transform>()->position;
@@ -166,15 +169,4 @@ namespace roka
 	{
 		NormalMonsterScript::RightSetting();
 	}
-	void SpiderMonsterScript::Skill01()
-	{
-		//std::shared_ptr<GameObject> skill = owner->GetChild(L"skill01");
-		std::shared_ptr<SkillScript> skillScript = mSkillList[0];
-		skillScript->Play();
-		/*std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		mCurSkillKey = mSkillStartKey[0];
-		ani->PlayAnimation(mSkillStartKey[0], false);
-		EnableNextState();*/
-	}
-	
 }

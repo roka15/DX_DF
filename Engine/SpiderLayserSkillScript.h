@@ -28,7 +28,7 @@ namespace roka
         virtual void Middle() override;
         virtual void End()override;
 
-        virtual void CreateLayser()override;
+        virtual void CreateColliderObject()override;
     private:
         friend class FactoryBase;
         friend class ScriptFactory;

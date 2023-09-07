@@ -33,7 +33,7 @@ namespace roka
 		
 		std::shared_ptr<Animation> animation = ani->FindAnimation(L"web_spider_Skill1");
 		Animation::AnimationEvent timeEvent = {};
-		timeEvent.mNormalFunc = std::bind(&SpiderLayserSkillScript::CreateLayser, this);
+		timeEvent.mNormalFunc = std::bind(&SpiderLayserSkillScript::CreateColliderObject, this);
 		timeEvent.mTime = 1.3f;
 		animation->AddTimeLineEvent(timeEvent);
 
@@ -99,10 +99,10 @@ namespace roka
 	void SpiderLayserSkillScript::End()
 	{
 	}
-	void SpiderLayserSkillScript::CreateLayser()
+	void SpiderLayserSkillScript::CreateColliderObject()
 	{
-		LayserSkillScript::CreateLayser();
-		std::shared_ptr<GameObject> layser = mLayserObj;
+		LayserSkillScript::CreateColliderObject();
+		std::shared_ptr<GameObject> layser = mColObj;
 		std::shared_ptr<Animator> OwnerAni = owner->GetComponent<Animator>();
 		std::shared_ptr<MonsterScript> OwnerMonsterScript = owner->GetComponent<MonsterScript>();
 		std::shared_ptr<Animation> start = OwnerAni->FindAnimation(mStartKey);

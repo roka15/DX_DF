@@ -11,10 +11,14 @@
 
 namespace roka
 {
-	SkillScript::SkillScript() :Script(EScriptType::SkillBase)
+	SkillScript::SkillScript() :Script(EScriptType::SkillBase),
+		mStunType(EStunState::None),
+		mStartKey(L"")
 	{
 	}
-	SkillScript::SkillScript(EScriptType type) : Script(type)
+	SkillScript::SkillScript(EScriptType type) : Script(type),
+		mStunType(EStunState::None),
+		mStartKey(L"")
 	{
 	}
 	SkillScript::SkillScript(const SkillScript& ref) : Script(ref)
@@ -26,6 +30,9 @@ namespace roka
 		SkillScript* source = dynamic_cast<SkillScript*>(src);
 		mStunType = source->mStunType;
 		mStartKey = source->mStartKey;
+	}
+	SkillScript::~SkillScript()
+	{
 	}
 	void SkillScript::Initialize()
 	{

@@ -11,7 +11,7 @@ namespace roka
 		SkillScript(const SkillScript& ref);
 		void Copy(Component* src);
 	public:
-		~SkillScript() {}
+		virtual ~SkillScript();
 		virtual void Initialize() override;
 		virtual void Update() override;
 		virtual void LateUpdate() override;
@@ -28,6 +28,7 @@ namespace roka
 		virtual void Middle() {}
 		virtual void End() {}
 
+		virtual void CreateColliderObject() {}
 		EStunState GetStunType() { return mStunType; }
 		void SetStunType(EStunState type) { mStunType = type;}
 
@@ -47,6 +48,9 @@ namespace roka
 	protected:
 		EStunState mStunType;
 		std::wstring mStartKey;
+
+		//collider object info
+		std::shared_ptr<GameObject> mColObj;
 	};
 }
 
