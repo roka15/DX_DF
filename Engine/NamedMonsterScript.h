@@ -25,7 +25,8 @@ namespace roka
 		virtual void Idle()override;
 		virtual void Move()override;
 		virtual void Attack()override;
-	
+		virtual void Skill()override;
+
 		virtual void SetTargetPos(Vector2& outDir, Vector2& outTargetPos)override;
 
 		void RegisterSkillFunc(std::function<void()> func);
@@ -34,8 +35,7 @@ namespace roka
 		friend class FactoryBase;
 		friend class ScriptFactory;
 	protected:
-		std::vector<std::function<void()>> mSkillStartList;
-		int mBeforSkillIndex;
+	
 	};
 }
 

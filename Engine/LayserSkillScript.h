@@ -30,15 +30,11 @@ namespace roka
         virtual void Middle()override {}
         virtual void End()override {}
 
-        virtual void CreateLayser();
+        virtual void CreateColliderObject()override;
     private:
         friend class FactoryBase;
         friend class ScriptFactory;
     protected:
-        Vector3 mLayserSize;
-        Vector3 mLayserSpawnPos;
-
-        std::shared_ptr<GameObject> mLayserObj;
     };
 }
 

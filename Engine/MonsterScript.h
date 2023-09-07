@@ -45,9 +45,10 @@ namespace roka
 		virtual void Move();
 		virtual void Attack();
 	
+		virtual void Skill();
 		
 		void SetTarget(std::shared_ptr<GameObject> target) { mTarget = target; }
-
+		std::shared_ptr<GameObject> GetTarget() { return mTarget.lock(); }
 		void EnableNextState() { mbNextState = true; }
 		void DisableNextState() { mbNextState = false; }
 
@@ -78,6 +79,7 @@ namespace roka
 
 		const UINT mSkillStateCntMax;
 		UINT mSkillStateCnt;
+		UINT mExcuteSkillIndex;
 
 		std::vector<std::shared_ptr<SkillScript>> mSkillList;
 	};

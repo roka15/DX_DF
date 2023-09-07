@@ -4,6 +4,8 @@
 #include "Transform.h"
 #include "Collider2D.h"
 #include "Animator.h"
+
+#include "SkillScript.h"
 namespace roka
 {
     NormalMonsterScript::NormalMonsterScript():MonsterScript(EScriptType::NormalMonster)
@@ -66,7 +68,12 @@ namespace roka
     void NormalMonsterScript::Attack()
     {
         MonsterScript::Attack();
-        Skill01();
+    }
+
+    void NormalMonsterScript::Skill()
+    {
+        mExcuteSkillIndex = 0;
+        MonsterScript::Skill();
     }
 
     void NormalMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
@@ -80,7 +87,5 @@ namespace roka
     {  
         MonsterScript::RightSetting();
     }
-    void NormalMonsterScript::Skill01()
-    {
-    }
+  
 }

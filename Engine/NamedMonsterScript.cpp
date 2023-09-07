@@ -66,22 +66,24 @@ namespace roka
 	void NamedMonsterScript::Attack()
 	{
 		MonsterScript::Attack();
-		size_t count = mSkillStartList.size();
+	}
+	void NamedMonsterScript::Skill()
+	{
+		size_t count = mSkillList.size();
 		if (count == 0)
 			return;
 		int index = 0;
-		//test 끝나면 풀기
+		//test 스킬 추가되면 지우기
 		/*while (1)
 		{
 			index = rand() % count;
-			if (mBeforSkillIndex != index)
+			if (mExcuteSkillIndex != index)
 			{
-				mBeforSkillIndex = index;
 				break;
 			}
 		}*/
-
-		mSkillStartList[index]();
+		mExcuteSkillIndex = index;
+		MonsterScript::Skill();
 	}
 	void NamedMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
 	{
@@ -149,6 +151,6 @@ namespace roka
 	}
 	void NamedMonsterScript::RegisterSkillFunc(std::function<void()> func)
 	{
-		mSkillStartList.push_back(func);
+		//mSkillStartList.push_back(func);
 	}
 }

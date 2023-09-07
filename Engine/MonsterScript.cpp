@@ -10,9 +10,11 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "Collider2D.h"
+
 #include "MoveScript.h"
 #include "TargetMoveScript.h"
 #include "PlayerScript.h"
+#include "SkillScript.h"
 
 
 extern roka::Application application;
@@ -252,6 +254,13 @@ namespace roka
 	}
 	void MonsterScript::Attack()
 	{
+		Skill();
+	}
+
+	void MonsterScript::Skill()
+	{
+		std::shared_ptr<SkillScript> skillScript = mSkillList[mExcuteSkillIndex];
+		skillScript->Play();
 	}
 
 	void MonsterScript::LeftSetting()

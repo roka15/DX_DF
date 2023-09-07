@@ -28,15 +28,13 @@ namespace roka
 		virtual void Idle()override;
 		virtual void Move()override;
 		virtual void Attack()override;
-
+		virtual void Skill()override;
 
 		virtual void SetTargetPos(Vector2& outDir, Vector2& outTargetPos)override;
 
 
 		virtual void LeftSetting()override;
 		virtual void RightSetting()override;
-
-		virtual void Skill01();
 
 	private:
 		friend class FactoryBase;
