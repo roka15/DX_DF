@@ -73,4 +73,26 @@ namespace roka
 		}
 		return nullptr;
 	}
+	void Layer::RemoveGameObject(std::wstring name)
+	{
+		for (int i=0;i<mGameObjects.size();i++)
+		{
+			if (mGameObjects[i]->GetName().compare(name) == 0)
+			{
+				mGameObjects.erase(mGameObjects.begin() + i);
+				return;
+			}
+		}
+	}
+	void Layer::RemoveGameObject(std::shared_ptr<GameObject> gameObj)
+	{
+		for (int i = 0; i < mGameObjects.size(); i++)
+		{
+			if (mGameObjects[i] == gameObj)
+			{
+				mGameObjects.erase(mGameObjects.begin() + i);
+				return;
+			}
+		}
+	}
 }

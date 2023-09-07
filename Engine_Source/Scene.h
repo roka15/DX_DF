@@ -23,6 +23,8 @@ namespace roka
 		void AddGameObject(enums::ELayerType type, std::shared_ptr<GameObject> gameObj);
 		std::shared_ptr<GameObject> FindGameObject(enums::ELayerType type,std::wstring name);
 
+		void RemoveGameObject(ELayerType type, std::wstring name);
+		void RemoveGameObject(ELayerType type,std::shared_ptr<GameObject> gameObj);
 		template <typename T>
 		std::vector<T*> FindObjectsOfType()
 		{

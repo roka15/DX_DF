@@ -17,6 +17,8 @@ namespace roka
 		void Clear();
 		std::shared_ptr<GameObject> FindGameObject(std::wstring name);
 
+		void RemoveGameObject(std::wstring name);
+		void RemoveGameObject(std::shared_ptr<GameObject> gameObj);
 		const std::vector<std::shared_ptr<GameObject>>& GetGameObjects() { return mGameObjects; }
 	private:
 		std::vector<std::shared_ptr<GameObject>> mGameObjects;

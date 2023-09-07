@@ -71,6 +71,14 @@ namespace roka
 	{
 		return mLayers[(int)type].FindGameObject(name);
 	}
+	void Scene::RemoveGameObject(ELayerType type, std::wstring name)
+	{
+		mLayers[(int)type].RemoveGameObject(name);
+	}
+	void Scene::RemoveGameObject(ELayerType type, std::shared_ptr<GameObject> gameObj)
+	{
+		mLayers[(int)type].RemoveGameObject(gameObj);
+	}
 	const std::vector<std::shared_ptr<GameObject>>& Scene::GetGameObjects(ELayerType type)
 	{
 		return mLayers[(int)type].GetGameObjects();
