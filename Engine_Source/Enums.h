@@ -30,6 +30,8 @@ namespace roka::enums
 		SkillBase,
 		SkillLayser,
 		SkillSpiderLayser,
+		SkillDelayCollider,
+		SkillTairangType01,
 		SkillMonster,
 		Weapon,
 		HitBox,

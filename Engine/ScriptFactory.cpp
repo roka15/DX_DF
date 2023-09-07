@@ -20,7 +20,9 @@
 
 #include "SkillScript.h"
 #include "LayserSkillScript.h"
+#include "DelayedCollisionSkillScript.h"
 #include "SpiderLayserSkillScript.h"
+#include "TairangSkill01Script.h"
 #include "MonsterSkillScript.h"
 namespace roka
 {
@@ -72,10 +74,20 @@ namespace roka
 			LayserSkillScript* ss = dynamic_cast<LayserSkillScript*>(script);
 			return std::shared_ptr<LayserSkillScript>(new LayserSkillScript(*ss));
 		};
+		mFactories[EScriptType::SkillDelayCollider] = [](Script* script)
+		{
+			DelayedCollisionSkillScript* ss = dynamic_cast<DelayedCollisionSkillScript*>(script);
+			return std::shared_ptr<DelayedCollisionSkillScript>(new DelayedCollisionSkillScript(*ss));
+		};
 		mFactories[EScriptType::SkillSpiderLayser] = [](Script* script)
 		{
 			SpiderLayserSkillScript* ss = dynamic_cast<SpiderLayserSkillScript*>(script);
 			return std::shared_ptr<SpiderLayserSkillScript>(new SpiderLayserSkillScript(*ss));
+		};
+		mFactories[EScriptType::SkillTairangType01] = [](Script* script)
+		{
+			TairangSkill01Script* ss = dynamic_cast<TairangSkill01Script*>(script);
+			return std::shared_ptr<TairangSkill01Script>(new TairangSkill01Script(*ss));
 		};
 		mFactories[EScriptType::SkillMonster] = [](Script* script)
 		{

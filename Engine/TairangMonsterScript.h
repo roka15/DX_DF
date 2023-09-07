@@ -24,13 +24,11 @@ namespace roka
 		virtual void Idle()override;
 		virtual void Move()override;
 		virtual void Attack()override;
+		virtual void Skill()override;
 
 		virtual void SetTargetPos(Vector2& outDir, Vector2& outTargetPos)override;
 
-		virtual void Skill01();
-		virtual void Skill02();
-		virtual void Skill03();
-		virtual void Skill04();
+	
 
 		void Skill01SetPos();
 	private:				  
