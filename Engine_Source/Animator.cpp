@@ -42,6 +42,7 @@ namespace roka
 	}
 	void Animator::Initialize()
 	{
+		Component::Initialize();
 		mAnimations.clear();
 		mEvents.clear();
 	}

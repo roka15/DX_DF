@@ -4,6 +4,7 @@ namespace roka
 {
 	void Slot::Initialize()
 	{
+		Script::Initialize();
 	}
 
 	void Slot::Update()

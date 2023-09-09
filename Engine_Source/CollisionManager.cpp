@@ -82,6 +82,8 @@ namespace roka
 		if (itr == mCollisionMap.end())
 		{
 			mCollisionMap.insert(std::make_pair(id.id, false));
+			if (id.left == 111 && id.right == 418)
+				int a = 0;
 			itr = mCollisionMap.find(id.id);
 		}
 

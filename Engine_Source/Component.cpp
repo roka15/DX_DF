@@ -26,6 +26,7 @@ namespace roka
 
 	void Component::Initialize()
 	{
+		is_active = true;
 	}
 
 	void Component::Update()

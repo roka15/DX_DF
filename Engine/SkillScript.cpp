@@ -36,6 +36,7 @@ namespace roka
 	}
 	void SkillScript::Initialize()
 	{
+		Script::Initialize();
 	}
 	void SkillScript::Update()
 	{

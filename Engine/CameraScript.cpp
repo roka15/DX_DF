@@ -18,6 +18,10 @@ namespace roka
 	CameraScript::~CameraScript()
 	{
 	}
+	void CameraScript::Initialize()
+	{
+		Script::Initialize();
+	}
 	void CameraScript::Update()
 	{
 		std::shared_ptr<Transform> tf = GetOwner()->GetComponent<Transform>();

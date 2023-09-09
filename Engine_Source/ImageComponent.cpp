@@ -29,6 +29,7 @@ namespace roka
 	}
 	void ImageComponent::Initialize()
 	{
+		Component::Initialize();
 		auto default_material = prefab::Resources.find(L"DefaultMaterial");
 		if (default_material == prefab::Resources.end())
 			return;

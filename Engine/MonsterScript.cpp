@@ -74,6 +74,7 @@ namespace roka
 
 	void MonsterScript::Initialize()
 	{
+		Script::Initialize();
 		owner->layer_type = ELayerType::Monster;
 		mState = EMonsterState::Ready;
 		mNextStateCoolTime = 5.0;

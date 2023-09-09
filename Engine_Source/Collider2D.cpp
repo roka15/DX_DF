@@ -64,6 +64,7 @@ namespace roka
 	}
 	void Collider2D::Initialize()
 	{
+		Component::Initialize();
 		mTransform = owner->GetComponent<Transform>();
 	}
 	void Collider2D::Update()

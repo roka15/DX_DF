@@ -26,6 +26,7 @@ namespace roka
 
 	void Script::Initialize()
 	{
+		Component::Initialize();
 	}
 
 	void Script::Update()

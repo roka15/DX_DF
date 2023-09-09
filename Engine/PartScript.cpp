@@ -28,6 +28,7 @@ namespace roka
 	}
 	void PartScript::Initialize()
 	{
+		Script::Initialize();
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 
 		std::shared_ptr<Material> material = std::make_shared<Material>();

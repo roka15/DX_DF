@@ -47,6 +47,7 @@ namespace roka
     }
     void Transform::Initialize()
     {
+        Component::Initialize();
     }
     void Transform::Update()
     {

@@ -17,6 +17,7 @@ namespace roka
 	}
 	void PortalScript::Initialize()
 	{
+		Script::Initialize();
 	}
 	void PortalScript::Update()
 	{

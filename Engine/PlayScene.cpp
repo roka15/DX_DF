@@ -225,6 +225,7 @@ namespace roka
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
+		CollisionManager::SetLayer(ELayerType::Skill, ELayerType::Player, true);
 
 		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),

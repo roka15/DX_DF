@@ -21,6 +21,7 @@ roka::WeaponScript::~WeaponScript()
 
 void roka::WeaponScript::Initialize()
 {
+	PartScript::Initialize();
 }
 
 void roka::WeaponScript::Update()

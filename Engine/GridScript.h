@@ -11,7 +11,7 @@ namespace roka
 		GridScript(const GridScript& ref);
 		virtual void Copy(Component* src)override;
 	public:
-		~GridScript();
+		virtual ~GridScript();
 
 		virtual void Initialize() override;
 		virtual void Update() override;

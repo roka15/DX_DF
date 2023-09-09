@@ -62,7 +62,7 @@ namespace roka
 	}
 	void Rigidbody::Initialize()
 	{
-		
+		Component::Initialize();
 	}
 	void Rigidbody::Update()
 	{

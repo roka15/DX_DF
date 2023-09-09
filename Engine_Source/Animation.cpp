@@ -122,7 +122,10 @@ namespace roka
 		for (auto aniEvent : mEvents)
 		{
 			if (mEventFlag[index] == true)
+			{
+				index++;
 				continue;
+			}
 			if (aniEvent.mTime <= mEventTime)
 			{
 				if (aniEvent.mNormalFunc != nullptr)
@@ -135,13 +138,6 @@ namespace roka
 				}
 				
 				mEventFlag[index] = true;
-				if (GetKey().compare(L"tairang_Skill01_start") == 0)
-				{
-					if (mEventFlag[2] == true)
-					{
-						int a = 0;
-					}
-				}
 			}
 			index++;
 		}

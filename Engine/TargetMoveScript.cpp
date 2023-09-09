@@ -23,6 +23,7 @@ namespace roka
 	}
 	void TargetMoveScript::Initialize()
 	{
+		MoveScript::Initialize();
 	}
 	void TargetMoveScript::Update()
 	{

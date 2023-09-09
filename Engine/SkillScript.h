@@ -29,6 +29,7 @@ namespace roka
 		virtual void End() {}
 
 		virtual void CreateColliderObject() {}
+		virtual void DeleteColliderObject() {}
 		EStunState GetStunType() { return mStunType; }
 		void SetStunType(EStunState type) { mStunType = type;}
 
@@ -51,6 +52,8 @@ namespace roka
 
 		//collider object info
 		std::shared_ptr<GameObject> mColObj;
+
+		float mDamage;
 	};
 }
 

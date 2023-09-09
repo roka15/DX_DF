@@ -30,6 +30,7 @@ namespace roka
 	}
 	void AvatarScript::Initialize()
 	{
+		Script::Initialize();
 		std::vector<std::shared_ptr<GameObject>> childs = owner->GetChilds();
 
 		for (auto child : childs)

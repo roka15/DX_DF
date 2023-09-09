@@ -9,7 +9,8 @@ namespace roka
 		CameraScript(const CameraScript& ref);
 		virtual void Copy(Component* src)override;
 	public:
-		~CameraScript();
+		virtual ~CameraScript();
+		virtual void Initialize()override;
 		virtual void Update()override;
 	private:
 		friend class FactoryBase;

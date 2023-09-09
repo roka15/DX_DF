@@ -64,6 +64,7 @@ namespace roka
 	}
 	void PlayerScript::Initialize()
 	{
+		Script::Initialize();
 		owner->layer_type = ELayerType::Player;
 		mTransform = owner->GetComponent<Transform>();
 		mMoveScript = owner->GetComponent<MoveScript>();

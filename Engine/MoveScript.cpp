@@ -36,7 +36,7 @@ namespace roka
 
 	void MoveScript::Initialize()
 	{
-
+		Script::Initialize();
 	}
 
 	void MoveScript::Update()

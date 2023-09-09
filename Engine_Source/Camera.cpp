@@ -55,7 +55,7 @@ namespace roka
 	}
 	void Camera::Initialize()
 	{
-
+		Component::Initialize();
 	}
 	void Camera::Update()
 	{

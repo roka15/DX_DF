@@ -30,6 +30,7 @@ namespace roka
 	}
 	void MeshRenderer::Initialize()
 	{
+		Component::Initialize();
 	}
 	void MeshRenderer::Update()
 	{

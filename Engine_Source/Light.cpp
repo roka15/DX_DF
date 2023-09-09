@@ -17,6 +17,7 @@ namespace roka
 	}
 	void Light::Initialize()
 	{
+		Component::Initialize();
 	}
 	void Light::Update()
 	{
