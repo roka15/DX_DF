@@ -164,6 +164,7 @@ namespace roka
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->PlayAnimation(L"tairang_Skill01_end", false);
 		DeleteMiddleEftObject();
+		DeleteWarningObject();
 		Landing();
 		CreateColliderObject();
 		CreateEndEftObject();
@@ -217,8 +218,8 @@ namespace roka
 		TimeEvent.mNormalFunc = std::bind(&TairangSkill01Script::StopWarningAniEvent, this);
 		
 		animation->AddTimeLineEvent(TimeEvent);
-
-		warning_ani->CompleteEvent(L"ellipse_warning1") = std::bind(&TairangSkill01Script::DeleteWarningObject,this);
+		MeshRenderer* meshRenderer = mWarningObj->GetComponent<MeshRenderer>().get();
+		warning_ani->CompleteEvent(L"ellipse_warning1") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 		warning_ani->PlayAnimation(L"ellipse_warning1", false);
 	}
 	void TairangSkill01Script::CreateStartEftObject()
@@ -455,7 +456,7 @@ namespace roka
 		DelayedCollisionSkillScript::StopWarningAniEvent();
 
 		Time::CallBackTimerInfo callBack = {};
-		callBack.endTime = 1.5f;
+		callBack.endTime = 3.5f;
 		Time::RequestEvent(callBack, std::bind(&TairangSkill01Script::ContinueWarningAniEvent, this));
 	}
 	void TairangSkill01Script::PlayStartEftObject(int index,std::wstring key)

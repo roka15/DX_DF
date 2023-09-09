@@ -49,6 +49,7 @@ namespace roka
 		void Hide();
 		void Explosion();
 		void Landing();
+
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
