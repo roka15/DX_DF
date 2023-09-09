@@ -17,7 +17,7 @@ namespace roka
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-		virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other) {}
+		virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other);
 		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other) {}
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other) {}
 
@@ -34,18 +34,28 @@ namespace roka
 		virtual void CreateColliderObject()override;
 		virtual void CreateWarningObject();
 		void CreateStartEftObject();
+		void CreateMiddleEftObject();
+		void CreateEndEftObject();
 
 		virtual void DeleteWarningObject();
 		void DeleteStartEftObject();
+		void DeleteMiddleEftObject();
+		void DeleteEndEftObject();
 
 		virtual void StopWarningAniEvent();
 
+		void PlayStartEftObject(int index,std::wstring key);
+		void Jump();
+		void Hide();
+		void Explosion();
+		void Landing();
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
 	protected:
 		std::vector<std::shared_ptr<GameObject>> mStartEftObject;
-		
+		std::vector<std::shared_ptr<GameObject>> mMiddleEftObject;
+		std::vector<std::shared_ptr<GameObject>> mEndEftObject;
 	};
 }
 

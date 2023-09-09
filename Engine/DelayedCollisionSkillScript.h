@@ -32,6 +32,7 @@ namespace roka
 		virtual void CreateColliderObject()override;
 		virtual void CreateWarningObject();
 
+		virtual void DeleteColliderObject()override;
 		virtual void DeleteWarningObject();
 
 		virtual void StopWarningAniEvent();
@@ -49,6 +50,8 @@ namespace roka
 
 		Vector3 mWarningSize;
 		Vector3 mWarningCenter;
+
+		Vector3 mPos;
 	};
 }
 

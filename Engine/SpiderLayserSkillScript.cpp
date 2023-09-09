@@ -28,6 +28,7 @@ namespace roka
 	}
 	void SpiderLayserSkillScript::Initialize()
 	{
+		LayserSkillScript::Initialize();
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Skill1", 28, 46, 0.1f);
 		
@@ -63,7 +64,7 @@ namespace roka
 			return;
 
 		float damage = 1;
-		player->BeAttacked(damage, mStunType);
+		player->BeAttacked(mDamage, mStunType);
 	}
 	void SpiderLayserSkillScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	{

@@ -22,6 +22,7 @@ void roka::HitBoxScript::Copy(Component* src)
 
 void roka::HitBoxScript::Initialize()
 {
+	Script::Initialize();
 	mHitBoxOwner = owner->GetSharedPtr();
 }
 

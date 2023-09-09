@@ -4,9 +4,11 @@
 #include "AnimationObjectPool.h"
 #include "SceneManager.h"
 #include "RokaTime.h"
+#include "CollisionManager.h"
 
 #include "Transform.h"
 #include "Animator.h"
+#include "Collider2D.h"
 namespace roka
 {
 	DelayedCollisionSkillScript::DelayedCollisionSkillScript():SkillScript(EScriptType::SkillDelayCollider),
@@ -43,6 +45,7 @@ namespace roka
 	}
 	void DelayedCollisionSkillScript::Initialize()
 	{
+		SkillScript::Initialize();
 	}
 	void DelayedCollisionSkillScript::Update()
 	{
@@ -69,16 +72,25 @@ namespace roka
 	void DelayedCollisionSkillScript::Exit()
 	{
 		SkillScript::Exit();
-		Scene* ActiveScene = SceneManager::GetActiveScene();
-		ActiveScene->RemoveGameObject(ELayerType::Skill, mColObj);
-		mColObj.reset();
+		std::shared_ptr<Collider2D> skill = mColObj->GetComponent<Collider2D>();
+		std::shared_ptr<GameObject> playerObj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::Player, L"Player");
+		if (playerObj == nullptr)
+			return;
+		std::vector<std::shared_ptr<Collider2D>> vec = playerObj->GetChilds<Collider2D>();
+
+		for (auto player : vec)
+		{
+			CollisionManager::DisableCollision(player,skill);
+		}
+		DeleteColliderObject();
 	}
 	void DelayedCollisionSkillScript::CreateColliderObject()
 	{
 		Scene* ActiveScene = SceneManager::GetActiveScene();
 		pool::AnimationObjectPool* AniPool = pool::AnimationObjectPool::GetInstance();
 		mColObj = AniPool->GetPool(L"ColAniEftObject")->Spawn();
-
+		std::shared_ptr<Transform> tf = mColObj->GetComponent<Transform>();
+		tf->position = mPos;
 		ActiveScene->AddGameObject(ELayerType::Skill,mColObj);
 	}
 	void DelayedCollisionSkillScript::CreateWarningObject()
@@ -91,6 +103,12 @@ namespace roka
 		std::shared_ptr<Transform> warning_tf = mWarningObj->GetComponent<Transform>();
 		warning_tf->scale = mWarningSize;
 		ActiveScene->AddGameObject(ELayerType::Skill, mWarningObj);
+	}
+	void DelayedCollisionSkillScript::DeleteColliderObject()
+	{
+		Scene* ActiveScene = SceneManager::GetActiveScene();
+		ActiveScene->RemoveGameObject(ELayerType::Skill, mColObj);
+		mColObj.reset();
 	}
 	void DelayedCollisionSkillScript::DeleteWarningObject()
 	{
@@ -116,5 +134,7 @@ namespace roka
 
 		std::shared_ptr<Transform> warning_tf = mWarningObj->GetComponent<Transform>();
 		warning_tf->position = mWarningCenter+target_pos;
+
+		mPos = target_pos;
 	}
 }

@@ -33,6 +33,7 @@ namespace roka
 	}
 	void LayserSkillScript::Initialize()
 	{
+		SkillScript::Initialize();
 	}
 	void LayserSkillScript::Update()
 	{
