@@ -94,10 +94,11 @@ namespace roka
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(npk_key);
 		if (npk == nullptr)
 			return;
-		mAtlas = Resources::Find<Texture>(set_name + L"AtlasTexture");
+		std::wstring atlas_name = pack_key + set_name;
+		mAtlas = Resources::Find<Texture>(atlas_name + L"AtlasTexture");
 		if (mAtlas != nullptr)
 			return;
-		mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, set_name);
+		mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, atlas_name);
 	}
 	const Sprite& Animation::GetSprite()
 	{
