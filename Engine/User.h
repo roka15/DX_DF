@@ -40,6 +40,7 @@ namespace roka::info
 		UINT left;
 		UINT up;
 		UINT down;
+		UINT normalAtk;
 	};
 	class User
 	{
@@ -52,21 +53,25 @@ namespace roka::info
 		void Initialize(); //나중에 로그인 성공시 db 가져온 정보 세팅해주기
 		void Release();
 
-		const std::wstring& GetPartyName() { return std::wstring(mUserInfo->party_name); }
-		const std::wstring& GetName() { return std::wstring(mCharacterInfo->name); }
-		const int& GetFame() { return mCharacterInfo->fame; }
-		const int& GetFatigue() { return mCharacterInfo->fatigue; }
-		const ECharacterClassType& GetClassType() { return mCharacterInfo->character_class_type; }
+		const std::wstring& GetPartyName()const { return std::wstring(mUserInfo->party_name); }
+		const std::wstring& GetName()const { return std::wstring(mCharacterInfo->name); }
+		const int& GetFame()const { return mCharacterInfo->fame; }
+		const int& GetFatigue()const { return mCharacterInfo->fatigue; }
+		const ECharacterClassType& GetClassType()const { return mCharacterInfo->character_class_type; }
 		
-		std::wstring GetBaseAvatar() { return std::wstring(mCharacterInfo->base_skin_avatar); }
-		std::wstring GetWeaponAvatar1() { return std::wstring(mCharacterInfo->weapon_avatar1); }
-		std::wstring GetWeaponAvatar2() { return std::wstring(mCharacterInfo->weapon_avatar2); }
+		std::wstring GetBaseAvatar()const { return std::wstring(mCharacterInfo->base_skin_avatar); }
+		std::wstring GetWeaponAvatar1()const { return std::wstring(mCharacterInfo->weapon_avatar1); }
+		std::wstring GetWeaponAvatar2()const { return std::wstring(mCharacterInfo->weapon_avatar2); }
 
-		const UINT& GetRightKey() { return mKeysInfo->right; }
-		const UINT& GetLeftKey() { return mKeysInfo->left; }
-		const UINT& GetUpKey() { return mKeysInfo->up; }
-		const UINT& GetDownKey() { return mKeysInfo->down; }
+		const UINT& GetRightKey()const { return mKeysInfo->right; }
+		const UINT& GetLeftKey()const { return mKeysInfo->left; }
+		const UINT& GetUpKey()const { return mKeysInfo->up; }
+		const UINT& GetDownKey()const { return mKeysInfo->down; }
+		const UINT& GetNormalAtkKey()const { return mKeysInfo->normalAtk; }
 
+		void SetBaseAvatar(std::wstring name) { wcscpy(mCharacterInfo->base_skin_avatar,name.c_str()); }
+		void SetWeaponAvatar1(std::wstring name) { wcscpy(mCharacterInfo->weapon_avatar1, name.c_str()); }
+		void SetWeaponAvatar2(std::wstring name) { wcscpy(mCharacterInfo->weapon_avatar2, name.c_str()); }
 
 		GET_PROPERTY(GetPartyName) std::wstring party_name;
 		GET_PROPERTY(GetName) std::wstring name;
@@ -74,14 +79,15 @@ namespace roka::info
 		GET_PROPERTY(GetFatigue) int fatigue;
 		GET_PROPERTY(GetClassType) ECharacterClassType class_type;
 
-		GET_PROPERTY(GetBaseAvatar) std::wstring base_avartar;
-		GET_PROPERTY(GetWeaponAvatar1) std::wstring weapon_avatar1;
-		GET_PROPERTY(GetWeaponAvatar2) std::wstring weapon_avatar2;
+		PROPERTY(GetBaseAvatar,SetBaseAvatar) std::wstring base_avartar;
+		PROPERTY(GetWeaponAvatar1,SetWeaponAvatar1) std::wstring weapon_avatar1;
+		PROPERTY(GetWeaponAvatar2,SetWeaponAvatar2) std::wstring weapon_avatar2;
 
 		GET_PROPERTY(GetRightKey) UINT right_key;
 		GET_PROPERTY(GetLeftKey) UINT left_key;
 		GET_PROPERTY(GetUpKey) UINT up_key;
 		GET_PROPERTY(GetDownKey) UINT down_key;
+		GET_PROPERTY(GetNormalAtkKey) UINT normalAtk_key;
 
 	private:
 		std::unique_ptr<UserInfo> mUserInfo;

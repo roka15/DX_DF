@@ -46,6 +46,7 @@ namespace roka::info
 		mKeysInfo->left = (UINT)EKeyCode::LEFT;
 		mKeysInfo->up = (UINT)EKeyCode::UP;
 		mKeysInfo->down = (UINT)EKeyCode::DOWN;
+		mKeysInfo->normalAtk = (UINT)EKeyCode::X;
 	}
 	void User::Release()
 	{
