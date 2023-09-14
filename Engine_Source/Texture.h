@@ -52,6 +52,7 @@ namespace roka::graphics
 		void AddSprite(Sprite sprite);
 		const Sprite GetSprite(int index);
 		const Sprite GetSprite();
+		size_t GetSpriteSize();
 		void SetCurSpriteIndex(size_t index) { mCurSpriteIndex = index; }
 
 		void SpriteRatioValue(Vector2 ratio);

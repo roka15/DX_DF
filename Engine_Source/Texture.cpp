@@ -191,6 +191,10 @@ namespace roka::graphics
 	{
 		return mSprites[mCurSpriteIndex];
 	}
+	size_t Texture::GetSpriteSize()
+	{
+		return mSprites.size();
+	}
 	void Texture::SpriteRatioValue(Vector2 ratio)
 	{
 		for (auto& sprite : mSprites)
