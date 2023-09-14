@@ -100,6 +100,8 @@ namespace roka
 			{
 				left->OnCollisionStay(right);
 				right->OnCollisionStay(left);
+				left->time = mTime;
+				right->time = mTime;
 			}
 			itr->second = true;
 		}
