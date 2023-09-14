@@ -180,16 +180,22 @@
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="HitBoxScript.h" />
+    <ClInclude Include="IAnimationFramEvent.h" />
     <ClInclude Include="LayserSkillScript.h" />
     <ClInclude Include="LoadScene.h" />
+    <ClInclude Include="MageNormalAttackScript.h" />
+    <ClInclude Include="MgNormalAtk.h" />
     <ClInclude Include="MonsterScript.h" />
     <ClInclude Include="MonsterSkillScript.h" />
     <ClInclude Include="MoveScript.h" />
     <ClInclude Include="NamedMonsterScript.h" />
     <ClInclude Include="NormalMonsterPool.h" />
     <ClInclude Include="NormalMonsterScript.h" />
+    <ClInclude Include="PartManager.h" />
     <ClInclude Include="PartScript.h" />
+    <ClInclude Include="PlayerNormalAttackScript.h" />
     <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="ISkill.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="PortalScript.h" />
     <ClInclude Include="Prefab.h" />
@@ -197,7 +203,9 @@
     <ClInclude Include="ScriptFactory.h" />
     <ClInclude Include="SelectCharacterScene.h" />
     <ClInclude Include="SeriaGateScene.h" />
+    <ClInclude Include="SkillManager.h" />
     <ClInclude Include="SkillScript.h" />
+    <ClInclude Include="SkinPartScript.h" />
     <ClInclude Include="Slot.h" />
     <ClInclude Include="SpiderLayserSkillScript.h" />
     <ClInclude Include="SpiderMonsterScript.h" />
@@ -205,7 +213,7 @@
     <ClInclude Include="TairangSkill01Script.h" />
     <ClInclude Include="TargetMoveScript.h" />
     <ClInclude Include="User.h" />
-    <ClInclude Include="WeaponScript.h" />
+    <ClInclude Include="WeaponPartScript.h" />
     <ClInclude Include="WestcoastScene.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,22 +227,30 @@
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HendonmyreScene.cpp" />
     <ClCompile Include="HitBoxScript.cpp" />
+    <ClCompile Include="IAnimationFramEvent.cpp" />
     <ClCompile Include="LayserSkillScript.cpp" />
+    <ClCompile Include="MageNormalAttackScript.cpp" />
+    <ClCompile Include="MgNormalAtk.cpp" />
     <ClCompile Include="MonsterScript.cpp" />
     <ClCompile Include="MonsterSkillScript.cpp" />
     <ClCompile Include="MoveScript.cpp" />
     <ClCompile Include="NamedMonsterScript.cpp" />
     <ClCompile Include="NormalMonsterPool.cpp" />
     <ClCompile Include="NormalMonsterScript.cpp" />
+    <ClCompile Include="PartManager.cpp" />
     <ClCompile Include="PartScript.cpp" />
+    <ClCompile Include="PlayerNormalAttackScript.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PortalScript.cpp" />
     <ClCompile Include="Prefab.cpp" />
     <ClCompile Include="ScriptFactory.cpp" />
     <ClCompile Include="SelectCharacterScene.cpp" />
     <ClCompile Include="SeriaGateScene.cpp" />
+    <ClCompile Include="SkillManager.cpp" />
     <ClCompile Include="SkillScript.cpp" />
+    <ClCompile Include="SkinPartScript.cpp" />
     <ClCompile Include="Slot.cpp" />
     <ClCompile Include="SpiderLayserSkillScript.cpp" />
     <ClCompile Include="SpiderMonsterScript.cpp" />
@@ -242,7 +258,7 @@
     <ClCompile Include="TairangSkill01Script.cpp" />
     <ClCompile Include="TargetMoveScript.cpp" />
     <ClCompile Include="User.cpp" />
-    <ClCompile Include="WeaponScript.cpp" />
+    <ClCompile Include="WeaponPartScript.cpp" />
     <ClCompile Include="WestcoastScene.cpp" />
   </ItemGroup>
   <ItemGroup>
