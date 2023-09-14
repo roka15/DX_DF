@@ -11,6 +11,8 @@
 #include "..\\Engine\\NormalMonsterPool.h"
 #include "TestPool.h"
 #include "CollisionManager.h"
+#include "..\\Engine\\PartManager.h"
+#include "..\\Engine\\SkillManager.h"
 namespace roka
 {
 
@@ -43,12 +45,15 @@ namespace roka
 		
 		FactoryManager::Initialize();
 
+	
 		roka::renderer::Initialize();
 		roka::prefab::Initialize();
+		manager::PartManager::GetInstance()->Initialize();
+		roka::prefab::LateInitialize();
 		SceneManager::Initialize();
-
+		manager::SkillManager::GetInstance()->Initialize();
 		
-		pool::AnimationObjectPool::GetInstance()->Initialize();
+		ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Initialize();
 	}
 
 	void Application::Update()
@@ -79,8 +84,8 @@ namespace roka
 		
 		renderer::Release();
 		prefab::Release();
-
-		pool::AnimationObjectPool::GetInstance()->Release();
+		manager::SkillManager::GetInstance()->Release();
+		ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Release();
 	}
 
 	void Application::Destroy()

@@ -1,6 +1,6 @@
 #include "Input.h"
 #include "Application.h"
-
+#include "RokaTime.h"
 extern roka::Application application;
 
 namespace roka
@@ -17,7 +17,8 @@ namespace roka
 
 	std::vector<Input::Key> Input::mKeys;
 	Vector2 Input::mMousePos = Vector2::Zero;
-
+	double Input::mTime = 0.0;
+	
 	void Input::Initialize()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -26,6 +27,8 @@ namespace roka
 			keyInfo.key = (EKeyCode)i;
 			keyInfo.state = EKeyState::None;
 			keyInfo.bPressed = false;
+			keyInfo.beforPress = 0.0;
+			keyInfo.curPress = 0.0;
 
 			mKeys.push_back(keyInfo);
 		}
@@ -33,6 +36,8 @@ namespace roka
 	
 	void Input::Update()
 	{
+		mTime += Time::DeltaTime();
+
 		if (GetFocus())
 		{
 
@@ -44,8 +49,11 @@ namespace roka
 					if (mKeys[i].bPressed)
 						mKeys[i].state = EKeyState::Pressed;
 					else
+					{
 						mKeys[i].state = EKeyState::Down;
-
+						mKeys[i].beforPress = mKeys[i].curPress;
+						mKeys[i].curPress = mTime;
+					}
 					mKeys[i].bPressed = true;
 				}
 				else // 현재 프레임에 키가 눌려있지 않다.

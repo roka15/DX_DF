@@ -66,13 +66,13 @@ namespace roka
   
         position.Translation(mPosition);
         
-        if (owner->GetName().compare(L"Monster1") == 0)
-            int a = 0;
         mWorld = scale * rotation * position;
 
         std::shared_ptr<GameObject> parent = owner->parent;
         if(parent)
         {
+            if (owner->GetName().compare(L"BasePart") == 0)
+                int a = 0;
             std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
             mWorld *= tf->mWorld;
         }

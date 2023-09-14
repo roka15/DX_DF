@@ -31,6 +31,8 @@ namespace roka
 			EKeyCode key;
 			EKeyState state;
 			bool bPressed;
+			double beforPress;
+			double curPress;
 		};
 
 		static void Initialize();
@@ -84,5 +86,7 @@ namespace roka
 	private:
 		static std::vector<Key> mKeys;
 		static Vector2 mMousePos;
+
+		static double mTime;
 	};
 }

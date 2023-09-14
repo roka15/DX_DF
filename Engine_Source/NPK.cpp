@@ -104,7 +104,7 @@ namespace roka
 
 		texture->Create(&pack);
 		texture->SpriteRatioValue(Vector2(width, height));
-
+		texture->SetKey(texture_name);
 		Resources::Insert(texture_name, texture);
 		return texture;
 	}
