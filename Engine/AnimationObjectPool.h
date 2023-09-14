@@ -1,6 +1,8 @@
 #pragma once
 #include "ObjectPoolManager.h"
 #include "Prefab.h"
+
+using namespace roka::manager;	
 namespace roka::pool
 {
 	class AnimationObjectPool : public ObjectPoolManager<AnimationObjectPool, GameObject>

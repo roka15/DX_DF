@@ -2,6 +2,7 @@
 
 #include "ObjectPoolManager.h"
 #include "Prefab.h"
+using namespace roka::manager;
 namespace roka::pool
 {
 	class NormalMonsterPool : public ObjectPoolManager<NormalMonsterPool, GameObject>

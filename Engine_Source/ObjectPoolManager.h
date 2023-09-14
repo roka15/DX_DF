@@ -2,7 +2,9 @@
 #include "RokaEngine.h"
 #include "ObjectPool.h"
 #include "SingleTon.h"
-namespace roka::pool
+
+using namespace roka::pool;
+namespace roka::manager
 {
 	template <typename Pool,typename Origin>
 	class ObjectPoolManager : public Singleton<Pool>
