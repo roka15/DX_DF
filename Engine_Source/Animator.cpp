@@ -86,7 +86,8 @@ namespace roka
 			return;
 		if (mbStop == true)
 			return;
-		if (mFirstUpdateAnimation.lock().get() != mActiveAnimation.lock().get())
+		if (mFirstUpdateAnimation.lock().get() != mActiveAnimation.lock().get() &&
+			mActiveAnimation.lock() != nullptr)
 		{
 			mActiveAnimation.lock()->LateUpdate();
 		}
@@ -97,6 +98,13 @@ namespace roka
 	}
 	void Animator::Render()
 	{
+	}
+	void Animator::SetAnimationOwner()
+	{
+		for (auto& animation : mAnimations)
+		{
+			animation.second->SetAnimator(GetSharedPtr());
+		}
 	}
 	void Animator::Create(std::wstring npk_name, std::wstring pack_name, std::wstring set_name, int start_index, int end_index, float duration)
 	{
@@ -200,6 +208,7 @@ namespace roka
 		mbLoop = loop;
 	    mbStop = false;
 		ActiveAni->Reset();
+		mFrameEvent = nullptr;
 	}
 	void Animator::PlayAnimation(const std::wstring& name)
 	{
@@ -285,6 +294,20 @@ namespace roka
 	const Sprite& Animator::GetSprite()
 	{
 		return mActiveAnimation.lock()->GetSprite();
+	}
+	void Animator::CompleteStop()
+	{
+		std::shared_ptr<Animation> animation = mActiveAnimation.lock();
+		UINT index = animation->EndIndex();
+		mActiveAnimation.lock()->SetIndex(index);
+		mbStop = true;
+	}
+	void Animator::CompleteStart()
+	{
+		std::shared_ptr<Animation> animation = mActiveAnimation.lock();
+		UINT index = animation->StartIndex();
+		mActiveAnimation.lock()->SetIndex(index);
+		mbStop = false;
 	}
 	void Animator::NextSprite()
 	{

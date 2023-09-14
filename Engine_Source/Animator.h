@@ -1,6 +1,7 @@
 #pragma once
 #include "Component.h"
 #include "Animation.h"
+#include "..\\Engine\\IAnimationFramEvent.h"
 namespace roka
 {
 	class Animator :
@@ -47,6 +48,7 @@ namespace roka
 		virtual void LateUpdate();
 		virtual void Render();
 
+		void SetAnimationOwner();
 		void Create(std::wstring npk_name,std::wstring pack_name,std::wstring set_name,int start_index,int end_index,float duration);
 		void Create(std::shared_ptr<Texture> atlas, std::wstring set_name, int start_index, int end_index, float duration);
 		std::shared_ptr<Animation> FindAnimation(const std::wstring& name);
@@ -67,7 +69,12 @@ namespace roka
 
 		void Stop() { mbStop = true; }
 		void Play() { mbStop = false; }
+		void CompleteStop();
+		void CompleteStart();
 		void NextSprite(); 
+		void ActiveAnimationNull() { mActiveAnimation.reset(); }
+		IAnimationFramEvent* GetFrameEventListener() { return mFrameEvent; }
+		void SetFrameEventListener(IAnimationFramEvent*listener) { mFrameEvent = listener; }
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;
@@ -78,6 +85,8 @@ namespace roka
 		std::weak_ptr<Animation> mFirstUpdateAnimation;
 		bool mbLoop;
 		bool mbStop;
+
+		IAnimationFramEvent* mFrameEvent;
 	};
 }
 

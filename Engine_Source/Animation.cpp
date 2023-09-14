@@ -2,10 +2,12 @@
 #include "Renderer.h"
 #include "Sprite.h"
 #include "Animation.h"
+#include "Animator.h"
 #include "Texture.h"
 #include "NPK.h"
 #include "Resources.h"
 #include "RokaTime.h"
+#include "GameObject.h"
 namespace roka
 {
 	Animation::Animation() :Resource(enums::EResourceType::Animation)
@@ -16,7 +18,7 @@ namespace roka
 		, mIsComplete(false)
 		, mDuration(0.0f)
 		, mRange(std::make_pair(0, 0))
-		,mEventTime(0.0f)
+		, mEventTime(0.0f)
 	{
 	}
 	Animation::Animation(const Animation& ref) :Resource(ref)
@@ -29,6 +31,7 @@ namespace roka
 		mRange.first = ref.mRange.first;
 		mRange.second = ref.mRange.second;
 		mEventTime = 0.0f;
+		mFrameEventKey = ref.mFrameEventKey;
 	}
 	Animation::~Animation()
 	{
@@ -43,7 +46,7 @@ namespace roka
 
 		mTime += Time::DeltaTime();
 		mEventTime += Time::DeltaTime();
-		
+
 		EventFunc();
 		if (mDuration <= mTime)
 		{
@@ -58,6 +61,7 @@ namespace roka
 				mIsComplete = true;
 				std::replace(mEventFlag.begin(), mEventFlag.end(), true, false);
 			}
+			OnAnimationFrameEvent(mIndex);
 		}
 	}
 	void Animation::Render()
@@ -95,10 +99,18 @@ namespace roka
 		if (npk == nullptr)
 			return;
 		std::wstring atlas_name = pack_key + set_name;
-		mAtlas = Resources::Find<Texture>(atlas_name + L"AtlasTexture");
-		if (mAtlas != nullptr)
-			return;
-		mAtlas = npk->CreateAtlas(pack_key, start_index, end_index, atlas_name);
+		std::shared_ptr<Texture> atlas = Resources::Find<Texture>(atlas_name + L"AtlasTexture");
+
+		if (atlas == nullptr)
+			atlas = npk->CreateAtlas(pack_key, start_index, end_index, atlas_name);
+
+		SetAtlas(atlas);
+	}
+	void Animation::SetAtlas(std::shared_ptr<Texture> atlas)
+	{
+		 mAtlas = atlas;
+		 size_t SpriteCnt = mAtlas->GetSpriteSize();
+		 mFrameEventKey.resize(SpriteCnt);
 	}
 	const Sprite& Animation::GetSprite()
 	{
@@ -107,15 +119,41 @@ namespace roka
 	void Animation::AddIndex()
 	{
 		mIndex++;
-		if (mIndex == 3)
-			int a = 0;
 		if (mIndex >= mRange.second)
 			mIndex = mRange.first;
+	}
+	UINT Animation::EndIndex()
+	{
+		if (mRange.first == mRange.second)
+			return mRange.second;
+		else
+			return mRange.second - 1;
+	}
+	UINT Animation::StartIndex()
+	{
+		return mRange.first;
+	}
+	void Animation::SetIndex(UINT index)
+	{
+		mIndex = index;
 	}
 	void Animation::AddTimeLineEvent(AnimationEvent aniEvent)
 	{
 		mEvents.push_back(aniEvent);
 		mEventFlag.push_back(false);
+	}
+	void Animation::RegisterFrameEvent(std::wstring key, int index)
+	{
+		mFrameEventKey[index] = key;
+	}
+	void Animation::OnAnimationFrameEvent(int index)
+	{
+		IAnimationFramEvent* Listener = mAnimator.lock()->GetFrameEventListener();
+		if (Listener == nullptr)
+			return;
+		std::wstring key = mFrameEventKey[index];
+		std::shared_ptr<GameObject> caster = mAnimator.lock()->owner->GetSharedPtr();
+		Listener->OnAnimationFramEvent(caster, key);
 	}
 	void Animation::EventFunc()
 	{
@@ -137,7 +175,7 @@ namespace roka
 				{
 					aniEvent.mObjFunc(aniEvent.mObject);
 				}
-				
+
 				mEventFlag[index] = true;
 			}
 			index++;

@@ -58,15 +58,23 @@ namespace roka
 		void SetDuration(float duration) { mDuration = duration; }
 		float GetDuration() { return mDuration; }
 		bool IsComplete() { return mIsComplete; }
-		void SetAtlas(std::shared_ptr<Texture> atlas) { mAtlas = atlas; }
+		void SetAtlas(std::shared_ptr<Texture> atlas); 
 		const Sprite& GetSprite();
 		void SetPlayRange(std::pair<UINT, UINT> range) { mRange = range; }
 		void AddIndex();
+		UINT EndIndex();
+		UINT StartIndex();
+		void SetIndex(UINT index);
 		PROPERTY(GetDuration, SetDuration) float duration;
 		GET_PROPERTY(IsComplete) bool is_complete;
 		SET_PROPERTY(SetPlayRange) std::pair<UINT, UINT> play_range;
 
 		void AddTimeLineEvent(AnimationEvent aniEvent);
+
+	
+		void RegisterFrameEvent(std::wstring key, int index);
+		
+		void OnAnimationFrameEvent(int index);
 	private:
 		void EventFunc();
 	private:
@@ -78,9 +86,14 @@ namespace roka
 		float mTime;
 		bool mIsComplete;
 
+		/* 보통 ani event 방식*/
 		std::vector<AnimationEvent> mEvents;
 		std::vector<bool> mEventFlag;
 		float mEventTime;
+
+		/*player skill event 방식*/
+	
+		std::vector<std::wstring> mFrameEventKey;
 	};
 }
 
