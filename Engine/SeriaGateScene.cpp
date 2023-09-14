@@ -69,6 +69,8 @@ void roka::SeriaGateScene::Update()
 			ps->DownBtnUp();
 		if (Input::GetKeyDown(EKeyCode::X))
 			ps->NomalAtkBtnDown();
+		if (Input::GetKeyDown(EKeyCode::SPACE))
+			ps->JumpBtnDown();
 	}
 }
 
@@ -129,6 +131,8 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
+		std::shared_ptr<PlayerScript> playerScript = player->GetComponent<PlayerScript>();
+		playerScript->LateInitialize();
 		player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.3f);
 		AddGameObject(ELayerType::Player, player);
 

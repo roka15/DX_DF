@@ -11,6 +11,8 @@
 #include "NPK.h"
 #include "Object.h"
 #include "CollisionManager.h"
+#include "PartManager.h"
+#include "ObjectPoolManager.h"
 #include "NormalMonsterPool.h"
 #include "AnimationObjectPool.h"
 
@@ -112,8 +114,7 @@ namespace roka
 	}
 	void PlayScene::OnEnter()
 	{
-		pool::NormalMonsterPool::GetInstance()->Initialize();
-	
+		ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance()->Initialize();
 		//std::shared_ptr<PaintShader> paintShader = Resources::Find<PaintShader>(L"PaintShader");
 		//std::shared_ptr<Texture> paintTexture = Resources::Find<Texture>(L"PaintTexture");
 		//paintShader->SetTarget(paintTexture);
@@ -164,6 +165,8 @@ namespace roka
 
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
+		std::shared_ptr<PlayerScript> playerScript = player->GetComponent<PlayerScript>();
+		playerScript->LateInitialize();
 		vec = player->GetChilds<HitBoxScript>();
 		for (auto& value : vec)
 		{
@@ -203,16 +206,18 @@ namespace roka
 		skillScript->stun_type = EStunState::Down;
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
-		pool::NormalMonsterPool* pool = pool::NormalMonsterPool::GetInstance();
+		NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
 		for (int i = 0; i < 1; i++)
 		{
-			std::shared_ptr<GameObject> monster = pool::NormalMonsterPool::GetInstance()->GetPool(L"SpiderMonster")->Spawn();
+			std::shared_ptr<GameObject> monster = normalMonsterPool->GetPool(L"SpiderMonster")->Spawn();
 
 			monster->SetName(L"Monster" + std::to_wstring(i));
 			monster->GetComponent<Transform>()->position = Vector3(0.5f * i, 0.0f, 0.0f);
 			monster->GetComponent<MonsterScript>()->SetTarget(player);
 			AddGameObject(ELayerType::Monster, monster);
 		}
+
+	
 
 		std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
 		{
@@ -222,6 +227,52 @@ namespace roka
 			monster->GetComponent<MonsterScript>()->SetTarget(player);
 			AddGameObject(ELayerType::Monster, monster);
 		}
+
+		//test
+		AnimationObjectPool* aniPool = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance();
+		std::shared_ptr<GameObject> weapon_aniTest = aniPool->GetPool(L"AniObject")->Spawn();
+		{
+			std::shared_ptr<Transform> tf = weapon_aniTest->GetComponent<Transform>();
+			tf->position = Vector3(1.0f, 1.0f, 0.0f);
+			tf->scale = Vector3(2.0f, 2.0f, 1.0f);
+			float speed = 0.1f;
+			std::shared_ptr<Animator> ani1 = weapon_aniTest->GetComponent<Animator>();
+			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_01", 109, 127, speed);
+		/*	ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_02",30, 60, speed);
+			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_03", 60, 90, speed);
+			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_04", 90, 120, speed);
+			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_05", 120, 150, speed);
+			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_06", 150, 182, speed);*/
+			std::shared_ptr<GameObject> weapon_Test2 = aniPool->GetPool(L"AniObject")->Spawn();
+			weapon_aniTest->AddChild(weapon_Test2);
+			std::shared_ptr<Animator> ani2 = weapon_Test2->GetComponent<Animator>();
+			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_01", 109, 127, speed);
+			/*ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_02", 30, 60, speed);
+			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_03", 60, 90, speed);
+			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_04", 90, 120, speed);
+			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_05", 120, 150, speed);
+			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_06", 150, 182, speed);*/
+
+			/*Animator* ani1_ptr = ani1.get();
+			ani1->CompleteEvent(L"mg_broom7200c_01") = std::bind([ani1_ptr]()->void {ani1_ptr->PlayAnimation(L"mg_broom7200c_02", false); });
+			ani1->CompleteEvent(L"mg_broom7200c_02") = std::bind([ani1_ptr]()->void {ani1_ptr->PlayAnimation(L"mg_broom7200c_03", false); });
+			ani1->CompleteEvent(L"mg_broom7200c_03") = std::bind([ani1_ptr]()->void {ani1_ptr->PlayAnimation(L"mg_broom7200c_04", false); });
+			ani1->CompleteEvent(L"mg_broom7200c_04") = std::bind([ani1_ptr]()->void {ani1_ptr->PlayAnimation(L"mg_broom7200c_05", false); });
+			ani1->CompleteEvent(L"mg_broom7200c_05") = std::bind([ani1_ptr]()->void {ani1_ptr->PlayAnimation(L"mg_broom7200c_06", false); });
+			ani1->CompleteEvent(L"mg_broom7200c_06") = std::bind([ani1_ptr]()->void {ani1_ptr->PlayAnimation(L"mg_broom7200c_01", false); });
+
+			Animator* ani2_ptr = ani2.get();
+			ani2->CompleteEvent(L"mg_broom7200d_01") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_02", false); });
+			ani2->CompleteEvent(L"mg_broom7200d_02") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_03", false); });
+			ani2->CompleteEvent(L"mg_broom7200d_03") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_04", false); });
+			ani2->CompleteEvent(L"mg_broom7200d_04") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_05", false); });
+			ani2->CompleteEvent(L"mg_broom7200d_05") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_06", false); });
+			ani2->CompleteEvent(L"mg_broom7200d_06") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_01", false); });*/
+
+			ani1->PlayAnimation(L"mg_broom7200c_01", true);
+			ani2->PlayAnimation(L"mg_broom7200d_01", true);
+		}
+		AddGameObject(ELayerType::Player, weapon_aniTest);
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);
@@ -330,7 +381,7 @@ namespace roka
 		Scene::OnExit();
 		renderer::cameras.clear();
 		renderer::MainCamera.reset();
-		pool::NormalMonsterPool::GetInstance()->Release();
+		ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance()->Release();
 	}
 	
 	void PlayScene::Loading()
