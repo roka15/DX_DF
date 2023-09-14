@@ -143,6 +143,7 @@ namespace roka
 		}
 
 		void AddChild(std::shared_ptr<GameObject> child);
+		void InsertChild(std::shared_ptr<GameObject> child, int index);
 		void SetParent(std::weak_ptr<GameObject> parent) { mParent = parent; }
 		std::shared_ptr<GameObject> GetParent() { return mParent.lock(); }
 
@@ -174,6 +175,36 @@ namespace roka
 			return nullptr;
 		}
 
+		void SwapRemoveChild(std::shared_ptr<GameObject> find, std::shared_ptr<GameObject> swap)
+		{
+			int index = 0;
+			for (auto& child : mChild)
+			{
+				if (child == find)
+				{
+					mChild[index].reset();
+					mChild[index] = swap;
+					swap->parent = GetSharedPtr();
+					return;
+				}
+				index++;
+			}
+		}
+		void SwapRemoveChild(std::wstring find, std::shared_ptr<GameObject> swap)
+		{
+			int index = 0;
+			for (auto& child : mChild)
+			{
+				if (child->GetName().compare(find)==0)
+				{
+					mChild[index].reset();
+					mChild[index] = swap;
+					swap->parent = GetSharedPtr();
+					return;
+				}
+				index++;
+			}
+		}
 		void RemoveChild(std::wstring key);
 		void RemoveChild(std::shared_ptr<GameObject> obj);
 		UINT GetChildCont() { return mChild.size(); }

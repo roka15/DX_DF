@@ -135,6 +135,25 @@ void roka::GameObject::AddChild(std::shared_ptr<GameObject> child)
 	child->parent = GetSharedPtr();
 }
 
+void roka::GameObject::InsertChild(std::shared_ptr<GameObject> child, int index)
+{
+	std::vector<std::shared_ptr<GameObject>>::iterator itr = mChild.begin();
+	if (mChild.size() < index)
+	{
+		mChild.push_back(child);
+	}
+	else
+	{
+		for (int i = 0; i < index; i++)
+		{
+			itr++;
+		}
+		mChild.insert(itr, child);
+	}
+	child->parent = GetSharedPtr();
+}
+
+
 std::shared_ptr<roka::GameObject> roka::GameObject::GetChild(std::wstring name)
 {
 	for (auto& child : mChild)
@@ -230,7 +249,6 @@ void roka::GameObject::Update()
 	{
 		script->Update();
 	}
-
 	for (std::shared_ptr<GameObject>& child : mChild)
 	{
 		child->Update();
@@ -249,6 +267,8 @@ void roka::GameObject::LateUpdate()
 	{
 		script->LateUpdate();
 	}
+	if (GetName().compare(L"Player") == 0)
+		int a = 0;
 	for (std::shared_ptr<GameObject>& child : mChild)
 	{
 		child->LateUpdate();
