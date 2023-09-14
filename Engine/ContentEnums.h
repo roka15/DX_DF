@@ -15,15 +15,19 @@ namespace roka::enums
 		Idle,
 		Walk,
 		Run,
-		FallDown,
 		NomalAtk,
 		OnePlay,
 		Jump,
 		JumpHold,
 		JumpRun,
+		FallDown,
+		Landing,
 		Stun,
+		Stagger,
+		Down,
 		Standing,
 		Skill,
+	
 		
 		End,
 	};
@@ -34,6 +38,12 @@ namespace roka::enums
 		Down=2,
 		HardStagger=4,
 		HardDown=8,
+		End,
+	};
+	enum class EPlayerSkillType
+	{
+		None,
+		NormalAtk,
 		End,
 	};
 	enum class EAttackType
@@ -53,10 +63,10 @@ namespace roka::enums
 		End,
 	};
 	
-
 	enum class EAvatarParts
 	{
 		None,
+		Weapon,
 		Base,
 		Face,
 		Hair,
@@ -66,7 +76,6 @@ namespace roka::enums
 		Pants,
 		Belt,
 		Shoes,
-		Weapon,
 		End,
 	};
 	
