@@ -25,6 +25,7 @@ namespace roka
 		virtual ~PlayerScript();
 
 		virtual void Initialize() override;
+		virtual void LateInitialize();
 		virtual void Update() override;
 		virtual void LateUpdate() override;
 		virtual void Render() override;
@@ -34,6 +35,8 @@ namespace roka
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other);
 
 		virtual void BeAttacked(float damage,EStunState stun);
+		void EquipPart(EAvatarParts type);
+		void EquipPart(EAvatarParts type, std::wstring name);
 
 		void Move();
 		// input system 적용시 사용
@@ -49,22 +52,30 @@ namespace roka
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
 
+		void NormalFallEvent();
+
 		void StunStagger(EStunState stun,float endtime);
 		void StunDown();
 
 		void NextState();
 		void DownEvent();
 
-		EPlayerState GetState() { return mPlayerState; }
+	
 		void EnableKeyInput() { mIsActiveInput = true; }
 		void DisableKeyInput() { mIsActiveInput = false; }
+		const info::User* GetUserInfo() { return mUser.get(); }
 
 		static void FallCompleteEvent(std::weak_ptr<void> ptr);
 		static void JumpDashCompleteEvent(std::weak_ptr<void> ptr);
 		static void StunCompleteEvent(std::weak_ptr<void> ptr);
 
+		void SkillNormalAtk();
 		
-		GET_PROPERTY(GetState) EPlayerState player_state;
+		void PlayPartMotion();
+		void SetPlayerState(EPlayerState state) { mPlayerState = state; }
+		EPlayerState GetPlayerState() { return mPlayerState; }
+
+		PROPERTY(GetPlayerState, SetPlayerState) EPlayerState player_state;
 	protected:
 		
 	private:
@@ -90,6 +101,8 @@ namespace roka
 		double mDiff;
 
 		float mCurDir;
+
+		//std::vector<std::shared_ptr<SkillScript>> mSkillList;
 	};
 }
 
