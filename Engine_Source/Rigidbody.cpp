@@ -16,8 +16,11 @@ namespace roka
 		, mDecreaseGravity(1.0f)
 		, mIncreaseGravity(2.0f)
 		, mbFall(false)
+		, mbFallEvent(false)
+		, mbJumpFlag(false)
 		, mLandingPoint(Vector2::Zero)
 	{
+		mMaxVelocity.y = 400.0f;
 		mLimitedVelocity.x = 1400.0f;
 		mLimitedVelocity.y = 10000.0f;
 		mGravity = Vector2(0.0f, 980.0f);
@@ -25,6 +28,7 @@ namespace roka
 	}
 	Rigidbody::Rigidbody(const Rigidbody& ref) :Component(ref)
 	{
+		mMaxVelocity.y = ref.mMaxVelocity.y;
 		mTime = ref.mTime;
 		mMass = ref.mMass;
 		mAccelation = ref.mAccelation;
@@ -38,6 +42,8 @@ namespace roka
 		mDecreaseGravity = ref.mDecreaseGravity;
 		mIncreaseGravity = ref.mIncreaseGravity;
 		mbFall = ref.mbFall;
+		mbFallEvent = false;
+		mbJumpFlag = false;
 	}
 	Rigidbody::~Rigidbody()
 	{
@@ -46,6 +52,7 @@ namespace roka
 	void Rigidbody::Copy(Component* src)
 	{
 		Rigidbody* source = dynamic_cast<Rigidbody*>(src);
+		mMaxVelocity.y = source->mMaxVelocity.y;
 		mTime = source->mTime;
 		mMass = source->mMass;
 		mAccelation = source->mAccelation;
@@ -59,6 +66,8 @@ namespace roka
 		mDecreaseGravity = source->mDecreaseGravity;
 		mIncreaseGravity = source->mIncreaseGravity;
 		mbFall = source->mbFall;
+		mbFallEvent = false;
+		mbJumpFlag = false;
 	}
 	void Rigidbody::Initialize()
 	{
@@ -80,6 +89,8 @@ namespace roka
 
 		Vector2 limit_velocity = mLimitedVelocity / resolution;
 
+		float max_velocity_y = mMaxVelocity.y / resolution.y;
+
 		if (mForce != Vector2::Zero)
 		{
 			int a = 0;
@@ -88,6 +99,7 @@ namespace roka
 	
 
 		mVelocity += accelation * Time::DeltaTime();
+		
 		if (mbGravity)
 		{
 			if (mbGround)
@@ -100,6 +112,16 @@ namespace roka
 			}
 			else
 			{
+				if (mVelocity.y <= max_velocity_y && mbJumpFlag == true)
+				{
+					mVelocity.y = -0.5f;
+					DecreaseGravity(false);
+					if (mFallEvent!=nullptr && mbFallEvent == false)
+					{
+						mFallEvent();
+						mbFallEvent = true;
+					}
+				}
 				if (mbFall)
 				{
 					mVelocity.y = -0.1f;
@@ -108,6 +130,7 @@ namespace roka
 				{
  					DecreaseGravity(false);
 				}
+				
 				mVelocity -= gravity * mIncreaseGravity * mDecreaseGravity * Time::DeltaTime();
 			}
 		}
@@ -164,6 +187,9 @@ namespace roka
 		if (mbGround==false && pos.y <= mLandingPoint.y)
 		{
 			mbGround = true;
+			mbJumpFlag = false;
+			mbFall = false;
+			mbFallEvent = false;
 			mVelocity.y = 0.0f;
 			pos.y = mLandingPoint.y;
 		}
