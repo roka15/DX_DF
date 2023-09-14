@@ -30,6 +30,9 @@ namespace roka
 		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other) {}
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other) {}
 
+		void EquipPart(EAvatarParts type, std::wstring name);
+		void RegisterPart(EAvatarParts type, std::shared_ptr<GameObject> obj) { mParts[type] = obj; }
+
 		void CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name,std::wstring set_name, UINT start, UINT end, float duration);
 		void CreatePartAni(EAvatarParts type, std::shared_ptr<Texture> atlas,std::wstring set_name, UINT start, UINT end, float duration);
 		
@@ -52,12 +55,14 @@ namespace roka
 		void AddSpriteIndex();
 
 		std::shared_ptr<GameObject> GetPart(EAvatarParts part) { mParts[part]; }
+		bool IsAniStop() { return mbAniStop; }
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;
 
 		std::map<EPlayerState, std::map<EAvatarParts,std::vector<std::wstring>>> mStateAnis;
 		std::map<EAvatarParts, std::weak_ptr<GameObject>> mParts;
+		bool mbAniStop;
 	};
 
 }

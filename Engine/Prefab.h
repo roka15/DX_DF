@@ -6,6 +6,7 @@ namespace roka::prefab
 {
 	void RegisterPrefab(std::wstring key, roka::GameObject* obj);
 	void Initialize();
+	void LateInitialize();
 	void Release();
 
 	void NPKLoad();

@@ -7,8 +7,10 @@
 
 #include "AvatarScript.h"
 #include "PartScript.h"
+#include "WeaponPartScript.h"
+#include "SkinPartScript.h"
 
-#include "WeaponScript.h"
+
 #include "HitBoxScript.h"
 #include "PortalScript.h"
 
@@ -24,6 +26,8 @@
 #include "SpiderLayserSkillScript.h"
 #include "TairangSkill01Script.h"
 #include "MonsterSkillScript.h"
+#include "PlayerNormalAttackScript.h"
+#include "MageNormalAttackScript.h"
 namespace roka
 {
 	void ScriptFactory::Initialize()
@@ -64,6 +68,17 @@ namespace roka
 			PartScript* ps = dynamic_cast<PartScript*>(script);
 			return std::shared_ptr<PartScript>(new PartScript(*ps));
 		};
+		mFactories[EScriptType::PartWeapon] = [](Script* script)
+		{
+			WeaponPartScript* ps = dynamic_cast<WeaponPartScript*>(script);
+			return std::shared_ptr<WeaponPartScript>(new WeaponPartScript(*ps));
+		};
+		mFactories[EScriptType::PartSkin] = [](Script* script)
+		{
+			SkinPartScript* ps = dynamic_cast<SkinPartScript*>(script);
+			return std::shared_ptr<SkinPartScript>(new SkinPartScript(*ps));
+		};
+		
 		mFactories[EScriptType::SkillBase] = [](Script* script)
 		{
 			SkillScript* ss = dynamic_cast<SkillScript*>(script);
@@ -94,10 +109,15 @@ namespace roka
 			MonsterSkillScript* ss = dynamic_cast<MonsterSkillScript*>(script);
 			return std::shared_ptr<MonsterSkillScript>(new MonsterSkillScript(*ss));
 		};
-		mFactories[EScriptType::Weapon] = [](Script* script)
+		mFactories[EScriptType::SkillPlayerNormalAtk] = [](Script* script)
 		{
-			WeaponScript* ss = dynamic_cast<WeaponScript*>(script);
-			return std::shared_ptr<WeaponScript>(new WeaponScript(*ss));
+			PlayerNormalAttackScript* ss = dynamic_cast<PlayerNormalAttackScript*>(script);
+			return std::shared_ptr<PlayerNormalAttackScript>(new PlayerNormalAttackScript(*ss));
+		};
+		mFactories[EScriptType::SkillMageNormalAtk] = [](Script* script)
+		{
+			MageNormalAttackScript* ss = dynamic_cast<MageNormalAttackScript*>(script);
+			return std::shared_ptr<MageNormalAttackScript>(new MageNormalAttackScript(*ss));
 		};
 		mFactories[EScriptType::HitBox] = [](Script* script)
 		{

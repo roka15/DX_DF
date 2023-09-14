@@ -4,10 +4,15 @@
 #include "Texture.h"
 #include "MeshRenderer.h"
 #include "Animator.h"
-
+#include "MoveScript.h"
+#include "PlayerScript.h"
 namespace roka
 {
 	PartScript::PartScript() :Script(EScriptType::Part),
+		mPartType(EAvatarParts::None)
+	{
+	}
+	PartScript::PartScript(EScriptType type):Script(type),
 		mPartType(EAvatarParts::None)
 	{
 	}
@@ -43,6 +48,69 @@ namespace roka
 	{
 	}
 	void PartScript::Render()
+	{
+	}
+	void PartScript::Idle()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Idle", true);
+	}
+	void PartScript::Walk()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Walk", true);
+	}
+	void PartScript::Run()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Run", true);
+	}
+	void PartScript::Jump()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Jump", false);
+	}
+	void PartScript::Fall()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Fall", false);
+	}
+	void PartScript::JumpDash()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"JumpDash", true);
+	}
+	void PartScript::JumpHold()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"JumpHold", false);
+	}
+	void PartScript::NormalAtk()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"NormalAtk", true);
+	}
+	void PartScript::Stagger()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Stagger", false);
+	}
+	void PartScript::Down()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Down", false);
+	}
+	void PartScript::Standing()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Standing", false);
+	}
+	void PartScript::Landing()
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Landing", false);
+	}
+	void PartScript::Create(std::wstring npk, std::wstring pack)
 	{
 	}
 	void PartScript::PlayPartMotion(std::wstring name, bool flag)
@@ -98,6 +166,47 @@ namespace roka
 	{
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->Play();
+	}
+	void PartScript::DisableMove()
+	{
+		std::shared_ptr<GameObject> parent = owner->parent;
+		if (parent == nullptr)
+			return;
+		std::shared_ptr<MoveScript> moveScript = parent->parent->GetComponent<MoveScript>();
+		moveScript->is_active = false;
+	}
+	void PartScript::EnableMove()
+	{
+		std::shared_ptr<GameObject> parent = owner->parent;
+		if (parent == nullptr)
+			return;
+		std::shared_ptr<MoveScript> moveScript = parent->parent->GetComponent<MoveScript>();
+		moveScript->is_active = true;
+	}
+	void PartScript::NextState()
+	{
+		std::shared_ptr<GameObject> parent = owner->parent;
+		if (parent == nullptr)
+			return;
+		std::shared_ptr<PlayerScript> playerScript = parent->parent->GetComponent<PlayerScript>();
+		playerScript->NextState();
+	}
+	void PartScript::DownDelayEvent()
+	{
+		std::shared_ptr<GameObject> parent = owner->parent;
+		if (parent == nullptr)
+			return;
+		std::shared_ptr<PlayerScript> playerScript = parent->parent->GetComponent<PlayerScript>();
+		playerScript->DownEvent();
+	}
+	void PartScript::StandingCompleteEvent()
+	{
+		std::shared_ptr<GameObject> parent = owner->parent;
+		if (parent == nullptr)
+			return;
+		std::shared_ptr<PlayerScript> playerScript = parent->parent->GetComponent<PlayerScript>();
+		playerScript->EnableKeyInput();
+		playerScript->NextState();
 	}
 	void PartScript::NextSprite()
 	{

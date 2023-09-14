@@ -12,7 +12,7 @@
 #include "MoveScript.h"
 #include "PlayerScript.h"
 #include "PartScript.h"
-#include "WeaponScript.h"
+
 #include "HitBoxScript.h"
 #include "SkillScript.h"
 #include "MonsterSkillScript.h"
@@ -207,6 +207,22 @@ namespace roka::prefab
 			PartObject->SetName(L"PartObject");
 			PartObject->AddScript<PartScript>();
 		}
+		
+
+		Prefabs.insert(std::make_pair(TestObject->GetName(), TestObject));
+		Prefabs.insert(std::make_pair(AniObject->GetName(), AniObject));
+		Prefabs.insert(std::make_pair(AniEftObject->GetName(), AniEftObject));
+		Prefabs.insert(std::make_pair(ColAniObject->GetName(), ColAniObject));
+		Prefabs.insert(std::make_pair(ColAniEftObject->GetName(), ColAniEftObject));
+	
+		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
+		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
+		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/
+		
+	}
+	void LateInitialize()
+	{
+		std::shared_ptr<GameObject> AniObject = Prefabs[L"AniObject"];
 		std::shared_ptr<roka::GameObject> Spider_MonsterObject = object::Instantiate<roka::GameObject>(AniObject);
 		{
 			Spider_MonsterObject->SetName(L"Spider_MonsterObject");
@@ -221,8 +237,8 @@ namespace roka::prefab
 			std::shared_ptr<Collider2D> col = TopColObject->AddComponent<Collider2D>();
 			col->SetSize(Vector2(0.13f, 0.08f));
 			col->SetCenter(Vector2(-0.05f, 0.1f));
-			
-		
+
+
 			std::shared_ptr<HitBoxScript> hitbox = TopColObject->AddScript<HitBoxScript>();
 			hitbox->hitbox = HitBoxScript::EHitBoxType::Top;
 			hitbox->hitbox_owner = Spider_MonsterObject;
@@ -305,7 +321,7 @@ namespace roka::prefab
 		//	TairangSkillEft01_2->SetName(L"Eft01_2");
 		//	TairangSkillEft02->AddChild(TairangSkillEft01_1);
 		//	TairangSkillEft02->AddChild(TairangSkillEft01_2);
-	
+
 		//	tf = TairangSkillEft01_1->GetComponent<Transform>();
 		//	tf->position = Vector3(-0.15f, 0.15f, 0.0f);
 		//	tf->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
@@ -432,54 +448,7 @@ namespace roka::prefab
 				Vector3::One);
 			{
 				AvatarParrent->SetName(L"AvatarParrentObj");
-
 				PlayerObject->AddChild(AvatarParrent);
-
-				std::shared_ptr<roka::Image> Base = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Face = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Hair = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Cap = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Coat = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Neck = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Pants = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Belt = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Shoes = object::Instantiate<roka::Image>(PartObject);
-				std::shared_ptr<roka::Image> Weapon = object::Instantiate<roka::Image>(PartObject);
-				
-
-				Base->SetName(L"Base");
-				Face->SetName(L"Face");
-				Hair->SetName(L"Hair");
-				Cap->SetName(L"Cap");
-				Coat->SetName(L"Coat");
-				Neck->SetName(L"Neck");
-				Pants->SetName(L"Pants");
-				Belt->SetName(L"Belt");
-				Shoes->SetName(L"Shoes");
-				Weapon->SetName(L"Weapon");
-				
-				AvatarParrent->AddChild(Weapon);
-				AvatarParrent->AddChild(Base);
-				AvatarParrent->AddChild(Face);
-				AvatarParrent->AddChild(Hair);
-				AvatarParrent->AddChild(Cap);
-				AvatarParrent->AddChild(Coat);
-				AvatarParrent->AddChild(Neck);
-				AvatarParrent->AddChild(Pants);
-				AvatarParrent->AddChild(Belt);
-				AvatarParrent->AddChild(Shoes);
-				
-				Base->GetComponent<PartScript>()->part_type = EAvatarParts::Base;
-				Face->GetComponent<PartScript>()->part_type = EAvatarParts::Face;
-				Hair->GetComponent<PartScript>()->part_type = EAvatarParts::Hair;
-				Cap->GetComponent<PartScript>()->part_type = EAvatarParts::Cap;
-				Coat->GetComponent<PartScript>()->part_type = EAvatarParts::Coat;
-				Neck->GetComponent<PartScript>()->part_type = EAvatarParts::Neck;
-				Pants->GetComponent<PartScript>()->part_type = EAvatarParts::Pants;
-				Belt->GetComponent<PartScript>()->part_type = EAvatarParts::Belt;
-				Shoes->GetComponent<PartScript>()->part_type = EAvatarParts::Shoes;
-				Weapon->GetComponent<PartScript>()->part_type = EAvatarParts::Weapon;
-			
 				AvatarParrent->AddScript<AvatarScript>();
 			}
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
@@ -504,19 +473,9 @@ namespace roka::prefab
 			PlayerObject->AddComponent<Rigidbody>()->IsGravity(true);
 			PlayerObject->AddScript<PlayerScript>();
 		}
-
-		Prefabs.insert(std::make_pair(TestObject->GetName(), TestObject));
-		Prefabs.insert(std::make_pair(AniObject->GetName(), AniObject));
-		Prefabs.insert(std::make_pair(AniEftObject->GetName(), AniEftObject));
-		Prefabs.insert(std::make_pair(ColAniObject->GetName(), ColAniObject));
-		Prefabs.insert(std::make_pair(ColAniEftObject->GetName(), ColAniEftObject));
 		Prefabs.insert(std::make_pair(Spider_MonsterObject->GetName(), Spider_MonsterObject));
 		Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
 		Prefabs.insert(std::make_pair(PlayerObject->GetName(), PlayerObject));
-		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
-		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
-		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/
-		
 	}
 	void Release()
 	{
