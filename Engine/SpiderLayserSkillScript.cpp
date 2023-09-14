@@ -86,10 +86,14 @@ namespace roka
 	void SpiderLayserSkillScript::Play()
 	{
 		LayserSkillScript::Play();
+		std::shared_ptr<MonsterScript> monsterScript = owner->GetComponent<MonsterScript>();
+		monsterScript->DisableNextState();
 	}
 	void SpiderLayserSkillScript::Exit()
 	{
 		LayserSkillScript::Exit();
+		std::shared_ptr<MonsterScript> monsterScript = owner->GetComponent<MonsterScript>();
+		monsterScript->EnableNextState();
 	}
 	void SpiderLayserSkillScript::Start()
 	{

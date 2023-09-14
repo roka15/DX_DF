@@ -54,13 +54,9 @@ namespace roka
 		if (ani != nullptr)
 			if(mStartKey.size()!=0)
 			ani->PlayAnimation(mStartKey, false);
-
-		std::shared_ptr<MonsterScript> monsterScript = owner->GetComponent<MonsterScript>();
-		monsterScript->DisableNextState();
 	}
 	void SkillScript::Exit()
 	{
-		std::shared_ptr<MonsterScript> monsterScript = owner->GetComponent<MonsterScript>();
-		monsterScript->EnableNextState();
+		
 	}
 }

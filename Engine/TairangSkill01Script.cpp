@@ -137,10 +137,14 @@ namespace roka
 			mTarget = owner->GetComponent<TairangMonsterScript>()->GetTarget();
 		}
 		DelayedCollisionSkillScript::Play();
+		std::shared_ptr<MonsterScript> monsterScript = owner->GetComponent<MonsterScript>();
+		monsterScript->DisableNextState();
 	}
 	void TairangSkill01Script::Exit()
 	{
 		DelayedCollisionSkillScript::Exit();
+		std::shared_ptr<MonsterScript> monsterScript = owner->GetComponent<MonsterScript>();
+		monsterScript->EnableNextState();
 	}
 	void TairangSkill01Script::StartStartEvent()
 	{
@@ -227,7 +231,7 @@ namespace roka
 		std::shared_ptr<Animator> owner_ani = owner->GetComponent<Animator>();
 		
 
-		pool::AnimationObjectPool* pool = pool::AnimationObjectPool::GetInstance();
+		AnimationObjectPool* pool = ObjectPoolManager<AnimationObjectPool,GameObject>::GetInstance();
 		std::shared_ptr<GameObject> Eft01 = pool->GetPool(L"AniEftObject")->Spawn();
 		{
 			std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
@@ -322,7 +326,7 @@ namespace roka
 	}
 	void TairangSkill01Script::CreateMiddleEftObject()
 	{
-		pool::AnimationObjectPool* pool = pool::AnimationObjectPool::GetInstance();
+		AnimationObjectPool* pool = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance();
 		std::shared_ptr<GameObject> Eft01 = pool->GetPool(L"AniEftObject")->Spawn();
 		{
 			std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
@@ -366,7 +370,7 @@ namespace roka
 	}
 	void TairangSkill01Script::CreateEndEftObject()
 	{
-		pool::AnimationObjectPool* pool = pool::AnimationObjectPool::GetInstance();
+		AnimationObjectPool* pool = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance();
 		std::shared_ptr<GameObject> Eft01 = pool->GetPool(L"AniObject")->Spawn();
 		{
 			std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
