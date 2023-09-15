@@ -1,5 +1,5 @@
 #include "Material.h"
-
+#include "Resources.h"
 roka::graphics::Material::Material()
 	:Resource(enums::EResourceType::Material)
 	, mShader(nullptr)
@@ -8,11 +8,28 @@ roka::graphics::Material::Material()
 {
 }
 
-roka::graphics::Material::Material(const Material& ref):Resource(ref)
+roka::graphics::Material::Material(const Material& ref) :Resource(ref)
 {
+	std::wstring key;
 	mMode = ref.mMode;
-	mShader = ref.mShader;
-	mTexture = ref.mTexture;
+	if (ref.mShader != nullptr)
+	{
+		key = ref.mShader->GetKey();
+		if (key.size() != 0)
+		{
+			mShader = Resources::Find<Shader>(key);
+		}
+	}
+
+	if (ref.mTexture != nullptr)
+	{
+		key = ref.mTexture->GetKey();
+		if (key.size() != 0)
+		{
+			mTexture = Resources::Find<Texture>(key + L"AtlasTexture");
+		}
+	}
+
 }
 
 roka::graphics::Material::~Material()
