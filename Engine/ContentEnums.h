@@ -8,7 +8,13 @@ namespace roka::enums
 		Mage,
 		End,
 	};
-
+	enum class EMonsterType
+	{
+		None,
+		Spider,
+		Tairang,
+		End,
+	};
 	enum class EPlayerState
 	{
 		None,
@@ -62,7 +68,12 @@ namespace roka::enums
 		Attack,
 		End,
 	};
-	
+	enum class EHitBoxType
+	{
+		Top,
+		Bottom,
+		End,
+	};
 	enum class EAvatarParts
 	{
 		None,

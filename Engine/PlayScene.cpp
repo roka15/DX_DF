@@ -154,24 +154,18 @@ namespace roka
 		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
 		another_player->SetName(L"AnotherPlayer");
 		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
-		std::vector<std::shared_ptr<HitBoxScript>> vec = another_player->GetChilds<HitBoxScript>();
-		for (auto& value : vec)
-		{
-			value->hitbox_owner = another_player;
-		}
+		std::shared_ptr<PlayerScript> playerScript = another_player->GetComponent<PlayerScript>();
+		playerScript->LateInitialize();
+	
 		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
 		AddGameObject(ELayerType::Player, another_player);
 
 
 		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
 		player->SetName(L"Player");
-		std::shared_ptr<PlayerScript> playerScript = player->GetComponent<PlayerScript>();
+		playerScript = player->GetComponent<PlayerScript>();
 		playerScript->LateInitialize();
-		vec = player->GetChilds<HitBoxScript>();
-		for (auto& value : vec)
-		{
-			value->hitbox_owner = player;
-		}
+	
 		//player->AddComponent<Rigidbody>()->IsGravity(true);
 
 		//cd->SetSize(Vector2(0.05f, 0.2f));
@@ -219,34 +213,34 @@ namespace roka
 
 	
 
-		std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
+		/*std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
 		{
 			std::shared_ptr<GameObject> monster = object::Instantiate<GameObject>(TairangOrigin);
 			monster->SetName(L"Tiarang");
 			monster->GetComponent<Transform>()->position = Vector3(-1.0f, 0.0f, 0.0f);
 			monster->GetComponent<MonsterScript>()->SetTarget(player);
 			AddGameObject(ELayerType::Monster, monster);
-		}
+		}*/
 
 		//test
 		AnimationObjectPool* aniPool = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance();
-		std::shared_ptr<GameObject> weapon_aniTest = aniPool->GetPool(L"AniObject")->Spawn();
+		/*std::shared_ptr<GameObject> weapon_aniTest = aniPool->GetPool(L"AniObject")->Spawn();
 		{
 			std::shared_ptr<Transform> tf = weapon_aniTest->GetComponent<Transform>();
 			tf->position = Vector3(1.0f, 1.0f, 0.0f);
 			tf->scale = Vector3(2.0f, 2.0f, 1.0f);
 			float speed = 0.1f;
 			std::shared_ptr<Animator> ani1 = weapon_aniTest->GetComponent<Animator>();
-			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_01", 109, 127, speed);
+			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_01", 109, 127, speed);*/
 		/*	ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_02",30, 60, speed);
 			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_03", 60, 90, speed);
 			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_04", 90, 120, speed);
 			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_05", 120, 150, speed);
 			ani1->Create(L"weapon", L"mg_broom7200c.img", L"mg_broom7200c_06", 150, 182, speed);*/
-			std::shared_ptr<GameObject> weapon_Test2 = aniPool->GetPool(L"AniObject")->Spawn();
+			/*std::shared_ptr<GameObject> weapon_Test2 = aniPool->GetPool(L"AniObject")->Spawn();
 			weapon_aniTest->AddChild(weapon_Test2);
 			std::shared_ptr<Animator> ani2 = weapon_Test2->GetComponent<Animator>();
-			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_01", 109, 127, speed);
+			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_01", 109, 127, speed);*/
 			/*ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_02", 30, 60, speed);
 			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_03", 60, 90, speed);
 			ani2->Create(L"weapon", L"mg_broom7200d.img", L"mg_broom7200d_04", 90, 120, speed);
@@ -269,10 +263,10 @@ namespace roka
 			ani2->CompleteEvent(L"mg_broom7200d_05") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_06", false); });
 			ani2->CompleteEvent(L"mg_broom7200d_06") = std::bind([ani2_ptr]()->void {ani2_ptr->PlayAnimation(L"mg_broom7200d_01", false); });*/
 
-			ani1->PlayAnimation(L"mg_broom7200c_01", true);
-			ani2->PlayAnimation(L"mg_broom7200d_01", true);
-		}
-		AddGameObject(ELayerType::Player, weapon_aniTest);
+		/*	ani1->PlayAnimation(L"mg_broom7200c_01", true);
+			ani2->PlayAnimation(L"mg_broom7200d_01", true);*/
+		//}
+		//AddGameObject(ELayerType::Player, weapon_aniTest);
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Player, true);
 		CollisionManager::SetLayer(ELayerType::Monster, ELayerType::Player, true);

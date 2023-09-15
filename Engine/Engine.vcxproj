@@ -189,7 +189,12 @@
     <ClInclude Include="MonsterScript.h" />
     <ClInclude Include="MonsterSkillScript.h" />
     <ClInclude Include="MoveScript.h" />
-    <ClInclude Include="NamedMonsterScript.h" />
+    <ClInclude Include="NamedMonsterScript.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="NormalMonsterPool.h" />
     <ClInclude Include="NormalMonsterScript.h" />
     <ClInclude Include="PartManager.h" />
@@ -210,8 +215,19 @@
     <ClInclude Include="Slot.h" />
     <ClInclude Include="SpiderLayserSkillScript.h" />
     <ClInclude Include="SpiderMonsterScript.h" />
-    <ClInclude Include="TairangMonsterScript.h" />
-    <ClInclude Include="TairangSkill01Script.h" />
+    <ClInclude Include="SpiderNormalAtk.h" />
+    <ClInclude Include="TairangMonsterScript.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="TairangSkill01Script.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="TargetMoveScript.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="WeaponPartScript.h" />
@@ -236,7 +252,12 @@
     <ClCompile Include="MonsterScript.cpp" />
     <ClCompile Include="MonsterSkillScript.cpp" />
     <ClCompile Include="MoveScript.cpp" />
-    <ClCompile Include="NamedMonsterScript.cpp" />
+    <ClCompile Include="NamedMonsterScript.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="NormalMonsterPool.cpp" />
     <ClCompile Include="NormalMonsterScript.cpp" />
     <ClCompile Include="PartManager.cpp" />
@@ -256,8 +277,19 @@
     <ClCompile Include="Slot.cpp" />
     <ClCompile Include="SpiderLayserSkillScript.cpp" />
     <ClCompile Include="SpiderMonsterScript.cpp" />
-    <ClCompile Include="TairangMonsterScript.cpp" />
-    <ClCompile Include="TairangSkill01Script.cpp" />
+    <ClCompile Include="SpiderNormalAtk.cpp" />
+    <ClCompile Include="TairangMonsterScript.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="TairangSkill01Script.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="TargetMoveScript.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="WeaponPartScript.cpp" />

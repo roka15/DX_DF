@@ -12,7 +12,7 @@ namespace roka
 	NamedMonsterScript::NamedMonsterScript(EScriptType type) : MonsterScript(type)
 	{
 	}
-	NamedMonsterScript::NamedMonsterScript(const NamedMonsterScript& ref)
+	NamedMonsterScript::NamedMonsterScript(const NamedMonsterScript& ref):MonsterScript()
 	{
 	}
 	void NamedMonsterScript::Copy(Component* src)
@@ -66,24 +66,6 @@ namespace roka
 	void NamedMonsterScript::Attack()
 	{
 		MonsterScript::Attack();
-	}
-	void NamedMonsterScript::Skill()
-	{
-		size_t count = mSkillList.size();
-		if (count == 0)
-			return;
-		int index = 0;
-		//test 스킬 추가되면 지우기
-		/*while (1)
-		{
-			index = rand() % count;
-			if (mExcuteSkillIndex != index)
-			{
-				break;
-			}
-		}*/
-		mExcuteSkillIndex = index;
-		MonsterScript::Skill();
 	}
 	void NamedMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
 	{

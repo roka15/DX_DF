@@ -142,6 +142,7 @@
     <ClInclude Include="ICollisionListener.h">
       <Filter>Contents\Interface\ICollisionListener</Filter>
     </ClInclude>
+    <ClInclude Include="SpiderNormalAtk.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -276,6 +277,7 @@
     <ClCompile Include="ICollisionListener.cpp">
       <Filter>Contents\Interface\ICollisionListener</Filter>
     </ClCompile>
+    <ClCompile Include="SpiderNormalAtk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -457,6 +459,18 @@
     </Filter>
     <Filter Include="Contents\Interface\ICollisionListener">
       <UniqueIdentifier>{df44fd09-fbe7-43bf-83a3-43a4a479ef55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Skill\Monster">
+      <UniqueIdentifier>{893d6225-d0ee-43b6-8f87-5a25fd0eb426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Skill\Monster\Normal">
+      <UniqueIdentifier>{dad89458-24f7-45d8-a52a-24dd74680d3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Skill\Monster\Named">
+      <UniqueIdentifier>{60e73a39-be1b-4a6a-b1bd-5a5d029cbbdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Skill\Monster\Normal\Spider">
+      <UniqueIdentifier>{82259d83-6993-44f6-aada-e4da22aeb634}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

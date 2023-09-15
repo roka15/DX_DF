@@ -17,14 +17,14 @@
 #include "MonsterScript.h"
 #include "NormalMonsterScript.h"
 #include "SpiderMonsterScript.h"
-#include "NamedMonsterScript.h"
-#include "TairangMonsterScript.h"
+//#include "NamedMonsterScript.h"
+//#include "TairangMonsterScript.h"
 
 #include "SkillScript.h"
 #include "LayserSkillScript.h"
 #include "DelayedCollisionSkillScript.h"
 #include "SpiderLayserSkillScript.h"
-#include "TairangSkill01Script.h"
+//#include "TairangSkill01Script.h"
 #include "MonsterSkillScript.h"
 #include "PlayerNormalAttackScript.h"
 #include "MageNormalAttackScript.h"
@@ -99,10 +99,10 @@ namespace roka
 			SpiderLayserSkillScript* ss = dynamic_cast<SpiderLayserSkillScript*>(script);
 			return std::shared_ptr<SpiderLayserSkillScript>(new SpiderLayserSkillScript(*ss));
 		};
-		mFactories[EScriptType::SkillTairangType01] = [](Script* script)
+		//mFactories[EScriptType::SkillTairangType01] = [](Script* script)
 		{
-			TairangSkill01Script* ss = dynamic_cast<TairangSkill01Script*>(script);
-			return std::shared_ptr<TairangSkill01Script>(new TairangSkill01Script(*ss));
+			//TairangSkill01Script* ss = dynamic_cast<TairangSkill01Script*>(script);
+			//return std::shared_ptr<TairangSkill01Script>(new TairangSkill01Script(*ss));
 		};
 		mFactories[EScriptType::SkillMonster] = [](Script* script)
 		{
@@ -140,15 +140,15 @@ namespace roka
 			SpiderMonsterScript* hs = dynamic_cast<SpiderMonsterScript*>(script);
 			return std::shared_ptr<SpiderMonsterScript>(new SpiderMonsterScript(*hs));
 		};
-		mFactories[EScriptType::NamedMonster] = [](Script* script)
+		//mFactories[EScriptType::NamedMonster] = [](Script* script)
 		{
-			NamedMonsterScript* hs = dynamic_cast<NamedMonsterScript*>(script);
-			return std::shared_ptr<NamedMonsterScript>(new NamedMonsterScript(*hs));
+			//NamedMonsterScript* hs = dynamic_cast<NamedMonsterScript*>(script);
+			//return std::shared_ptr<NamedMonsterScript>(new NamedMonsterScript(*hs));
 		};
-		mFactories[EScriptType::TairangMonster] = [](Script* script)
+		//mFactories[EScriptType::TairangMonster] = [](Script* script)
 		{
-			TairangMonsterScript* hs = dynamic_cast<TairangMonsterScript*>(script);
-			return std::shared_ptr<TairangMonsterScript>(new TairangMonsterScript(*hs));
+			//TairangMonsterScript* hs = dynamic_cast<TairangMonsterScript*>(script);
+			//return std::shared_ptr<TairangMonsterScript>(new TairangMonsterScript(*hs));
 		};
 	}
 	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)
