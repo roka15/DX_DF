@@ -24,6 +24,7 @@ namespace roka
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
+		mCollisionListener = nullptr;
 	}
 	Collider2D::Collider2D(const Collider2D& ref) :
 		Component(ref),
@@ -39,6 +40,7 @@ namespace roka
 	{
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
+		mCollisionListener = nullptr;
 	}
 	void Collider2D::Copy(Component* src)
 	{
@@ -57,6 +59,7 @@ namespace roka
 		mRotationZ = 0.0f;
 		mbRender = source->mbRender;
 		mbColCehck = true;
+		mCollisionListener = nullptr;
 	}
 
 	Collider2D::~Collider2D()
@@ -66,6 +69,10 @@ namespace roka
 	{
 		Component::Initialize();
 		mTransform = owner->GetComponent<Transform>();
+		mbColCehck = true;
+		mbCollision = false;
+		mbRender = true;
+		mCollisionListener = nullptr;
 	}
 	void Collider2D::Update()
 	{
@@ -128,6 +135,8 @@ namespace roka
 		{
 			script->OnCollisionEnter(other);
 		}
+		if (mCollisionListener != nullptr)
+			mCollisionListener->OnCollisionEnter(owner->GetSharedPtr(),other->owner->GetSharedPtr());
 	}
 	void Collider2D::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	{
@@ -141,6 +150,8 @@ namespace roka
 		{
 			script->OnCollisionStay(other);
 		}
+		if (mCollisionListener != nullptr)
+			mCollisionListener->OnCollisionStay(owner->GetSharedPtr(), other->owner->GetSharedPtr());
 	}
 	void Collider2D::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
@@ -154,5 +165,7 @@ namespace roka
 		{
 			script->OnCollisionExit(other);
 		}
+		if (mCollisionListener != nullptr)
+			mCollisionListener->OnCollisionExit(owner->GetSharedPtr(), other->owner->GetSharedPtr());
 	}
 }

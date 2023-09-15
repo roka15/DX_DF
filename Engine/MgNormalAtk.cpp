@@ -5,14 +5,21 @@
 #include "Input.h"
 #include "User.h"
 #include "RokaTime.h"
+#include "Object.h"
+#include "AnimationObjectPool.h"
+#include "CollisionManager.h"
 
 #include "Animator.h"
+#include "Transform.h"
+#include "Collider2D.h"
 #include "SkinPartScript.h"
 #include "AvatarScript.h"
 #include "PlayerScript.h"
+#include "MonsterScript.h"
+#include "MoveScript.h"
 namespace roka
 {
-	MgNormalAtk::MgNormalAtk():Skill()
+	MgNormalAtk::MgNormalAtk() :Skill()
 	{
 	}
 	void MgNormalAtk::Execute(std::shared_ptr<GameObject> caster)
@@ -20,13 +27,18 @@ namespace roka
 		std::shared_ptr<PlayerScript> player = caster->GetComponent<PlayerScript>();
 		player->player_state = EPlayerState::NomalAtk;
 		player->PlayPartMotion();
-		
-		
+		player->DisableKeyInput();
+		std::shared_ptr<MoveScript> move = caster->GetComponent<MoveScript>();
+		move->is_active = false;
+
+
 		std::shared_ptr<GameObject> avatarObj = caster->GetChild<AvatarScript>();
 		std::shared_ptr<GameObject> skinObj = avatarObj->GetChild<SkinPartScript>();
 
 		std::shared_ptr<Animator> ani = skinObj->GetComponent<Animator>();
 		ani->SetFrameEventListener(this);
+
+		SpawnCollider(caster);
 	}
 
 	void MgNormalAtk::SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)
@@ -35,14 +47,84 @@ namespace roka
 
 	void MgNormalAtk::SpawnCollider(std::shared_ptr<GameObject> caster)
 	{
+		std::shared_ptr<PlayerScript> player = caster->GetComponent<PlayerScript>();
+		std::shared_ptr<GameObject> colObject = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->GetPool(L"ColAniObject")->Spawn();
+		colObject->SetName(L"MgNormalAtkColObject");
+		std::shared_ptr<Collider2D> collider = colObject->AddComponent<Collider2D>();
+		std::shared_ptr<Transform> transform = colObject->GetComponent<Transform>();
+		transform->scale = Vector3(0.1f, 0.1f, 1.0f);
+		
+
+		float dir = player->GetDir();
+		if (dir == -1.0f)
+		{
+			Left(colObject);
+		}
+		else if (dir == 1.0f)
+		{
+			Right(colObject);
+		}
+		collider->SetCollisionListener(this);
+		caster->AddChild(colObject);
 	}
 
-	void MgNormalAtk::SpawnCollider(Vector3 target)
+	void MgNormalAtk::DeSpawnCollider(std::shared_ptr<GameObject> caster)
 	{
+		std::shared_ptr<GameObject> playerObj = caster;
+		std::shared_ptr<Collider2D> collider = playerObj->GetChild(L"MgNormalAtkColObject")->GetComponent<Collider2D>();
+		collider->SetCollisionListener(nullptr);
+		collider->owner->active = GameObject::EState::Dead;
+	}
+
+	void MgNormalAtk::EnableCollision(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<GameObject> playerObj = caster;
+		std::shared_ptr<GameObject> colObj = playerObj->GetChild(L"MgNormalAtkColObject");
+		std::shared_ptr<Collider2D> collider = colObj->GetComponent<Collider2D>();
+		collider->EnableColCheck();
+	}
+
+	void MgNormalAtk::DisableCollision(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<GameObject> playerObj = caster;
+		std::shared_ptr<GameObject> colObj = playerObj->GetChild(L"MgNormalAtkColObject");
+		std::shared_ptr<Collider2D> collider = colObj->GetComponent<Collider2D>();
+		collider->DisableColCheck();
+	}
+
+	void MgNormalAtk::Left(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<Transform> transform = caster->GetComponent<Transform>();
+		transform->position = Vector3(-0.3f, -0.4f, 0.0f);
+	}
+
+	void MgNormalAtk::Right(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<Transform> transform = caster->GetComponent<Transform>();
+		transform->position = Vector3(0.3f, -0.4f, 0.0f);
 	}
 
 	void MgNormalAtk::Sound(std::wstring key)
 	{
+	}
+
+	void MgNormalAtk::End(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<GameObject> playerObj = caster;
+		std::shared_ptr<GameObject> avatarObj = playerObj->GetChild<AvatarScript>();
+		std::shared_ptr<PlayerScript> player = playerObj->GetComponent<PlayerScript>();
+		std::shared_ptr<AvatarScript> avatar = avatarObj->GetComponent<AvatarScript>();
+		if (mbCallbackEvent == false)
+		{
+			avatar->StopAni();
+			Time::CallBackTimerInfo callBack = {};
+			callBack.endTime = 0.1f;
+			Time::RequestEvent(callBack, std::bind(&PlayerScript::NextState, player));
+			Time::RequestEvent(callBack, std::bind([this]()->void {mbCallbackEvent = false; }));
+			mbCallbackEvent = true;
+			DeSpawnCollider(playerObj);
+			player->EnableKeyInput();
+		}
 	}
 
 	void MgNormalAtk::OnAnimationFramEvent(std::shared_ptr<GameObject> caster, std::wstring frameEvent)
@@ -54,6 +136,7 @@ namespace roka
 		if (frameEvent.compare(L"NextState") == 0)
 		{
 			EKeyCode key = (EKeyCode)player->GetUserInfo()->GetNormalAtkKey();
+			DisableCollision(playerObj);
 			if (Input::GetKey(key) || Input::GetKeyDown(key))
 			{
 				if (mbCallbackEvent == false)
@@ -65,22 +148,42 @@ namespace roka
 					Time::RequestEvent(callBack, std::bind([this]()->void {mbCallbackEvent = false; }));
 					mbCallbackEvent = true;
 				}
-			
+
 				return;
 			}
 			else
 			{
-				if (mbCallbackEvent == false)
-				{
-					avatar->StopAni();
-					Time::CallBackTimerInfo callBack = {};
-					callBack.endTime = 0.1f;
-					Time::RequestEvent(callBack, std::bind(&PlayerScript::NextState,player));
-					Time::RequestEvent(callBack, std::bind([this]()->void {mbCallbackEvent = false; }));
-					mbCallbackEvent = true;
-				}	
+				End(playerObj);
 			}
 		}
+		else if (frameEvent.compare(L"ActiveCollider") == 0)
+		{
+			EnableCollision(playerObj);
+		}
+		else if (frameEvent.compare(L"DisableCollision") == 0)
+		{
+			DisableCollision(playerObj);
+		}
+	}
+	void MgNormalAtk::OnCollisionEnter(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
+	{
+		std::shared_ptr<GameObject> colObj = caster;
+		std::shared_ptr<MonsterScript> monster = target->GetComponent<MonsterScript>();
+		if (monster == nullptr)
+			return;
+		monster->TakeDamage(mDamage);
+		monster->PlayStun(EStunState::Stagger);
+
+		std::shared_ptr<Collider2D> left = colObj->GetComponent<Collider2D>();
+		std::shared_ptr<Collider2D> right = target->GetComponent<Collider2D>();
+		CollisionManager::DisableCollision(left, right);
+		left->DisableColCheck();
+	}
+	void MgNormalAtk::OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
+	{
+	}
+	void MgNormalAtk::OnCollisionExit(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
+	{
 	}
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "Component.h"
-
+#include "..\\Engine\\ICollisionListener.h"
 namespace roka
 {
 	class Transform;
@@ -49,6 +49,8 @@ namespace roka
 		GET_PROPERTY(GetColliderID) UINT collider_id;
 		PROPERTY(GetTime,SetTime) double time;
 
+		void SetCollisionListener(ICollisionListener* listener) { mCollisionListener = listener; }
+		
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;
@@ -67,6 +69,8 @@ namespace roka
 		double mTime;
 		bool mbRender;
 		bool mbColCehck;
+
+		ICollisionListener* mCollisionListener;
 	};
 }
 
