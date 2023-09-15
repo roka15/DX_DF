@@ -7,8 +7,10 @@
 #include "RokaTime.h"
 #include "Prefab.h"
 #include "Object.h"
+#include "AnimationObjectPool.h"
 
 #include "Animator.h"
+#include "MeshRenderer.h"
 
 namespace roka
 {
@@ -143,7 +145,7 @@ namespace roka
 	}
 	void WeaponPartScript::CreateSubObject()
 	{
-		std::shared_ptr<GameObject> subObject = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);
+		std::shared_ptr<GameObject> subObject = manager::ObjectPoolManager<AnimationObjectPool,GameObject>::GetInstance()->GetPool(L"AniObject")->Spawn();
 		std::shared_ptr<Animator> sub_ani = subObject->GetComponent<Animator>();
 		std::wstring npk = mNpkKey;
 		std::wstring pack = mPackKey;
@@ -182,6 +184,20 @@ namespace roka
 	void WeaponPartScript::NormalAtkEndEvent()
 	{
 		mSubObject.lock()->ActiveAnimationNull();
+	}
+	void WeaponPartScript::Right()
+	{
+		PartScript::Right();
+		std::shared_ptr<GameObject> subObj = mSubObject.lock()->owner->GetSharedPtr();
+		std::shared_ptr<MeshRenderer> mr = subObj->GetComponent<MeshRenderer>();
+		mr->material->shader = Resources::Find<Shader>(L"AnimationShader");
+	}
+	void WeaponPartScript::Left()
+	{
+		PartScript::Left();
+		std::shared_ptr<GameObject> subObj = mSubObject.lock()->owner->GetSharedPtr();
+		std::shared_ptr<MeshRenderer> mr = subObj->GetComponent<MeshRenderer>();
+		mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
 	}
 	void WeaponPartScript::Stop()
 	{

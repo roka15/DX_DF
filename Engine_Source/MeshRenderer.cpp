@@ -14,7 +14,7 @@ namespace roka
 	MeshRenderer::MeshRenderer(const MeshRenderer& ref) : Component(ref)
 	{
 		mMesh = ref.mMesh;
-		mMaterial = ref.mMaterial;
+		mMaterial = std::make_shared<Material>(*(ref.mMaterial.get()));
 	}
 	void MeshRenderer::Copy(Component* src)
 	{
@@ -23,7 +23,7 @@ namespace roka
 		if (source == nullptr)
 			return;
 		mMesh = source->mMesh;
-		mMaterial = source->mMaterial;
+		mMaterial = std::make_shared<Material>(*(source->mMaterial.get()));
 	}
 	MeshRenderer::~MeshRenderer()
 	{

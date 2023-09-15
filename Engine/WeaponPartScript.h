@@ -38,8 +38,10 @@ namespace roka
 		virtual void NormalAtkCompleteEvent();
 		virtual void NormalAtkEndEvent();
 
-		virtual void Stop();
-		virtual void Start();
+		virtual void Right()override;
+		virtual void Left()override;
+		virtual void Stop()override;
+		virtual void Start()override;
 	private:
 		friend class FactoryBase;
 		friend class ScriptFactory;

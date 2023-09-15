@@ -28,8 +28,6 @@ void roka::graphics::Material::Binds()
 {
 	if (mTexture != nullptr)
 	{
-		if (mTexture->GetKey().compare(L"tairang_attack3boosterAtlasTexture") == 0)
-			int a = 0;
 		mTexture->BindShaderResource(EShaderStage::PS, 0);
 	}
 	if (mShader != nullptr)
