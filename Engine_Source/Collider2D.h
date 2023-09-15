@@ -34,6 +34,8 @@ namespace roka
 		
 
 		UINT GetColliderID() { return mColliderID; }
+		EHitBoxType GetHitType() { return mHitType; }
+		void SetHitType(EHitBoxType type) { mHitType = type; }
 		
 		void SetTime(double time) { mTime = time; }
 		double GetTime() { return mTime; }
@@ -70,6 +72,7 @@ namespace roka
 		bool mbRender;
 		bool mbColCehck;
 
+		EHitBoxType mHitType;
 		ICollisionListener* mCollisionListener;
 	};
 }

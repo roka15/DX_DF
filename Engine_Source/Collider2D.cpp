@@ -3,7 +3,7 @@
 #include "Renderer.h"
 #include "GameObject.h"
 #include "Application.h"
-
+#include "CollisionManager.h"
 #include "Transform.h"
 
 extern roka::Application application;
@@ -41,6 +41,7 @@ namespace roka
 		mColliderNumber++;
 		mColliderID = mColliderNumber;
 		mCollisionListener = nullptr;
+		mHitType = ref.mHitType;
 	}
 	void Collider2D::Copy(Component* src)
 	{
@@ -60,6 +61,7 @@ namespace roka
 		mbRender = source->mbRender;
 		mbColCehck = true;
 		mCollisionListener = nullptr;
+		mHitType = source->mHitType;
 	}
 
 	Collider2D::~Collider2D()
@@ -125,8 +127,12 @@ namespace roka
 	}
 	void Collider2D::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 	{
-		if (mbColCehck == false)
+		if (mbColCehck == false || other->mbColCehck == false)
+		{
+			std::shared_ptr<Collider2D> left = owner->GetComponent<Collider2D>();
+			CollisionManager::DisableCollision(left, other);
 			return;
+		}
 		mbCollision = true;
 		const std::vector<std::shared_ptr<Script>>& scripts
 			= owner->GetScripts();
@@ -140,8 +146,12 @@ namespace roka
 	}
 	void Collider2D::OnCollisionStay(std::shared_ptr<Collider2D> other)
 	{
-		if (mbColCehck == false)
+		if (mbColCehck == false || other->mbColCehck == false)
+		{
+			std::shared_ptr<Collider2D> left = owner->GetComponent<Collider2D>();
+			CollisionManager::DisableCollision(left, other);
 			return;
+		}
 		mbCollision = true;
 		const std::vector<std::shared_ptr<Script>>& scripts
 			= owner->GetScripts();
@@ -155,8 +165,6 @@ namespace roka
 	}
 	void Collider2D::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
-		if (mbColCehck == false)
-			return;
 		mbCollision = false;
 		const std::vector<std::shared_ptr<Script>>& scripts
 			= owner->GetComponents<Script>();
