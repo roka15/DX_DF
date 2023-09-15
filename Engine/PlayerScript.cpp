@@ -751,6 +751,7 @@ namespace roka
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
+		EnableKeyInput();
 		if (Input::GetKey(EKeyCode::SPACE))
 		{
 			if (mPlayerState == EPlayerState::Landing)

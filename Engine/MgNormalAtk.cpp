@@ -29,7 +29,8 @@ namespace roka
 		player->PlayPartMotion();
 		player->DisableKeyInput();
 		std::shared_ptr<MoveScript> move = caster->GetComponent<MoveScript>();
-		move->is_active = false;
+		move->Stop();
+		move->ResetSpeed();
 
 
 		std::shared_ptr<GameObject> avatarObj = caster->GetChild<AvatarScript>();
@@ -95,13 +96,13 @@ namespace roka
 	void MgNormalAtk::Left(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<Transform> transform = caster->GetComponent<Transform>();
-		transform->position = Vector3(-0.3f, -0.4f, 0.0f);
+		transform->position = Vector3(-0.35f, -0.4f, 0.0f);
 	}
 
 	void MgNormalAtk::Right(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<Transform> transform = caster->GetComponent<Transform>();
-		transform->position = Vector3(0.3f, -0.4f, 0.0f);
+		transform->position = Vector3(0.35f, -0.4f, 0.0f);
 	}
 
 	void MgNormalAtk::Sound(std::wstring key)
@@ -123,7 +124,6 @@ namespace roka
 			Time::RequestEvent(callBack, std::bind([this]()->void {mbCallbackEvent = false; }));
 			mbCallbackEvent = true;
 			DeSpawnCollider(playerObj);
-			player->EnableKeyInput();
 		}
 	}
 
@@ -136,6 +136,9 @@ namespace roka
 		if (frameEvent.compare(L"NextState") == 0)
 		{
 			EKeyCode key = (EKeyCode)player->GetUserInfo()->GetNormalAtkKey();
+			std::shared_ptr<GameObject> colObj = playerObj->GetChild(L"MgNormalAtkColObject");
+			if (colObj == nullptr)
+				return;
 			DisableCollision(playerObj);
 			if (Input::GetKey(key) || Input::GetKeyDown(key))
 			{

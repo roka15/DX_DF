@@ -49,37 +49,37 @@ namespace roka
 	void WeaponPartScript::Idle()
 	{
 		PartScript::Idle();
-		mSubObject.lock()->PlayAnimation(L"Idle",true);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Walk()
 	{
 		PartScript::Walk();
-		mSubObject.lock()->PlayAnimation(L"Walk", true);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Run()
 	{
 		PartScript::Run();
-		mSubObject.lock()->PlayAnimation(L"Run", true);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Jump()
 	{
 		PartScript::Jump();
-		mSubObject.lock()->PlayAnimation(L"Jump", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Fall()
 	{
 		PartScript::Fall();
-		mSubObject.lock()->PlayAnimation(L"Fall", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::JumpDash()
 	{
 		PartScript::JumpDash();
-		mSubObject.lock()->PlayAnimation(L"JumpDash", true);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::JumpHold()
 	{
 		PartScript::JumpHold();
-		mSubObject.lock()->PlayAnimation(L"JumpHold", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::NormalAtk()
 	{
@@ -89,22 +89,22 @@ namespace roka
 	void WeaponPartScript::Stagger()
 	{
 		PartScript::Stagger();
-		mSubObject.lock()->PlayAnimation(L"Stagger", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Down()
 	{
 		PartScript::Down();
-		mSubObject.lock()->PlayAnimation(L"Down", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Standing()
 	{
 		PartScript::Standing();
-		mSubObject.lock()->PlayAnimation(L"Standing", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::Landing()
 	{
 		PartScript::Landing();
-		mSubObject.lock()->PlayAnimation(L"Landing", false);
+		mSubObject.lock()->ActiveAnimationNull();
 	}
 	void WeaponPartScript::SetEvent()
 	{
@@ -133,6 +133,7 @@ namespace roka
 
 		std::shared_ptr<Texture> texture1 = weapon_npk->CreateAtlas(pack, 0, 22, L"mg_broom7200d_01");
 		ani->Create(texture1,L"Idle", 0, 10, 0.2f);
+		ani->Create(texture1, L"Walk", 0, 10, 0.2f);
 		ani->Create(texture1, L"Run", 0, 10, 0.05f);
 		ani->Create(texture1, L"Jump", 11, 21, speed);
 
