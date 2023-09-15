@@ -1,5 +1,9 @@
 #include "PortalScript.h"
 #include "SceneManager.h"
+#include "GameObject.h"
+
+#include "PlayerScript.h"
+#include "Collider2D.h"
 namespace roka
 {
 	PortalScript::PortalScript() : Script(EScriptType::Portal),
@@ -30,6 +34,9 @@ namespace roka
 	}
 	void PortalScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
 	{
+		std::shared_ptr<PlayerScript> player = other->owner->parent->GetComponent<PlayerScript>();
+		if (player == nullptr)
+			return;
 		std::wstring key = L"";
 		switch (mType)
 		{
