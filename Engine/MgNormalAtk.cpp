@@ -46,6 +46,10 @@ namespace roka
 	{
 	}
 
+	void MgNormalAtk::DeSpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)
+	{
+	}
+
 	void MgNormalAtk::SpawnCollider(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<PlayerScript> player = caster->GetComponent<PlayerScript>();
@@ -171,16 +175,19 @@ namespace roka
 	void MgNormalAtk::OnCollisionEnter(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
 	{
 		std::shared_ptr<GameObject> colObj = caster;
-		std::shared_ptr<MonsterScript> monster = target->GetComponent<MonsterScript>();
+		std::shared_ptr<MonsterScript> monster = target->parent->GetComponent<MonsterScript>();
 		if (monster == nullptr)
 			return;
-		monster->TakeDamage(mDamage);
-		monster->PlayStun(EStunState::Stagger);
-
 		std::shared_ptr<Collider2D> left = colObj->GetComponent<Collider2D>();
 		std::shared_ptr<Collider2D> right = target->GetComponent<Collider2D>();
-		CollisionManager::DisableCollision(left, right);
-		left->DisableColCheck();
+		if (left->GetHitType() == right->GetHitType())
+		{
+			monster->TakeDamage(mDamage);
+			monster->PlayStun(EStunState::Stagger);
+
+			CollisionManager::DisableCollision(left, right);
+			left->DisableColCheck();
+		}
 	}
 	void MgNormalAtk::OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
 	{

@@ -11,6 +11,7 @@ namespace roka
 
 		virtual void Execute(std::shared_ptr<GameObject> caster)override;
 		virtual void SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)override;
+		virtual void DeSpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)override;
 		virtual void SpawnCollider(std::shared_ptr<GameObject> caster)override;
 		virtual void DeSpawnCollider(std::shared_ptr<GameObject> caster)override;
 		virtual void EnableCollision(std::shared_ptr<GameObject> caster) override;
