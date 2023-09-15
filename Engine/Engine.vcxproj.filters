@@ -139,6 +139,9 @@
     <ClInclude Include="MgNormalAtk.h">
       <Filter>Contents\Skill\Player\NormalAtk</Filter>
     </ClInclude>
+    <ClInclude Include="ICollisionListener.h">
+      <Filter>Contents\Interface\ICollisionListener</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -269,6 +272,9 @@
     </ClCompile>
     <ClCompile Include="MgNormalAtk.cpp">
       <Filter>Contents\Skill\Player\NormalAtk</Filter>
+    </ClCompile>
+    <ClCompile Include="ICollisionListener.cpp">
+      <Filter>Contents\Interface\ICollisionListener</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -448,6 +454,9 @@
     </Filter>
     <Filter Include="Contents\Interface\ISkill">
       <UniqueIdentifier>{f46138e2-0519-463c-84a2-ce6348345726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Interface\ICollisionListener">
+      <UniqueIdentifier>{df44fd09-fbe7-43bf-83a3-43a4a479ef55}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

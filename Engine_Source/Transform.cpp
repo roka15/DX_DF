@@ -139,7 +139,7 @@ namespace roka
         if (parent != nullptr)
         {
             Vector3 value = parent->GetComponent<Transform>()->scale;
-            value += mScale;
+            value *= mScale;
             return value;
         }
         else

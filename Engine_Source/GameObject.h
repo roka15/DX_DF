@@ -207,6 +207,7 @@ namespace roka
 		}
 		void RemoveChild(std::wstring key);
 		void RemoveChild(std::shared_ptr<GameObject> obj);
+		
 		UINT GetChildCont() { return mChild.size(); }
 
 

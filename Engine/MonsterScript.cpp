@@ -264,6 +264,10 @@ namespace roka
 		skillScript->Play();
 	}
 
+	void MonsterScript::PlayStun(EStunState stun)
+	{
+	}
+
 	void MonsterScript::LeftSetting()
 	{
 		std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();

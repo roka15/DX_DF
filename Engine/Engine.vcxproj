@@ -181,6 +181,7 @@
     <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="HitBoxScript.h" />
     <ClInclude Include="IAnimationFramEvent.h" />
+    <ClInclude Include="ICollisionListener.h" />
     <ClInclude Include="LayserSkillScript.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MageNormalAttackScript.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="HendonmyreScene.cpp" />
     <ClCompile Include="HitBoxScript.cpp" />
     <ClCompile Include="IAnimationFramEvent.cpp" />
+    <ClCompile Include="ICollisionListener.cpp" />
     <ClCompile Include="LayserSkillScript.cpp" />
     <ClCompile Include="MageNormalAttackScript.cpp" />
     <ClCompile Include="MgNormalAtk.cpp" />

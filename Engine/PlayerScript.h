@@ -74,6 +74,7 @@ namespace roka
 		void PlayPartMotion();
 		void SetPlayerState(EPlayerState state) { mPlayerState = state; }
 		EPlayerState GetPlayerState() { return mPlayerState; }
+		float GetDir() { return mCurDir; }
 
 		PROPERTY(GetPlayerState, SetPlayerState) EPlayerState player_state;
 	protected:

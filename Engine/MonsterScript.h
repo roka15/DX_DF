@@ -47,6 +47,9 @@ namespace roka
 	
 		virtual void Skill();
 		
+		virtual void TakeDamage(UINT damage) { mHP -= damage; }
+		virtual void PlayStun(EStunState stun);
+
 		void SetTarget(std::shared_ptr<GameObject> target) { mTarget = target; }
 		std::shared_ptr<GameObject> GetTarget() { return mTarget.lock(); }
 		void EnableNextState() { mbNextState = true; }
@@ -70,8 +73,6 @@ namespace roka
 		const Vector2 mLeftColCenter;
 		const Vector2 mRightColCenter;
 
-		
-
 		double mNextStateCoolTime;
 		float mSpeed;
 		bool mbNextState;
@@ -82,6 +83,7 @@ namespace roka
 		UINT mExcuteSkillIndex;
 
 		std::vector<std::shared_ptr<SkillScript>> mSkillList;
+		UINT mHP;
 	};
 }
 

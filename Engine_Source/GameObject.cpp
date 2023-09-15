@@ -203,6 +203,7 @@ void roka::GameObject::RemoveChild(std::shared_ptr<GameObject> obj)
 	}
 }
 
+
 roka::ELayerType roka::GameObject::GetLayerType()
 {
 	std::shared_ptr<GameObject> parrent = mParent.lock();

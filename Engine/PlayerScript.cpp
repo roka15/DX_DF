@@ -155,19 +155,15 @@ namespace roka
 		Time::RegisterEvent(L"PlayerStunCompEvent", &PlayerScript::StunCompleteEvent);
 
 		//mSkillList.resize((UINT)EPlayerSkillType::End);
+
+	}
+	void PlayerScript::LateInitialize()
+	{
 		EquipPart(EAvatarParts::Base);
 		EquipPart(EAvatarParts::Weapon);
 
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
 		avatar->PlayPartsMotion();
-	}
-	void PlayerScript::LateInitialize()
-	{
-		/*EquipPart(EAvatarParts::Base);
-		EquipPart(EAvatarParts::Weapon);
-
-		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
-		avatar->PlayPartsMotion();*/
 	}
 	void PlayerScript::Update()
 	{
