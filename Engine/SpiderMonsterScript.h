@@ -17,15 +17,12 @@ namespace roka
         virtual void LateUpdate() override;
         virtual void Render() override;
 
-        virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other)override;
-        virtual void OnCollisionStay(std::shared_ptr<Collider2D> other)override;
-        virtual void OnCollisionExit(std::shared_ptr<Collider2D> other)override;
 
         virtual void Ready()override;
         virtual void Idle()override;
         virtual void Move()override;
         virtual void Attack()override;
-        virtual void Skill()override;
+  
 
         virtual void SetTargetPos(Vector2& outDir, Vector2& outTargetPos)override;
 

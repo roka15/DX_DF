@@ -5,6 +5,8 @@
 #include "RokaMath.h"
 #include "Camera.h"
 #include "Resources.h"
+#include "SkillManager.h"
+#include "ISkill.h"
 
 #include "Animator.h"
 #include "Transform.h"
@@ -82,6 +84,8 @@ namespace roka
 	
 		Time::RegisterEvent(L"MonsterRandomStateEvent", MonsterScript::RandomState);
 		mCurDirType = EDir4Type::RIGHT;
+
+		mSkillKey.push_back(L"Skill01");
 	}
 
 	void MonsterScript::Update()
@@ -111,18 +115,6 @@ namespace roka
 	}
 
 	void MonsterScript::Render()
-	{
-	}
-
-	void MonsterScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
-	{
-	}
-
-	void MonsterScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
-	{
-	}
-
-	void MonsterScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
 	}
 
@@ -203,10 +195,14 @@ namespace roka
 	}
 	void MonsterScript::Idle()
 	{
-		
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Idle",true);
 	}
 	void MonsterScript::Move()
 	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		ani->PlayAnimation(L"Walk", true);
+
 		Vector2 Dir = Vector2::Zero;
 		Vector2 TargetPos = Vector2::Zero;
 
@@ -255,15 +251,15 @@ namespace roka
 	}
 	void MonsterScript::Attack()
 	{
-		Skill();
+		int size = mSkillKey.size();
+		int index = rand() % size;
+		mExcuteSkillIndex = index;
+		std::wstring key = mSkillKey[index];
+		ISkill* skill = manager::SkillManager::GetInstance()->Find(key,EMonsterType::Spider);
+		skill->Execute(owner->GetSharedPtr());
 	}
 
-	void MonsterScript::Skill()
-	{
-		std::shared_ptr<SkillScript> skillScript = mSkillList[mExcuteSkillIndex];
-		skillScript->Play();
-	}
-
+	
 	void MonsterScript::PlayStun(EStunState stun)
 	{
 	}

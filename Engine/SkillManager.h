@@ -18,10 +18,12 @@ namespace roka::manager
 		void Release();
 
 		ISkill* Find(roka::enums::ECharacterClassType type,std::wstring name);
+		ISkill* Find(std::wstring name,roka::enums::EMonsterType type);
 	private:
 		friend class Singleton<SkillManager>;
 	private:
 		std::map<roka::enums::ECharacterClassType, std::map<std::wstring, ISkill*>> mSkillInfos;
+		std::map<roka::enums::EMonsterType, std::map<std::wstring, ISkill*>> mMonsterSkillInfos;
 	};
 }
 

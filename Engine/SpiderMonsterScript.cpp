@@ -6,10 +6,10 @@
 #include "Collider2D.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "NPK.h"
 
 #include "TargetMoveScript.h"
 #include "SkillScript.h"
-#include "SpiderLayserSkillScript.h"
 
 
 #include "Resources.h"
@@ -43,13 +43,18 @@ namespace roka
 	{
 		NormalMonsterScript::Initialize();
 
-		std::shared_ptr<SpiderLayserSkillScript> layerSkill = owner->AddScript<SpiderLayserSkillScript>();
-		mSkillList.push_back(layerSkill);
-
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Idle", 0, 5, 0.2f);
-		ani->Create(L"monster", L"web_spider_z.img", L"web_spider_Walk", 5, 13, 0.2f);
-		
+		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster");
+		std::shared_ptr<Texture> texture1 = npk->CreateAtlas(L"web_spider_z.img",0,28,L"MonsterSpiderZ01");
+		ani->Create(texture1,L"Idle", 0, 5, 0.2f);
+		ani->Create(texture1,L"Walk", 5, 13, 0.2f);
+		std::shared_ptr<Texture> texture2 = npk->CreateAtlas(L"web_spider_z.img", 28, 50, L"MonsterSpiderZ02");
+		ani->Create(texture2, L"Skill01", 0, 19, 0.1f);
+
+		std::shared_ptr<Animation> animation = ani->FindAnimation(L"Skill01");
+		animation->RegisterFrameEvent(L"SpawnEffect01", 11);
+		animation->RegisterFrameEvent(L"DeSpawnEffect01", 17);
+		animation->RegisterFrameEvent(L"NextState", 18);
 		Idle();
 	}
 	void SpiderMonsterScript::Update()
@@ -63,18 +68,6 @@ namespace roka
 	void SpiderMonsterScript::Render()
 	{
 		NormalMonsterScript::Render();
-	}
-	void SpiderMonsterScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
-	{
-		NormalMonsterScript::OnCollisionEnter(other);
-	}
-	void SpiderMonsterScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
-	{
-		NormalMonsterScript::OnCollisionStay(other);
-	}
-	void SpiderMonsterScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
-	{
-		NormalMonsterScript::OnCollisionExit(other);
 	}
 	void SpiderMonsterScript::Ready()
 	{
@@ -95,10 +88,6 @@ namespace roka
 	void SpiderMonsterScript::Attack()
 	{
 		NormalMonsterScript::Attack();
-	}
-	void SpiderMonsterScript::Skill()
-	{
-		NormalMonsterScript::Skill();
 	}
 	void SpiderMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
 	{

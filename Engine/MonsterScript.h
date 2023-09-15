@@ -33,10 +33,6 @@ namespace roka
 		virtual void LateUpdate() override;
 		virtual void Render() override;
 
-		virtual void OnCollisionEnter(std::shared_ptr<Collider2D> other)override;
-		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other)override;
-		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other)override;
-        
 		static void RandomState(std::weak_ptr<void> ptr);
 		
 
@@ -45,7 +41,6 @@ namespace roka
 		virtual void Move();
 		virtual void Attack();
 	
-		virtual void Skill();
 		
 		virtual void TakeDamage(UINT damage) { mHP -= damage; }
 		virtual void PlayStun(EStunState stun);
@@ -82,7 +77,7 @@ namespace roka
 		UINT mSkillStateCnt;
 		UINT mExcuteSkillIndex;
 
-		std::vector<std::shared_ptr<SkillScript>> mSkillList;
+		std::vector<std::wstring> mSkillKey;
 		UINT mHP;
 	};
 }

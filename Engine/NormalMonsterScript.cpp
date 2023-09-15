@@ -41,18 +41,6 @@ namespace roka
     {
         MonsterScript::Render();
     }
-    void NormalMonsterScript::OnCollisionEnter(std::shared_ptr<Collider2D> other)
-    {
-        MonsterScript::OnCollisionEnter(other);
-    }
-    void NormalMonsterScript::OnCollisionStay(std::shared_ptr<Collider2D> other)
-    {
-        MonsterScript::OnCollisionStay(other);
-    }
-    void NormalMonsterScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
-    {
-        MonsterScript::OnCollisionExit(other);
-    }
     void NormalMonsterScript::Ready()
     {
         MonsterScript::Ready();
@@ -69,13 +57,6 @@ namespace roka
     {
         MonsterScript::Attack();
     }
-
-    void NormalMonsterScript::Skill()
-    {
-        mExcuteSkillIndex = 0;
-        MonsterScript::Skill();
-    }
-
     void NormalMonsterScript::SetTargetPos(Vector2& outDir, Vector2& outTargetPos)
     {
     }
