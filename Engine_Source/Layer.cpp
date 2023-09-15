@@ -53,18 +53,41 @@ namespace roka
 				itr = mGameObjects.erase(itr);
 				continue;
 			}
+			else
+			{
+				ChildDestroy(*itr);
+			}
 			itr++;
+		}
+	}
+	void Layer::ChildDestroy(std::shared_ptr<GameObject> gameObj)
+	{
+		std::shared_ptr<GameObject> parent = gameObj;
+		std::vector<std::shared_ptr<GameObject>> childs = parent->GetChilds();
+		if (childs.size() == 0)
+			return;
+
+		for (auto child : childs)
+		{
+			if (child->active == GameObject::EState::Dead)
+			{
+				parent->RemoveChild(child);
+			}
+			else
+			{
+				ChildDestroy(child);
+			}
 		}
 	}
 	void Layer::AddGameObject(std::shared_ptr<GameObject> gameObj)
 	{
 		mGameObjects.push_back(gameObj);
 	}
-    void Layer::Clear()
-    {
+	void Layer::Clear()
+	{
 		mGameObjects.clear();
-    }
-    std::shared_ptr<GameObject> Layer::FindGameObject(std::wstring name)
+	}
+	std::shared_ptr<GameObject> Layer::FindGameObject(std::wstring name)
 	{
 		for (auto obj : mGameObjects)
 		{
@@ -75,7 +98,7 @@ namespace roka
 	}
 	void Layer::RemoveGameObject(std::wstring name)
 	{
-		for (int i=0;i<mGameObjects.size();i++)
+		for (int i = 0; i < mGameObjects.size(); i++)
 		{
 			if (mGameObjects[i]->GetName().compare(name) == 0)
 			{
