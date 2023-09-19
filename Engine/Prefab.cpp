@@ -13,14 +13,12 @@
 #include "PlayerScript.h"
 #include "PartScript.h"
 
-#include "HitBoxScript.h"
-#include "SkillScript.h"
-#include "MonsterSkillScript.h"
+#include "WarningScript.h"
 #include "TargetMoveScript.h"
 #include "Rigidbody.h"
 #include "MonsterScript.h"
 #include "SpiderMonsterScript.h"
-//#include "TairangMonsterScript.h"
+#include "TairangMonsterScript.h"
 namespace roka::prefab
 {
 	std::map<std::wstring, std::shared_ptr<roka::GameObject>> Prefabs = {};
@@ -179,7 +177,6 @@ namespace roka::prefab
 			ColAniObject->SetName(L"ColAniObject");
 			ColAniObject->AddComponent<Animator>();
 			ColAniObject->AddComponent<Collider2D>();
-			ColAniObject->AddScript<HitBoxScript>();
 
 			std::shared_ptr<MeshRenderer>mr = ColAniObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -195,26 +192,46 @@ namespace roka::prefab
 			ColAniEftObject->SetName(L"ColAniEftObject");
 			ColAniEftObject->AddComponent<Animator>();
 			ColAniEftObject->AddComponent<Collider2D>();
-			ColAniEftObject->AddScript<HitBoxScript>();
 
 			std::shared_ptr<MeshRenderer>mr = ColAniEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
 		}
 
-		std::shared_ptr<roka::Image> PartObject = object::Instantiate<roka::Image>(AniObject);
+		std::shared_ptr<roka::Image> WarningObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
 		{
-			PartObject->SetName(L"PartObject");
-			PartObject->AddScript<PartScript>();
+			WarningObject->SetName(L"WarningObject");
+			WarningObject->AddComponent<Animator>();
+			WarningObject->AddScript<WarningScript>();
+
+			std::shared_ptr<MeshRenderer>mr = WarningObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 		}
-		
+		std::shared_ptr<roka::Image> WarningEftObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			WarningEftObject->SetName(L"WarningEftObject");
+			WarningEftObject->AddComponent<Animator>();
+			WarningEftObject->AddScript<WarningScript>();
+
+			std::shared_ptr<MeshRenderer>mr = WarningEftObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+		}
 
 		Prefabs.insert(std::make_pair(TestObject->GetName(), TestObject));
 		Prefabs.insert(std::make_pair(AniObject->GetName(), AniObject));
 		Prefabs.insert(std::make_pair(AniEftObject->GetName(), AniEftObject));
 		Prefabs.insert(std::make_pair(ColAniObject->GetName(), ColAniObject));
 		Prefabs.insert(std::make_pair(ColAniEftObject->GetName(), ColAniEftObject));
-	
+		Prefabs.insert(std::make_pair(WarningObject->GetName(), WarningObject));
+		Prefabs.insert(std::make_pair(WarningEftObject->GetName(), WarningEftObject));
 		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
 		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
 		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/
@@ -256,7 +273,7 @@ namespace roka::prefab
 			hitbox->hitbox_owner = Spider_MonsterObject;*/
 		}
 
-		/*std::shared_ptr<GameObject> Tairang_MonsterObject = object::Instantiate<GameObject>(AniObject);
+		std::shared_ptr<GameObject> Tairang_MonsterObject = object::Instantiate<GameObject>(AniObject);
 		{
 			Tairang_MonsterObject->SetName(L"Tairang_MonsterObject");
 			Tairang_MonsterObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
@@ -265,7 +282,7 @@ namespace roka::prefab
 			std::shared_ptr<Rigidbody> rigid = Tairang_MonsterObject->AddComponent<Rigidbody>();
 			std::shared_ptr<Transform> tf = Tairang_MonsterObject->GetComponent<Transform>();
 			tf->position = Vector3(0.0f, 0.0f, 0.1f);
-		}*/
+		}
 		
 		std::shared_ptr<roka::GameObject> PlayerObject = object::Instantiate<roka::GameObject>(
 			Vector3::Zero,
@@ -296,18 +313,17 @@ namespace roka::prefab
 			std::shared_ptr<GameObject> BottomColObject = object::Instantiate<GameObject>();
 			PlayerObject->AddChild(BottomColObject);
 			col = BottomColObject->AddComponent<Collider2D>();
-			
 			col->SetSize(Vector2(0.05f, 0.07f));
 			col->SetCenter(Vector2(-0.01f, -0.65f));
 			col->SetHitType(EHitBoxType::Bottom);
-			TopColObject->layer_type = ELayerType::Player;
+			BottomColObject->layer_type = ELayerType::Player;
 
 			PlayerObject->AddScript<MoveScript>();
 			PlayerObject->AddComponent<Rigidbody>()->IsGravity(true);
 			PlayerObject->AddScript<PlayerScript>();
 		}
 		Prefabs.insert(std::make_pair(Spider_MonsterObject->GetName(), Spider_MonsterObject));
-		//Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
+		Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
 		Prefabs.insert(std::make_pair(PlayerObject->GetName(), PlayerObject));
 	}
 	void Release()
@@ -324,6 +340,7 @@ namespace roka::prefab
 		std::shared_ptr<NPK> tairang_npk = Resources::Find<NPK>(L"tairnag");
 		std::shared_ptr<NPK> tairangEft_npk = Resources::Find<NPK>(L"tairnag_eft");
 		std::shared_ptr<NPK> warning_npk = Resources::Find<NPK>(L"warning");
+		std::shared_ptr<NPK> hudUI_npk = Resources::Find<NPK>(L"ui_hud");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -338,5 +355,7 @@ namespace roka::prefab
 			tairangEft_npk = Resources::Load<NPK>(L"tairnag_eft", path + L"tairang_eft.npk");
 		if (warning_npk == nullptr)
 			warning_npk = Resources::Load<NPK>(L"warning", path + L"warning.npk");
+		if (hudUI_npk == nullptr)
+			hudUI_npk = Resources::Load<NPK>(L"ui_hud", path + L"HudUI.npk");
 	}
 }

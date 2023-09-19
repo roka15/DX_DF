@@ -3,6 +3,7 @@
 #include "MgNormalAtk.h"
 
 #include "SpiderNormalAtk.h"
+#include "TairangSkill01.h"
 namespace roka::manager
 {
 	void SkillManager::Initialize()
@@ -16,6 +17,10 @@ namespace roka::manager
 		ISkill* skill = new SpiderNormalAtk();
 		mMonsterSkillInfos.insert(std::make_pair(roka::enums::EMonsterType::Spider, std::map<std::wstring, ISkill*>()));
 		mMonsterSkillInfos[roka::enums::EMonsterType::Spider].insert(std::make_pair(L"Skill01", skill));
+
+		skill = new TairangSkill01();
+		mMonsterSkillInfos.insert(std::make_pair(roka::enums::EMonsterType::Tairang, std::map<std::wstring, ISkill*>()));
+		mMonsterSkillInfos[roka::enums::EMonsterType::Tairang].insert(std::make_pair(L"Skill01", skill));
 #pragma endregion	
 	}
 	void SkillManager::Release()
@@ -25,6 +30,7 @@ namespace roka::manager
 			for (auto& skill : character.second)
 			{
 				ISkill* skillPtr = skill.second;
+				skillPtr->Release();
 				delete skillPtr;
 				skill.second = nullptr;
 			}
@@ -34,6 +40,7 @@ namespace roka::manager
 			for (auto& skill : monster.second)
 			{
 				ISkill* skillPtr = skill.second;
+				skillPtr->Release();
 				delete skillPtr;
 				skill.second = nullptr;
 			}

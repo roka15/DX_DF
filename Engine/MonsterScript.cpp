@@ -16,7 +16,7 @@
 #include "MoveScript.h"
 #include "TargetMoveScript.h"
 #include "PlayerScript.h"
-#include "SkillScript.h"
+
 
 
 extern roka::Application application;
@@ -255,7 +255,7 @@ namespace roka
 		int index = rand() % size;
 		mExcuteSkillIndex = index;
 		std::wstring key = mSkillKey[index];
-		ISkill* skill = manager::SkillManager::GetInstance()->Find(key,EMonsterType::Spider);
+		ISkill* skill = manager::SkillManager::GetInstance()->Find(key,mMonsterType);
 		skill->Execute(owner->GetSharedPtr());
 	}
 

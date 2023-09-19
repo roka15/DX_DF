@@ -62,6 +62,7 @@ namespace roka
 		friend class FactoryBase;
 		friend class ScriptFactory;
 	protected:
+		EMonsterType mMonsterType;
 		std::weak_ptr<GameObject> mTarget;
 		EMonsterState mState;
 
