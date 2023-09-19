@@ -46,7 +46,6 @@ namespace roka
 		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
 		std::shared_ptr<Animator> animator = owner->GetComponent<Animator>();
 		int flag = 0;
-	
 		if (imageComp != nullptr)
 		{
 			if (imageComp->Binds())

@@ -157,7 +157,7 @@ namespace roka::graphics
 		Vector2 imagesize = sprite0.image_size;
 		Vector2 offset = sprite0.offset;
 
-		if (canvas.x * count == imagesize.x && canvas.y == imagesize.y)
+		if (count == 1)
 		{
 			mDesc = textures[0]->mDesc;
 			mTexture = textures[0]->GetTexture();
