@@ -43,6 +43,9 @@ namespace roka
 	{
 		if (mIsComplete)
 			return;
+		//첫 frame에 이벤트 연결되어 있는 경우.
+		if(mTime == 0.0 && mIndex == mRange.first)
+			OnAnimationFrameEvent(mIndex);
 
 		mTime += Time::DeltaTime();
 		mEventTime += Time::DeltaTime();
