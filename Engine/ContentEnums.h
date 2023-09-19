@@ -89,16 +89,15 @@ namespace roka::enums
 		Shoes,
 		End,
 	};
-	
 	enum class EPortalType
 	{
 		None,
-		Direct,
-		Select,
+		SeriaBottom,
+		SeriaRight,
+		PlayTestUp,
 		End,
 	};
-
-	enum class EMapType
+	enum class ESceneType
 	{
 		None,
 		SeriaRoom,
