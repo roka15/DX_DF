@@ -9,7 +9,6 @@
 #include "NPK.h"
 
 #include "TargetMoveScript.h"
-#include "SkillScript.h"
 
 
 #include "Resources.h"
@@ -41,6 +40,7 @@ namespace roka
 	}
 	void SpiderMonsterScript::Initialize()
 	{
+		mMonsterType = EMonsterType::Spider;
 		NormalMonsterScript::Initialize();
 
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();

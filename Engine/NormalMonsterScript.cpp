@@ -5,7 +5,6 @@
 #include "Collider2D.h"
 #include "Animator.h"
 
-#include "SkillScript.h"
 namespace roka
 {
     NormalMonsterScript::NormalMonsterScript():MonsterScript(EScriptType::NormalMonster)

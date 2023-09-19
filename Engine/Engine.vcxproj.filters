@@ -61,9 +61,6 @@
     <ClInclude Include="Prefab.h">
       <Filter>Prefab</Filter>
     </ClInclude>
-    <ClInclude Include="HitBoxScript.h">
-      <Filter>Contents\Script\HitBoxScript</Filter>
-    </ClInclude>
     <ClInclude Include="TargetMoveScript.h">
       <Filter>Contents\Script\MoveScript</Filter>
     </ClInclude>
@@ -85,35 +82,8 @@
     <ClInclude Include="TairangMonsterScript.h">
       <Filter>Contents\Script\MonsterScript\Named Monster\Tairang</Filter>
     </ClInclude>
-    <ClInclude Include="MonsterSkillScript.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\MonsterSkillScript</Filter>
-    </ClInclude>
-    <ClInclude Include="SkillScript.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationObjectPool.h">
       <Filter>Contents\ObjectPool\AnimationObjectPool</Filter>
-    </ClInclude>
-    <ClInclude Include="PortalScript.h">
-      <Filter>Contents\Script\PortalScript</Filter>
-    </ClInclude>
-    <ClInclude Include="SpiderLayserSkillScript.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\NormalMonsterSkill\Spider</Filter>
-    </ClInclude>
-    <ClInclude Include="LayserSkillScript.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\Layser</Filter>
-    </ClInclude>
-    <ClInclude Include="DelayedCollisionSkillScript.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\DelayedCollision</Filter>
-    </ClInclude>
-    <ClInclude Include="TairangSkill01Script.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\NamedMonsterSkill\Tairang</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerNormalAttackScript.h">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\PlayerNormalAttack</Filter>
-    </ClInclude>
-    <ClInclude Include="MageNormalAttackScript.h">
-      <Filter>Contents\Script\SkillScript\PlayerSkill\Mage</Filter>
     </ClInclude>
     <ClInclude Include="PartScript.h">
       <Filter>Contents\Script\PartScript\Base</Filter>
@@ -137,12 +107,29 @@
       <Filter>Contents\Interface\ISkill</Filter>
     </ClInclude>
     <ClInclude Include="MgNormalAtk.h">
-      <Filter>Contents\Skill\Player\NormalAtk</Filter>
+      <Filter>Contents\Class\Skill\Player\NormalAtk</Filter>
     </ClInclude>
     <ClInclude Include="ICollisionListener.h">
       <Filter>Contents\Interface\ICollisionListener</Filter>
     </ClInclude>
-    <ClInclude Include="SpiderNormalAtk.h" />
+    <ClInclude Include="SpiderNormalAtk.h">
+      <Filter>Contents\Class\Skill\Monster\Normal\Spider</Filter>
+    </ClInclude>
+    <ClInclude Include="WarningScript.h">
+      <Filter>Contents\Script\Warning</Filter>
+    </ClInclude>
+    <ClInclude Include="WarningObjectPool.h">
+      <Filter>Contents\ObjectPool\WarningObjectPool</Filter>
+    </ClInclude>
+    <ClInclude Include="TairangSkill01.h">
+      <Filter>Contents\Class\Skill\Monster\Named\Tairang</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalManager.h">
+      <Filter>Manager\PortalManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Contents\Class\Portal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -196,9 +183,6 @@
     <ClCompile Include="Prefab.cpp">
       <Filter>Prefab</Filter>
     </ClCompile>
-    <ClCompile Include="HitBoxScript.cpp">
-      <Filter>Contents\Script\HitBoxScript</Filter>
-    </ClCompile>
     <ClCompile Include="TargetMoveScript.cpp">
       <Filter>Contents\Script\MoveScript</Filter>
     </ClCompile>
@@ -220,35 +204,8 @@
     <ClCompile Include="TairangMonsterScript.cpp">
       <Filter>Contents\Script\MonsterScript\Named Monster\Tairang</Filter>
     </ClCompile>
-    <ClCompile Include="MonsterSkillScript.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\MonsterSkillScript</Filter>
-    </ClCompile>
-    <ClCompile Include="SkillScript.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationObjectPool.cpp">
       <Filter>Contents\ObjectPool\AnimationObjectPool</Filter>
-    </ClCompile>
-    <ClCompile Include="PortalScript.cpp">
-      <Filter>Contents\Script\PortalScript</Filter>
-    </ClCompile>
-    <ClCompile Include="SpiderLayserSkillScript.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\NormalMonsterSkill\Spider</Filter>
-    </ClCompile>
-    <ClCompile Include="LayserSkillScript.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\Layser</Filter>
-    </ClCompile>
-    <ClCompile Include="DelayedCollisionSkillScript.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\DelayedCollision</Filter>
-    </ClCompile>
-    <ClCompile Include="TairangSkill01Script.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\NamedMonsterSkill\Tairang</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerNormalAttackScript.cpp">
-      <Filter>Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\PlayerNormalAttack</Filter>
-    </ClCompile>
-    <ClCompile Include="MageNormalAttackScript.cpp">
-      <Filter>Contents\Script\SkillScript\PlayerSkill\Mage</Filter>
     </ClCompile>
     <ClCompile Include="PartScript.cpp">
       <Filter>Contents\Script\PartScript\Base</Filter>
@@ -272,12 +229,29 @@
       <Filter>Contents\Interface\ISkill</Filter>
     </ClCompile>
     <ClCompile Include="MgNormalAtk.cpp">
-      <Filter>Contents\Skill\Player\NormalAtk</Filter>
+      <Filter>Contents\Class\Skill\Player\NormalAtk</Filter>
     </ClCompile>
     <ClCompile Include="ICollisionListener.cpp">
       <Filter>Contents\Interface\ICollisionListener</Filter>
     </ClCompile>
-    <ClCompile Include="SpiderNormalAtk.cpp" />
+    <ClCompile Include="SpiderNormalAtk.cpp">
+      <Filter>Contents\Class\Skill\Monster\Normal\Spider</Filter>
+    </ClCompile>
+    <ClCompile Include="WarningScript.cpp">
+      <Filter>Contents\Script\Warning</Filter>
+    </ClCompile>
+    <ClCompile Include="WarningObjectPool.cpp">
+      <Filter>Contents\ObjectPool\WarningObjectPool</Filter>
+    </ClCompile>
+    <ClCompile Include="TairangSkill01.cpp">
+      <Filter>Contents\Class\Skill\Monster\Named\Tairang</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalManager.cpp">
+      <Filter>Manager\PortalManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Contents\Class\Portal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Contents">
@@ -334,17 +308,8 @@
     <Filter Include="Contents\Script\PartScript">
       <UniqueIdentifier>{ce278227-0394-45ee-962d-e1d9d30ca995}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\Ground">
-      <UniqueIdentifier>{1c62c7f6-2c97-40fc-bd4d-57e930fbce37}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript">
-      <UniqueIdentifier>{cc36197d-40a4-47ab-af81-6ec91fd62257}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Script\MonsterScript">
       <UniqueIdentifier>{658ec8d0-1e5d-41df-a674-68ae1ced7955}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\HitBoxScript">
-      <UniqueIdentifier>{09790a15-7216-42d7-a261-a82f228c5c80}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Script\MonsterScript\Nomal Monster">
       <UniqueIdentifier>{1375173e-57a8-43ce-989c-022bfa8ce630}</UniqueIdentifier>
@@ -379,15 +344,6 @@
     <Filter Include="Manager">
       <UniqueIdentifier>{da2540d1-414e-4906-9063-f70f7185b166}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\PortalScript">
-      <UniqueIdentifier>{d2bc9dd9-15ed-43c1-a1c1-4e275a2ea3b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\PlayerSkill">
-      <UniqueIdentifier>{2b2303be-516a-4306-b6ea-f1564f2c0eac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\PlayerSkill\Mage">
-      <UniqueIdentifier>{43ab35fc-daa1-48b0-8278-3123c5742a81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Script\PartScript\Base">
       <UniqueIdentifier>{dd6e7d60-859b-408a-ae91-77e2e2e09789}</UniqueIdentifier>
     </Filter>
@@ -403,56 +359,11 @@
     <Filter Include="Manager\SkillManager">
       <UniqueIdentifier>{7168718b-6f4f-4c89-87d8-d377c0061ee9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill">
-      <UniqueIdentifier>{cb6e81b9-06a1-4ed6-ad87-d52f178f52c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\Base">
-      <UniqueIdentifier>{6857e66a-45b2-4d4d-8bdc-111692b6fbf3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\Base\TypeBase">
-      <UniqueIdentifier>{1dc980a3-7467-4bf9-a342-47daa1c27eb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\Layser">
-      <UniqueIdentifier>{d89e9fb9-4a52-4648-86d9-5f39be7cf6c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\DelayedCollision">
-      <UniqueIdentifier>{c41bd470-a02c-4046-893a-becc9a6baf52}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\Base\TypeBase\PlayerNormalAttack">
-      <UniqueIdentifier>{00cfd4e9-52b3-4b30-8c3c-de43ccff12b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\MonsterSkillScript">
-      <UniqueIdentifier>{41f01de6-6d0a-420d-a98f-56a07b14f469}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\NamedMonsterSkill">
-      <UniqueIdentifier>{d932522b-0e9b-419d-b8d3-9ae1dd05a0ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\NamedMonsterSkill\Tairang">
-      <UniqueIdentifier>{e100c645-34b5-43b1-8835-ae4e18e4055e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\NormalMonsterSkill">
-      <UniqueIdentifier>{d0714876-160c-4bfd-bee7-271ecee32fc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\MonsterSkill\NormalMonsterSkill\Spider">
-      <UniqueIdentifier>{785ca910-c59f-4a26-b357-07a2efb499c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Script\SkillScript\PlayerSkill\Base">
-      <UniqueIdentifier>{045b209a-85e3-4044-9f88-e687ae142fe5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Contents\Interface">
       <UniqueIdentifier>{a8da34d3-f546-4f11-bf70-b37557d8fdda}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Interface\IAnimationFramEvent">
       <UniqueIdentifier>{c8082348-077b-4fa2-8541-66692b2d8516}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Skill">
-      <UniqueIdentifier>{3046ed18-7ea9-4dc1-bcde-22690d464077}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Skill\Player">
-      <UniqueIdentifier>{3f163e4d-ecca-4bf3-9a28-77a677a9983b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Contents\Skill\Player\NormalAtk">
-      <UniqueIdentifier>{30ba0bbd-f567-4afa-a758-b26354f852c3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Contents\Interface\ISkill">
       <UniqueIdentifier>{f46138e2-0519-463c-84a2-ce6348345726}</UniqueIdentifier>
@@ -460,17 +371,44 @@
     <Filter Include="Contents\Interface\ICollisionListener">
       <UniqueIdentifier>{df44fd09-fbe7-43bf-83a3-43a4a479ef55}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Skill\Monster">
+    <Filter Include="Contents\Script\Warning">
+      <UniqueIdentifier>{76f4145b-cee8-4922-b30a-e667fb2b59a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\ObjectPool\WarningObjectPool">
+      <UniqueIdentifier>{43556132-b0e0-44b6-953e-17622378a45f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\PortalManager">
+      <UniqueIdentifier>{40a1b9fb-7391-4755-8a1c-c21115799526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class">
+      <UniqueIdentifier>{7adf0dbf-8543-422d-adda-fc2d48750c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Portal">
+      <UniqueIdentifier>{34a46d2d-32f9-4c3f-82a8-cf4ff29e4240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Skill">
+      <UniqueIdentifier>{3046ed18-7ea9-4dc1-bcde-22690d464077}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Skill\Player">
+      <UniqueIdentifier>{3f163e4d-ecca-4bf3-9a28-77a677a9983b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Skill\Player\NormalAtk">
+      <UniqueIdentifier>{30ba0bbd-f567-4afa-a758-b26354f852c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Skill\Monster">
       <UniqueIdentifier>{893d6225-d0ee-43b6-8f87-5a25fd0eb426}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Skill\Monster\Normal">
+    <Filter Include="Contents\Class\Skill\Monster\Normal">
       <UniqueIdentifier>{dad89458-24f7-45d8-a52a-24dd74680d3d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Skill\Monster\Named">
+    <Filter Include="Contents\Class\Skill\Monster\Normal\Spider">
+      <UniqueIdentifier>{82259d83-6993-44f6-aada-e4da22aeb634}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Skill\Monster\Named">
       <UniqueIdentifier>{60e73a39-be1b-4a6a-b1bd-5a5d029cbbdf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Contents\Skill\Monster\Normal\Spider">
-      <UniqueIdentifier>{82259d83-6993-44f6-aada-e4da22aeb634}</UniqueIdentifier>
+    <Filter Include="Contents\Class\Skill\Monster\Named\Tairang">
+      <UniqueIdentifier>{dd31a119-0784-4669-b638-ce78e0644781}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
