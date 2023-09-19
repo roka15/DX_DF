@@ -173,5 +173,7 @@ namespace roka
 	{
 		int a = 0;
 	}
-
+	void SpiderNormalAtk::Release()
+	{
+	}
 }

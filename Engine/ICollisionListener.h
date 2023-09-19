@@ -10,6 +10,7 @@ namespace roka
 		virtual void OnCollisionEnter(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
 		virtual void OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
 		virtual void OnCollisionExit(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
+		virtual void SetCollisionListener(std::shared_ptr<GameObject>& obj) = 0;
 	};
 }
 

@@ -25,6 +25,9 @@ namespace roka
 		virtual void OnCollisionEnter(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
 		virtual void OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
 		virtual void OnCollisionExit(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
+		virtual void SetCollisionListener(std::shared_ptr<GameObject>& obj) = 0;
+
+		virtual void Release()=0;
 	protected:
 	};
 	class Skill : public ISkill
@@ -48,6 +51,8 @@ namespace roka
 		virtual void OnCollisionEnter(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
 		virtual void OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
 		virtual void OnCollisionExit(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target) = 0;
+		virtual void SetCollisionListener(std::shared_ptr<GameObject>& obj)override;
+		virtual void Release() = 0;
 	protected:
 		bool mbCallbackEvent;
 		UINT mDamage;

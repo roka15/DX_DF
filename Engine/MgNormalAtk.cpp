@@ -195,6 +195,9 @@ namespace roka
 	void MgNormalAtk::OnCollisionExit(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
 	{
 	}
+	void MgNormalAtk::Release()
+	{
+	}
 }
 
 
