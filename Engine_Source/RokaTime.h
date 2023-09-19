@@ -19,7 +19,9 @@ namespace roka
 		static void Initiailize();
 		static void Update();
 		static void Render();
+		static void Release();
 
+		static void Clear();
 		__forceinline static double DeltaTime() { return mDeltaTime; }
 
 		static void RegisterEvent(std::wstring key, std::function<void(std::weak_ptr<void>)> func);

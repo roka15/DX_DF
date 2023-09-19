@@ -175,6 +175,17 @@ std::vector<std::shared_ptr<roka::GameObject>> roka::GameObject::GetChilds()
 	return vec;
 }
 
+void roka::GameObject::SetChildState(EState state,std::wstring key)
+{
+	for (auto& child : mChild)
+	{
+		if (child->GetName().compare(key) == 0)
+		{
+			child->active = state;
+		}
+	}
+}
+
 void roka::GameObject::RemoveChild(std::wstring key)
 {
 	for (auto& child : mChild)
@@ -302,4 +313,11 @@ void roka::GameObject::Render()
 	}*/
 	/*if (mr != nullptr)
 		mr->Render();*/
+}
+
+void roka::GameObject::Release()
+{
+	mComponents.clear();
+	mScripts.clear();
+	mChild.clear();
 }

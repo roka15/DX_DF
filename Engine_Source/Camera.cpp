@@ -80,6 +80,12 @@ namespace roka
 		RenderTransparent();
 		EnableDepthStencilState();
 	}
+	void Camera::Release()
+	{
+		mOpaqueGameObjects.clear();
+		mCutOutGameObjects.clear();
+		mTransparentObjects.clear();
+	}
 	void Camera::Copy(Component* src)
 	{
 		Component::Copy(src);

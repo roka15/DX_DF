@@ -101,6 +101,23 @@ namespace roka
 		}
 	}
 
+	void Time::Release()
+	{
+		Clear();
+	}
+
+	void Time::Clear()
+	{
+		while (mRequestRegisterEvent.empty() == false)
+		{
+			mRequestRegisterEvent.pop();
+		}
+		while (mRequestEvent.empty() == false)
+		{
+			mRequestEvent.pop();
+		}
+	}
+
 	void Time::RegisterEvent(std::wstring key,std::function<void(std::weak_ptr<void>)> func)
 	{
 		CallBackEvent callback = func;

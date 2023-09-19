@@ -9,10 +9,12 @@
 #include "ObjectPoolManager.h"
 #include "..\\Engine\\AnimationObjectPool.h"
 #include "..\\Engine\\NormalMonsterPool.h"
+#include "..\\Engine\\WarningObjectPool.h"
 #include "TestPool.h"
 #include "CollisionManager.h"
 #include "..\\Engine\\PartManager.h"
 #include "..\\Engine\\SkillManager.h"
+#include "..\\Engine\\PortalManager.h"
 namespace roka
 {
 
@@ -52,8 +54,10 @@ namespace roka
 		roka::prefab::LateInitialize();
 		SceneManager::Initialize();
 		manager::SkillManager::GetInstance()->Initialize();
+		manager::PortalManager::GetInstance()->Initialize();
 		
 		ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Initialize();
+		ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Initialize();
 	}
 
 	void Application::Update()
@@ -67,6 +71,7 @@ namespace roka
 	void Application::LateUpdate()
 	{
 		SceneManager::LateUpdate();
+		CollisionManager::LateUpdate();
 	}
 
 	void Application::Render()
@@ -80,12 +85,14 @@ namespace roka
 
 	void Application::Release()
 	{
+		Time::Release();
 		SceneManager::Release();
-		
+		manager::PortalManager::GetInstance()->Release();
 		renderer::Release();
 		prefab::Release();
 		manager::SkillManager::GetInstance()->Release();
 		ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Release();
+		ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Release();
 	}
 
 	void Application::Destroy()

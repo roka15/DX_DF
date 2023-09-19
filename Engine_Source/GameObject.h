@@ -23,6 +23,7 @@ namespace roka
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+		virtual void Release();
 
 
 		virtual void Copy(GameObject* src);
@@ -205,6 +206,7 @@ namespace roka
 				index++;
 			}
 		}
+		void SetChildState(EState state,std::wstring key);
 		void RemoveChild(std::wstring key);
 		void RemoveChild(std::shared_ptr<GameObject> obj);
 		

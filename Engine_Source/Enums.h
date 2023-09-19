@@ -29,32 +29,16 @@ namespace roka::enums
 		Part,
 		PartWeapon,
 		PartSkin,
-		SkillBase,
-		SkillLayser,
-		SkillSpiderLayser,
-		SkillDelayCollider,
-		SkillTairangType01,
-		SkillMonster,
-		SkillPlayerNormalAtk,
-		SkillMageNormalAtk,
 		Weapon,
-		HitBox,
 		Monster,
 		NormalMonster,
 		SpiderMonster,
 		NamedMonster,
 		TairangMonster,
-		Portal,
+		Warning,
 		End,
 	};
 
-	enum class ESceneType
-	{
-		DefaultVillage,
-		AnotherVillage,
-		Dungeon,
-		End,
-	};
 	enum class ELayerType
 	{
 		Grid,
