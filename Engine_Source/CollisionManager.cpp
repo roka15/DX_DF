@@ -8,6 +8,7 @@ namespace roka
 {
 	std::bitset<LAYER_MAX>  CollisionManager::mMatrix[LAYER_MAX] = {};
 	std::map<UINT64, bool> CollisionManager::mCollisionMap = {};
+	std::queue<std::pair<std::shared_ptr<Collider2D>, std::shared_ptr<Collider2D>>> CollisionManager::mExitRequest;
 	double CollisionManager::mTime;
 
 	void CollisionManager::Initialize()
@@ -27,6 +28,34 @@ namespace roka
 				}
 			}
 		}
+	}
+	void CollisionManager::LateUpdate()
+	{
+		while (mExitRequest.empty() == false)
+		{
+			std::pair<std::shared_ptr<Collider2D>, std::shared_ptr<Collider2D>> value
+				= mExitRequest.front();
+			mExitRequest.pop();
+			std::shared_ptr<Collider2D> left = value.first;
+			std::shared_ptr<Collider2D> right = value.second;
+
+			ColliderID id = {};
+			id.left = left->GetColliderID();
+			id.right = right->GetColliderID();
+
+			std::map<UINT64, bool>::iterator itr
+				= mCollisionMap.find(id.id);
+
+			if (itr == mCollisionMap.end())
+				return;
+			if (itr->second == false)
+				return;
+
+			itr->second = false;
+			left->OnCollisionExit(right);
+			right->OnCollisionExit(left);
+		}
+	
 	}
 	void CollisionManager::LayerCollision(ELayerType left, ELayerType right)
 	{
@@ -82,8 +111,6 @@ namespace roka
 		if (itr == mCollisionMap.end())
 		{
 			mCollisionMap.insert(std::make_pair(id.id, false));
-			if (id.left == 111 && id.right == 418)
-				int a = 0;
 			itr = mCollisionMap.find(id.id);
 		}
 
@@ -212,21 +239,7 @@ namespace roka
 	}
 	void CollisionManager::DisableCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
 	{
-		ColliderID id = {};
-		id.left = left->GetColliderID();
-		id.right = right->GetColliderID();
-
-		std::map<UINT64, bool>::iterator itr
-			= mCollisionMap.find(id.id);
-
-		if (itr == mCollisionMap.end())
-			return;
-		if (itr->second == false)
-			return;
-
-		itr->second = false;
-		left->OnCollisionExit(right);
-		right->OnCollisionExit(left);
+		mExitRequest.push(std::make_pair(left, right));
 	}
 	void CollisionManager::SetLayer(ELayerType left, ELayerType right, bool enable)
 	{

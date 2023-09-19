@@ -23,6 +23,7 @@ namespace roka
 
 		static void Initialize();
 		static void Update();
+		static void LateUpdate();
 		static void LayerCollision(ELayerType left, ELayerType right);
 		static void ColliderCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
 		static bool Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
@@ -35,6 +36,7 @@ namespace roka
 	private:
 		static std::bitset<LAYER_MAX> mMatrix[LAYER_MAX];
 		static std::map<UINT64, bool> mCollisionMap;
+		static std::queue<std::pair<std::shared_ptr<Collider2D>, std::shared_ptr<Collider2D>>> mExitRequest;
 		static double mTime;
 	};
 
