@@ -17,8 +17,6 @@
 
 #include "MoveScript.h"
 #include "AvatarScript.h"
-#include "SkillScript.h"
-#include "PlayerNormalAttackScript.h"
 #include "PartScript.h"
 
 #include "User.h"
@@ -717,6 +715,7 @@ namespace roka
 	void PlayerScript::StunDown()
 	{
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		std::shared_ptr<Rigidbody> rigid = owner->GetComponent<Rigidbody>();
 		std::vector<std::shared_ptr<Collider2D>> cols;
 		cols.push_back(mTopCollider.lock());
@@ -743,7 +742,7 @@ namespace roka
 		}
 
 		rigid->disableGround();
-
+		rigid->SetLandingPoint(Vector2(tf->position.x, tf->position.y));
 	}
 
 	void PlayerScript::NextState()
