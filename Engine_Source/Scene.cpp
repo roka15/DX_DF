@@ -38,6 +38,14 @@ namespace roka
 		}
 	}
 
+	void Scene::Release()
+	{
+		for (Layer& layer : mLayers)
+		{
+			layer.Release();
+		}
+	}
+
 	void Scene::Destroy()
 	{
 		for (Layer& layer : mLayers)

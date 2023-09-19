@@ -14,6 +14,7 @@ namespace roka
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+		virtual void Release();
 		virtual void Destroy();
 
 		virtual void OnExit();
@@ -47,6 +48,7 @@ namespace roka
 		const std::vector<std::shared_ptr<GameObject>>& GetGameObjects(ELayerType type);
 		Layer& GetLayer(enums::ELayerType type) { return mLayers[(UINT)type]; }
 
+		ESceneType GetSceneType() { return mType; }
 	protected:
 		SceneSector* GetSector() { return mActiveSector; }
 		void SetSector(SceneSector* sector) { 

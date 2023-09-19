@@ -14,7 +14,7 @@
 #include "Input.h"
 namespace roka
 {
-	WestcoastScene::WestcoastScene() :Scene(ESceneType::AnotherVillage)
+	WestcoastScene::WestcoastScene() :Scene(ESceneType::End)
 	{
 	}
 	WestcoastScene::~WestcoastScene()

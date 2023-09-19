@@ -31,6 +31,7 @@ namespace roka
 		}
 		static Scene* GetActiveScene() { return mActiveScene; }
 		static Scene* LoadScene(std::wstring name);
+		static Scene* LoadScene(ESceneType type);
 	private:
 		static Scene* mActiveScene;
 		static std::map<std::wstring, Scene*> mScenes;

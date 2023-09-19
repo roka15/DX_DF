@@ -43,6 +43,15 @@ namespace roka
 			gameObj->Render();
 		}
 	}
+	void Layer::Release()
+	{
+		for (auto& obj : mGameObjects)
+		{
+			obj->Release();
+			obj.reset();
+		}
+		mGameObjects.clear();
+	}
 	void Layer::Destroy()
 	{
 		for (std::vector<std::shared_ptr<GameObject>>::iterator itr = mGameObjects.begin();
@@ -85,6 +94,10 @@ namespace roka
 	}
 	void Layer::Clear()
 	{
+		for (auto& obj : mGameObjects)
+		{
+			obj.reset();
+		}
 		mGameObjects.clear();
 	}
 	std::shared_ptr<GameObject> Layer::FindGameObject(std::wstring name)

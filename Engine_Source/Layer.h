@@ -11,6 +11,7 @@ namespace roka
 		virtual void Update();
 		virtual void LateUpdate();
 		virtual void Render();
+		virtual void Release();
 		virtual void Destroy();
 
 		void ChildDestroy(std::shared_ptr<GameObject> gameObj);

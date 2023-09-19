@@ -23,8 +23,9 @@ namespace roka
 	}
 	void SceneManager::Release()
 	{
-		for (auto itr : mScenes)
+		for (auto& itr : mScenes)
 		{
+			itr.second->Release();
 			delete itr.second;
 			itr.second = nullptr;
 		}
@@ -46,5 +47,19 @@ namespace roka
 		mActiveScene = itr->second;
 		mActiveScene->OnEnter();
 		return itr->second;
+	}
+	Scene* SceneManager::LoadScene(ESceneType type)
+	{
+		std::wstring name = L"";
+		switch (type)
+		{
+		case ESceneType::PlayTestScene:
+			name = L"PlayScene";
+			break;
+		case ESceneType::SeriaRoom:
+			name = L"SeriaGateScene";
+			break;
+		}
+		return LoadScene(name);
 	}
 }

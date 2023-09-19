@@ -12,7 +12,7 @@
 #include "NPK.h"
 namespace roka
 {
-	HendonmyreScene::HendonmyreScene():Scene(ESceneType::AnotherVillage)
+	HendonmyreScene::HendonmyreScene():Scene(ESceneType::End)
 	{
 	}
 
