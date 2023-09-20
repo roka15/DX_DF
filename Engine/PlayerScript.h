@@ -52,6 +52,7 @@ namespace roka
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
 
+		void Skill(UINT input);
 		void NormalFallEvent();
 
 		void StunStagger(EStunState stun,float endtime);
@@ -69,9 +70,9 @@ namespace roka
 		static void JumpDashCompleteEvent(std::weak_ptr<void> ptr);
 		static void StunCompleteEvent(std::weak_ptr<void> ptr);
 
-		void SkillNormalAtk();
 		
 		void PlayPartMotion();
+		void SkillPartMotion(std::wstring key);
 		void SetPlayerState(EPlayerState state) { mPlayerState = state; }
 		EPlayerState GetPlayerState() { return mPlayerState; }
 		float GetDir() { return mCurDir; }

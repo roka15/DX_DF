@@ -46,9 +46,15 @@ namespace roka::info
 		mKeysInfo->left = (UINT)EKeyCode::LEFT;
 		mKeysInfo->up = (UINT)EKeyCode::UP;
 		mKeysInfo->down = (UINT)EKeyCode::DOWN;
+		mKeysInfo->jump = (UINT)EKeyCode::SPACE;
+		mKeysInfo->quick_standing = (UINT)EKeyCode::C;
 		mKeysInfo->normalAtk = (UINT)EKeyCode::X;
+		mKeysInfo->skill1 = (UINT)EKeyCode::F;
+
+		mSkillNames.insert(std::make_pair(mKeysInfo->skill1, L"mageAntiGravity"));
 	}
 	void User::Release()
 	{
 	}
+	
 }

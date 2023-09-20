@@ -39,6 +39,7 @@ namespace roka
 		virtual void Down();
 		virtual void Standing();
 		virtual void Landing();
+		virtual void Skill(std::wstring key);
 
 		
 		// 여기서부터 

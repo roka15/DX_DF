@@ -40,7 +40,8 @@ namespace roka
 		void SettingRightMaterial();
 		void SettingLeftMaterial();
 		void PlayPartsMotion();
-		void PlayPartsMotion(EPlayerState state, int index, bool flag);
+		void SkillPartsMotion(std::wstring key);
+		
 		void PlayPartsSprite(EPlayerState state, int index);
 		void SetCompleteEventAnimation(EPlayerState state, int prev_index, int next_index);
 		void SetCompleteEventAnimations(EPlayerState state);

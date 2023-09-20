@@ -78,69 +78,6 @@ namespace roka
 		mTopCollider = vec[0];
 		mBottomCollider = vec[1];
 
-		//해당 part의 애니 생성
-#pragma region base part
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAIdle", 10, 14, 0.3f);
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAWalk", 0, 10, 0.05f);
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBARun", 18, 21, 0.05f);
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBANomalAtk", 109, 127, 0.05f);
-
-		//std::shared_ptr<NPK> baseskin_npk = Resources::Find<NPK>(L"baseskin");
-		//std::shared_ptr<Texture> jump_texture = baseskin_npk->CreateAtlas(mUser->base_avartar, 76, 85, L"PlayerBAJump");
-
-		//avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump1", 0, 4, 0.185f);
-		//avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump2", 4, 7, 0.20755f);
-		//avatar->CreatePartAni(EAvatarParts::Base, jump_texture, L"PlayerBAJump3", 7, 9, 0.04f);
-
-		//std::shared_ptr<Texture> stun_texter = baseskin_npk->CreateAtlas(mUser->base_avartar, 128, 135, L"PlayerBAStun");
-		//avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunStagger", 0, 2, 0.1f);
-		//avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunDownStagger", 2, 4, 0.15f);
-		//avatar->CreatePartAni(EAvatarParts::Base, stun_texter, L"PlayerBAStunDown", 4, 7, 0.15f);
-
-		//avatar->CreatePartAni(EAvatarParts::Base, L"baseskin", mUser->base_avartar, L"PlayerBAStanding", 53, 54, 0.5f);
-
-		////player state 에 따라 재생할 애니 정보 등록
-		//avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Base, L"PlayerBAIdle");
-		//avatar->InsertStateAniInfo(EPlayerState::Walk, EAvatarParts::Base, L"PlayerBAWalk");
-		//avatar->InsertStateAniInfo(EPlayerState::Run, EAvatarParts::Base, L"PlayerBARun");
-		//avatar->InsertStateAniInfo(EPlayerState::JumpRun, EAvatarParts::Base, L"PlayerBARun");
-		//avatar->InsertStateAniInfo(EPlayerState::NomalAtk, EAvatarParts::Base, L"PlayerBANomalAtk");
-		//avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump1");
-		//avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump2");
-		//avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Base, L"PlayerBAJump3");
-		//avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunStagger");
-		//avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunDownStagger");
-		//avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Base, L"PlayerBAStunDown");
-		//avatar->InsertStateAniInfo(EPlayerState::Standing, EAvatarParts::Base, L"PlayerBAStanding");
-#pragma endregion
-#pragma region weapon part
-		/*avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAIdle", 0, 10, 0.2f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAWalkAndRun", 0, 10, 0.05f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAJump", 11, 21, 0.1f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWAJumpRun", 178, 179, 0.1f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADownStagger", 130, 131, 0.2f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWADown", 131, 135, 0.05f);
-		avatar->CreatePartAni(EAvatarParts::Weapon, L"weapon", mUser->weapon_avatar1, L"PlayerWANormalAtk", 109, 127, 0.05f);
-
-
-		avatar->InsertStateAniInfo(EPlayerState::Idle, EAvatarParts::Weapon, L"PlayerWAIdle");
-		avatar->InsertStateAniInfo(EPlayerState::Walk, EAvatarParts::Weapon, L"PlayerWAWalkAndRun");
-		avatar->InsertStateAniInfo(EPlayerState::Run, EAvatarParts::Weapon, L"PlayerWAWalkAndRun");
-		avatar->InsertStateAniInfo(EPlayerState::Jump, EAvatarParts::Weapon, L"PlayerWAJump");
-		avatar->InsertStateAniInfo(EPlayerState::JumpRun, EAvatarParts::Weapon, L"PlayerWAJumpRun");
-		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Weapon, L"PlayerWAIdle");
-		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Weapon, L"PlayerWADownStagger");
-		avatar->InsertStateAniInfo(EPlayerState::Stun, EAvatarParts::Weapon, L"PlayerWADown");
-		avatar->InsertStateAniInfo(EPlayerState::Standing, EAvatarParts::Weapon, L"PlayerWAIdle");*/
-#pragma endregion
-
-		//avatar->SetCompleteEventAnimation(EPlayerState::Jump, 0, 1);
-
-		///*avatar->EndEventAnimation(EPlayerState::Jump, 1, std::bind([this]()->void { mRigid.lock()->SetGround(true); }));*/
-		//avatar->SetStartEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { mMoveScript.lock()->is_active = false; }));
-		//avatar->CompleteEventAnimation(EPlayerState::Jump, 2, std::bind([this]()->void { NextState(); }));
-		//avatar->CompleteEventAnimation(EPlayerState::Stun, 2, std::bind([this]()->void { DownEvent(); }));
-		//avatar->CompleteEventAnimation(EPlayerState::Standing, 0, std::bind([this]()->void {EnableKeyInput(); NextState(); }));
 		mPlayerState = EPlayerState::Idle;
 
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
@@ -675,6 +612,15 @@ namespace roka
 		}
 	}
 
+	void PlayerScript::Skill(UINT input)
+	{
+		if (mPlayerState >= EPlayerState::Skill)
+			return;
+		std::wstring skillName = mUser->GetKeySkillName(input);
+		ISkill* skill = manager::SkillManager::GetInstance()->Find(ECharacterClassType::Mage, skillName);
+		skill->Execute(owner->GetSharedPtr());
+	}
+
 	void PlayerScript::NormalFallEvent()
 	{
 		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
@@ -871,14 +817,17 @@ namespace roka
 		ps->mStunState = EStunState::None;
 	}
 
-	void PlayerScript::SkillNormalAtk()
-	{
-	}
 
 	void PlayerScript::PlayPartMotion()
 	{
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
 		avatar->PlayPartsMotion();
+	}
+
+	void PlayerScript::SkillPartMotion(std::wstring key)
+	{
+		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
+		avatar->SkillPartsMotion(key);
 	}
 
 }

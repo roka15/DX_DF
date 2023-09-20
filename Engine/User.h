@@ -5,6 +5,7 @@ using namespace roka::enums;
 #define MAX_NAME 10
 #define MAX_ID 10
 #define MAX_AVATAR 255
+#define MAX_SKILLNAME 255
 namespace roka::info
 {
 	struct UserInfo
@@ -40,7 +41,14 @@ namespace roka::info
 		UINT left;
 		UINT up;
 		UINT down;
+		UINT jump;
+		UINT quick_standing;
 		UINT normalAtk;
+		UINT skill1;
+	};
+	struct SkillNameInfo
+	{
+		wchar_t skill1_name[MAX_SKILLNAME];
 	};
 	class User
 	{
@@ -68,11 +76,13 @@ namespace roka::info
 		const UINT& GetUpKey()const { return mKeysInfo->up; }
 		const UINT& GetDownKey()const { return mKeysInfo->down; }
 		const UINT& GetNormalAtkKey()const { return mKeysInfo->normalAtk; }
+		const UINT& GetSkillKey01()const { return mKeysInfo->skill1; }
 
 		void SetBaseAvatar(std::wstring name) { wcscpy(mCharacterInfo->base_skin_avatar,name.c_str()); }
 		void SetWeaponAvatar1(std::wstring name) { wcscpy(mCharacterInfo->weapon_avatar1, name.c_str()); }
 		void SetWeaponAvatar2(std::wstring name) { wcscpy(mCharacterInfo->weapon_avatar2, name.c_str()); }
 
+		const std::wstring& GetKeySkillName(UINT input)const {return mSkillNames.find(input)->second;}
 		GET_PROPERTY(GetPartyName) std::wstring party_name;
 		GET_PROPERTY(GetName) std::wstring name;
 		GET_PROPERTY(GetFame) int fame;
@@ -93,6 +103,7 @@ namespace roka::info
 		std::unique_ptr<UserInfo> mUserInfo;
 		std::unique_ptr<CharacterInfo> mCharacterInfo;
 		std::unique_ptr<KeysInfo> mKeysInfo;
+		std::map<UINT, std::wstring> mSkillNames;
 		//나중에 socket 통신 객체 소유.
 	};
 }

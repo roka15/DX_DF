@@ -110,6 +110,13 @@ namespace roka
 		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
 		ani->PlayAnimation(L"Landing", false);
 	}
+	void PartScript::Skill(std::wstring key)
+	{
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		if (ani->FindAnimation(key) == nullptr)
+			return;
+		ani->PlayAnimation(key,false);
+	}
 	void PartScript::Create(std::wstring npk, std::wstring pack)
 	{
 	}

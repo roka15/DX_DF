@@ -151,11 +151,19 @@ namespace roka
 		}
 	
 	}
-
-	void AvatarScript::PlayPartsMotion(EPlayerState state, int index, bool flag)
+	void AvatarScript::SkillPartsMotion(std::wstring key)
 	{
+		std::shared_ptr<PlayerScript> ps = owner->parent->GetComponent<PlayerScript>();
+		StartAni();
+		for (auto part : mParts)
+		{
+			std::shared_ptr<PartScript> script = part.second.lock()->GetComponent<PartScript>();
+			if (ps->player_state == EPlayerState::Skill)
+			{
+				script->Skill(key);
+			}
+		}
 	}
-
 	void AvatarScript::PlayPartsSprite(EPlayerState state, int index)
 	{
 		auto itr = mStateAnis.find(state);
