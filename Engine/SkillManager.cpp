@@ -1,6 +1,7 @@
 #include "SkillManager.h"
 
 #include "MgNormalAtk.h"
+#include "AntiGravity.h"
 
 #include "SpiderNormalAtk.h"
 #include "TairangSkill01.h"
@@ -12,6 +13,11 @@ namespace roka::manager
 		ISkill* normalAttack = new MgNormalAtk();
 		mSkillInfos.insert(std::make_pair(roka::enums::ECharacterClassType::Mage, std::map<std::wstring, ISkill*>()));
 		mSkillInfos[roka::enums::ECharacterClassType::Mage].insert(std::make_pair(L"NormalAtk", normalAttack));
+
+		ISkill* antiGravity = new AntiGravity();
+		mSkillInfos.insert(std::make_pair(roka::enums::ECharacterClassType::Mage, std::map<std::wstring, ISkill*>()));
+		mSkillInfos[roka::enums::ECharacterClassType::Mage].insert(std::make_pair(L"mageAntiGravity", antiGravity));
+
 #pragma endregion
 #pragma region monster skill
 		ISkill* skill = new SpiderNormalAtk();

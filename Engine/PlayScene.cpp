@@ -85,6 +85,8 @@ namespace roka
 			ps->DownBtnUp();
 		if (Input::GetKeyDown(EKeyCode::X))
 			ps->NomalAtkBtnDown();
+		if (Input::GetKeyDown(EKeyCode::F))
+			ps->Skill((UINT)EKeyCode::F);
 
 		//if (Input::GetKeyDown(EKeyCode::F))
 		//{

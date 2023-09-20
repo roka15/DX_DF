@@ -72,6 +72,8 @@ void roka::SeriaGateScene::Update()
 			ps->NomalAtkBtnDown();
 		if (Input::GetKeyDown(EKeyCode::SPACE))
 			ps->JumpBtnDown();
+		if (Input::GetKeyDown(EKeyCode::F))
+			ps->Skill((UINT)EKeyCode::F);
 	}
 }
 

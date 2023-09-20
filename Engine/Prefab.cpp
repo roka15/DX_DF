@@ -341,6 +341,8 @@ namespace roka::prefab
 		std::shared_ptr<NPK> tairangEft_npk = Resources::Find<NPK>(L"tairnag_eft");
 		std::shared_ptr<NPK> warning_npk = Resources::Find<NPK>(L"warning");
 		std::shared_ptr<NPK> hudUI_npk = Resources::Find<NPK>(L"ui_hud");
+		std::shared_ptr<NPK> mage_AntiGravity = Resources::Find<NPK>(L"mageAntiGravity");
+		std::shared_ptr<NPK> mage_homonculouse = Resources::Find<NPK>(L"homonculouse");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -357,5 +359,9 @@ namespace roka::prefab
 			warning_npk = Resources::Load<NPK>(L"warning", path + L"warning.npk");
 		if (hudUI_npk == nullptr)
 			hudUI_npk = Resources::Load<NPK>(L"ui_hud", path + L"HudUI.npk");
+		if (mage_AntiGravity == nullptr)
+			mage_AntiGravity = Resources::Load<NPK>(L"mageAntiGravity", path + L"mageAntiGravity.npk");
+		if (mage_homonculouse == nullptr)
+			mage_homonculouse = Resources::Load<NPK>(L"homonculouse", path + L"homonculouse.npk");
 	}
 }

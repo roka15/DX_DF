@@ -51,7 +51,7 @@ namespace roka
         ani->CompleteEvent(L"Standing") = std::bind(&SkinPartScript::StandingCompleteEvent, this);
         ani->CompleteEvent(L"Fall") = std::bind(&SkinPartScript::DisableMove, this);
         ani->CompleteEvent(L"Landing") = std::bind(&SkinPartScript::EnableMove, this);
-
+        ani->CompleteEvent(L"mageAntiGravity") = std::bind(&SkinPartScript::NextState, this);
         std::shared_ptr<Animation> animation;
         animation = ani->FindAnimation(L"Down");
         {
@@ -86,11 +86,16 @@ namespace roka
         std::shared_ptr<Texture> skill_texture2 = skin_npk->CreateAtlas(pack, 75, 105, L"MgBaseSkillPart2");
         std::shared_ptr<Texture> skill_texture3 = skin_npk->CreateAtlas(pack, 105, 114, L"MgBaseSkillPart3");
         ani->Create(skill_texture, L"Standing", 8, 9, 0.5f);
+        ani->Create(skill_texture, L"mageAntiGravity", 0, 8, 0.025f);
 
-
+       
+       
         std::shared_ptr<Animation> animation = ani->FindAnimation(L"NormalAtk");
         animation->RegisterFrameEvent(L"NextState", 4);
         animation->RegisterFrameEvent(L"NextState", 9);
         animation->RegisterFrameEvent(L"NextState", 18);
+
+        animation = ani->FindAnimation(L"mageAntiGravity");
+        animation->RegisterFrameEvent(L"SpawnHomonculouse", 7);
     }
 }
