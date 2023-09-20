@@ -170,6 +170,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AnimationObjectPool.h" />
+    <ClInclude Include="AntiGravity.h" />
     <ClInclude Include="AvatarScript.h" />
     <ClInclude Include="CameraScript.h" />
     <ClInclude Include="ComponentFactory.h" />
@@ -225,6 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnimationObjectPool.cpp" />
+    <ClCompile Include="AntiGravity.cpp" />
     <ClCompile Include="AvatarScript.cpp" />
     <ClCompile Include="CameraScript.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />

@@ -130,6 +130,9 @@
     <ClInclude Include="Portal.h">
       <Filter>Contents\Class\Portal</Filter>
     </ClInclude>
+    <ClInclude Include="AntiGravity.h">
+      <Filter>Contents\Class\Skill\Player\AntiGravity</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -251,6 +254,9 @@
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Contents\Class\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="AntiGravity.cpp">
+      <Filter>Contents\Class\Skill\Player\AntiGravity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -409,6 +415,9 @@
     </Filter>
     <Filter Include="Contents\Class\Skill\Monster\Named\Tairang">
       <UniqueIdentifier>{dd31a119-0784-4669-b638-ce78e0644781}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Class\Skill\Player\AntiGravity">
+      <UniqueIdentifier>{426615f0-bd4b-40ee-bea8-dafaa2f94db6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
