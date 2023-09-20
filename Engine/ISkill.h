@@ -35,7 +35,7 @@ namespace roka
 	public:
 		Skill() { mbCallbackEvent = false; }
 		virtual ~Skill() {}
-		virtual void Execute(std::shared_ptr<GameObject> caster) = 0;
+		virtual void Execute(std::shared_ptr<GameObject> caster)override;
 		virtual void SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key) = 0;
 		virtual void DeSpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key) = 0;
 		virtual void SpawnCollider(std::shared_ptr<GameObject> caster) = 0;
