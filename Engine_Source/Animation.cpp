@@ -53,16 +53,29 @@ namespace roka
 		EventFunc();
 		if (mDuration <= mTime)
 		{
-			mIndex++;
 			mTime = 0.0f;
-			if (mRange.second <= mIndex)
+			if (mbReverse == true)
 			{
-				if (mRange.first == mRange.second)
-					mIndex = mRange.second;
-				else
-					mIndex = mRange.second - 1;
-				mIsComplete = true;
-				std::replace(mEventFlag.begin(), mEventFlag.end(), true, false);
+				mIndex--;
+				if (mRange.first >= mIndex)
+				{
+					mIndex = mRange.first;
+					mIsComplete = true;
+					std::replace(mEventFlag.begin(), mEventFlag.end(), true, false);
+				}
+			}
+			else
+			{
+				mIndex++;
+				if (mRange.second <= mIndex)
+				{
+					if (mRange.first == mRange.second)
+						mIndex = mRange.second;
+					else
+						mIndex = mRange.second - 1;
+					mIsComplete = true;
+					std::replace(mEventFlag.begin(), mEventFlag.end(), true, false);
+				}
 			}
 			OnAnimationFrameEvent(mIndex);
 		}
@@ -95,6 +108,14 @@ namespace roka
 		mEventTime = 0.0f;
 		mIsComplete = false;
 		mIndex = mRange.first;
+		mbReverse = false;
+	}
+	void Animation::ReverseReset()
+	{
+		mTime = 0.0f;
+		mEventTime = 0.0f;
+		mIsComplete = false;
+		mIndex = mRange.second;
 	}
 	void Animation::Create(std::wstring npk_key, std::wstring pack_key, std::wstring set_name, UINT start_index, UINT end_index)
 	{
@@ -108,6 +129,11 @@ namespace roka
 			atlas = npk->CreateAtlas(pack_key, start_index, end_index, atlas_name);
 
 		SetAtlas(atlas);
+	}
+	void Animation::ReversePlay()
+	{
+		mIndex = mRange.second;
+		mbReverse = true;
 	}
 	void Animation::SetAtlas(std::shared_ptr<Texture> atlas)
 	{

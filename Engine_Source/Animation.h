@@ -52,10 +52,12 @@ namespace roka
 
 		void Binds();
 		void Reset();
+		void ReverseReset();
 
 		void Create(std::wstring npk_key, std::wstring pack_key, std::wstring set_name, UINT start_index, UINT end_index);
 		void SetAnimator(std::shared_ptr<Animator> ani) { mAnimator = ani; }
 		void SetDuration(float duration) { mDuration = duration; }
+		void ReversePlay();
 		float GetDuration() { return mDuration; }
 		bool IsComplete() { return mIsComplete; }
 		void SetAtlas(std::shared_ptr<Texture> atlas); 
@@ -65,8 +67,10 @@ namespace roka
 		UINT EndIndex();
 		UINT StartIndex();
 		void SetIndex(UINT index);
+		bool GetReverseState() { return mbReverse; }
 		PROPERTY(GetDuration, SetDuration) float duration;
 		GET_PROPERTY(IsComplete) bool is_complete;
+		GET_PROPERTY(GetReverseState) bool is_reverse;
 		SET_PROPERTY(SetPlayRange) std::pair<UINT, UINT> play_range;
 
 		void AddTimeLineEvent(AnimationEvent aniEvent);
@@ -85,6 +89,7 @@ namespace roka
 		int mIndex;
 		float mTime;
 		bool mIsComplete;
+		bool mbReverse;
 
 		/* 보통 ani event 방식*/
 		std::vector<AnimationEvent> mEvents;

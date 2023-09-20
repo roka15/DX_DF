@@ -17,6 +17,7 @@ namespace roka
 		   StartEvent,
 		   CompleteEvent,
 		   EndEvent,
+		   ReverseCompleteEvent,
 		   End,
 		};
 		struct Event
@@ -38,6 +39,7 @@ namespace roka
 			std::vector<Event> startEvent;
 			std::vector<Event> completeEvent;
 			std::vector<Event> endEvent;
+			std::vector<Event> reverseCompleteEvent;
 		};
 
 		
@@ -55,6 +57,7 @@ namespace roka
 		std::shared_ptr<Animator::Events> FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop, float duration=0.0f);
 		void PlayAnimation(const std::wstring& name);
+		void PlayReverseAnimation(const std::wstring& name);
 		void PlayAniSprite(const std::wstring& name,int index);
 		bool Binds();
 		std::shared_ptr<Animator> GetSharedPtr() { return shared_from_this(); }
@@ -62,6 +65,7 @@ namespace roka
 		std::function<void()>& StartEvent(const std::wstring key);
 		std::function<void()>& CompleteEvent(const std::wstring key);
 		std::function<void()>& EndEvent(const std::wstring key);
+		std::function<void()>& ReverseCopleteEvent(const std::wstring key);
 
 		std::function<void()>& GetEvent(EAniEventType type,const std::wstring key);
 
@@ -85,6 +89,7 @@ namespace roka
 		std::weak_ptr<Animation> mFirstUpdateAnimation;
 		bool mbLoop;
 		bool mbStop;
+
 
 		IAnimationFramEvent* mFrameEvent;
 	};

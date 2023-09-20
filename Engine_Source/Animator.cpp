@@ -58,7 +58,7 @@ namespace roka
 
 		std::shared_ptr<Events> events
 			= FindEvents(mActiveAnimation.lock()->GetKey());
-	
+
 		if (mActiveAnimation.lock()->IsComplete())
 		{
 			if (mbLoop == true)
@@ -66,11 +66,34 @@ namespace roka
 			else
 				mbStop = true;
 
-			if (events != nullptr)
+			if (mActiveAnimation.lock()->is_reverse == true)
 			{
-				for (auto comp_event : events->completeEvent)
+				if (mbLoop == false)
 				{
-					comp_event();
+					mActiveAnimation.lock()->Reset();
+					ActiveAnimationNull();
+				}
+				else
+				{
+					mActiveAnimation.lock()->ReverseReset();
+				}
+
+				if (events != nullptr)
+				{
+					for (auto reverse_compEvent : events->reverseCompleteEvent)
+					{
+						reverse_compEvent();
+					}
+				}
+			}
+			else
+			{
+				if (events != nullptr)
+				{
+					for (auto comp_event : events->completeEvent)
+					{
+						comp_event();
+					}
 				}
 			}
 		}
@@ -206,7 +229,7 @@ namespace roka
 			}
 		}
 		mbLoop = loop;
-	    mbStop = false;
+		mbStop = false;
 		ActiveAni->Reset();
 		mFrameEvent = nullptr;
 	}
@@ -214,6 +237,12 @@ namespace roka
 	{
 		mbStop = false;
 		PlayAnimation(name, false, 0.0f);
+	}
+	void Animator::PlayReverseAnimation(const std::wstring& name)
+	{
+		PlayAnimation(name, false, 0.0f);
+		std::shared_ptr<Animation> animation = FindAnimation(name);
+		animation->ReversePlay();
 	}
 	void Animator::PlayAniSprite(const std::wstring& name, int index)
 	{
@@ -279,6 +308,13 @@ namespace roka
 		size_t size = events->endEvent.size() - 1;
 		return events->endEvent[size].mEvent;
 	}
+	std::function<void()>& Animator::ReverseCopleteEvent(const std::wstring key)
+	{
+		std::shared_ptr<Events> events = FindEvents(key);
+		events->reverseCompleteEvent.push_back(Event());
+		size_t size = events->reverseCompleteEvent.size() - 1;
+		return events->reverseCompleteEvent[size].mEvent;
+	}
 	std::function<void()>& Animator::GetEvent(EAniEventType type, const std::wstring key)
 	{
 		switch (type)
@@ -289,6 +325,8 @@ namespace roka
 			return CompleteEvent(key);
 		case EAniEventType::EndEvent:
 			return EndEvent(key);
+		case EAniEventType::ReverseCompleteEvent:
+			return ReverseCopleteEvent(key);
 		}
 	}
 	const Sprite& Animator::GetSprite()
