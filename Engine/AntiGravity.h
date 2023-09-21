@@ -26,7 +26,15 @@ namespace roka
 		virtual void OnCollisionExit(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)override;
 	
 		virtual void Release()override;
+
+		void PlutoAniType1(std::shared_ptr<GameObject> caster);
+		void PlutoAniType2(std::shared_ptr<GameObject> caster);
+		void EyeType1(std::shared_ptr<GameObject> caster);
+		void EyeType2(std::shared_ptr<GameObject> caster);
+		void PlutoSparkEffect(std::shared_ptr<GameObject> caster);
+	
 	private:
+		Vector3 mEyeOriginPos;
 	};
 }
 
