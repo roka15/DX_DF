@@ -57,7 +57,7 @@ namespace roka
 		std::shared_ptr<Animator::Events> FindEvents(const std::wstring& name);
 		void PlayAnimation(const std::wstring& name, bool loop, float duration=0.0f);
 		void PlayAnimation(const std::wstring& name);
-		void PlayReverseAnimation(const std::wstring& name);
+		void PlayReverseAnimation(const std::wstring& name,float duration=0.0f);
 		void PlayAniSprite(const std::wstring& name,int index);
 		bool Binds();
 		std::shared_ptr<Animator> GetSharedPtr() { return shared_from_this(); }
@@ -79,6 +79,7 @@ namespace roka
 		void ActiveAnimationNull() { mActiveAnimation.reset(); }
 		IAnimationFramEvent* GetFrameEventListener() { return mFrameEvent; }
 		void SetFrameEventListener(IAnimationFramEvent*listener) { mFrameEvent = listener; }
+
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;

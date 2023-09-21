@@ -33,8 +33,13 @@ namespace roka
 		void EyeType2(std::shared_ptr<GameObject> caster);
 		void PlutoSparkEffect(std::shared_ptr<GameObject> caster);
 	
+		void CreateHomonculouse(std::shared_ptr<GameObject> caster,std::wstring key);
+		void CreatePluto(std::shared_ptr<GameObject> caster, std::wstring key);
+		void CreatePlutoEffect(std::shared_ptr<GameObject> caster, std::wstring key);
+		void CreateSuccessTube(std::shared_ptr<GameObject> caster, std::wstring key,Vector3 offset);
 	private:
 		Vector3 mEyeOriginPos;
+		float mDir;
 	};
 }
 

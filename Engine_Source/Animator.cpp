@@ -238,9 +238,9 @@ namespace roka
 		mbStop = false;
 		PlayAnimation(name, false, 0.0f);
 	}
-	void Animator::PlayReverseAnimation(const std::wstring& name)
+	void Animator::PlayReverseAnimation(const std::wstring& name, float duration)
 	{
-		PlayAnimation(name, false, 0.0f);
+		PlayAnimation(name, false, duration);
 		std::shared_ptr<Animation> animation = FindAnimation(name);
 		animation->ReversePlay();
 	}
