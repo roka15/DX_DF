@@ -39,7 +39,7 @@ namespace roka
 		if (key.compare(L"Effect1") == 0)
 		{
 
-			std::shared_ptr<GameObject> Eft01 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft01 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"attack3slashglow.img", L"tairang_skill1glow", 0, 12, 0.05f);
@@ -47,7 +47,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1glow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1glow", false);
 			}
-			std::shared_ptr<GameObject> Eft02 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft02 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft02->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"attack3trail.img", L"tairang_skill1trail", 0, 12, 0.05f);
@@ -55,7 +55,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1trail") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1trail", false);
 			}
-			std::shared_ptr<GameObject> Eft03 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft03->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft03->GetComponent<Transform>();
@@ -67,7 +67,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
 			}
-			std::shared_ptr<GameObject> Eft04 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft04 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft04->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft04->GetComponent<Transform>();
@@ -78,7 +78,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
 			}
-			std::shared_ptr<GameObject> Eft05 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft05 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft05->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft05->GetComponent<Transform>();
@@ -89,7 +89,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
 			}
-			std::shared_ptr<GameObject> Eft06 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft06 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft06->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft06->GetComponent<Transform>();
@@ -100,7 +100,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
 			}
-			std::shared_ptr<GameObject> Eft07 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft07 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft07->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft07->GetComponent<Transform>();
@@ -111,7 +111,7 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
 			}
-			std::shared_ptr<GameObject> Eft08 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft08 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft08->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft08->GetComponent<Transform>();
@@ -142,7 +142,7 @@ namespace roka
 		}
 		else if (key.compare(L"Effect2") == 0)
 		{
-			std::shared_ptr<GameObject> Eft01 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft01 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"attack3line.img", L"tairang_skill1line", 0, 3, 0.08);
@@ -156,7 +156,7 @@ namespace roka
 				MeshRenderer* meshRenderer = Eft01->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1line") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 			}
-			std::shared_ptr<GameObject> Eft02 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft02 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft02->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"attack3booster.img", L"tairang_skill1booster", 0, 12, 0.08);
@@ -165,7 +165,7 @@ namespace roka
 				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
 				tf->position = Vector3(0.05f, 0.2f, 0.01f);
 			}
-			std::shared_ptr<GameObject> Eft03 = pool->GetPool(L"AniEftObject")->Spawn();
+			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft03->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"abyssbombsmall.img", L"tairang_skill1abyss_explosion", 0, 12, 0.08);
@@ -190,7 +190,7 @@ namespace roka
 		}
 		else if (key.compare(L"Effect3") == 0)
 		{
-			std::shared_ptr<GameObject> Eft01 = pool->GetPool(L"AniObject")->Spawn();
+			std::shared_ptr<GameObject> Eft01 = pool->Spawn(L"AniObject");
 			{
 				std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"lightning01a.img", L"tairang_skill1lightning", 0, 9, 0.08);
@@ -202,7 +202,7 @@ namespace roka
 				tf->scale = Vector3(0.1f, 4.0f, 1.0f);
 				tf->position = Vector3(0.0f, 1.7f, 0.0f);
 			}
-			std::shared_ptr<GameObject> Eft02 = pool->GetPool(L"AniObject")->Spawn();
+			std::shared_ptr<GameObject> Eft02 = pool->Spawn(L"AniObject");
 			{
 				std::shared_ptr<Animator> ani = Eft02->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"abyssbombmiddlen.img", L"tairang_skill1abyssBomb", 0, 20, 0.01);
@@ -214,7 +214,7 @@ namespace roka
 				tf->scale = Vector3(0.8f, 0.25f, 1.0f);
 				tf->position = Vector3(0.0f, -0.2f, 0.0f);
 			}
-			std::shared_ptr<GameObject> Eft03 = pool->GetPool(L"AniObject")->Spawn();
+			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniObject");
 			{
 				std::shared_ptr<Animator> ani = Eft03->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"jump_dust04.img", L"tairang_skill1dust", 0, 8, 0.01);
@@ -225,7 +225,7 @@ namespace roka
 				std::shared_ptr<Transform> tf = Eft03->GetComponent<Transform>();
 				tf->scale = Vector3(0.8f, 1.0f, 1.0f);
 			}
-			std::shared_ptr<GameObject> Eft04 = pool->GetPool(L"AniObject")->Spawn();
+			std::shared_ptr<GameObject> Eft04 = pool->Spawn(L"AniObject");
 			{
 				std::shared_ptr<Animator> ani = Eft04->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"bolt01.img", L"tairang_skill1bolt", 0, 13, 0.05);
@@ -280,7 +280,7 @@ namespace roka
 	void TairangSkill01::SpawnCollider(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<GameObject> colObj = 
-			ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->GetPool(L"ColAniObject")->Spawn();
+			ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"ColAniObject");
 		std::shared_ptr<WarningScript> wr = mWarningObj->GetComponent<WarningScript>();
 		Vector3 pos = wr->GetPos();
 		colObj->SetName(L"ColObject");
@@ -477,7 +477,7 @@ namespace roka
 		std::shared_ptr<MonsterScript> monster = caster->GetComponent<MonsterScript>();
 		Scene* ActiveScene = SceneManager::GetActiveScene();
 		WarningObjectPool* pool = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance();
-		mWarningObj = pool->GetPool(L"WarningObject")->Spawn();
+		mWarningObj = pool->Spawn(L"WarningObject");
 		std::shared_ptr<Animator> wani = mWarningObj->GetComponent<Animator>();
 		wani->Create(L"warning", L"warningfloor_circle500.img", L"ellipse_warning1", 0, 12, 0.1f);
 		wani->PlayAnimation(L"ellipse_warning1", false);

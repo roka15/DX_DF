@@ -1,4 +1,5 @@
 #include "MeshRenderer.h"
+#include "Resources.h"
 #include "GameObject.h"
 #include "Transform.h"
 #include "Renderer.h"

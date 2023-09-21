@@ -53,7 +53,7 @@ namespace roka
 	void MgNormalAtk::SpawnCollider(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<PlayerScript> player = caster->GetComponent<PlayerScript>();
-		std::shared_ptr<GameObject> colObject = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->GetPool(L"ColAniObject")->Spawn();
+		std::shared_ptr<GameObject> colObject = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"ColAniObject");
 		colObject->SetName(L"MgNormalAtkColObject");
 		std::shared_ptr<Collider2D> collider = colObject->AddComponent<Collider2D>();
 		std::shared_ptr<Transform> transform = colObject->GetComponent<Transform>();

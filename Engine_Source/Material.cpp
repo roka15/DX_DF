@@ -36,6 +36,17 @@ roka::graphics::Material::~Material()
 {
 }
 
+void roka::graphics::Material::Copy(Material* src)
+{
+	Material* source = dynamic_cast<Material*>(src);
+	if (source == nullptr)
+		return;
+	
+	mMode = source->mMode;
+	mShader = src->mShader;
+	mTexture = src->mTexture;
+}
+
 HRESULT roka::graphics::Material::Load(const std::wstring& path)
 {
 	return E_NOTIMPL;

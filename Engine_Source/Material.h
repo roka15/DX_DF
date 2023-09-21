@@ -11,6 +11,7 @@ namespace roka::graphics
 		Material(const Material& ref);
 		~Material();
 
+		virtual void Copy(Material* src);
 		virtual HRESULT Load(const std::wstring& path)override;
 
 		void Binds();

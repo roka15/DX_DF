@@ -22,6 +22,8 @@ namespace roka::pool
 		{
 			ObjectPoolManager<AnimationObjectPool, GameObject>::Release();
 		}
+		virtual std::shared_ptr<GameObject> Spawn(std::wstring key);
+		
 	private:
 		friend class Singleton<AnimationObjectPool>;
 		AnimationObjectPool() :ObjectPoolManager<AnimationObjectPool, GameObject>() {  }

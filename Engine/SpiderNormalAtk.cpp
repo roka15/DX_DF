@@ -40,7 +40,7 @@ namespace roka
 		if (Effect != nullptr)
 			return;
 		
-		Effect = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->GetPool(L"ColAniEftObject")->Spawn();
+		Effect = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"ColAniEftObject");
 		Effect->SetName(key);
 		Effect->layer_type = ELayerType::Monster;
 		std::shared_ptr<MeshRenderer> mesh = Effect->GetComponent<MeshRenderer>();

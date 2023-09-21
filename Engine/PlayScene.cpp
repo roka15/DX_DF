@@ -198,7 +198,7 @@ namespace roka
 		NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
 		for (int i = 0; i < 1; i++)
 		{
-			std::shared_ptr<GameObject> monster = normalMonsterPool->GetPool(L"SpiderMonster")->Spawn();
+			std::shared_ptr<GameObject> monster = normalMonsterPool->Spawn(L"SpiderMonster");
 
 			monster->SetName(L"Monster" + std::to_wstring(i));
 			monster->GetComponent<Transform>()->position = Vector3(0.5f * i, 0.0f, 0.0f);

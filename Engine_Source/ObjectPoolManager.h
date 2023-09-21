@@ -23,6 +23,12 @@ namespace roka::manager
             
 			return itr->second.get();
 		}
+		virtual std::shared_ptr<Origin> Spawn(std::wstring key)
+		{
+			ObjectPool<Origin>* pool = GetPool(key);
+			std::shared_ptr<Origin> object = pool->Spawn();
+			return object;
+		}
 	
 	protected:
 		ObjectPoolManager() {}
