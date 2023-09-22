@@ -173,6 +173,7 @@
     <ClInclude Include="AntiGravity.h" />
     <ClInclude Include="AvatarScript.h" />
     <ClInclude Include="CameraScript.h" />
+    <ClInclude Include="ChangeSizeOverTime.h" />
     <ClInclude Include="ComponentFactory.h" />
     <ClInclude Include="ContentEnums.h" />
     <ClInclude Include="FactoryManager.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="AntiGravity.cpp" />
     <ClCompile Include="AvatarScript.cpp" />
     <ClCompile Include="CameraScript.cpp" />
+    <ClCompile Include="ChangeSizeOverTime.cpp" />
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FactoryManager.cpp" />

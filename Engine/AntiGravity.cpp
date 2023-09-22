@@ -59,6 +59,9 @@ namespace roka
 		if (key.compare(L"homonculouse_pluto") == 0)
 		{
 			SpawnEffect(caster, L"pluto");
+			Time::CallBackTimerInfo callBack = {};
+			callBack.endTime = 0.25f;
+			Time::RequestEvent(callBack, std::bind(&AntiGravity::DeSpawnEffect, this, caster, L"homonculouse"));
 			mbActive = true;
 		}
 		else if (key.compare(L"pluto") == 0)
@@ -66,10 +69,22 @@ namespace roka
 			ani->PlayReverseAnimation(L"mage_antiGravity_pluto_start", 0.09f);
 			PlutoSparkEffect(deleteObj);
 			mbActive = true;
+
+			Scene* Active = SceneManager::GetActiveScene();
+			std::shared_ptr<GameObject> Object = Active->FindGameObject(ELayerType::BackObject, L"AntiGravityCircleObj");
+			std::shared_ptr<Animator> ani2 = Object->GetComponent<Animator>();
+			ani2->ActiveAnimationNull();
+			Object->active = GameObject::EState::Dead;
+
+			Object = Active->FindGameObject(ELayerType::BackObject, L"AntiGravityCircleObj2");
+			ani2 = Object->GetComponent<Animator>();
+			ani2->ActiveAnimationNull();
+			Object->active = GameObject::EState::Dead;
 		}
 		else if (key.compare(L"pluto_reverse") == 0)
 		{
-			deleteObj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, L"plutoObj");
+			Scene* Active = SceneManager::GetActiveScene();
+			deleteObj =Active->FindGameObject(ELayerType::BackObject, L"plutoObj");
 			ani = deleteObj->GetComponent<Animator>();
 		}
 		if (mbActive == false && deleteObj != nullptr)
@@ -202,10 +217,9 @@ namespace roka
 		ani->Create(texture1, L"mage_antiGravity_homon1", 8, 14, 0.05f);
 		ani->Create(texture1, L"mage_antiGravity_homon2", 12, 14, 0.05f);
 		aniPtr = ani.get();
-		ani->CompleteEvent(L"mage_antiGravity_homon1") = std::bind([aniPtr]()->void {aniPtr->PlayAnimation(L"mage_antiGravity_homon2"); });
+		ani->CompleteEvent(L"mage_antiGravity_homon1") = std::bind([aniPtr]()->void {aniPtr->PlayAnimation(L"mage_antiGravity_homon2",true); });
 		ani->PlayAnimation(L"mage_antiGravity_homon1");
 		ani->CompleteEvent(L"mage_antiGravity_homon1") = std::bind(&AntiGravity::DeSpawnEffect, this, caster, key + L"_pluto");
-		ani->CompleteEvent(L"mage_antiGravity_homon2") = std::bind(&AntiGravity::DeSpawnEffect, this, caster, key);
 		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, effectObj);
 		if (mDir < 0.0f)
 		{
@@ -286,6 +300,7 @@ namespace roka
 		scale.y = 0.6f;
 		offset.x = 1.0f;
 		offset.y = -0.4f;
+		offset.z = 0.001f;
 		tf = effectObj->GetComponent<Transform>();
 		if (mDir > 0)
 			tf->position = pos + offset;
@@ -293,6 +308,7 @@ namespace roka
 		{
 			pos.x -= offset.x;
 			pos.y += offset.y;
+			pos.z = offset.z;
 			tf->position = pos;
 		}
 
@@ -516,8 +532,9 @@ namespace roka
 	void AntiGravity::CreateCircle(std::shared_ptr<GameObject> caster, std::wstring key)
 	{
 		std::shared_ptr<GameObject> circle = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
+		std::shared_ptr<GameObject> circle2 = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
 		circle->SetName(L"AntiGravityCircleObj");
-
+		circle2->SetName(L"AntiGravityCircleObj2");
 		std::shared_ptr<Transform> tf;
 		Animator* aniPtr = nullptr;
 		Vector3 scale = Vector3::One;
@@ -527,19 +544,39 @@ namespace roka
 		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
 		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
-
+		Vector3 plutoPos = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, L"plutoObj")->GetComponent<Transform>()->position;
+		Vector3 offset = Vector3(0.01f, -0.25f, 0.001f);
 		std::shared_ptr<Texture> circleTexture = npk->CreateAtlas(L"magiccircle-normal.img", 0, 1, L"mage_antiGravity_circle-normal");
+		
 		std::shared_ptr<Animator> ani = circle->GetComponent<Animator>();
 		ani->Create(circleTexture, L"mage_antiGravity_circle-normal", 0, 0, 0.0f);
 		ani->PlayAnimation(L"mage_antiGravity_circle-normal");
 		std::shared_ptr<ChangeSizeOverTime> change_size = circle->GetComponent<ChangeSizeOverTime>();
-		change_size->SetOffset(Vector3(0.1f, 0.1f, 0.0f));
-		change_size->EndTime(0.4);
-
+		change_size->SetOffset(Vector3(0.3f, 0.3f, 0.0f));
+		change_size->EndTime(0.15);
+	
 		tf = circle->GetComponent<Transform>();
 		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
-		tf->position = Vector3(0.0f, -1.0f, 0.0f);
+		tf->position = plutoPos+offset;
+		tf->SetPivot(Vector3(1.0f, 0.5f, 0.0f));
+		tf->EnablePivot();
+
+		ani = circle2->GetComponent<Animator>();
+		ani->Create(circleTexture, L"mage_antiGravity_circle-normal", 0, 0, 0.0f);
+		ani->PlayAnimation(L"mage_antiGravity_circle-normal");
+		change_size = circle2->GetComponent<ChangeSizeOverTime>();
+		change_size->SetOffset(Vector3(0.3f, 0.3f, 0.0f));
+		change_size->EndTime(0.15);
+		
+		tf = circle2->GetComponent<Transform>();
+		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
+		tf->position = plutoPos+offset;
+		tf->SetPivot(Vector3(0.0f, 0.5f, 0.0f));
+		tf->EnablePivot();
+		std::shared_ptr<MeshRenderer> mesh = circle2->GetComponent<MeshRenderer>();
+		mesh->material->shader = VerticalAniEftShdaer;
 
 		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle);
+		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle2);
 	}
 }

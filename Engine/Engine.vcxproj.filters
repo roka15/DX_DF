@@ -133,6 +133,9 @@
     <ClInclude Include="AntiGravity.h">
       <Filter>Contents\Class\Skill\Player\AntiGravity</Filter>
     </ClInclude>
+    <ClInclude Include="ChangeSizeOverTime.h">
+      <Filter>Contents\Script\ChageSizeOverTiem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -257,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="AntiGravity.cpp">
       <Filter>Contents\Class\Skill\Player\AntiGravity</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeSizeOverTime.cpp">
+      <Filter>Contents\Script\ChageSizeOverTiem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +424,9 @@
     </Filter>
     <Filter Include="Contents\Class\Skill\Player\AntiGravity">
       <UniqueIdentifier>{426615f0-bd4b-40ee-bea8-dafaa2f94db6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\ChageSizeOverTiem">
+      <UniqueIdentifier>{674896c9-4ea4-476b-bad3-4716842fb311}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

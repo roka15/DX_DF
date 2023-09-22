@@ -8,6 +8,7 @@
 #include "ImageComponent.h"
 #include "Animator.h"
 #include "PlayerScript.h"
+#include "ChangeSizeOverTime.h"
 
 #include "Mesh.h"
 #include "Material.h"
