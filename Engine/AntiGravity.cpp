@@ -92,6 +92,8 @@ namespace roka
 			Scene* Active = SceneManager::GetActiveScene();
 			deleteObj =Active->FindGameObject(ELayerType::BackObject, L"plutoObj");
 			ani = deleteObj->GetComponent<Animator>();
+
+			CreateFamiliarEft(deleteObj);
 		}
 		if (mbActive == false && deleteObj != nullptr)
 		{
@@ -152,6 +154,11 @@ namespace roka
 			caster->GetChild(L"plutoEyeObj")->GetComponent<Animator>()->ActiveAnimationNull();
 			caster->GetChild(L"plutoLightObj")->GetComponent<Animator>()->PlayAnimation(L"mage_anitGravity_pluto_light");
 			caster->GetChild(L"plutoSmokeObj")->GetComponent<Animator>()->PlayAnimation(L"mage_antiGravity_pluto_smoke");
+		}
+		else if (frameEvent.compare(L"CreateFamiliar") == 0)
+		{
+			Vector3 pos = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, L"FamiliarEftObj")->GetComponent<Transform>()->position;
+			AntiGravity::CreateFamiliar(pos);
 		}
 	}
 	void AntiGravity::OnCollisionEnter(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)
@@ -539,8 +546,10 @@ namespace roka
 	{
 		std::shared_ptr<GameObject> circle = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
 		std::shared_ptr<GameObject> circle2 = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
+		
 		circle->SetName(L"AntiGravityCircleObj");
 		circle2->SetName(L"AntiGravityCircleObj2");
+		
 		std::shared_ptr<Transform> tf;
 		Animator* aniPtr = nullptr;
 		Vector3 scale = Vector3::One;
@@ -550,7 +559,8 @@ namespace roka
 		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
 		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
-		Vector3 plutoPos = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, L"plutoObj")->GetComponent<Transform>()->position;
+		std::shared_ptr<GameObject> pluto = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, L"plutoObj");
+		Vector3 plutoPos = pluto->GetComponent<Transform>()->position;
 		Vector3 offset = Vector3(0.01f, -0.25f, 0.001f);
 		std::shared_ptr<Texture> circleTexture = npk->CreateAtlas(L"magiccircle-normal.img", 0, 1, L"mage_antiGravity_circle-normal");
 		
@@ -558,9 +568,10 @@ namespace roka
 		ani->Create(circleTexture, L"mage_antiGravity_circle-normal", 0, 0, 0.0f);
 		ani->PlayAnimation(L"mage_antiGravity_circle-normal");
 		std::shared_ptr<ChangeSizeOverTime> change_size = circle->GetComponent<ChangeSizeOverTime>();
-		change_size->SetOffset(Vector3(0.3f, 0.3f, 0.0f));
+		change_size->SetOffset(Vector3(0.3f, 0.25f, 0.0f));
 		change_size->EndTime(0.15);
 		change_size->SetActive(true);
+		
 	
 		tf = circle->GetComponent<Transform>();
 		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
@@ -572,9 +583,10 @@ namespace roka
 		ani->Create(circleTexture, L"mage_antiGravity_circle-normal", 0, 0, 0.0f);
 		ani->PlayAnimation(L"mage_antiGravity_circle-normal");
 		change_size = circle2->GetComponent<ChangeSizeOverTime>();
-		change_size->SetOffset(Vector3(0.3f, 0.3f, 0.0f));
+		change_size->SetOffset(Vector3(0.3f, 0.25f, 0.0f));
 		change_size->EndTime(0.15);
 		change_size->SetActive(true);
+		change_size->SetEndEvent() = std::bind(&AntiGravity::CreateCircleEft, this, pluto);
 
 		tf = circle2->GetComponent<Transform>();
 		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
@@ -584,11 +596,140 @@ namespace roka
 		std::shared_ptr<MeshRenderer> mesh = circle2->GetComponent<MeshRenderer>();
 		mesh->material->shader = VerticalAniEftShdaer;
 
+		
+
 		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle);
 		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle2);
+		
+	}
+	void AntiGravity::CreateCircleEft(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
+		std::shared_ptr<Animator> ani;
+		std::shared_ptr<GameObject> circleEft = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
+		std::shared_ptr<GameObject> circleEft2 = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
+		circleEft->SetName(L"AntiGravityCircleEftObj");
+		circleEft2->SetName(L"AntiGravityCircleEftObj2");
+		std::shared_ptr<Texture> eftTexture = npk->CreateAtlas(L"magiccircle-aura3.img", 0, 2, L"mage_antiGravity_circle-aura3");
+		ani = circleEft->GetComponent<Animator>();
+		ani->Create(eftTexture, L"mage_antiGravity_circle-aura3", 0, 1, 0.0f);
+		ani->PlayAnimation(L"mage_antiGravity_circle-aura3");
+
+		std::shared_ptr<ChangeSizeOverTime> cso = circleEft->GetComponent<ChangeSizeOverTime>();
+		cso->SetOffset(Vector3::Zero);
+		cso->SetAlphaType(EAlphaType::FadeOut);
+		cso->SetAlphaOffset(0.15f);
+		cso->EndTime(1.0f);
+		cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle, this, circleEft);
+		cso->SetActive(true);
+
+		std::shared_ptr<Transform> tf = circleEft->GetComponent<Transform>();
+		tf->scale = Vector3(15.8f, 10.5f, 1.0f);
+		tf->position = Vector3(0.55f, 2.2f, 0.0f);
+
+	
+		ani = circleEft2->GetComponent<Animator>();
+		ani->Create(eftTexture, L"mage_antiGravity_circle-aura3", 1, 2, 0.0f);
+		ani->PlayAnimation(L"mage_antiGravity_circle-aura3");
+
+		cso = circleEft2->GetComponent<ChangeSizeOverTime>();
+		cso->SetOffset(Vector3::Zero);
+		cso->SetAlphaType(EAlphaType::FadeOut);
+		cso->SetAlphaOffset(0.15f);
+		cso->EndTime(1.0f);
+		cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle, this, circleEft2);
+		cso->SetActive(true);
+
+		tf = circleEft2->GetComponent<Transform>();
+		tf->scale = Vector3(15.8f, 10.5f, 1.0f);
+		tf->position = Vector3(0.55f, 2.2f, 0.0f);
+
+		caster->AddChild(circleEft);
+		caster->AddChild(circleEft2);
+	}
+	void AntiGravity::CreateFamiliarEft(std::shared_ptr<GameObject> caster)
+	{
+		Vector3 pos = caster->GetComponent<Transform>()->position;
+		std::shared_ptr<GameObject> eft = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"AniEftObject");
+		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mage_familiar");
+		std::shared_ptr<Texture> Texture = npk->CreateAtlas(L"hit01d.img", 0, 21, L"mage_antiGravity_familiar_blackcat_eft");
+		eft->SetName(L"FamiliarEftObj");
+		std::shared_ptr<Animator> ani = eft->GetComponent<Animator>();
+		ani->Create(Texture, L"mage_antiGravity_familiar_blackcat_eft", 0, 21, 0.1f);
+		ani->PlayAnimation(L"mage_antiGravity_familiar_blackcat_eft",false);
+		ani->CompleteEvent(L"mage_antiGravity_familiar_blackcat_eft") = std::bind(&AntiGravity::DeSpawnFamiliarEft, this);
+		std::shared_ptr<Transform> tf = eft->GetComponent<Transform>();
+		tf->position = pos;
+		tf->scale = Vector3(0.5f, 0.5f, 1.0f);
+
+		std::shared_ptr<GameObject> eft2 = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"AniObject");
+		Texture = npk->CreateAtlas(L"particlea.img", 0, 15, L"mage_antiGravity_familiar_blackcat_eft2");
+		eft2->SetName(L"FamiliarEftObj2");
+		ani = eft2->GetComponent<Animator>();
+		ani->Create(Texture, L"mage_antiGravity_familiar_blackcat_eft2", 0, 15, 0.1f);
+		ani->PlayAnimation(L"mage_antiGravity_familiar_blackcat_eft2", false);
+		std::shared_ptr<Animation> animation = ani->FindAnimation(L"mage_antiGravity_familiar_blackcat_eft2");
+		animation->RegisterFrameEvent(L"CreateFamiliar", 2);
+		ani->SetFrameEventListener(this);
+		
+		tf = eft2->GetComponent<Transform>();
+		tf->position = pos;
+		std::shared_ptr<MeshRenderer> mesh = eft2->GetComponent<MeshRenderer>();
+		mesh->alpha = 0.8f;
+		
+
+		Scene* Active = SceneManager::GetActiveScene();
+		Active->AddGameObject(ELayerType::BackObject, eft);
+		Active->AddGameObject(ELayerType::BackObject, eft2);
+	}
+	void AntiGravity::CreateFamiliar(Vector3 pos)
+	{
+		DeSpawnFamiliarEft();
+		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mage_familiar");
+		std::shared_ptr<GameObject> eft = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"AniHideObject");
+		std::shared_ptr<Texture> Texture= npk->CreateAtlas(L"great_n.img", 0, 2, L"mage_antiGravity_familiar_blackcat_eft3");
+		eft->SetName(L"FamiliarEftObj3");
+		std::shared_ptr<Animator>ani = eft->GetComponent<Animator>();
+		ani->Create(Texture, L"mage_antiGravity_familiar_blackcat_eft3", 0, 2, 0.1f);
+		ani->PlayAnimation(L"mage_antiGravity_familiar_blackcat_eft3", true);
+
+		std::shared_ptr<Transform> tf = eft->GetComponent<Transform>();
+		tf->position = pos;
+		tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+
+		Time::CallBackTimerInfo callBack = {};
+		callBack.endTime = 1.0f;
+		Time::RequestEvent(callBack, std::bind(&AntiGravity::DeSpawnFamiliar,this,eft));
+		
+
+		Scene* Active = SceneManager::GetActiveScene();
+		Active->AddGameObject(ELayerType::BackObject, eft);
 	}
 	void AntiGravity::DeSpawnCircle(std::shared_ptr<GameObject> caster)
 	{
 		caster->active = GameObject::EState::Dead;
+	}
+	void AntiGravity::DeSpawnFamiliarEft()
+	{
+		Scene* Active = SceneManager::GetActiveScene();
+		std::shared_ptr<GameObject> Object = Active->FindGameObject(ELayerType::BackObject, L"FamiliarEftObj");
+		std::shared_ptr<Animator> ani = Object->GetComponent<Animator>();
+		ani->ActiveAnimationNull();
+		Object->active = GameObject::EState::Dead;
+
+		Object = Active->FindGameObject(ELayerType::BackObject, L"FamiliarEftObj2");
+		ani->ActiveAnimationNull();
+		Object->active = GameObject::EState::Dead;
+		
+	}
+	void AntiGravity::DeSpawnFamiliar(std::shared_ptr<GameObject> caster)
+	{
+		std::shared_ptr<ChangeSizeOverTime> cso = caster->GetComponent<ChangeSizeOverTime>();
+		cso->SetOffset(Vector3::Zero);
+		cso->SetAlphaType(EAlphaType::FadeOut);
+		cso->SetAlphaOffset(0.01f);
+		cso->EndTime(1.0f);
+		cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle, this, caster);
+		cso->SetActive(true);
 	}
 }

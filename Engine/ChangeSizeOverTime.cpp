@@ -53,7 +53,7 @@ namespace roka
 		std::shared_ptr<MeshRenderer> mesh = owner->GetComponent<MeshRenderer>();
 		mCurTime += Time::DeltaTime();
 
-		Vector3 scale = tf->scale;
+		Vector3 scale = tf->GetLocalScale();
 		float alpha = 0.0f;
 		if (mCurTime <= mEndTime)
 		{
@@ -84,6 +84,7 @@ namespace roka
 			mesh->alpha = 0.0f;
 		else
 			mesh->alpha = resultAlpha;
+
 		tf->scale = scale;
 	}
 

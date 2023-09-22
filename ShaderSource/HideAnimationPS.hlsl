@@ -15,7 +15,6 @@ struct VSOut
 	float2 UV : TEXCOORD;
 };
 
-
 float4 main(VSOut In) : SV_TARGET
 {
 	float4 color = (float4) 1.0f;
@@ -28,7 +27,7 @@ float4 main(VSOut In) : SV_TARGET
 
 	color = atlasTexture.Sample(pointSampler, UV);
 
-	
+
 
 	float4 lightColor = float4(0.2f, 0.2f, 0.2f, 1.0f);
 
@@ -38,10 +37,12 @@ float4 main(VSOut In) : SV_TARGET
 	}
 
 	color *= lightColor;
+	if (color.x != 0.0f && color.y != 0.0f && color.z != 0.0f&&color.w !=1.0f)
+	{
+		color.w = alpha;
+	}
 
-	
 	color.xyz *= alpha;
-	
 
 	return color;
 }

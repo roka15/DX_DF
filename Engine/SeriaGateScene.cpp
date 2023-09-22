@@ -527,7 +527,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<MeshRenderer> mr = GateUp->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
-			mr->alpha = 0.6f;
+			//mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateUp->AddComponent<Animator>();
 			ani->Create(L"gate", L"gateup.img", L"DoorEft04", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft04", true);

@@ -28,6 +28,7 @@ namespace roka
 		void SetScale(float x, float y, float z) { mScale = Vector3(x, y, z); }
 
 		Vector3 GetLocalPosition() { return mPosition; }
+		Vector3 GetLocalScale() { return mScale; }
 		Vector3 GetPosition(); 
 		Vector3 GetRotation(); 
 		Vector3 GetScale(); 

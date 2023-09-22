@@ -17,6 +17,7 @@ namespace roka::pool
 			is_create = AddPool(L"WarningEftObject", prefab::Prefabs[L"WarningEftObject"]);
 			is_create = AddPool(L"ChangeSizeOverTimeObject", prefab::Prefabs[L"ChangeSizeOverTimeObject"],50);
 			is_create = AddPool(L"ChangeSizeOverTimeEftObject", prefab::Prefabs[L"ChangeSizeOverTimeEftObject"],50);
+			is_create = AddPool(L"AniHideObject", prefab::Prefabs[L"AniHideObject"], 50);
 		}
 		virtual void Release()override
 		{

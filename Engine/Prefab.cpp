@@ -103,6 +103,17 @@ namespace roka::prefab
 			Resources::Insert(key, material);
 		}
 		{
+			//1.alpha 값을 서서히 높이거나 줄일때 
+			//2.texture blend state 가 oneone 이 아니고 alpha blend일때
+			key = L"DefaultHideAniMaterial";
+			std::shared_ptr<Material> material = std::make_shared<Material>();
+			material->SetKey(key);
+			material->shader = Resources::Find<Shader>(L"HideAlphaBlendShader");
+			material->render_mode = ERenderMode::Transparent;
+			Resources.insert(std::make_pair(key, material));
+			Resources::Insert(key, material);
+		}
+		{
 			key = L"DefaultVInverterAniMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
@@ -168,6 +179,22 @@ namespace roka::prefab
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
+
+		std::shared_ptr<roka::Image> AniHideObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			AniHideObject->SetName(L"AniHideObject");
+			AniHideObject->AddComponent<Animator>();
+			AniHideObject->AddScript<ChangeSizeOverTime>();
+
+			std::shared_ptr<MeshRenderer>mr = AniHideObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultHideAniMaterial");
+			mr->material->render_mode = ERenderMode::Transparent;
+		}
+
 
 
 		std::shared_ptr<roka::Image> ColAniObject = object::Instantiate<roka::Image>(
@@ -262,6 +289,7 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(WarningEftObject->GetName(), WarningEftObject));
 		Prefabs.insert(std::make_pair(ChangeSizeOverTimeObject->GetName(), ChangeSizeOverTimeObject));
 		Prefabs.insert(std::make_pair(ChangeSizeOverTimeEftObject->GetName(), ChangeSizeOverTimeEftObject));
+		Prefabs.insert(std::make_pair(AniHideObject->GetName(), AniHideObject));
 		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
 		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
 		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/
@@ -355,6 +383,7 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(Spider_MonsterObject->GetName(), Spider_MonsterObject));
 		Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
 		Prefabs.insert(std::make_pair(PlayerObject->GetName(), PlayerObject));
+	
 	}
 	void Release()
 	{
@@ -373,6 +402,7 @@ namespace roka::prefab
 		std::shared_ptr<NPK> hudUI_npk = Resources::Find<NPK>(L"ui_hud");
 		std::shared_ptr<NPK> mage_AntiGravity = Resources::Find<NPK>(L"mageAntiGravity");
 		std::shared_ptr<NPK> mage_homonculouse = Resources::Find<NPK>(L"homonculouse");
+		std::shared_ptr<NPK> mage_familiar = Resources::Find<NPK>(L"familiar");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -393,5 +423,7 @@ namespace roka::prefab
 			mage_AntiGravity = Resources::Load<NPK>(L"mageAntiGravity", path + L"mageAntiGravity.npk");
 		if (mage_homonculouse == nullptr)
 			mage_homonculouse = Resources::Load<NPK>(L"homonculouse", path + L"homonculouse.npk");
+		if (mage_familiar == nullptr)
+			mage_familiar = Resources::Load<NPK>(L"mage_familiar", path + L"mage_familiar.npk");
 	}
 }

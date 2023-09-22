@@ -38,8 +38,13 @@ namespace roka
 		void CreatePlutoEffect(std::shared_ptr<GameObject> caster, std::wstring key);
 		void CreateSuccessTube(std::shared_ptr<GameObject> caster, std::wstring key,Vector3 offset);
 		void CreateCircle(std::shared_ptr<GameObject> caster, std::wstring key);
-
+		void CreateCircleEft(std::shared_ptr<GameObject>caster);
+		void CreateFamiliarEft(std::shared_ptr<GameObject> caster);
+		void CreateFamiliar(Vector3 pos);
+		
 		void DeSpawnCircle(std::shared_ptr<GameObject> caster);
+		void DeSpawnFamiliarEft();
+		void DeSpawnFamiliar(std::shared_ptr<GameObject> caster);
 	private:
 		Vector3 mEyeOriginPos;
 		float mDir;

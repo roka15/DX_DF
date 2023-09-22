@@ -280,6 +280,20 @@
     <ClCompile Include="WestcoastScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\AnimationEffectPS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\EffectPS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\HideAnimationPS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\HidePS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
     <None Update="C:\Users\skagu\OneDrive\바탕 화면\예람\DX11_DF\Engine_Source\RokaMath.inl">
       <FileType>Document</FileType>
     </None>
