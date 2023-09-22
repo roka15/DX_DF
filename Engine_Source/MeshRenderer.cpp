@@ -9,13 +9,15 @@ namespace roka
 {
 	using namespace roka::graphics;
 	MeshRenderer::MeshRenderer()
-		:Component(EComponentType::MeshRenderer)
+		:Component(EComponentType::MeshRenderer),
+		mAlpha(1.0f)
 	{
 	}
 	MeshRenderer::MeshRenderer(const MeshRenderer& ref) : Component(ref)
 	{
 		mMesh = ref.mMesh;
 		mMaterial = std::make_shared<Material>(*(ref.mMaterial.get()));
+		mAlpha = ref.mAlpha;
 	}
 	void MeshRenderer::Copy(Component* src)
 	{
@@ -25,6 +27,7 @@ namespace roka
 			return;
 		mMesh = source->mMesh;
 		mMaterial = std::make_shared<Material>(*(source->mMaterial.get()));
+		mAlpha = source->mAlpha;
 	}
 	MeshRenderer::~MeshRenderer()
 	{
@@ -32,6 +35,7 @@ namespace roka
 	void MeshRenderer::Initialize()
 	{
 		Component::Initialize();
+		mAlpha = 1.0f;
 	}
 	void MeshRenderer::Update()
 	{

@@ -72,14 +72,20 @@ namespace roka
 
 			Scene* Active = SceneManager::GetActiveScene();
 			std::shared_ptr<GameObject> Object = Active->FindGameObject(ELayerType::BackObject, L"AntiGravityCircleObj");
-			std::shared_ptr<Animator> ani2 = Object->GetComponent<Animator>();
-			ani2->ActiveAnimationNull();
-			Object->active = GameObject::EState::Dead;
+			std::shared_ptr<ChangeSizeOverTime> cso = Object->GetComponent<ChangeSizeOverTime>();
+			cso->SetAlphaType(EAlphaType::FadeOut);
+			cso->SetAlphaOffset(0.15f);
+			cso->EndTime(1.0f);
+			cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle,this,Object);
+			cso->SetActive(true);
 
 			Object = Active->FindGameObject(ELayerType::BackObject, L"AntiGravityCircleObj2");
-			ani2 = Object->GetComponent<Animator>();
-			ani2->ActiveAnimationNull();
-			Object->active = GameObject::EState::Dead;
+			cso = Object->GetComponent<ChangeSizeOverTime>();
+			cso->SetAlphaType(EAlphaType::FadeOut);
+			cso->SetAlphaOffset(0.15f);
+			cso->EndTime(1.0f);
+			cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle, this, Object);
+			cso->SetActive(true);
 		}
 		else if (key.compare(L"pluto_reverse") == 0)
 		{
@@ -554,6 +560,7 @@ namespace roka
 		std::shared_ptr<ChangeSizeOverTime> change_size = circle->GetComponent<ChangeSizeOverTime>();
 		change_size->SetOffset(Vector3(0.3f, 0.3f, 0.0f));
 		change_size->EndTime(0.15);
+		change_size->SetActive(true);
 	
 		tf = circle->GetComponent<Transform>();
 		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
@@ -567,7 +574,8 @@ namespace roka
 		change_size = circle2->GetComponent<ChangeSizeOverTime>();
 		change_size->SetOffset(Vector3(0.3f, 0.3f, 0.0f));
 		change_size->EndTime(0.15);
-		
+		change_size->SetActive(true);
+
 		tf = circle2->GetComponent<Transform>();
 		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
 		tf->position = plutoPos+offset;
@@ -578,5 +586,9 @@ namespace roka
 
 		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle);
 		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle2);
+	}
+	void AntiGravity::DeSpawnCircle(std::shared_ptr<GameObject> caster)
+	{
+		caster->active = GameObject::EState::Dead;
 	}
 }

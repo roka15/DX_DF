@@ -22,6 +22,7 @@ cbuffer Animation : register(b3)
 	float2 AniOffset;
 	float2 ViewSize;
 	float3 pad;
+	float alpha;
 }
 struct LightAttribute
 {

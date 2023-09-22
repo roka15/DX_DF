@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Animator.h"
 #include "Texture.h"
+#include "MeshRenderer.h"
 #include "NPK.h"
 #include "Resources.h"
 #include "RokaTime.h"
@@ -95,7 +96,9 @@ namespace roka
 		data.SpriteOffset = sprite.offset;
 		data.SpriteSize = sprite.image_size;
 		data.CanvasSize = sprite.canvas_size;
-
+	
+		std::shared_ptr<MeshRenderer> meshRenderer = mAnimator.lock()->owner->GetComponent<MeshRenderer>();
+		data.Alpha = meshRenderer->alpha;
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Animation];
 		cb->SetData(&data);
 

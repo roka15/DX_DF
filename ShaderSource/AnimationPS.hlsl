@@ -22,12 +22,14 @@ float4 main(VSOut In) : SV_TARGET
 	//color = atlasTexture.Sample(pointSampler, In.UV);
 	float2 UV = AniLeftTop + (ViewSize * In.UV);
 
-	/*if (UV.x < AniLeftTop.x || UV.x > AniLeftTop.x + AniSize.x
+	if (UV.x < AniLeftTop.x || UV.x > AniLeftTop.x + AniSize.x
 		|| UV.y < AniLeftTop.y || UV.y > AniLeftTop.y + AniSize.y)
-		discard;*/
+		discard;
 
 	color = atlasTexture.Sample(pointSampler, UV);
+
 	
+
 	float4 lightColor = float4(0.2f, 0.2f, 0.2f, 1.0f);
 
 	for (int i = 0; i < 2; i++)
@@ -36,6 +38,8 @@ float4 main(VSOut In) : SV_TARGET
 	}
 
 	color *= lightColor;
+
+	color.xyz *= alpha;
 
 	return color;
 }

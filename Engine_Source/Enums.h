@@ -93,4 +93,11 @@ namespace roka::enums
 		Spot,
 		End,
 	};
+	enum class EAlphaType
+	{
+		None,
+		FadeIn,
+		FadeOut,
+		End,
+	};
 }

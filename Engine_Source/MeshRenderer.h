@@ -23,14 +23,18 @@ namespace roka
 		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
 		void SetMaterial(std::shared_ptr<Material> material) { mMaterial = material; }
 		std::shared_ptr<Material> GetMaterial() { return mMaterial; }
+		void SetAlpha(float alpha) { mAlpha = alpha; }
+		float GetAlpha() { return mAlpha; }
 
 		PROPERTY(GetMesh,SetMesh) std::shared_ptr<Mesh> mesh;
 		PROPERTY(GetMaterial,SetMaterial) std::shared_ptr<Material> material;
+		PROPERTY(GetAlpha, SetAlpha) float alpha;
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;
 		std::shared_ptr<Mesh> mMesh;
 		std::shared_ptr<Material> mMaterial;
+		float mAlpha;
 	};
 }
 

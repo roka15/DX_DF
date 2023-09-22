@@ -42,6 +42,8 @@ namespace roka::renderer
 		Vector2 SpriteSize;
 		Vector2 SpriteOffset;
 		Vector2 CanvasSize;
+		Vector3 Pad;
+		float Alpha;
 	};
 	
 

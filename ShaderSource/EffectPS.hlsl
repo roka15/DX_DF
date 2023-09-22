@@ -32,8 +32,9 @@ float4 main(VSOut In) : SV_TARGET
 			   color.w = 0.05f;
 		   }
 	   }
-	 /*  float4 result = color + In.Color;
-	   result = saturate(result);*/
-	  
-		return color;
+
+	   /*  float4 result = color + In.Color;
+		 result = saturate(result);*/
+
+	   return color;
 }

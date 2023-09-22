@@ -192,6 +192,7 @@ namespace roka::renderer
 		BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP::D3D11_BLEND_OP_ADD;
 		BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
 		BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	
 		BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 		GetDevice()->CreateBlendState(&BlendDesc, blendStates[(UINT)EBSType::OneOne].GetAddressOf());

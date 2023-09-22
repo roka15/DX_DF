@@ -494,6 +494,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<MeshRenderer> mr = GateDown->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateDown->AddComponent<Animator>();
 			ani->Create(L"gate", L"gatedown.img", L"DoorEft02", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft02", true);
@@ -508,6 +509,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<MeshRenderer> mr = GateDownThin->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateDownThin->AddComponent<Animator>();
 			ani->Create(L"gate", L"gatedownthin.img", L"DoorEft03", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft03", true);
@@ -525,6 +527,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<MeshRenderer> mr = GateUp->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateUp->AddComponent<Animator>();
 			ani->Create(L"gate", L"gateup.img", L"DoorEft04", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft04", true);
@@ -542,6 +545,7 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<MeshRenderer> mr = GateUpThin->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateUpThin->AddComponent<Animator>();
 			ani->Create(L"gate", L"getupthin.img", L"DoorEft05", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft05", true);
