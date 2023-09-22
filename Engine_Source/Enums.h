@@ -36,6 +36,7 @@ namespace roka::enums
 		NamedMonster,
 		TairangMonster,
 		Warning,
+		ChangeSizeOverTime,
 		End,
 	};
 

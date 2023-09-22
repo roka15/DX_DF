@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "User.h"
 #include "AnimationObjectPool.h"
+#include "WarningObjectPool.h"
 #include "SceneManager.h"
 #include "NPK.h"
 #include "Resources.h"
@@ -14,6 +15,7 @@
 #include "MeshRenderer.h"
 
 #include "PlayerScript.h"
+#include "ChangeSizeOverTime.h"
 
 
 namespace roka
@@ -122,6 +124,7 @@ namespace roka
 			CreateSuccessTube(caster, L"tube", Vector3(-1.2f, -0.2f, 0.0f));
 			CreateSuccessTube(caster, L"tube", Vector3(0.55f, 0.0f, 0.001f));
 			CreateSuccessTube(caster, L"tube", Vector3(1.5f, -0.2f, 0.0f));
+			CreateCircle(caster, L"circle");
 		}
 		else if (frameEvent.compare(L"mage_antiGravity_pluto_effect2") == 0)
 		{
@@ -509,5 +512,34 @@ namespace roka
 		caster->AddChild(great);
 		caster->AddChild(normal);
 		caster->AddChild(success);
+	}
+	void AntiGravity::CreateCircle(std::shared_ptr<GameObject> caster, std::wstring key)
+	{
+		std::shared_ptr<GameObject> circle = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
+		circle->SetName(L"AntiGravityCircleObj");
+
+		std::shared_ptr<Transform> tf;
+		Animator* aniPtr = nullptr;
+		Vector3 scale = Vector3::One;
+
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AnimationShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAniShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
+
+		std::shared_ptr<Texture> circleTexture = npk->CreateAtlas(L"magiccircle-normal.img", 0, 1, L"mage_antiGravity_circle-normal");
+		std::shared_ptr<Animator> ani = circle->GetComponent<Animator>();
+		ani->Create(circleTexture, L"mage_antiGravity_circle-normal", 0, 0, 0.0f);
+		ani->PlayAnimation(L"mage_antiGravity_circle-normal");
+		std::shared_ptr<ChangeSizeOverTime> change_size = circle->GetComponent<ChangeSizeOverTime>();
+		change_size->SetOffset(Vector3(0.1f, 0.1f, 0.0f));
+		change_size->EndTime(0.4);
+
+		tf = circle->GetComponent<Transform>();
+		tf->scale = Vector3(0.0f, 0.0f, 0.0f);
+		tf->position = Vector3(0.0f, -1.0f, 0.0f);
+
+		SceneManager::GetActiveScene()->AddGameObject(ELayerType::BackObject, circle);
 	}
 }

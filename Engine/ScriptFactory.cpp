@@ -17,6 +17,8 @@
 #include "NamedMonsterScript.h"
 #include "TairangMonsterScript.h"
 
+#include "ChangeSizeOverTime.h"
+
 namespace roka
 {
 	void ScriptFactory::Initialize()
@@ -90,6 +92,11 @@ namespace roka
 		{
 			TairangMonsterScript* hs = dynamic_cast<TairangMonsterScript*>(script);
 			return std::shared_ptr<TairangMonsterScript>(new TairangMonsterScript(*hs));
+		};
+		mFactories[EScriptType::ChangeSizeOverTime] = [](Script* script)
+		{
+			ChangeSizeOverTime* cs = dynamic_cast<ChangeSizeOverTime*>(script);
+			return std::shared_ptr<ChangeSizeOverTime>(new ChangeSizeOverTime(*cs));
 		};
 	}
 	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)

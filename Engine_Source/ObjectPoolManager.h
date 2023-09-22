@@ -44,6 +44,15 @@ namespace roka::manager
 		{
 			mPools.clear();
 		}
+		bool AddPool(std::wstring key, std::shared_ptr<Origin> origin,size_t pool_size)
+		{
+			if (mPools.find(key) != mPools.end())
+				return false;
+			mPools.insert(std::make_pair(key, std::unique_ptr<ObjectPool<Origin>>(new ObjectPool<Origin>())));
+			mPools[key]->Initialize(origin, pool_size);
+
+			return true;
+		}
 		bool AddPool(std::wstring key, std::shared_ptr<Origin> origin)
 		{
 			if (mPools.find(key) != mPools.end())

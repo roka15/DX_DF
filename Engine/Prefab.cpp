@@ -19,6 +19,7 @@
 #include "MonsterScript.h"
 #include "SpiderMonsterScript.h"
 #include "TairangMonsterScript.h"
+#include "ChangeSizeOverTime.h"
 namespace roka::prefab
 {
 	std::map<std::wstring, std::shared_ptr<roka::GameObject>> Prefabs = {};
@@ -197,6 +198,33 @@ namespace roka::prefab
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
 		}
+		std::shared_ptr<roka::Image> ChangeSizeOverTimeObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			ChangeSizeOverTimeObject->SetName(L"ChangeSizeOverTimeObject");
+			ChangeSizeOverTimeObject->AddComponent<Animator>();
+			ChangeSizeOverTimeObject->AddScript<ChangeSizeOverTime>();
+			std::shared_ptr<MeshRenderer>mr = ChangeSizeOverTimeObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->material->shader->bsstate = EBSType::AlphaBlend;
+			mr->material->render_mode = ERenderMode::Transparent;
+		}
+		std::shared_ptr<roka::Image> ChangeSizeOverTimeEftObject = object::Instantiate<roka::Image>(
+			Vector3::Zero,
+			Vector3::Zero,
+			Vector3::One);
+		{
+			ChangeSizeOverTimeEftObject->SetName(L"ChangeSizeOverTimeEftObject");
+			ChangeSizeOverTimeEftObject->AddComponent<Animator>();
+			ChangeSizeOverTimeEftObject->AddScript<ChangeSizeOverTime>();
+			std::shared_ptr<MeshRenderer>mr = ChangeSizeOverTimeEftObject->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material->render_mode = ERenderMode::Transparent;
+		}
 
 		std::shared_ptr<roka::Image> WarningObject = object::Instantiate<roka::Image>(
 			Vector3::Zero,
@@ -232,6 +260,8 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(ColAniEftObject->GetName(), ColAniEftObject));
 		Prefabs.insert(std::make_pair(WarningObject->GetName(), WarningObject));
 		Prefabs.insert(std::make_pair(WarningEftObject->GetName(), WarningEftObject));
+		Prefabs.insert(std::make_pair(ChangeSizeOverTimeObject->GetName(), ChangeSizeOverTimeObject));
+		Prefabs.insert(std::make_pair(ChangeSizeOverTimeEftObject->GetName(), ChangeSizeOverTimeEftObject));
 		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
 		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
 		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/
