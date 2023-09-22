@@ -2,7 +2,8 @@
 #include "Component.h"
 #include "GameObject.h"
 namespace roka
-{
+{ 
+	//rect transform ±â´É
 	class Transform : public Component
 	{
 	private:
@@ -26,6 +27,7 @@ namespace roka
 		void SetRotation(float x, float y, float z) { mRotation = Vector3(x, y, z); }
 		void SetScale(float x, float y, float z) { mScale = Vector3(x, y, z); }
 
+		Vector3 GetLocalPosition() { return mPosition; }
 		Vector3 GetPosition(); 
 		Vector3 GetRotation(); 
 		Vector3 GetScale(); 
@@ -36,7 +38,10 @@ namespace roka
 
 		Matrix& GetMatrix() { return mWorld; }
 		float GetWorldZ();
-		
+
+		void SetPivot(Vector3 pivot) { mPivot = pivot; }
+		void EnablePivot();
+		void DisablePivot(); 
 		PROPERTY(GetPosition, SetPosition) Vector3 position;
 		PROPERTY(GetRotation, SetRotation)Vector3 rotation;
 		PROPERTY(GetScale, SetScale)Vector3 scale;
@@ -55,6 +60,10 @@ namespace roka
 		Vector3 mForward;
 		Vector3 mRight;
 
+		Vector3 mPivot;
+		bool mbPivot;
+		Vector3 mPivotOriginScale;
+		Vector3 mPivotOriginPos;
 		Matrix mWorld;
 	};
 }
