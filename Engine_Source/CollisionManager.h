@@ -33,10 +33,14 @@ namespace roka
 		static void Clear();
 		static double GetColliderTimer() { return mTime; }
 		static void FindCollider(std::shared_ptr<GameObject> obj,std::vector<std::shared_ptr<Collider2D>>& cols);
+	
+		static void RegisterID(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
+		static void DeleteID();
 	private:
 		static std::bitset<LAYER_MAX> mMatrix[LAYER_MAX];
 		static std::map<UINT64, bool> mCollisionMap;
 		static std::queue<std::pair<std::shared_ptr<Collider2D>, std::shared_ptr<Collider2D>>> mExitRequest;
+		static bool mbBreak;
 		static double mTime;
 	};
 

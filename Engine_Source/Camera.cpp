@@ -4,7 +4,6 @@
 #include "Application.h"
 #include "Renderer.h"
 #include "SceneManager.h"
-#include "DontDestroyOnLoad.h"
 #include "MeshRenderer.h"
 extern roka::Application application;
 namespace roka
@@ -171,20 +170,7 @@ namespace roka
 		mCutOutGameObjects.clear();
 		mTransparentObjects.clear();
 
-		Scene* scene = SceneManager::GetActiveScene();
-		for (size_t i = 0; i < (UINT)ELayerType::End; i++)
-		{
-			if (mLayerMask[i] == false)
-				continue;
-
-			Layer& layer = scene->GetLayer((ELayerType)i);
-
-			const std::vector<std::shared_ptr<GameObject>> objs = layer.GetGameObjects();
-
-			DivideAlphaBlendGameObjects(objs);
-		}
-
-		const std::vector<std::shared_ptr<GameObject>> objs = DontDestroyOnLoad::GetInstance()->GetGameObjects();
+		const std::vector<std::shared_ptr<GameObject>> objs = SceneManager::GetGameObjects(mLayerMask);
 		DivideAlphaBlendGameObjects(objs);
 
 	}

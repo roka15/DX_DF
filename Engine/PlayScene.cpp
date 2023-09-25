@@ -17,7 +17,7 @@
 #include "NormalMonsterPool.h"
 #include "AnimationObjectPool.h"
 #include "RokaTime.h"
-#include "DontDestroyOnLoad.h"
+
 
 
 #include "MoveScript.h"
@@ -61,7 +61,7 @@ namespace roka
 		Scene::Update();
 
 		std::shared_ptr<GameObject> obj
-			= DontDestroyOnLoad::GetInstance()->FindGameObject(L"Player");
+			= SceneManager::FindGameObject(L"Player");
 	
 		std::shared_ptr<GameObject> obj2
 			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
@@ -166,7 +166,9 @@ namespace roka
 		AddGameObject(ELayerType::Player, another_player);
 
 		std::shared_ptr<GameObject> player
-			= DontDestroyOnLoad::GetInstance()->FindGameObject(L"Player");
+			=SceneManager::FindGameObject(L"Player");
+		std::vector<std::shared_ptr<Collider2D>> playercols = player->GetChilds<Collider2D>();
+		
 
 		//°æÁ÷
 		std::shared_ptr<GameObject> skill01 = object::Instantiate<GameObject>(
@@ -232,9 +234,12 @@ namespace roka
 			Vector3(1.0f, 1.0f, 1.0f),
 			ELayerType::Portal
 			);
-		portal01->AddComponent<Collider2D>();
+		std::shared_ptr<Collider2D> portalCol = portal01->AddComponent<Collider2D>();
 		Portal* portal = manager::PortalManager::GetInstance()->Find(EPortalType::PlayTestUp);
 		portal->SetCollisionListener(portal01);
+		
+		CollisionManager::RegisterID(portalCol, playercols[0]);
+		CollisionManager::RegisterID(portalCol, playercols[1]);
 
 		CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal, true);
 	}

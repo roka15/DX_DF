@@ -15,7 +15,7 @@
 #include "..\\Engine\\PartManager.h"
 #include "..\\Engine\\SkillManager.h"
 #include "..\\Engine\\PortalManager.h"
-#include "DontDestroyOnLoad.h"
+
 namespace roka
 {
 
@@ -54,7 +54,6 @@ namespace roka
 		manager::PartManager::GetInstance()->Initialize();
 		roka::prefab::LateInitialize();
 		SceneManager::Initialize();
-		DontDestroyOnLoad::GetInstance()->Initialize();
 		manager::SkillManager::GetInstance()->Initialize();
 		manager::PortalManager::GetInstance()->Initialize();
 		
@@ -68,13 +67,11 @@ namespace roka
 		Input::Update();
 		CollisionManager::Update();
 		SceneManager::Update();
-		DontDestroyOnLoad::GetInstance()->Update();
 	}
 
 	void Application::LateUpdate()
 	{
 		SceneManager::LateUpdate();
-		DontDestroyOnLoad::GetInstance()->LateUpdate();
 		CollisionManager::LateUpdate();
 	}
 
@@ -91,7 +88,6 @@ namespace roka
 	{
 		Time::Release();
 		SceneManager::Release();
-		DontDestroyOnLoad::GetInstance()->Release();
 		manager::PortalManager::GetInstance()->Release();
 		renderer::Release();
 		prefab::Release();
@@ -103,7 +99,6 @@ namespace roka
 	void Application::Destroy()
 	{
 		SceneManager::Destroy();
-		DontDestroyOnLoad::GetInstance()->Destroy();
 	}
 
 	void Application::Present()

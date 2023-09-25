@@ -1,7 +1,6 @@
 #include "SeriaGateScene.h"
 #include "Resources.h"
 
-#include "DontDestroyOnLoad.h"
 #include "RokaTime.h"
 #include "Object.h"
 #include "Image.h"
@@ -53,7 +52,7 @@ void roka::SeriaGateScene::Initialize()
 	std::shared_ptr<PlayerScript> playerScript = player->GetComponent<PlayerScript>();
 	playerScript->LateInitialize();
 	player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.3f);
-	DontDestroyOnLoad::GetInstance()->AddGameObject(player);
+	SceneManager::AddGameObject(player);
 	
 #pragma region hud/ui
 
@@ -71,7 +70,7 @@ void roka::SeriaGateScene::Initialize()
 		std::shared_ptr<ImageComponent> imageComp = HudBase->GetComponent<ImageComponent>();
 		imageComp->SetSprite(L"ui_hud", L"hud.img", 0);
 	}
-	DontDestroyOnLoad::GetInstance()->AddGameObject(HudBase);
+	SceneManager::AddGameObject(HudBase);
 
 	std::shared_ptr<Image> HPBase = object::Instantiate<Image>(
 		Vector3(-0.393f, -0.02f, 0.0f),
@@ -1078,13 +1077,14 @@ void roka::SeriaGateScene::Initialize()
 	//
 #pragma endregion
 
+
 }
 
 void roka::SeriaGateScene::Update()
 {
 	Scene::Update();
 	std::shared_ptr<GameObject> obj
-		= DontDestroyOnLoad::GetInstance()->FindGameObject(L"Player");
+		= SceneManager::FindGameObject(L"Player");
 	if (obj != nullptr)
 	{
 		std::shared_ptr<PlayerScript> ps
@@ -1133,7 +1133,7 @@ void roka::SeriaGateScene::OnExit()
 void roka::SeriaGateScene::OnEnter()
 {
 	Scene::OnEnter();
-
+	
 	std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
 	light->SetName(L"main_light");
 	AddGameObject(ELayerType::Light, light);
@@ -1796,6 +1796,9 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<GridScript> script = grid->AddScript<GridScript>();
 		script->camera = UIcamera->GetComponent<Camera>();
 	}*/
+	std::shared_ptr<GameObject> player
+		= SceneManager::FindGameObject(L"Player");
+	std::vector<std::shared_ptr<Collider2D>> playercols = player->GetChilds<Collider2D>();
 
 	std::shared_ptr<GameObject> portal01 = object::Instantiate<GameObject>(
 		Vector3(-0.0f, -1.8f, 0.0f),
@@ -1803,10 +1806,12 @@ void roka::SeriaGateScene::OnEnter()
 		Vector3(0.5f, 0.7f, 1.0f),
 		ELayerType::Portal
 		);
-	portal01->AddComponent<Collider2D>();
+	std::shared_ptr<Collider2D> portalCol = portal01->AddComponent<Collider2D>();
 	Portal* portal = manager::PortalManager::GetInstance()->Find(EPortalType::SeriaBottom);
 	portal->SetCollisionListener(portal01);
 
+	CollisionManager::RegisterID(portalCol, playercols[0]);
+	CollisionManager::RegisterID(portalCol, playercols[1]);
 
 	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal,true);
 }

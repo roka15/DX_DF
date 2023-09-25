@@ -7,12 +7,12 @@ namespace roka::manager
 	}
 	void PortalManager::Initialize()
 	{
-		DirectPortal* portal = new DirectPortal(EPortalType::SeriaBottom,ESceneType::SeriaRoom);
+		DirectPortal* portal = new DirectPortal(EPortalType::SeriaBottom,ESceneType::SeriaRoom, Vector2(-0.8f, 2.5f));
 		portal->SetConnectScene(ESceneType::PlayTestScene);
 		portal->SetConnectPortal(EPortalType::PlayTestUp);
 		mPortalInfos.insert(std::make_pair(EPortalType::SeriaBottom, portal));
 
-		portal = new DirectPortal(EPortalType::PlayTestUp,ESceneType::PlayTestScene);
+		portal = new DirectPortal(EPortalType::PlayTestUp,ESceneType::PlayTestScene,Vector2(-0.0f,-1.5f));
 		portal->SetConnectScene(ESceneType::SeriaRoom);
 		portal->SetConnectPortal(EPortalType::SeriaBottom);
 		mPortalInfos.insert(std::make_pair(EPortalType::PlayTestUp, portal));

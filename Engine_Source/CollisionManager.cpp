@@ -2,7 +2,6 @@
 #include "SceneManager.h"
 
 #include "Collider2D.h"
-#include "DontDestroyOnLoad.h"
 #include "Transform.h"
 #include "RokaTime.h"
 namespace roka
@@ -10,6 +9,7 @@ namespace roka
 	std::bitset<LAYER_MAX>  CollisionManager::mMatrix[LAYER_MAX] = {};
 	std::map<UINT64, bool> CollisionManager::mCollisionMap = {};
 	std::queue<std::pair<std::shared_ptr<Collider2D>, std::shared_ptr<Collider2D>>> CollisionManager::mExitRequest;
+	bool CollisionManager::mbBreak;
 	double CollisionManager::mTime;
 
 	void CollisionManager::Initialize()
@@ -26,6 +26,11 @@ namespace roka
 				if (mMatrix[column][row] == true)
 				{
 					LayerCollision((ELayerType)column, (ELayerType)row);
+					if (mbBreak)
+					{
+						mbBreak = false;
+						return;
+					}
 				}
 			}
 		}
@@ -56,27 +61,17 @@ namespace roka
 			left->OnCollisionExit(right);
 			right->OnCollisionExit(left);
 		}
-	
+
 	}
 	void CollisionManager::LayerCollision(ELayerType left, ELayerType right)
 	{
 		Scene* scene = SceneManager::GetActiveScene();
 
 		std::vector<std::shared_ptr<GameObject>> lefts
-			= scene->GetGameObjects(left);
+			= SceneManager::FindGameObjects(left);
 		std::vector<std::shared_ptr<GameObject>> rights
-			= scene->GetGameObjects(right);
+			= SceneManager::FindGameObjects(right);
 
-		std::vector<std::shared_ptr<GameObject>> DontDestroys = DontDestroyOnLoad::GetInstance()->FindGameObjects(left);
-		for (auto& obj : DontDestroys)
-		{
-			lefts.push_back(obj);
-		}
-		DontDestroys = DontDestroyOnLoad::GetInstance()->FindGameObjects(right);
-		for (auto& obj : DontDestroys)
-		{
-			rights.push_back(obj);
-		}
 		std::vector<std::shared_ptr<Collider2D>> leftCols = {};
 		std::vector<std::shared_ptr<Collider2D>> rightCols = {};
 
@@ -104,6 +99,8 @@ namespace roka
 					for (int j = 0; j < rightCols.size(); j++)
 					{
 						ColliderCollision(leftCols[i], rightCols[j]);
+						if (mbBreak)
+							return;
 					}
 				}
 				rightCols.clear();
@@ -116,6 +113,9 @@ namespace roka
 		ColliderID id = {};
 		id.left = left->GetColliderID();
 		id.right = right->GetColliderID();
+
+		ELayerType leftType = left->owner->layer_type;
+		ELayerType RightType = right->owner->layer_type;
 
 		std::map<UINT64, bool>::iterator itr
 			= mCollisionMap.find(id.id);
@@ -133,6 +133,8 @@ namespace roka
 				right->OnCollisionEnter(left);
 				left->time = mTime;
 				right->time = mTime;
+				if (mbBreak)
+					return;
 			}
 			else
 			{
@@ -140,8 +142,10 @@ namespace roka
 				right->OnCollisionStay(left);
 				left->time = mTime;
 				right->time = mTime;
+				if (mbBreak)
+					return;
 			}
-			itr->second = true;
+				itr->second = true;
 		}
 		else
 		{
@@ -169,17 +173,17 @@ namespace roka
 		Matrix scale = Matrix::CreateScale(leftTf->scale);
 		Matrix rotation = Matrix::CreateRotationX(leftTf->rotation.x);
 		rotation *= Matrix::CreateRotationY(leftTf->rotation.y);
-		rotation *= Matrix::CreateRotationZ(left->GetRotation()+leftTf->rotation.z);
+		rotation *= Matrix::CreateRotationZ(left->GetRotation() + leftTf->rotation.z);
 		Matrix position;
 		position.Translation(leftTf->position);
-		Matrix leftMat = scale*rotation*position;
+		Matrix leftMat = scale * rotation * position;
 
 		scale = Matrix::CreateScale(rightTf->scale);
 		rotation = Matrix::CreateRotationX(rightTf->rotation.x);
 		rotation *= Matrix::CreateRotationY(rightTf->rotation.y);
 		rotation *= Matrix::CreateRotationZ(right->GetRotation() + rightTf->rotation.z);
 		position.Translation(rightTf->position);
-		Matrix rightMat = scale*rotation*position;
+		Matrix rightMat = scale * rotation * position;
 
 		Vector3 Axis[4] = {};
 
@@ -294,5 +298,28 @@ namespace roka
 		}
 
 		return;
+	}
+	void CollisionManager::RegisterID(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
+	{
+		//portal 이동 후 Scene 이동했을 때 다음 포탈 위에서 스폰될 것이기 때문에 과는 미리 enter 상태로 만들어 두기.
+		ColliderID id = {};
+		id.left = left->GetColliderID();
+		id.right = right->GetColliderID();
+
+		std::map<UINT64, bool>::iterator itr
+			= mCollisionMap.find(id.id);
+		if (itr == mCollisionMap.end())
+		{
+			mCollisionMap.insert(std::make_pair(id.id, false));
+			itr = mCollisionMap.find(id.id);
+		}
+		itr->second = true;
+		left->OnCollisionStay(right);
+		right->OnCollisionStay(left);
+	}
+	void CollisionManager::DeleteID()
+	{
+		mbBreak = true;
+		mCollisionMap.clear();
 	}
 }

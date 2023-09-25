@@ -4,6 +4,8 @@
 #include "Collider2D.h"
 #include "PlayerScript.h"
 #include "PortalManager.h"
+#include "CollisionManager.h"
+#include "Transform.h"
 namespace roka
 {
 	void Portal::SetCollisionListener(std::shared_ptr<GameObject>& obj)
@@ -33,7 +35,12 @@ namespace roka
 				direct->SetConnectScene(mCurScene);
 			}
 		}
-		
+		std::shared_ptr<Transform> tf = player->owner->GetComponent<Transform>();
+		Vector3 pos = tf->position;
+		pos.x = mPlayerSpawnPos.x;
+		pos.y = mPlayerSpawnPos.y;
+		tf->position = pos;
+
 		SceneManager::LoadScene(nextScene);
 	}
 	void DirectPortal::OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)

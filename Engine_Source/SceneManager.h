@@ -2,6 +2,7 @@
 #include "Scene.h"
 namespace roka
 {
+	class GameObject;
 	class SceneManager
 	{
 	public:
@@ -32,6 +33,13 @@ namespace roka
 		static Scene* GetActiveScene() { return mActiveScene; }
 		static Scene* LoadScene(std::wstring name);
 		static Scene* LoadScene(ESceneType type);
+		static void AddGameObject(enums::ELayerType type, std::shared_ptr<GameObject> obj);
+		static void AddGameObject(std::shared_ptr<GameObject> obj);
+		static std::shared_ptr<GameObject> FindGameObject(std::wstring key);
+		static std::shared_ptr<GameObject> FindGameObject(enums::ELayerType type, std::wstring key);
+		static std::vector<std::shared_ptr<GameObject>> FindGameObjects(enums::ELayerType type);
+		static std::vector<std::shared_ptr<GameObject>> GetGameObjects();
+		static std::vector<std::shared_ptr<GameObject>> GetGameObjects(const std::bitset<(UINT)enums::ELayerType::End>& layerMask);
 	private:
 		static Scene* mActiveScene;
 		static std::map<std::wstring, Scene*> mScenes;
