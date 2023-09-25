@@ -27,6 +27,8 @@ namespace roka
 		
 		void SetSize(Vector2 size) { mSize = size; }
 		Vector2 GetSize() { return mSize; }
+		void SetDepth(float depth) { mDepth = depth; }
+		float GetDepth() { return mDepth; }
 		void SetCenter(Vector2 size) { mCenter = size; }
 		Vector2 GetCenter() { return mCenter; }
 		void SetRotation(float z) { mRotationZ = z; }
@@ -46,6 +48,7 @@ namespace roka
 		void DisableColCheck() { mbColCehck = false; }
 
 		PROPERTY(GetSize, SetSize) Vector2 size;
+		PROPERTY(GetDepth, SetDepth) float depth;
 		PROPERTY(GetCenter, SetCenter) Vector2 center;
 
 		GET_PROPERTY(GetColliderID) UINT collider_id;
@@ -66,6 +69,7 @@ namespace roka
 		Vector3 mPosition;
 		float mRotationZ;
 		Vector2 mSize;
+		float mDepth;//z
 		Vector2 mCenter;
 		bool mbCollision;
 		double mTime;

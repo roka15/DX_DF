@@ -1,5 +1,10 @@
 #pragma once
 #include "RokaEngine.h"
+namespace roka::graphics
+{
+    class Texture;
+}
+using namespace roka::graphics;
 namespace roka
 {
     using namespace math;
@@ -12,6 +17,7 @@ namespace roka
         virtual ~Sprite();
     
         void Create(std::wstring npk_key,std::wstring imagepack_key,UINT index);
+        void Create(std::shared_ptr<Texture> texture, int index);
         
         void SetLeftTop(const Vector2& pos) { mLeftTop = pos; }
         Vector2 GetLeftTop()const  { return mLeftTop; }

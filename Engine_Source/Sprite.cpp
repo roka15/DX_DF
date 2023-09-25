@@ -1,6 +1,7 @@
 #include "Sprite.h"
 #include "Resources.h"
 #include "NPK.h"
+#include "Texture.h"
 #include <string.h>
 namespace roka
 {
@@ -57,6 +58,22 @@ namespace roka
 		mNPKKey = npk_key;
 		mPackKey = imagepack_key;
 		mIndex = index;
+	}
+	void Sprite::Create(std::shared_ptr<Texture> texture, int index)
+	{
+		Sprite sprite = texture->GetSprite(index);
+		mLeftTop = sprite.mLeftTop;
+		mCanvasSize = sprite.mCanvasSize;
+		mImageSize = sprite.mImageSize;
+		mOffset = sprite.mOffset;
+		size_t size = sprite.mNPKKey.size();
+		mNPKKey.resize(size);
+		std::wcsncpy(mNPKKey.data(), sprite.mNPKKey.c_str(), size);
+		size = sprite.mPackKey.size();
+		mPackKey.resize(size);
+		std::wcsncpy(mPackKey.data(), sprite.mPackKey.c_str(), size);
+
+		mIndex = sprite.mIndex;
 	}
 	void Sprite::SetRatioValue(const Vector2& resolution)
 	{

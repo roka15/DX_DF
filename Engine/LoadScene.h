@@ -7,6 +7,7 @@
 #pragma comment(lib,"..\\Libraries\\Debug\\Engine.lib")
 #endif
 
+#include "StartLoadScene.h"
 #include "PlayScene.h"
 #include "SeriaGateScene.h"
 #include "WestcoastScene.h"
@@ -16,6 +17,7 @@ namespace roka
 {
 	void InitializeScenes()
 	{
+		SceneManager::CreateScene<StartLoadScene>(L"StartLoadScene");
 		SceneManager::CreateScene<PlayScene>(L"PlayScene");
 
 		SceneManager::CreateScene<SelectCharacterScene>(L"SelectChScene");
@@ -23,6 +25,6 @@ namespace roka
 		SceneManager::CreateScene<WestcoastScene>(L"WestcoastScene");
 		SceneManager::CreateScene<HendonmyreScene>(L"HendonmyreScene");
 
-		SceneManager::LoadScene(L"SeriaGateScene");
+		SceneManager::LoadScene(L"StartLoadScene");
 	}
 }

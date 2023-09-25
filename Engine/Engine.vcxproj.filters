@@ -136,6 +136,10 @@
     <ClInclude Include="ChangeSizeOverTime.h">
       <Filter>Contents\Script\ChageSizeOverTiem</Filter>
     </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Manager\InputManager</Filter>
+    </ClInclude>
+    <ClInclude Include="StartLoadScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -263,6 +267,12 @@
     </ClCompile>
     <ClCompile Include="ChangeSizeOverTime.cpp">
       <Filter>Contents\Script\ChageSizeOverTiem</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Manager\InputManager</Filter>
+    </ClCompile>
+    <ClCompile Include="StartLoadScene.cpp">
+      <Filter>Contents\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

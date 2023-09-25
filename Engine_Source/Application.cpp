@@ -15,6 +15,7 @@
 #include "..\\Engine\\PartManager.h"
 #include "..\\Engine\\SkillManager.h"
 #include "..\\Engine\\PortalManager.h"
+#include "..\\Engine\\InputManager.h"
 
 namespace roka
 {
@@ -45,6 +46,7 @@ namespace roka
 
 		Time::Initiailize();
 		Input::Initialize();
+		manager::InputManager::GetInstance()->Initialize();
 		
 		FactoryManager::Initialize();
 
@@ -65,12 +67,14 @@ namespace roka
 	{
 		Time::Update();
 		Input::Update();
+		manager::InputManager::GetInstance()->Update();
 		CollisionManager::Update();
 		SceneManager::Update();
 	}
 
 	void Application::LateUpdate()
 	{
+		manager::InputManager::GetInstance()->LateUpdate();
 		SceneManager::LateUpdate();
 		CollisionManager::LateUpdate();
 	}
@@ -78,7 +82,7 @@ namespace roka
 	void Application::Render()
 	{
 		Time::Render();
-
+	
 		graphicDevice->ClearTarget();
 		graphicDevice->UpdateViewPort();
 		renderer::Render();
@@ -87,6 +91,7 @@ namespace roka
 	void Application::Release()
 	{
 		Time::Release();
+		manager::InputManager::GetInstance()->Release();
 		SceneManager::Release();
 		manager::PortalManager::GetInstance()->Release();
 		renderer::Release();

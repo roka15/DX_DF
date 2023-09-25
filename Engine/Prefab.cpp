@@ -378,6 +378,7 @@ namespace roka::prefab
 		std::shared_ptr<NPK> gate = Resources::Find<NPK>(L"gate");
 		std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
 		std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
+		std::shared_ptr<NPK> infomationButton = Resources::Find<NPK>(L"infoBtn");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -411,5 +412,7 @@ namespace roka::prefab
 			inven_npk = Resources::Load<NPK>(L"inventory", L"..\\Resources\\npk\\inventory.npk");
 		if (tooltip_npk == nullptr)
 			tooltip_npk = Resources::Load<NPK>(L"tooltip", L"..\\Resources\\npk\\tooltip.npk");
+		if(infomationButton == nullptr)
+			infomationButton = Resources::Load<NPK>(L"infoBtn", L"..\\Resources\\npk\\InformationButton.npk");
 	}
 }

@@ -60,52 +60,52 @@ namespace roka
 	{
 		Scene::Update();
 
-		std::shared_ptr<GameObject> obj
-			= SceneManager::FindGameObject(L"Player");
+		//std::shared_ptr<GameObject> obj
+		//	= SceneManager::FindGameObject(L"Player");
 	
-		std::shared_ptr<GameObject> obj2
-			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
+		//std::shared_ptr<GameObject> obj2
+		//	= FindGameObject(ELayerType::Player, L"AnotherPlayer");
 
-		std::shared_ptr<PlayerScript> ps
-			= obj->GetComponent<PlayerScript>();
+		//std::shared_ptr<PlayerScript> ps
+		//	= obj->GetComponent<PlayerScript>();
 
-		if (Input::GetKeyDown(EKeyCode::LEFT))
-			ps->LeftBtnDown();
-		if (Input::GetKeyUp(EKeyCode::LEFT))
-			ps->LeftBtnUp();
-		if (Input::GetKeyDown(EKeyCode::RIGHT))
-			ps->RightBtnDown();
-		if (Input::GetKeyUp(EKeyCode::RIGHT))
-			ps->RightBtnUp();
-		if (Input::GetKeyDown(EKeyCode::UP))
-			ps->UpBtnDown();
-		if (Input::GetKeyUp(EKeyCode::UP))
-			ps->UpBtnUp();
-		if (Input::GetKeyDown(EKeyCode::DOWN))
-			ps->DownBtnDown();
-		if (Input::GetKeyUp(EKeyCode::DOWN))
-			ps->DownBtnUp();
-		if (Input::GetKeyDown(EKeyCode::X))
-			ps->NomalAtkBtnDown();
-		if (Input::GetKeyDown(EKeyCode::F))
-			ps->Skill((UINT)EKeyCode::F);
-
+		//if (Input::GetKeyDown(EKeyCode::LEFT))
+		//	ps->LeftBtnDown();
+		//if (Input::GetKeyUp(EKeyCode::LEFT))
+		//	ps->LeftBtnUp();
+		//if (Input::GetKeyDown(EKeyCode::RIGHT))
+		//	ps->RightBtnDown();
+		//if (Input::GetKeyUp(EKeyCode::RIGHT))
+		//	ps->RightBtnUp();
+		//if (Input::GetKeyDown(EKeyCode::UP))
+		//	ps->UpBtnDown();
+		//if (Input::GetKeyUp(EKeyCode::UP))
+		//	ps->UpBtnUp();
+		//if (Input::GetKeyDown(EKeyCode::DOWN))
+		//	ps->DownBtnDown();
+		//if (Input::GetKeyUp(EKeyCode::DOWN))
+		//	ps->DownBtnUp();
+		//if (Input::GetKeyDown(EKeyCode::X))
+		//	ps->NomalAtkBtnDown();
 		//if (Input::GetKeyDown(EKeyCode::F))
+		//	ps->Skill((UINT)EKeyCode::F);
+
+		////if (Input::GetKeyDown(EKeyCode::F))
+		////{
+		////	obj->GetComponent<Rigidbody>()->AddForce(Vector2(30.0f, 60*980.0f));
+		////	obj->GetComponent<Rigidbody>()->disableGround();
+		////}
+		////
+		//if (Input::GetKeyDown(EKeyCode::G))
 		//{
-		//	obj->GetComponent<Rigidbody>()->AddForce(Vector2(30.0f, 60*980.0f));
-		//	obj->GetComponent<Rigidbody>()->disableGround();
+		//	test_num += 90;
+		//	if (test_num > 360)
+		//		test_num = 0;
+		//	if (obj2 != nullptr)
+		//		obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
 		//}
-		//
-		if (Input::GetKeyDown(EKeyCode::G))
-		{
-			test_num += 90;
-			if (test_num > 360)
-				test_num = 0;
-			if (obj2 != nullptr)
-				obj2->GetComponent<Transform>()->rotation = Vector3(0.0, 0.0, Deg2Rad(test_num));
-		}
-		if (Input::GetKeyDown(EKeyCode::SPACE))
-			ps->JumpBtnDown();
+		//if (Input::GetKeyDown(EKeyCode::SPACE))
+		//	ps->JumpBtnDown();
 	}
 
 	void PlayScene::LateUpdate()

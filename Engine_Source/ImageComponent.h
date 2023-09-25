@@ -4,6 +4,7 @@
 namespace roka::graphics
 {
     class Material;
+    class Texture;
 }
 using namespace roka::graphics;
 namespace roka
@@ -26,6 +27,7 @@ namespace roka
         bool Binds();
 
         void SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index);
+        void SetSprite(std::shared_ptr<Texture>& texture,int index);
         const Sprite& GetSprite();
         void SetMaterial(std::shared_ptr<Material> material);
         

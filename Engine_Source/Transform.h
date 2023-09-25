@@ -27,6 +27,8 @@ namespace roka
 		void SetRotation(float x, float y, float z) { mRotation = Vector3(x, y, z); }
 		void SetScale(float x, float y, float z) { mScale = Vector3(x, y, z); }
 
+		void SetPosition(Vector2 position) { mPosition.x = position.x; mPosition.y = position.y; }
+
 		Vector3 GetLocalPosition() { return mPosition; }
 		Vector3 GetLocalScale() { return mScale; }
 		Vector3 GetPosition(); 

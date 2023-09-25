@@ -100,6 +100,7 @@ namespace roka::enums
 	enum class ESceneType
 	{
 		None,
+		StartLoad,
 		SeriaRoom,
 		PlayTestScene,
 		End,

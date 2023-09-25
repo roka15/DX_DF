@@ -41,23 +41,16 @@ void roka::SeriaGateScene::Initialize()
 	Scene::Initialize();
 	std::shared_ptr<NPK> hud_npk = Resources::Find<NPK>(L"ui_hud");
 
-
-	std::shared_ptr<NPK> mbskin_npk = Resources::Find<NPK>(L"baseskin");
 	std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
 	std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
 
-	std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
-	std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
-	player->SetName(L"Player");
-	std::shared_ptr<PlayerScript> playerScript = player->GetComponent<PlayerScript>();
-	playerScript->LateInitialize();
-	player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.3f);
-	SceneManager::AddGameObject(player);
-	
+
+
+
 #pragma region hud/ui
 
 	std::shared_ptr<Image> HudBase = object::Instantiate<Image>(
-		Vector3(0.1f, -1.89f, -20.0f),
+		Vector3(0.1f, -1.89f, -5.0f),
 		Vector3::Zero,
 		Vector3(3.5f, 0.6f, 1.0f));
 	{
@@ -70,7 +63,7 @@ void roka::SeriaGateScene::Initialize()
 		std::shared_ptr<ImageComponent> imageComp = HudBase->GetComponent<ImageComponent>();
 		imageComp->SetSprite(L"ui_hud", L"hud.img", 0);
 	}
-	SceneManager::AddGameObject(HudBase);
+	SceneManager::DontDestroy(HudBase);
 
 	std::shared_ptr<Image> HPBase = object::Instantiate<Image>(
 		Vector3(-0.393f, -0.02f, 0.0f),
@@ -1077,13 +1070,12 @@ void roka::SeriaGateScene::Initialize()
 	//
 #pragma endregion
 
-
 }
 
 void roka::SeriaGateScene::Update()
 {
 	Scene::Update();
-	std::shared_ptr<GameObject> obj
+	/*std::shared_ptr<GameObject> obj
 		= SceneManager::FindGameObject(L"Player");
 	if (obj != nullptr)
 	{
@@ -1112,7 +1104,7 @@ void roka::SeriaGateScene::Update()
 			ps->JumpBtnDown();
 		if (Input::GetKeyDown(EKeyCode::F))
 			ps->Skill((UINT)EKeyCode::F);
-	}
+	}*/
 }
 
 void roka::SeriaGateScene::LateUpdate()
@@ -1133,7 +1125,7 @@ void roka::SeriaGateScene::OnExit()
 void roka::SeriaGateScene::OnEnter()
 {
 	Scene::OnEnter();
-	
+
 	std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
 	light->SetName(L"main_light");
 	AddGameObject(ELayerType::Light, light);
@@ -1145,7 +1137,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
 		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
 		std::shared_ptr<NPK> gate_npk = Resources::Find<NPK>(L"gate");
-		
+
 
 #pragma region base bg
 		std::shared_ptr<Image> bg = object::Instantiate<Image>(
@@ -1445,7 +1437,7 @@ void roka::SeriaGateScene::OnEnter()
 			ani->PlayAnimation(L"SeriaLeaf01", true);
 		}
 #pragma endregion
-	
+
 #pragma region gate
 		std::shared_ptr<Image> MGateRight = object::Instantiate<Image>(
 			Vector3(0.8f, -1.3f, 0.1f),
@@ -1644,7 +1636,7 @@ void roka::SeriaGateScene::OnEnter()
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = SeriaNPC->AddComponent<Animator>();
-			ani->Create(L"npc", L"seria_event_2012summer.img",L"SeriaNPC_Room", 0, 33, 0.1f);
+			ani->Create(L"npc", L"seria_event_2012summer.img", L"SeriaNPC_Room", 0, 33, 0.1f);
 			ani->PlayAnimation(L"SeriaNPC_Room", true);
 		}
 		std::shared_ptr<Image> GoldBox = object::Instantiate<Image>(
@@ -1662,7 +1654,7 @@ void roka::SeriaGateScene::OnEnter()
 			ani->Create(L"npc", L"storagebrilliantdiamond.img", L"GoldBoxNPC_Room", 0, 18, 0.1f);
 			ani->PlayAnimation(L"GoldBoxNPC_Room", true);
 		}
-	
+
 
 		std::shared_ptr<Image> PremiumCoinShop = object::Instantiate<Image>(
 			Vector3(1.5f, 0.0f, 0.98f),
@@ -1726,7 +1718,7 @@ void roka::SeriaGateScene::OnEnter()
 			imageComp->SetSprite(L"npc", L"postbox.img", 0);
 		}
 
-		
+
 #pragma endregion
 	}
 
@@ -1774,6 +1766,7 @@ void roka::SeriaGateScene::OnEnter()
 		camera->AddScript<CameraScript>();
 		std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 		cameraComp->TurnLayerMask(ELayerType::UI, false);
+		cameraComp->TurnLayerMask(ELayerType::Raycast, false);
 		renderer::MainCamera = cameraComp;
 	}
 
@@ -1785,6 +1778,7 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<Camera> cameraComp = UIcamera->AddComponent<Camera>();
 		cameraComp->DisableLayerMasks();
 		cameraComp->TurnLayerMask(ELayerType::UI, true);
+		cameraComp->TurnLayerMask(ELayerType::Raycast, true);
 	}
 
 	/*{
@@ -1813,7 +1807,8 @@ void roka::SeriaGateScene::OnEnter()
 	CollisionManager::RegisterID(portalCol, playercols[0]);
 	CollisionManager::RegisterID(portalCol, playercols[1]);
 
-	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal,true);
+	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal, true);
+	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Raycast, true);
 }
 
 void roka::SeriaGateScene::Loading()

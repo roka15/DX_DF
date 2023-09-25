@@ -78,7 +78,7 @@ namespace roka
 	{
 		mActiveScene->AddGameObject(type, obj);
 	}
-	void SceneManager::AddGameObject(std::shared_ptr<GameObject> obj)
+	void SceneManager::DontDestroy(std::shared_ptr<GameObject> obj)
 	{
 		DontDestroyOnLoad::GetInstance()->AddGameObject(obj);
 	}

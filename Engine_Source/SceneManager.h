@@ -34,7 +34,7 @@ namespace roka
 		static Scene* LoadScene(std::wstring name);
 		static Scene* LoadScene(ESceneType type);
 		static void AddGameObject(enums::ELayerType type, std::shared_ptr<GameObject> obj);
-		static void AddGameObject(std::shared_ptr<GameObject> obj);
+		static void DontDestroy(std::shared_ptr<GameObject> obj);
 		static std::shared_ptr<GameObject> FindGameObject(std::wstring key);
 		static std::shared_ptr<GameObject> FindGameObject(enums::ELayerType type, std::wstring key);
 		static std::vector<std::shared_ptr<GameObject>> FindGameObjects(enums::ELayerType type);

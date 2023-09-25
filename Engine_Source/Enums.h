@@ -51,6 +51,7 @@ namespace roka::enums
 		Light,
 		Portal,
 		UI,
+		Raycast,
 		End,
 	};
 	

@@ -8,6 +8,7 @@
 #include "NPK.h"
 #include "Camera.h"
 #include "Transform.h"
+#include "Texture.h"
 
 using namespace roka::graphics;
 namespace roka
@@ -68,6 +69,10 @@ namespace roka
 	void ImageComponent::SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index)
 	{
 		mSprite->Create(npk_key, pack_key, index);
+	}
+	void ImageComponent::SetSprite(std::shared_ptr<Texture>& texture, int index)
+	{
+		mSprite->Create(texture,index);
 	}
 	const Sprite& ImageComponent::GetSprite()
 	{

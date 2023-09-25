@@ -34,6 +34,8 @@ namespace roka
 		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other);
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other);
 
+		virtual void RegisterKeyEvents();
+
 		virtual void BeAttacked(float damage,EStunState stun);
 		void EquipPart(EAvatarParts type);
 		void EquipPart(EAvatarParts type, std::wstring name);

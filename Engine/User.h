@@ -76,6 +76,7 @@ namespace roka::info
 		const UINT& GetUpKey()const { return mKeysInfo->up; }
 		const UINT& GetDownKey()const { return mKeysInfo->down; }
 		const UINT& GetNormalAtkKey()const { return mKeysInfo->normalAtk; }
+		const UINT& GetJumpKey()const { return mKeysInfo->jump; }
 		const UINT& GetSkillKey01()const { return mKeysInfo->skill1; }
 
 		void SetBaseAvatar(std::wstring name) { wcscpy(mCharacterInfo->base_skin_avatar,name.c_str()); }
@@ -98,6 +99,8 @@ namespace roka::info
 		GET_PROPERTY(GetUpKey) UINT up_key;
 		GET_PROPERTY(GetDownKey) UINT down_key;
 		GET_PROPERTY(GetNormalAtkKey) UINT normalAtk_key;
+		GET_PROPERTY(GetJumpKey) UINT jump_key;
+		GET_PROPERTY(GetSkillKey01) UINT skill01_key;
 
 	private:
 		std::unique_ptr<UserInfo> mUserInfo;

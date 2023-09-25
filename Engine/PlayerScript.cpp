@@ -6,6 +6,7 @@
 #include "NPK.h"
 #include "CollisionManager.h"
 #include "SkillManager.h"
+#include "InputManager.h"
 
 #include "ISkill.h"
 
@@ -25,6 +26,7 @@
 using namespace roka::info;
 namespace roka
 {
+	manager::InputManager* M_Input = manager::InputManager::GetInstance();
 	PlayerScript::PlayerScript() :Script(EScriptType::Player)
 		, mUser(std::make_unique<User>())
 		, mPlayerState(EPlayerState::Idle)
@@ -164,6 +166,21 @@ namespace roka
 
 	void PlayerScript::OnCollisionExit(std::shared_ptr<Collider2D> other)
 	{
+	}
+
+	void PlayerScript::RegisterKeyEvents()
+	{
+		M_Input->RegisterKeyEvent(mUser->left_key, EKeyState::Down, std::bind(&PlayerScript::LeftBtnDown,this));
+		M_Input->RegisterKeyEvent(mUser->left_key, EKeyState::Up, std::bind(&PlayerScript::LeftBtnUp, this));
+		M_Input->RegisterKeyEvent(mUser->right_key, EKeyState::Down, std::bind(&PlayerScript::RightBtnDown, this));
+		M_Input->RegisterKeyEvent(mUser->right_key, EKeyState::Up, std::bind(&PlayerScript::RightBtnUp, this));
+		M_Input->RegisterKeyEvent(mUser->down_key, EKeyState::Down, std::bind(&PlayerScript::DownBtnDown, this));
+		M_Input->RegisterKeyEvent(mUser->down_key, EKeyState::Up, std::bind(&PlayerScript::DownBtnUp, this));
+		M_Input->RegisterKeyEvent(mUser->up_key, EKeyState::Down, std::bind(&PlayerScript::UpBtnDown, this));
+		M_Input->RegisterKeyEvent(mUser->up_key, EKeyState::Up, std::bind(&PlayerScript::UpBtnUp, this));
+		M_Input->RegisterKeyEvent(mUser->normalAtk_key, EKeyState::Down, std::bind(&PlayerScript::NomalAtkBtnDown, this));
+		M_Input->RegisterKeyEvent(mUser->jump_key, EKeyState::Down, std::bind(&PlayerScript::JumpBtnDown, this));
+		M_Input->RegisterKeyEvent(mUser->skill01_key, EKeyState::Down, std::bind(&PlayerScript::Skill, this, mUser->skill01_key));
 	}
 
 	void PlayerScript::BeAttacked(float damage, EStunState stun)

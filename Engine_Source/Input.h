@@ -82,7 +82,9 @@ namespace roka
 			return false;
 		}
 		static __forceinline Vector2 GetMousePos() { return mMousePos; }
-
+	private:
+		static void KeyUpdate();
+		static void MouseUpdate();
 	private:
 		static std::vector<Key> mKeys;
 		static Vector2 mMousePos;
