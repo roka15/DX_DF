@@ -25,7 +25,7 @@ namespace roka::renderer
 		Matrix mView;
 		Matrix mProjection;
 	};
-	CBUFFER(MaterialCB, CBSLOT_ANIMATION)
+	CBUFFER(MaterialCB, CBSLOT_MATERIAL)
 	{
 		Vector4 Color;
 	};
@@ -42,8 +42,9 @@ namespace roka::renderer
 		Vector2 SpriteSize;
 		Vector2 SpriteOffset;
 		Vector2 CanvasSize;
-		Vector3 Pad;
 		float Alpha;
+		int Flag;
+		Vector2 padding;
 	};
 	
 

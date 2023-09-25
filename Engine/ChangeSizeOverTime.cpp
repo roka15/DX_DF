@@ -58,13 +58,17 @@ namespace roka
 		if (mCurTime <= mEndTime)
 		{
 			scale = scale + mOffset;
-			if (mAlphaType == EAlphaType::FadeIn)
+			if (mAlphaType > EAlphaType::None)
 			{
-				alpha += mAlpha;
-			}
-			else if (mAlphaType == EAlphaType::FadeOut)
-			{
-				alpha -= mAlpha;
+				mesh->EnableChangeAlpha();
+				if (mAlphaType == EAlphaType::FadeIn)
+				{
+					alpha += mAlpha;
+				}
+				else if (mAlphaType == EAlphaType::FadeOut)
+				{
+					alpha -= mAlpha;
+				}
 			}
 		}
 		else
@@ -74,6 +78,7 @@ namespace roka
 				mEndEvent();
 				mEndEvent = nullptr;
 			}
+			mesh->DisableChangeAlpha();
 			mbActive = false;
 			mAlpha = 0.0f;
 			mOffset = Vector3::Zero;

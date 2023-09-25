@@ -34,12 +34,14 @@ namespace roka
 		void SetDSState(EDSType type) { mDsType = type; }
 		void SetBSState(EBSType type) { mBsType = type; }
 	    
+		const EBSType& GetBSState() { return mBsType; }
+
 		void SetTopology(D3D11_PRIMITIVE_TOPOLOGY topology) { mTopology = topology; }
 		
 
 		SET_PROPERTY(SetRSState) ERSType rsstate;
 		SET_PROPERTY(SetDSState) EDSType dsstate;
-		SET_PROPERTY(SetBSState) EBSType bsstate;
+		PROPERTY(GetBSState,SetBSState) EBSType bsstate;
 		
 		SET_PROPERTY(SetTopology) D3D11_PRIMITIVE_TOPOLOGY topology;
 	private:

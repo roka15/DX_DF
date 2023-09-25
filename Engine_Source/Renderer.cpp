@@ -87,11 +87,6 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"AnimationShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
-
-		shader = roka::Resources::Find<Shader>(L"HideAlphaBlendShader");
-		GetDevice()->CreateInputLayout(arrLayout, 3
-			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
-		
 		
 		shader = roka::Resources::Find<Shader>(L"VerticalInverterAnimationShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
@@ -431,12 +426,7 @@ namespace roka::renderer
 		effectShader->bsstate = EBSType::OneOne;
 		roka::Resources::Insert(L"EffectShader", effectShader);
 
-		std::shared_ptr<Shader> hideAniShader = std::make_shared<Shader>();
-		hideAniShader->Create(EShaderStage::VS, L"AnimationVS.hlsl", "main");
-		hideAniShader->Create(EShaderStage::PS, L"HideAnimationPS.hlsl", "main");
-		hideAniShader->bsstate = EBSType::AlphaBlend;
-		roka::Resources::Insert(L"HideAlphaBlendShader", hideAniShader);
-
+		
 		std::shared_ptr<Shader> effectAniShader = std::make_shared<Shader>();
 		effectAniShader->Create(EShaderStage::VS, L"AnimationVS.hlsl", "main");
 		effectAniShader->Create(EShaderStage::PS, L"AnimationPS.hlsl", "main");

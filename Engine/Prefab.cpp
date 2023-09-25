@@ -103,17 +103,6 @@ namespace roka::prefab
 			Resources::Insert(key, material);
 		}
 		{
-			//1.alpha 값을 서서히 높이거나 줄일때 
-			//2.texture blend state 가 oneone 이 아니고 alpha blend일때
-			key = L"DefaultHideAniMaterial";
-			std::shared_ptr<Material> material = std::make_shared<Material>();
-			material->SetKey(key);
-			material->shader = Resources::Find<Shader>(L"HideAlphaBlendShader");
-			material->render_mode = ERenderMode::Transparent;
-			Resources.insert(std::make_pair(key, material));
-			Resources::Insert(key, material);
-		}
-		{
 			key = L"DefaultVInverterAniMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
@@ -179,24 +168,6 @@ namespace roka::prefab
 			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
-
-		std::shared_ptr<roka::Image> AniHideObject = object::Instantiate<roka::Image>(
-			Vector3::Zero,
-			Vector3::Zero,
-			Vector3::One);
-		{
-			AniHideObject->SetName(L"AniHideObject");
-			AniHideObject->AddComponent<Animator>();
-			AniHideObject->AddScript<ChangeSizeOverTime>();
-
-			std::shared_ptr<MeshRenderer>mr = AniHideObject->GetComponent<MeshRenderer>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultHideAniMaterial");
-			mr->material->render_mode = ERenderMode::Transparent;
-		}
-
-
-
 		std::shared_ptr<roka::Image> ColAniObject = object::Instantiate<roka::Image>(
 			Vector3::Zero,
 			Vector3::Zero,
@@ -289,7 +260,6 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(WarningEftObject->GetName(), WarningEftObject));
 		Prefabs.insert(std::make_pair(ChangeSizeOverTimeObject->GetName(), ChangeSizeOverTimeObject));
 		Prefabs.insert(std::make_pair(ChangeSizeOverTimeEftObject->GetName(), ChangeSizeOverTimeEftObject));
-		Prefabs.insert(std::make_pair(AniHideObject->GetName(), AniHideObject));
 		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
 		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
 		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/

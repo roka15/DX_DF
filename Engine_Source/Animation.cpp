@@ -9,6 +9,7 @@
 #include "Resources.h"
 #include "RokaTime.h"
 #include "GameObject.h"
+#include "..\\Engine\\ChangeSizeOverTime.h"
 namespace roka
 {
 	Animation::Animation() :Resource(enums::EResourceType::Animation)
@@ -96,8 +97,17 @@ namespace roka
 		data.SpriteOffset = sprite.offset;
 		data.SpriteSize = sprite.image_size;
 		data.CanvasSize = sprite.canvas_size;
-	
+
 		std::shared_ptr<MeshRenderer> meshRenderer = mAnimator.lock()->owner->GetComponent<MeshRenderer>();
+		
+		if (EBSType::OneOne == meshRenderer->material->shader->bsstate)
+			data.Flag |= 0x1;
+		
+		if (meshRenderer->GetChangeActiveAlpha() == true)
+			data.Flag |= 0x2;
+		
+		
+	
 		data.Alpha = meshRenderer->alpha;
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Animation];
 		cb->SetData(&data);

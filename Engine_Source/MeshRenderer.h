@@ -26,6 +26,10 @@ namespace roka
 		void SetAlpha(float alpha) { mAlpha = alpha; }
 		float GetAlpha() { return mAlpha; }
 
+		void EnableChangeAlpha() { mbChangeAlpha = true; }
+		void DisableChangeAlpha() { mbChangeAlpha = false; }
+		bool GetChangeActiveAlpha() { return mbChangeAlpha; }
+
 		PROPERTY(GetMesh,SetMesh) std::shared_ptr<Mesh> mesh;
 		PROPERTY(GetMaterial,SetMaterial) std::shared_ptr<Material> material;
 		PROPERTY(GetAlpha, SetAlpha) float alpha;
@@ -34,6 +38,7 @@ namespace roka
 		friend class ComponentFactory;
 		std::shared_ptr<Mesh> mMesh;
 		std::shared_ptr<Material> mMaterial;
+		bool mbChangeAlpha;
 		float mAlpha;
 	};
 }

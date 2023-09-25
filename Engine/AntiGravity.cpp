@@ -686,7 +686,7 @@ namespace roka
 	{
 		DeSpawnFamiliarEft();
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mage_familiar");
-		std::shared_ptr<GameObject> eft = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"AniHideObject");
+		std::shared_ptr<GameObject> eft = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeObject");
 		std::shared_ptr<Texture> Texture= npk->CreateAtlas(L"great_n.img", 0, 2, L"mage_antiGravity_familiar_blackcat_eft3");
 		eft->SetName(L"FamiliarEftObj3");
 		std::shared_ptr<Animator>ani = eft->GetComponent<Animator>();
