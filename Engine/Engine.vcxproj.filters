@@ -428,5 +428,8 @@
     <Filter Include="Contents\Script\ChageSizeOverTiem">
       <UniqueIdentifier>{674896c9-4ea4-476b-bad3-4716842fb311}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Manager\InputManager">
+      <UniqueIdentifier>{0475043d-f373-459f-b4d4-251b2f4d18c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

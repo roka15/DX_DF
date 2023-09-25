@@ -2,6 +2,7 @@
 #include "SceneManager.h"
 
 #include "Collider2D.h"
+#include "DontDestroyOnLoad.h"
 #include "Transform.h"
 #include "RokaTime.h"
 namespace roka
@@ -66,6 +67,16 @@ namespace roka
 		std::vector<std::shared_ptr<GameObject>> rights
 			= scene->GetGameObjects(right);
 
+		std::vector<std::shared_ptr<GameObject>> DontDestroys = DontDestroyOnLoad::GetInstance()->FindGameObjects(left);
+		for (auto& obj : DontDestroys)
+		{
+			lefts.push_back(obj);
+		}
+		DontDestroys = DontDestroyOnLoad::GetInstance()->FindGameObjects(right);
+		for (auto& obj : DontDestroys)
+		{
+			rights.push_back(obj);
+		}
 		std::vector<std::shared_ptr<Collider2D>> leftCols = {};
 		std::vector<std::shared_ptr<Collider2D>> rightCols = {};
 

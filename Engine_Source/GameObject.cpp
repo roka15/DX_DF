@@ -129,6 +129,42 @@ void roka::GameObject::Copy(GameObject* src)
 	}
 }
 
+void roka::GameObject::ChildDestroy()
+{
+	for(auto itr = mChild.begin(); itr!= mChild.end();)
+	{
+		std::shared_ptr<GameObject> child = (*itr);
+		if (child->active == EState::Dead)
+		{
+			itr = mChild.erase(itr);
+			continue;
+		}
+		else if (child->GetChildCont() != 0)
+		{
+			ChildDestroy(child);
+		}
+		itr++;
+	}
+}
+
+void roka::GameObject::ChildDestroy(std::shared_ptr<GameObject> parrent)
+{
+	for (auto itr = parrent->mChild.begin(); itr != parrent->mChild.end();)
+	{
+		std::shared_ptr<GameObject> child = (*itr);
+		if (child->active == EState::Dead)
+		{
+			itr = parrent->mChild.erase(itr);
+			continue;
+		}
+		else if (child->GetChildCont() != 0)
+		{
+			ChildDestroy(child);
+		}
+		itr++;
+	}
+}
+
 void roka::GameObject::AddChild(std::shared_ptr<GameObject> child)
 {
 	mChild.push_back(child);

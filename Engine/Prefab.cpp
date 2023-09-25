@@ -373,6 +373,11 @@ namespace roka::prefab
 		std::shared_ptr<NPK> mage_AntiGravity = Resources::Find<NPK>(L"mageAntiGravity");
 		std::shared_ptr<NPK> mage_homonculouse = Resources::Find<NPK>(L"homonculouse");
 		std::shared_ptr<NPK> mage_familiar = Resources::Find<NPK>(L"familiar");
+		std::shared_ptr<NPK> seria_room = Resources::Find<NPK>(L"seria_room");
+		std::shared_ptr<NPK> npc = Resources::Find<NPK>(L"npc");
+		std::shared_ptr<NPK> gate = Resources::Find<NPK>(L"gate");
+		std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
+		std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -395,5 +400,16 @@ namespace roka::prefab
 			mage_homonculouse = Resources::Load<NPK>(L"homonculouse", path + L"homonculouse.npk");
 		if (mage_familiar == nullptr)
 			mage_familiar = Resources::Load<NPK>(L"mage_familiar", path + L"mage_familiar.npk");
+
+		if (seria_room == nullptr)
+			seria_room = Resources::Load<NPK>(L"seria_room", L"..\\Resources\\npk\\seriaroom.npk");
+		if(npc == nullptr)
+			npc = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
+		if (gate == nullptr)
+			gate = Resources::Load<NPK>(L"gate", L"..\\Resources\\npk\\gate.npk");
+		if (inven_npk == nullptr)
+			inven_npk = Resources::Load<NPK>(L"inventory", L"..\\Resources\\npk\\inventory.npk");
+		if (tooltip_npk == nullptr)
+			tooltip_npk = Resources::Load<NPK>(L"tooltip", L"..\\Resources\\npk\\tooltip.npk");
 	}
 }

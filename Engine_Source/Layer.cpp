@@ -62,9 +62,9 @@ namespace roka
 				itr = mGameObjects.erase(itr);
 				continue;
 			}
-			else
+			else if((*itr)->GetChildCont()!=0)
 			{
-				ChildDestroy(*itr);
+				(*itr)->ChildDestroy();
 			}
 			itr++;
 		}

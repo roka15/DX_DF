@@ -133,6 +133,7 @@
       <Filter>Manager\ObjectPoolManager\EX</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaRandom.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -291,6 +292,7 @@
       <Filter>Manager\ObjectPoolManager\EX</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaRandom.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -439,6 +441,9 @@
     </Filter>
     <Filter Include="Common\Random">
       <UniqueIdentifier>{9eaef568-c5e6-4579-b77c-1af20504b0eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\DontDestroy">
+      <UniqueIdentifier>{5d4dbe50-bd2a-4e61-95eb-bccd03d6a0a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

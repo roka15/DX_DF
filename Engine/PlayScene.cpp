@@ -17,6 +17,7 @@
 #include "NormalMonsterPool.h"
 #include "AnimationObjectPool.h"
 #include "RokaTime.h"
+#include "DontDestroyOnLoad.h"
 
 
 #include "MoveScript.h"
@@ -60,7 +61,8 @@ namespace roka
 		Scene::Update();
 
 		std::shared_ptr<GameObject> obj
-			= FindGameObject(ELayerType::Player, L"Player");
+			= DontDestroyOnLoad::GetInstance()->FindGameObject(L"Player");
+	
 		std::shared_ptr<GameObject> obj2
 			= FindGameObject(ELayerType::Player, L"AnotherPlayer");
 
@@ -163,16 +165,8 @@ namespace roka
 		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
 		AddGameObject(ELayerType::Player, another_player);
 
-
-		std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
-		player->SetName(L"Player");
-		playerScript = player->GetComponent<PlayerScript>();
-		playerScript->LateInitialize();
-	
-		//player->AddComponent<Rigidbody>()->IsGravity(true);
-
-		//cd->SetSize(Vector2(0.05f, 0.2f));
-		AddGameObject(ELayerType::Player, player);
+		std::shared_ptr<GameObject> player
+			= DontDestroyOnLoad::GetInstance()->FindGameObject(L"Player");
 
 		//°æÁ÷
 		std::shared_ptr<GameObject> skill01 = object::Instantiate<GameObject>(

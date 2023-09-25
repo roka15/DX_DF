@@ -27,6 +27,8 @@ namespace roka
 
 
 		virtual void Copy(GameObject* src);
+		virtual void ChildDestroy();
+		virtual void ChildDestroy(std::shared_ptr<GameObject> parrent);
 
 		template <typename T>
 		std::shared_ptr<T> GetComponent()

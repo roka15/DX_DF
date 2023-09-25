@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "Renderer.h"
 #include "SceneManager.h"
+#include "DontDestroyOnLoad.h"
 #include "MeshRenderer.h"
 extern roka::Application application;
 namespace roka
@@ -182,6 +183,10 @@ namespace roka
 
 			DivideAlphaBlendGameObjects(objs);
 		}
+
+		const std::vector<std::shared_ptr<GameObject>> objs = DontDestroyOnLoad::GetInstance()->GetGameObjects();
+		DivideAlphaBlendGameObjects(objs);
+
 	}
 	void Camera::ZSortTransparencyGameObjects()
 	{
@@ -244,8 +249,8 @@ namespace roka
 				continue;
 			if (obj->GetState() != GameObject::EState::Active)
 				continue;
-			if (obj->GetName().compare(L"Base") == 0 || 
-				obj->GetName().compare(L"MGateRight")==0)
+			if (obj->GetName().compare(L"Base") == 0 ||
+				obj->GetName().compare(L"MGateRight") == 0)
 			{
 				int a = 0;
 			}
