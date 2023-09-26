@@ -23,6 +23,11 @@ namespace roka
 	Vector2 Input::mMousePos = Vector2::Zero;
 	double Input::mTime = 0.0;
 	int Input::mMousePosSameCheck = 0;
+	EMouseBtnType Input::mMouseType = EMouseBtnType::NONE;
+	EKeyState Input::mMouseState = EKeyState::None;
+	double Input::mMouseLBUpTime=0.0;
+	double Input::mMouseRBUpTime=0.0;
+	const double Input::mDoubleClickTime = 1.0;
 	void Input::Initialize()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -70,6 +75,25 @@ namespace roka
 	{
 
 	}
+	void Input::MouseBtnDown(PointerEventData* data)
+	{
+		if (mTime - mMouseLBUpTime <= mDoubleClickTime)
+		{
+			//double click
+			//data->double_click = true;
+		}
+		else if (mMouseState == EKeyState::Down)
+		{
+			//state-> pressed
+			mMouseState = EKeyState::Pressed;
+		}
+	}
+	void Input::MouseBtnUp(PointerEventData* data)
+	{
+		data->button = mMouseType;
+		mMouseLBUpTime = mTime;
+	}
+	
 	void Input::KeyUpdate()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -120,6 +144,7 @@ namespace roka
 		view.y = 0;
 		view.minDepth = 0.0f;
 		view.maxDepth = 1.0f;
+		Vector2 delta = Vector2::Zero;
 		Vector3 Pos = { (float)cursorPos.x,(float)cursorPos.y,0.0f };
 		Pos = view.Unproject(Pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 		if (mMousePos.x == Pos.x && mMousePos.y == Pos.y)
@@ -127,19 +152,27 @@ namespace roka
 		else
 			mMousePosSameCheck = 0;
 
+		delta = mMousePos;
+
 		mMousePos.x = Pos.x;
 		mMousePos.y = Pos.y;
 
-		std::vector<PointerEventData*> vec = {};
-		for (int i = 0; i < 300; i++)
+		PointerEventData* data = new PointerEventData();
+		data->button = mMouseType;
+		data->btn_state = mMouseState;
+		data->delta = delta;
+		data->position = mMousePos;
+		
+		switch (mMouseState)
 		{
-			vec.push_back(new PointerEventData());
+		case EKeyState::Down:
+			MouseBtnDown(data);
+			break;
+		case EKeyState::Up:
+			MouseBtnUp(data);
+			break;
 		}
 
-		for (auto& pointer : vec)
-		{
-			delete pointer;
-		}
-	
+		M_Input->OnMouseEvent(data);
 	}
 }

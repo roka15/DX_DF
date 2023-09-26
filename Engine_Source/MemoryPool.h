@@ -3,7 +3,7 @@
 #include "RokaEngine.h"
 namespace roka::stl
 {
-#define MEMORY_BYTE 128 //32KB
+#define MEMORY_BYTE 32768 //32KB
 	
 	class MemoryPool
 	{

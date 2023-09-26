@@ -5,6 +5,7 @@
 #include "Editor_Window.h"
 #include "..\Engine_Source\Application.h"
 #include "..\Engine\LoadScene.h"
+#include "..\Engine_Source\Input.h"
 #include "guiEditor.h"
 roka::Application application;
 
@@ -187,6 +188,19 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             EndPaint(hWnd, &ps);
         }
         break;
+    case WM_LBUTTONDOWN:
+        roka::Input::SetMouseState(roka::EMouseBtnType::LEFT,roka::EKeyState::Down);
+        break;
+    case WM_LBUTTONUP:
+        roka::Input::SetMouseState(roka::EMouseBtnType::LEFT,roka::EKeyState::Up);
+        break;
+    case WM_RBUTTONDOWN:
+        roka::Input::SetMouseState(roka::EMouseBtnType::RIGHT,roka::EKeyState::Down);
+        break;
+    case WM_RBUTTONUP:
+        roka::Input::SetMouseState(roka::EMouseBtnType::RIGHT, roka::EKeyState::Up);
+        break;
+
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

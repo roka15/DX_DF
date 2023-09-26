@@ -23,6 +23,13 @@ namespace roka
 		None,
 	};
 
+	enum class EMouseBtnType
+	{
+		LEFT,
+		RIGHT,
+		NONE,
+	};
+
 	class Input
 	{
 	public:
@@ -83,6 +90,10 @@ namespace roka
 		}
 		static __forceinline Vector2 GetMousePos() { return mMousePos; }
 		static __forceinline int GetMouseSameCnt() { return mMousePosSameCheck; }
+		static __forceinline void SetMouseState(EMouseBtnType type, EKeyState state) { mMouseType = type; mMouseState = state; }
+
+		static void MouseBtnDown(class PointerEventData* data);
+		static void MouseBtnUp(class PointerEventData* data);
 	private:
 		static void KeyUpdate();
 		static void MouseUpdate();
@@ -90,6 +101,11 @@ namespace roka
 		static std::vector<Key> mKeys;
 		static Vector2 mMousePos;
 		static int mMousePosSameCheck;
+		static EMouseBtnType mMouseType;
+		static EKeyState mMouseState;
+		static double mMouseLBUpTime;
+		static double mMouseRBUpTime;
+		static const double mDoubleClickTime;
 
 		static double mTime;
 	};

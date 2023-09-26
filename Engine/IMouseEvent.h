@@ -5,19 +5,13 @@ namespace roka
 {
 	using namespace math;
 	
-	enum class EMouseBtnType
-	{
-		None,
-		Left,
-		Right,
-		End,
-	};
 	class PointerEventData:public stl::MemoryPool
 	{
 	public:
-		Vector3 position;//event 발생 시점의 pos
-		Vector3 delta;//이전 프레임 이후 pos
+		Vector2 position;//event 발생 시점의 pos
+		Vector2 delta;//이전 프레임 이후 pos
 		EMouseBtnType button;//발생한 event의 버튼
+		EKeyState btn_state; // 버튼의 상태
 		int click_cnt; // 연속 클릭 
 		float scroll_delta;//스크롤 이동량
 		bool ui_check;//현재 오브젝트가 ui 인지 정보
@@ -26,35 +20,48 @@ namespace roka
 	};
 	class IPointerEnterHandler
 	{
-		virtual void OnPointerEnter(PointerEventData& data) = 0;
+	public:
+		virtual void OnPointerEnter(PointerEventData* data) = 0;
 	};
 	class IPointerExitHandler
 	{
-		virtual void OnPointerExit(PointerEventData& data) = 0;
+	public:
+		virtual void OnPointerExit(PointerEventData* data) = 0;
 	};
 	class IPointerDownHandler
 	{
-		virtual void OnPointerDown(PointerEventData& data) = 0;
+	public:
+		virtual void OnPointerDown(PointerEventData* data) = 0;
 	};
 	class IPointerUpHandler
 	{
-		virtual void OnPointerUp(PointerEventData& data) = 0;
+	public:
+		virtual void OnPointerUp(PointerEventData* data) = 0;
+	};
+	class IPointerClickHandler
+	{
+	public:
+		virtual void OnClick(PointerEventData* data) = 0;
 	};
 	class IBeginDragHandler
 	{
-		virtual void OnBeginDrag(PointerEventData& data) = 0;
+	public:
+		virtual void OnBeginDrag(PointerEventData* data) = 0;
 	};
 	class IDragHandler
 	{
-		virtual void OnDrag(PointerEventData& data) = 0;
+	public:
+		virtual void OnDrag(PointerEventData* data) = 0;
 	};
 	class IDropHandler
 	{
-		virtual void OnDrop(PointerEventData& data) = 0;
+	public:
+		virtual void OnDrop(PointerEventData* data) = 0;
 	};
 	class IEndDragHandler
 	{
-		virtual void OnEndDrag(PointerEventData& data) = 0;
+	public:
+		virtual void OnEndDrag(PointerEventData* data) = 0;
 	};
 }
 
