@@ -43,7 +43,7 @@ public:
 	{
 
 	}
-	Node(NodeType _type) :parent(nullptr), type(_type), data(nullptr), is_extra(false), key(-1)
+	Node(NodeType _type) :parent(nullptr),left(nullptr),right(nullptr), type(_type), data(nullptr), is_extra(false), key(-1)
 	{
 
 	}

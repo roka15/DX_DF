@@ -3,6 +3,7 @@
 #include "RokaTime.h"
 #include "..\\Engine\\InputManager.h"
 #include "Camera.h"
+#include "..\\Engine\\IMouseEvent.h"
 extern roka::Application application;
 
 namespace roka
@@ -21,7 +22,7 @@ namespace roka
 	std::vector<Input::Key> Input::mKeys;
 	Vector2 Input::mMousePos = Vector2::Zero;
 	double Input::mTime = 0.0;
-
+	int Input::mMousePosSameCheck = 0;
 	void Input::Initialize()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -103,13 +104,6 @@ namespace roka
 				mKeys[i].bPressed = false;
 			}
 		}
-
-		POINT mousePos = {};
-		GetCursorPos(&mousePos);
-
-		ScreenToClient(application.GetHwnd(), &mousePos);
-		mMousePos.x = mousePos.x;
-		mMousePos.y = mousePos.y;
 	}
 	void Input::MouseUpdate()
 	{
@@ -128,8 +122,24 @@ namespace roka
 		view.maxDepth = 1.0f;
 		Vector3 Pos = { (float)cursorPos.x,(float)cursorPos.y,0.0f };
 		Pos = view.Unproject(Pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
+		if (mMousePos.x == Pos.x && mMousePos.y == Pos.y)
+			mMousePosSameCheck++;
+		else
+			mMousePosSameCheck = 0;
 
 		mMousePos.x = Pos.x;
 		mMousePos.y = Pos.y;
+
+		std::vector<PointerEventData*> vec = {};
+		for (int i = 0; i < 300; i++)
+		{
+			vec.push_back(new PointerEventData());
+		}
+
+		for (auto& pointer : vec)
+		{
+			delete pointer;
+		}
+	
 	}
 }

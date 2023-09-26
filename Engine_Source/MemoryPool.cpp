@@ -1,7 +1,7 @@
 #include "RBT.h"
 #include "MemoryPool.h"
 
-namespace core
+namespace roka::stl
 {
 	MemoryPool::memorypool_t MemoryPool::m_memory_pools;
     std::shared_ptr < MemoryPool::memorypool_t> MemoryPool::sp_pools(&m_memory_pools
