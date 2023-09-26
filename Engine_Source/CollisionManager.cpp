@@ -77,9 +77,6 @@ namespace roka
 
 		for (std::shared_ptr<GameObject>& leftObj : lefts)
 		{
-			if (leftObj->GetState() != GameObject::EState::Active)
-				continue;
-
 			FindCollider(leftObj, leftCols);
 			if (leftCols.size() == 0)
 				continue;
@@ -88,8 +85,7 @@ namespace roka
 			{
 				if (leftObj == rightObj)
 					continue;
-				if (rightObj->GetState() != GameObject::EState::Active)
-					continue;
+			
 				FindCollider(rightObj, rightCols);
 				if (rightCols.size() == 0)
 					continue;
@@ -129,6 +125,9 @@ namespace roka
 		{
 			if (itr->second == false)
 			{
+				if (left->owner->active != GameObject::EState::Active ||
+					right->owner->active != GameObject::EState::Active)
+					return;
 				left->OnCollisionEnter(right);
 				right->OnCollisionEnter(left);
 				left->time = mTime;
@@ -138,6 +137,14 @@ namespace roka
 			}
 			else
 			{
+				if (left->owner->active != GameObject::EState::Active ||
+					right->owner->active != GameObject::EState::Active)
+				{
+					left->OnCollisionExit(right);
+					right->OnCollisionExit(left);
+					itr->second = false;
+					return;
+				}
 				left->OnCollisionStay(right);
 				right->OnCollisionStay(left);
 				left->time = mTime;
@@ -283,9 +290,7 @@ namespace roka
 	void CollisionManager::FindCollider(std::shared_ptr<GameObject> obj, std::vector<std::shared_ptr<Collider2D>>& cols)
 	{
 		std::shared_ptr<Collider2D> col = obj->GetComponent<Collider2D>();
-		if (col != nullptr &&
-			(col->owner->active == GameObject::EState::Active &&
-				col->is_active == true))
+		if (col != nullptr &&col->is_active == true)
 			cols.push_back(col);
 
 		int cnt = obj->GetChildCont();

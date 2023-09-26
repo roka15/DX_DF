@@ -183,6 +183,8 @@ namespace roka
 	{
 		for (std::shared_ptr<GameObject> obj : objs)
 		{
+			if (obj->active != GameObject::EState::Active)
+				continue;
 			std::shared_ptr<MeshRenderer> mr = obj->GetComponent<MeshRenderer>();
 			if (mr != nullptr)
 			{
@@ -235,11 +237,6 @@ namespace roka
 				continue;
 			if (obj->GetState() != GameObject::EState::Active)
 				continue;
-			if (obj->GetName().compare(L"Base") == 0 ||
-				obj->GetName().compare(L"MGateRight") == 0)
-			{
-				int a = 0;
-			}
 			obj->Render();
 			index++;
 		}

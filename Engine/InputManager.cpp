@@ -16,6 +16,14 @@ namespace roka::manager
 	}
 	void InputManager::Update()
 	{
+		int same_cnt = Input::GetMouseSameCnt();
+		std::shared_ptr<GameObject> cursor = mCursor.lock();
+		if (same_cnt >= 500)
+		{
+			cursor->active = GameObject::EState::Paused;
+			return;
+		}
+		cursor->active = GameObject::EState::Active;
 		Vector2 mouse_pos = Input::GetMousePos();
 		Vector2 setting_pos = mouse_pos;
 		setting_pos.y -= 0.05f;
