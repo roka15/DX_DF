@@ -1,11 +1,11 @@
 #pragma once
-#include "GameObject.h"
+#include "UI.h"
 namespace roka
 {
 	class MeshRenderer;
 	class Transform;
 	class ImageComponent;
-	class Image : public GameObject
+	class Image : public UI
 	{
 	public:
 		Image();
