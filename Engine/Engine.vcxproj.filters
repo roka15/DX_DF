@@ -139,7 +139,12 @@
     <ClInclude Include="InputManager.h">
       <Filter>Manager\InputManager</Filter>
     </ClInclude>
-    <ClInclude Include="StartLoadScene.h" />
+    <ClInclude Include="StartLoadScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="IMouseEvent.h">
+      <Filter>Contents\Interface\IMouseEvent</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -273,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="StartLoadScene.cpp">
       <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="IMouseEvent.cpp">
+      <Filter>Contents\Interface\IMouseEvent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,6 +448,9 @@
     </Filter>
     <Filter Include="Manager\InputManager">
       <UniqueIdentifier>{0475043d-f373-459f-b4d4-251b2f4d18c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Interface\IMouseEvent">
+      <UniqueIdentifier>{724e3715-5d4f-48fd-8c19-55b9aa50a7a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

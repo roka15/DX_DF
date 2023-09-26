@@ -134,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaRandom.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -293,6 +296,9 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaRandom.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

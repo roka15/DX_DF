@@ -182,6 +182,7 @@
     <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="IAnimationFramEvent.h" />
     <ClInclude Include="ICollisionListener.h" />
+    <ClInclude Include="IMouseEvent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MgNormalAtk.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="HendonmyreScene.cpp" />
     <ClCompile Include="IAnimationFramEvent.cpp" />
     <ClCompile Include="ICollisionListener.cpp" />
+    <ClCompile Include="IMouseEvent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="MgNormalAtk.cpp" />
     <ClCompile Include="MonsterScript.cpp" />

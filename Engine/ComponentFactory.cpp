@@ -7,6 +7,7 @@
 #include "Animator.h"
 #include "Rigidbody.h"
 #include "Light.h"
+
 namespace roka
 {
 	void ComponentFactory::Initialize()
