@@ -4,6 +4,7 @@
 #include "IMouseEvent.h"
 
 #include "Transform.h"
+#include "Cursor.h"
 namespace roka::manager
 {
 	InputManager::InputManager()
@@ -67,6 +68,8 @@ namespace roka::manager
 	}
 	void InputManager::OnMouseEvent(PointerEventData* data)
 	{
+		if (mCursor.expired() == false)
+			return;
 		//충돌 object들 모두 뽑아오기
 		std::vector<std::shared_ptr<GameObject>> objs = {};
 		switch (data->btn_state)
@@ -84,22 +87,29 @@ namespace roka::manager
 	}
 	void InputManager::MouseDown(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
+		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
 		if (data->btn_state == EKeyState::Pressed)//누르는중
 		{
 			for (auto& obj : objs)
 			{
+				//z값이 제일 앞에 있는 object 처리
 				std::vector<std::shared_ptr<Script>> scripts = obj->GetScripts();
 				for (auto& script : scripts)
 				{
 					IDragHandler* handler = dynamic_cast<IDragHandler*>(script.get());
 					if (handler == nullptr)
-						return;
+						continue;
+					
+					cursor->AddDragObject(obj);
 					handler->OnDrag(data);
+					return;
 				}
 			}
 		}
 		else//일반 down
 		{
+			
+			//z값이 제일 앞에 있는 object 처리
 			for (auto& obj : objs)
 			{
 				std::vector<std::shared_ptr<Script>> scripts = obj->GetScripts();
@@ -107,26 +117,54 @@ namespace roka::manager
 				{
 					IPointerDownHandler* down_handler = dynamic_cast<IPointerDownHandler*>(script.get());
 					IPointerClickHandler* click_handler = dynamic_cast<IPointerClickHandler*>(script.get());
+
 					if (down_handler != nullptr)
+					{
 						down_handler->OnPointerDown(data);
-					if (click_handler != nullptr)
+						data->enter_object = obj;
+						return;
+					}
+					else if (click_handler != nullptr)
+					{
 						click_handler->OnClick(data);
+						data->enter_object = obj;
+						return;
+					}
+					else
+						continue;
+
 				}
 			}
 		}
 	}
 	void InputManager::MouseUp(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
+		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+
+	
+		//z값이 제일 앞에 있는 object 처리
 		for (auto& obj : objs)
 		{
 			std::vector<std::shared_ptr<Script>> scripts = obj->GetScripts();
 			for (auto& script : scripts)
 			{
 				IPointerUpHandler* handler = dynamic_cast<IPointerUpHandler*>(script.get());
+				IDropHandler* drop_hendler = dynamic_cast<IDropHandler*>(script.get());
 				if (handler != nullptr)
+				{
 					handler->OnPointerUp(data);
+					return;
+				}
+				else if (drop_hendler != nullptr)
+				{
+					drop_hendler->OnDrop(data);
+					return;
+				}
+				else
+					continue;
 			}
 		}
+		cursor->DragObjectClear();
 	}
 
 	void InputManager::MouseEnter(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
@@ -138,9 +176,17 @@ namespace roka::manager
 			{
 				IPointerEnterHandler* handler = dynamic_cast<IPointerEnterHandler*>(script.get());
 				if (handler != nullptr)
+				{
 					handler->OnPointerEnter(data);
+					data->enter_object = obj;
+					return;
+				}
+				else
+					continue;
 			}
 		}
+		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+		cursor->OnPointerEnter(data);
 	}
 
 	void InputManager::MouseExit(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
@@ -155,6 +201,8 @@ namespace roka::manager
 				IPointerExitHandler* handler = dynamic_cast<IPointerExitHandler*>(script.get());
 				if (handler != nullptr)
 					handler->OnPointerExit(data);
+				else
+					continue;
 			}
 		}
 	}

@@ -80,12 +80,13 @@ namespace roka
 		if (mTime - mMouseLBUpTime <= mDoubleClickTime)
 		{
 			//double click
-			//data->double_click = true;
+			data->click_cnt++;
 		}
 		else if (mMouseState == EKeyState::Down)
 		{
 			//state-> pressed
 			mMouseState = EKeyState::Pressed;
+			data->click_cnt = 1;
 		}
 	}
 	void Input::MouseBtnUp(PointerEventData* data)
@@ -174,5 +175,6 @@ namespace roka
 		}
 
 		M_Input->OnMouseEvent(data);
+		delete data;
 	}
 }

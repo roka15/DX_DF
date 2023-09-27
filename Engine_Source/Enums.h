@@ -15,6 +15,7 @@ namespace roka::enums
 		Collider,
 		Rigidbody,
 		Light,
+		Cursor,
 		End,
 	};
 	enum class EScriptType

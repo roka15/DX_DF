@@ -39,6 +39,7 @@ namespace roka::manager
 	private:
 		std::map<EKeyCode,std::map<EKeyState,std::vector<std::function<void()>>>> mKeyEvents;
 		std::weak_ptr<GameObject> mCursor;
+		std::shared_ptr<GameObject> mDragObject;
 	};
 }
 
