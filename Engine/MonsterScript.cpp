@@ -228,7 +228,7 @@ namespace roka
 			{
 				std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 				mCurDirType = EDir4Type::LEFT;
-				mr->material = Resources::Find<Material>(L"DefaultVInverterAniMaterial");
+				mr->material->shader = Resources::Find<Shader>(L"AtlasShader");
 				LeftSetting();
 			}
 		}
@@ -238,7 +238,7 @@ namespace roka
 			{
 				std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 				mCurDirType = EDir4Type::RIGHT;
-				mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+				mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
 				RightSetting();
 			}
 		}

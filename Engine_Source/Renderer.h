@@ -36,7 +36,7 @@ namespace roka::renderer
 		Vector2 Resolution;
 	};
 
-	CBUFFER(AnimationCB, CBSLOT_ANIMATION)
+	CBUFFER(AtlasCB, CBSLOT_ANIMATION)
 	{
 		Vector2 SpriteLeftTop;
 		Vector2 SpriteSize;

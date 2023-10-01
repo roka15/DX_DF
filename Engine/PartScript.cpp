@@ -35,11 +35,7 @@ namespace roka
 	{
 		Script::Initialize();
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-
-		std::shared_ptr<Material> material = std::make_shared<Material>();
-		material->shader = Resources::Find<Shader>(L"AnimationShader");
-		material->render_mode = ERenderMode::Transparent;
-		mr->material = material;
+		mr->material->render_mode = ERenderMode::Transparent;
 	}
 	void PartScript::Update()
 	{
@@ -157,12 +153,12 @@ namespace roka
 	void PartScript::Right()
 	{
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-		mr->material->shader = Resources::Find<Shader>(L"AnimationShader");
+		mr->material->shader = Resources::Find<Shader>(L"AtlasShader");
 	}
 	void PartScript::Left()
 	{
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-		mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+		mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
 	}
 	void PartScript::Stop()
 	{

@@ -38,13 +38,30 @@ roka::graphics::Material::~Material()
 
 void roka::graphics::Material::Copy(Material* src)
 {
+	std::wstring key;
 	Material* source = dynamic_cast<Material*>(src);
 	if (source == nullptr)
 		return;
 	
 	mMode = source->mMode;
-	mShader = src->mShader;
-	mTexture = src->mTexture;
+
+	if (src->mShader != nullptr)
+	{
+		key = src->mShader->GetKey();
+		if (key.size() != 0)
+		{
+			mShader = Resources::Find<Shader>(key);
+		}
+	}
+
+	if (src->mTexture != nullptr)
+	{
+		key = src->mTexture->GetKey();
+		if (key.size() != 0)
+		{
+			mTexture = Resources::Find<Texture>(key + L"AtlasTexture");
+		}
+	}
 }
 
 HRESULT roka::graphics::Material::Load(const std::wstring& path)
@@ -52,9 +69,9 @@ HRESULT roka::graphics::Material::Load(const std::wstring& path)
 	return E_NOTIMPL;
 }
 
-void roka::graphics::Material::Binds()
+void roka::graphics::Material::Binds(bool atlas)
 {
-	if (mTexture != nullptr)
+	if (mTexture != nullptr && atlas == false)
 	{
 		mTexture->BindShaderResource(EShaderStage::PS, 0);
 	}

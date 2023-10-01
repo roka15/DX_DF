@@ -214,10 +214,10 @@ namespace roka
 		Vector3 offset = Vector3::Zero;
 		Vector3 scale = Vector3::One;
 		
-		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AnimationShader");
-		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAniShader");
-		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 
 		effectObj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, key + L"Obj");
 		if (effectObj != nullptr)
@@ -237,7 +237,7 @@ namespace roka
 		if (mDir < 0.0f)
 		{
 			std::shared_ptr<MeshRenderer> meshRenderer = effectObj->GetComponent<MeshRenderer>();
-			meshRenderer->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+			meshRenderer->material->shader = VerticalAniEftShdaer;
 		}
 
 
@@ -267,10 +267,10 @@ namespace roka
 		Vector3 pos = tf->position;
 		Vector3 offset = Vector3::Zero;
 		Vector3 scale = Vector3::One;
-		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AnimationShader");
-		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAniShader");
-		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 
 		effectObj = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, key + L"Obj");
 		if (effectObj != nullptr)
@@ -336,10 +336,10 @@ namespace roka
 		Vector3 offset = Vector3::Zero;
 		Vector3 scale = Vector3::One;
 
-		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AnimationShader");
-		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAniShader");
-		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 
 		std::shared_ptr<Texture> eye_texture
 			= Resources::Find<NPK>(L"mageAntiGravity")->CreateAtlas(L"pluto-eye.img", 0, 1, L"mage_antiGravity_pluto_eye");
@@ -469,10 +469,10 @@ namespace roka
 		Animator* aniPtr = nullptr;
 		Vector3 scale = Vector3::One;
 
-		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AnimationShader");
-		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAniShader");
-		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
 		
 		std::shared_ptr<Texture> dustTexture = npk->CreateAtlas(L"tube-dust.img", 0, 6, L"mage_antiGravity_tube-dust");
@@ -537,6 +537,15 @@ namespace roka
 		normalAni->CompleteEvent(L"mage_antiGravity_tube-normal") = std::bind([aniPtr]()->void {aniPtr->ActiveAnimationNull(); });
 		
 		
+		std::shared_ptr<MeshRenderer> mesh = dust->GetComponent<MeshRenderer>();
+		mesh->material->shader = EftShader;
+		mesh = great->GetComponent<MeshRenderer>();
+		mesh->material->shader = EftShader;
+		mesh = success->GetComponent<MeshRenderer>();
+		mesh->material->shader = EftShader;
+		mesh = normal->GetComponent<MeshRenderer>();
+		mesh->material->shader = AniShader;
+
 		caster->AddChild(dust);
 		caster->AddChild(great);
 		caster->AddChild(normal);
@@ -554,14 +563,14 @@ namespace roka
 		Animator* aniPtr = nullptr;
 		Vector3 scale = Vector3::One;
 
-		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AnimationShader");
-		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAniShader");
-		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
-		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
 		std::shared_ptr<GameObject> pluto = SceneManager::GetActiveScene()->FindGameObject(ELayerType::BackObject, L"plutoObj");
 		Vector3 plutoPos = pluto->GetComponent<Transform>()->position;
-		Vector3 offset = Vector3(0.01f, -0.25f, 0.001f);
+		Vector3 offset = Vector3(0.0f, 0.0f, 0.001f);
 		std::shared_ptr<Texture> circleTexture = npk->CreateAtlas(L"magiccircle-normal.img", 0, 1, L"mage_antiGravity_circle-normal");
 		
 		std::shared_ptr<Animator> ani = circle->GetComponent<Animator>();
@@ -593,7 +602,9 @@ namespace roka
 		tf->position = plutoPos+offset;
 		tf->SetPivot(Vector3(0.0f, 0.5f, 0.0f));
 		tf->EnablePivot();
-		std::shared_ptr<MeshRenderer> mesh = circle2->GetComponent<MeshRenderer>();
+		std::shared_ptr<MeshRenderer> mesh = circle->GetComponent<MeshRenderer>();
+		mesh->material->shader = EftShader;
+		mesh = circle2->GetComponent<MeshRenderer>();
 		mesh->material->shader = VerticalAniEftShdaer;
 
 		
@@ -606,6 +617,10 @@ namespace roka
 	{
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mageAntiGravity");
 		std::shared_ptr<Animator> ani;
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 		std::shared_ptr<GameObject> circleEft = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
 		std::shared_ptr<GameObject> circleEft2 = ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Spawn(L"ChangeSizeOverTimeEftObject");
 		circleEft->SetName(L"AntiGravityCircleEftObj");
@@ -625,7 +640,7 @@ namespace roka
 
 		std::shared_ptr<Transform> tf = circleEft->GetComponent<Transform>();
 		tf->scale = Vector3(15.8f, 10.5f, 1.0f);
-		tf->position = Vector3(0.55f, 2.2f, 0.0f);
+		tf->position = Vector3(-0.55f, 2.2f, 0.0f);
 
 	
 		ani = circleEft2->GetComponent<Animator>();
@@ -644,11 +659,21 @@ namespace roka
 		tf->scale = Vector3(15.8f, 10.5f, 1.0f);
 		tf->position = Vector3(0.55f, 2.2f, 0.0f);
 
+		std::shared_ptr<MeshRenderer> mesh = circleEft->GetComponent<MeshRenderer>();
+		mesh->material->shader = VerticalAniEftShdaer;
+		mesh = circleEft2->GetComponent<MeshRenderer>();
+		mesh->material->shader = EftShader;
+
 		caster->AddChild(circleEft);
 		caster->AddChild(circleEft2);
 	}
 	void AntiGravity::CreateFamiliarEft(std::shared_ptr<GameObject> caster)
 	{
+		std::shared_ptr<Shader> AniShader = Resources::Find<Shader>(L"AtlasShader");
+		std::shared_ptr<Shader> EftShader = Resources::Find<Shader>(L"EffectAtlasShader");
+		std::shared_ptr<Shader> VerticalAniShader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+		std::shared_ptr<Shader> VerticalAniEftShdaer = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+
 		Vector3 pos = caster->GetComponent<Transform>()->position;
 		std::shared_ptr<GameObject> eft = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"AniEftObject");
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"mage_familiar");
@@ -674,8 +699,11 @@ namespace roka
 		
 		tf = eft2->GetComponent<Transform>();
 		tf->position = pos;
-		std::shared_ptr<MeshRenderer> mesh = eft2->GetComponent<MeshRenderer>();
+		std::shared_ptr<MeshRenderer> mesh = eft->GetComponent<MeshRenderer>();
+		mesh->material->shader = EftShader;
+		mesh = eft2->GetComponent<MeshRenderer>();
 		mesh->alpha = 0.8f;
+		mesh->material->shader = AniShader;
 		
 
 		Scene* Active = SceneManager::GetActiveScene();

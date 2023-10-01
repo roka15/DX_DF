@@ -90,7 +90,7 @@ namespace roka
 		if (mAtlas == nullptr)
 			return;
 		mAtlas->BindShaderResource(graphics::EShaderStage::PS, 12);
-		renderer::AnimationCB data = {};
+		renderer::AtlasCB data = {};
 		Sprite sprite = mAtlas->GetSprite(mIndex);
 		mAtlas->SetCurSpriteIndex(mIndex);
 		data.SpriteLeftTop = sprite.lefttop;
@@ -99,7 +99,8 @@ namespace roka
 		data.CanvasSize = sprite.canvas_size;
 
 		std::shared_ptr<MeshRenderer> meshRenderer = mAnimator.lock()->owner->GetComponent<MeshRenderer>();
-		
+		meshRenderer->material->texture = mAtlas;
+
 		if (EBSType::OneOne == meshRenderer->material->shader->bsstate)
 			data.Flag |= 0x1;
 		
@@ -109,7 +110,7 @@ namespace roka
 		
 	
 		data.Alpha = meshRenderer->alpha;
-		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Animation];
+		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Atlas];
 		cb->SetData(&data);
 
 		cb->Bind(EShaderStage::VS);

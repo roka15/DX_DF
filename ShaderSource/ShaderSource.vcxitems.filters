@@ -42,10 +42,10 @@
     <FxCompile Include="$(MSBuildThisFileDirectory)DebugVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)AnimationPS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)AtlasPS.hlsl">
       <Filter>PS</Filter>
     </FxCompile>
-    <FxCompile Include="$(MSBuildThisFileDirectory)AnimationVS.hlsl">
+    <FxCompile Include="$(MSBuildThisFileDirectory)AtlasVS.hlsl">
       <Filter>VS</Filter>
     </FxCompile>
     <FxCompile Include="$(MSBuildThisFileDirectory)PaintCS.hlsl">

@@ -36,6 +36,8 @@ namespace roka
 	{
 		Component::Initialize();
 		mAlpha = 1.0f;
+		if (mMaterial == nullptr)
+			mMaterial = std::make_shared<Material>();
 	}
 	void MeshRenderer::Update()
 	{
@@ -51,36 +53,38 @@ namespace roka
 		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
 		std::shared_ptr<Animator> animator = owner->GetComponent<Animator>();
 		int flag = 0;
-		if (imageComp != nullptr)
-		{
-			if (imageComp->Binds())
-			{
-				Execute();
-				return;
-			}
-		}
 		if (animator != nullptr)
 		{
 			if (animator->Binds())
 			{
-				Execute();
-				return;
+				Execute(true);
 			}
+			return;
 		}
+
+		if (imageComp != nullptr)
+		{
+			if (imageComp->Binds())
+			{
+				Execute(true);
+			}
+			return;
+		}
+
 
 		if (owner->is_debug)
 		{
-			Execute();
+			Execute(false);
 			return;
 		}
 	}
-	void MeshRenderer::Execute()
+	void MeshRenderer::Execute(bool atlas)
 	{
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 
 		tf->BindConstantBuffer();
 		mMesh->BindBuffer();
-		mMaterial->Binds();
+		mMaterial->Binds(atlas);
 		mMesh->Render();
 		mMaterial->Clear();
 	}

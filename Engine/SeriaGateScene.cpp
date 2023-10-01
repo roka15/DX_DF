@@ -49,24 +49,38 @@ void roka::SeriaGateScene::Initialize()
 
 #pragma region hud/ui
 
+	std::shared_ptr<Texture> hudTexture1 = hud_npk->CreateAtlas(L"hud.img", 0, 20, L"ui_hudAtlasTexture01");
+	std::shared_ptr<Texture> hudTexture2 = hud_npk->CreateAtlas(L"hud.img", 20, 40, L"ui_hudAtlasTexture02");
+	std::shared_ptr<Texture> hudTexture3 = hud_npk->CreateAtlas(L"hud.img", 40, 60, L"ui_hudAtlasTexture03");
+	std::shared_ptr<Texture> hudTexture4 = hud_npk->CreateAtlas(L"hud.img", 60, 80, L"ui_hudAtlasTexture04");
+	std::shared_ptr<Texture> hudTexture5 = hud_npk->CreateAtlas(L"hud.img", 80, 100, L"ui_hudAtlasTexture05");
+	std::shared_ptr<Texture> hudTexture6 = hud_npk->CreateAtlas(L"hud.img", 100, 120, L"ui_hudAtlasTexture06");
+	std::shared_ptr<Texture> hudTexture7 = hud_npk->CreateAtlas(L"hud.img", 120, 140, L"ui_hudAtlasTexture07");
+	std::shared_ptr<Texture> hudTexture8 = hud_npk->CreateAtlas(L"hud.img", 140, 160, L"ui_hudAtlasTexture08");
+	std::shared_ptr<Texture> hudTexture9 = hud_npk->CreateAtlas(L"hud.img", 160, 180, L"ui_hudAtlasTexture09");
+	std::shared_ptr<Texture> hudTexture10 = hud_npk->CreateAtlas(L"hud.img", 180, 200, L"ui_hudAtlasTexture10");
+	std::shared_ptr<Texture> hudTexture11 = hud_npk->CreateAtlas(L"hud.img", 200, 220, L"ui_hudAtlasTexture11");
+	std::shared_ptr<Texture> hudTexture12 = hud_npk->CreateAtlas(L"hud.img", 220, 240, L"ui_hudAtlasTexture12");
+	std::shared_ptr<Texture> hudTexture13 = hud_npk->CreateAtlas(L"hud.img", 240, 257, L"ui_hudAtlasTexture13");
+
 	std::shared_ptr<Image> HudBase = object::Instantiate<Image>(
-		Vector3(0.1f, -1.89f, -5.0f),
+		Vector3(0.1f, -1.825f, -5.0f),
 		Vector3::Zero,
-		Vector3(3.5f, 0.6f, 1.0f));
+		Vector3(3.7f, 0.75f, 1.0f));
 	{
 		HudBase->SetName(L"HudBase");
 		HudBase->ismove = false;
 		HudBase->layer_type = ELayerType::UI;
 		std::shared_ptr<MeshRenderer> mr = HudBase->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
+		mr->material->texture = hudTexture1;
 		std::shared_ptr<ImageComponent> imageComp = HudBase->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 0);
+		imageComp->SetSprite(0);
 	}
 	SceneManager::DontDestroy(HudBase);
 
 	std::shared_ptr<Image> HPBase = object::Instantiate<Image>(
-		Vector3(-0.393f, -0.02f, 0.0f),
+		Vector3(-0.365f, -0.055f, 0.0f),
 		Vector3::Zero,
 		Vector3(0.14f, 0.7f, 1.0f));
 	{
@@ -74,15 +88,15 @@ void roka::SeriaGateScene::Initialize()
 		HPBase->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = HPBase->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
+		mr->material->texture = hudTexture1;
 		std::shared_ptr<ImageComponent> imageComp = HPBase->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 1);
+		imageComp->SetSprite(1);
 
 		HudBase->AddChild(HPBase);
 	}
+
 	std::shared_ptr<Image> MPBase = object::Instantiate<Image>(
-		Vector3(0.393f, -0.02f, 0.0f),
+		Vector3(0.365f, -0.055f, 0.0f),
 		Vector3::Zero,
 		Vector3(0.14f, 0.7f, 1.0f));
 	{
@@ -90,55 +104,56 @@ void roka::SeriaGateScene::Initialize()
 		MPBase->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = MPBase->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
+		mr->material->texture = hudTexture1;
 		std::shared_ptr<ImageComponent> imageComp = MPBase->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 2);
+		imageComp->SetSprite(2);
 
 		HudBase->AddChild(MPBase);
 	}
 	std::shared_ptr<Image> HPFilter = object::Instantiate<Image>(
 		Vector3(0.0f, -0.05f, 0.0f),
 		Vector3::Zero,
-		Vector3(1.25f, 1.25f, 1.0f));
+		Vector3(1.2f, 1.2f, 1.0f));
 	{
 		HPFilter->SetName(L"HPFilter");
 		HPFilter->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = HPFilter->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"TransparentMaterial");
+		mr->material->texture = hudTexture11;
 		std::shared_ptr<ImageComponent> imageComp = HPFilter->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 212);
+		imageComp->SetSprite(12);
 
 		HPBase->AddChild(HPFilter);
 	}
 	std::shared_ptr<Image> MPFilter = object::Instantiate<Image>(
 		Vector3(0.0f, -0.05f, 0.0f),
 		Vector3::Zero,
-		Vector3(1.25f, 1.25f, 1.0f));
+		Vector3(1.2f, 1.2f, 1.0f));
 	{
 		MPFilter->SetName(L"MPFilter");
 		MPFilter->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = MPFilter->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"TransparentMaterial");
+		mr->material->texture = hudTexture11;
 		std::shared_ptr<ImageComponent> imageComp = MPFilter->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 213);
+		imageComp->SetSprite(13);
 
 		MPBase->AddChild(MPFilter);
 	}
-	float startx = -0.2f;
-	float starty = -0.23f;
+
+	float startx = -0.17f;
+	float starty = -0.2125f;
 	for (int i = 0; i < 2; i++)
 	{
 		for (int j = 0; j < 7; j++)
 		{
 			int index = i * 8 + j;
-			float x = startx + 0.076 * j;
-			float y = starty + 0.41 * i;
+			float x = startx + 0.068 * j;
+			float y = starty + 0.335 * i;
 			std::shared_ptr<Image> SkillQuickSlot = object::Instantiate<Image>(
 				Vector3(x, y, 0.0f),
 				Vector3::Zero,
-				Vector3(0.08f, 0.43f, 1.0f));
+				Vector3(0.07f, 0.35f, 1.0f));
 			{
 				std::wstring name = L"SkillQuickSlot01" + index;
 				SkillQuickSlot->SetName(name);
@@ -146,10 +161,9 @@ void roka::SeriaGateScene::Initialize()
 
 				std::shared_ptr<MeshRenderer> mr = SkillQuickSlot->GetComponent<MeshRenderer>();
 				mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-				mr->material = Resources::Find<Material>(L"TransparentMaterial");
-
+				mr->material->texture = hudTexture10;
 				std::shared_ptr<ImageComponent> imageComp = SkillQuickSlot->GetComponent<ImageComponent>();
-				imageComp->SetSprite(L"ui_hud", L"hud.img", 198);
+				imageComp->SetSprite(18);
 
 				HudBase->AddChild(SkillQuickSlot);
 			}
@@ -157,34 +171,32 @@ void roka::SeriaGateScene::Initialize()
 	}
 
 	std::shared_ptr<Image> MoreSkillBtn = object::Instantiate<Image>(
-		Vector3(-0.26f, 0.185f, 0.0f),
+		Vector3(-0.235f, 0.115f, 0.0f),
 		Vector3::Zero,
-		Vector3(0.05f, 0.44f, 1.0f));
+		Vector3(0.05f, 0.35f, 1.0f));
 	{
 		MoreSkillBtn->SetName(L"MoreSkillBtn");
 		MoreSkillBtn->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = MoreSkillBtn->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture10;
 		std::shared_ptr<ImageComponent> imageComp = MoreSkillBtn->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 193);
+		imageComp->SetSprite(13);
 
 		HudBase->AddChild(MoreSkillBtn);
 	}
 	std::shared_ptr<Image> SkillChangeBtn = object::Instantiate<Image>(
-		Vector3(-0.26f, -0.23f, 0.0f),
+		Vector3(-0.235f, -0.22f, 0.0f),
 		Vector3::Zero,
-		Vector3(0.05f, 0.44f, 1.0f));
+		Vector3(0.05f, 0.35f, 1.0f));
 	{
 		SkillChangeBtn->SetName(L"SkillChangeBtn");
 		SkillChangeBtn->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = SkillChangeBtn->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture3;
 		std::shared_ptr<ImageComponent> imageComp = SkillChangeBtn->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 53);
+		imageComp->SetSprite(13);
 
 		HudBase->AddChild(SkillChangeBtn);
 	}
@@ -201,7 +213,7 @@ void roka::SeriaGateScene::Initialize()
 			std::shared_ptr<Image> ItemSlot = object::Instantiate<Image>(
 				Vector3(x, y, 0.0f),
 				Vector3::Zero,
-				Vector3(0.07f, 0.4f, 1.0f));
+				Vector3(0.07f, 0.35f, 1.0f));
 			{
 				std::wstring name = L"SkillQuickSlot" + index;
 				ItemSlot->SetName(name);
@@ -209,15 +221,15 @@ void roka::SeriaGateScene::Initialize()
 
 				std::shared_ptr<MeshRenderer> mr = ItemSlot->GetComponent<MeshRenderer>();
 				mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-				mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+				mr->material->texture = hudTexture11;
 				std::shared_ptr<ImageComponent> imageComp = ItemSlot->GetComponent<ImageComponent>();
-				imageComp->SetSprite(L"ui_hud", L"hud.img", 200);
+				imageComp->SetSprite(0);
 
 				HudBase->AddChild(ItemSlot);
 			}
 		}
 	}
+
 	std::shared_ptr<Image> Icon1 = object::Instantiate<Image>(
 		Vector3(0.65f, -0.19f, 0.0f),
 		Vector3::Zero,
@@ -227,13 +239,13 @@ void roka::SeriaGateScene::Initialize()
 		Icon1->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon1->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture4;
 		std::shared_ptr<ImageComponent> imageComp = Icon1->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 72);
+		imageComp->SetSprite(12);
 
 		HudBase->AddChild(Icon1);
 	}
+
 	std::shared_ptr<Image> Icon2 = object::Instantiate<Image>(
 		Vector3(0.86f, -0.05f, 0.0f),
 		Vector3::Zero,
@@ -243,10 +255,9 @@ void roka::SeriaGateScene::Initialize()
 		Icon2->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon2->AddComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture4;
 		std::shared_ptr<ImageComponent> imageComp = Icon2->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 68);
+		imageComp->SetSprite(8);
 
 		Icon1->AddChild(Icon2);
 	}
@@ -259,13 +270,13 @@ void roka::SeriaGateScene::Initialize()
 		Icon3->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon3->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture5;
 		std::shared_ptr<ImageComponent> imageComp = Icon3->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 93);
+		imageComp->SetSprite(13);
 
 		Icon1->AddChild(Icon3);
 	}
+
 	std::shared_ptr<Image> Icon4 = object::Instantiate<Image>(
 		Vector3(1.42f, -0.05f, 0.0f),
 		Vector3::Zero,
@@ -275,11 +286,9 @@ void roka::SeriaGateScene::Initialize()
 		Icon4->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon4->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"IconMaterial04");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture5;
 		std::shared_ptr<ImageComponent> imageComp = Icon4->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 94);
+		imageComp->SetSprite(14);
 
 		Icon1->AddChild(Icon4);
 	}
@@ -292,10 +301,9 @@ void roka::SeriaGateScene::Initialize()
 		Icon5->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon5->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture5;
 		std::shared_ptr<ImageComponent> imageComp = Icon5->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 95);
+		imageComp->SetSprite(15);
 
 		Icon1->AddChild(Icon5);
 	}
@@ -308,10 +316,9 @@ void roka::SeriaGateScene::Initialize()
 		Icon6->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon6->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture5;
 		std::shared_ptr<ImageComponent> imageComp = Icon6->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 96);
+		imageComp->SetSprite(16);
 
 		Icon1->AddChild(Icon6);
 	}
@@ -324,42 +331,39 @@ void roka::SeriaGateScene::Initialize()
 		Icon7->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon7->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture5;
 		std::shared_ptr<ImageComponent> imageComp = Icon7->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 97);
+		imageComp->SetSprite(17);
 
 		Icon1->AddChild(Icon7);
 	}
 	std::shared_ptr<Image> Icon8 = object::Instantiate<Image>(
 		Vector3(-0.35f, -0.58, 0.0f),
 		Vector3::Zero,
-		Vector3(0.5f, 0.4f, 1.0f));
+		Vector3(1.0f, 0.45f, 1.0f));
 	{
 		Icon8->SetName(L"Icon8");
 		Icon8->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon8->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture11;
 		std::shared_ptr<ImageComponent> imageComp = Icon8->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 211);
+		imageComp->SetSprite(11);
 
 		Icon1->AddChild(Icon8);
 	}
 	std::shared_ptr<Image> Icon9 = object::Instantiate<Image>(
-		Vector3(1.07f, -0.62f, 0.0f),
+		Vector3(1.15f, -0.62f, 0.0f),
 		Vector3::Zero,
-		Vector3(2.25f, 0.3f, 1.0f));
+		Vector3(2.0f, 0.25f, 1.0f));
 	{
 		Icon9->SetName(L"Icon9");
 		Icon9->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon9->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture11;
 		std::shared_ptr<ImageComponent> imageComp = Icon9->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 203);
+		imageComp->SetSprite(3);
 
 		Icon1->AddChild(Icon9);
 	}
@@ -372,16 +376,15 @@ void roka::SeriaGateScene::Initialize()
 		Icon10->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon10->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture13;
 		std::shared_ptr<ImageComponent> imageComp = Icon10->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 242);
+		imageComp->SetSprite(2);
 
 		Icon1->AddChild(Icon10);
 	}
 
 	std::shared_ptr<Image> Icon11 = object::Instantiate<Image>(
-		Vector3(1.185f, -0.62f, 0.0f),
+		Vector3(1.185f, -0.62f, -0.01f),
 		Vector3::Zero,
 		Vector3(1.9f, 0.15f, 1.0f));
 	{
@@ -389,15 +392,14 @@ void roka::SeriaGateScene::Initialize()
 		Icon11->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon11->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture1;
 		std::shared_ptr<ImageComponent> imageComp = Icon11->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 3);
+		imageComp->SetSprite(3);
 
 		Icon1->AddChild(Icon11);
 	}
 	std::shared_ptr<Image> Icon12 = object::Instantiate<Image>(
-		Vector3(1.15f, -1.0f, 0.0f),
+		Vector3(1.15f, -1.0f, -0.01f),
 		Vector3::Zero,
 		Vector3(1.5f, 0.2f, 1.0f));
 	{
@@ -405,32 +407,30 @@ void roka::SeriaGateScene::Initialize()
 		Icon12->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = Icon12->AddComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"DefaultMaterial");
-
+		mr->material->texture = hudTexture2;
 		std::shared_ptr<ImageComponent> imageComp = Icon12->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 22);
+		imageComp->SetSprite(2);
 
 		Icon1->AddChild(Icon12);
 	}
 
 	std::shared_ptr<Image> HudBase2 = object::Instantiate<Image>(
-		Vector3(0.0f, -0.43f, -0.01f),
+		Vector3(0.0f, -0.4f, -0.01f),
 		Vector3::Zero,
-		Vector3(1.1f, 0.17f, 1.0f));
+		Vector3(1.1f, 0.2f, 1.0f));
 	{
 		HudBase2->SetName(L"HudBase2");
 		HudBase2->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = HudBase2->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"TransparentMaterial");
-
+		mr->material->texture = hudTexture11;
 		std::shared_ptr<ImageComponent> imageComp = HudBase2->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 202);
+		imageComp->SetSprite(2);
 
 		HudBase->AddChild(HudBase2);
 	}
 	std::shared_ptr<Image> ExpBar = object::Instantiate<Image>(
-		Vector3(0.01f, -0.5f, -0.01f),
+		Vector3(0.01f, -0.47f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.7f, 0.05f, 1.0f));
 	{
@@ -438,11 +438,9 @@ void roka::SeriaGateScene::Initialize()
 		ExpBar->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = ExpBar->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-		mr->material = Resources::Find<Material>(L"TransparentMaterial");
-		//mr->material->render_mode = ERenderMode::Transparent;
-
+		mr->material->texture = hudTexture2;
 		std::shared_ptr<ImageComponent> imageComp = ExpBar->GetComponent<ImageComponent>();
-		imageComp->SetSprite(L"ui_hud", L"hud.img", 24);
+		imageComp->SetSprite(4);
 
 		std::shared_ptr<Transform> tf = ExpBar->GetComponent<Transform>();
 		HudBase->AddChild(ExpBar);
@@ -1138,10 +1136,11 @@ void roka::SeriaGateScene::OnEnter()
 		std::shared_ptr<NPK> npc_npk = Resources::Find<NPK>(L"npc");
 		std::shared_ptr<NPK> gate_npk = Resources::Find<NPK>(L"gate");
 
+#pragma region test를 위해 잠시 주석
 
 #pragma region base bg
 		std::shared_ptr<Image> bg = object::Instantiate<Image>(
-			Vector3(0.15f, 0.0f, 0.98f),
+			Vector3(0.15f, 0.0f, 0.99f),
 			Vector3::Zero,
 			Vector3(8.5f, 4.4f, 1.0f),
 			ELayerType::BackObject);
@@ -1150,9 +1149,11 @@ void roka::SeriaGateScene::OnEnter()
 			bg->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = bg->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultMaterial");
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"bg", 0, 1, L"SeriamRoomBG");
+			mr->material->texture = texture;
 			std::shared_ptr<ImageComponent> imageComp = bg->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"bg", 0);
+			imageComp->SetSprite(0);
 		}
 		std::shared_ptr<Image> bgeft = object::Instantiate<Image>(
 			Vector3(0.15f, 0.0f, 0.98f),
@@ -1164,9 +1165,12 @@ void roka::SeriaGateScene::OnEnter()
 			bgeft->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = bgeft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectMaterial");
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"bgeff", 0, 1, L"SeriamRoomEft");
+			mr->material->texture = texture;
 			std::shared_ptr<ImageComponent> imageComp = bgeft->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"bgeff", 0);
+			imageComp->SetSprite(0);
 		}
 		std::shared_ptr<Image> bglight = object::Instantiate<Image>(
 			Vector3(0.15f, 0.0f, 0.98f),
@@ -1176,11 +1180,15 @@ void roka::SeriaGateScene::OnEnter()
 		{
 			bglight->SetName(L"BackGroundLight");
 			bglight->ismove = false;
+			std::shared_ptr<Animator> ani = bglight->AddComponent<Animator>();
+
 			std::shared_ptr<MeshRenderer> mr = bglight->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			std::shared_ptr<Animator> ani = bglight->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"bglight", L"SeriaRoom_Light", 0, 3, 1.0f);
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"bglight", 0, 3, L"SeriaRoom_Light");
+
+			ani->Create(texture, L"SeriaRoom_Light", 0, 3, 1.0f);
 			ani->PlayAnimation(L"SeriaRoom_Light", true);
 		}
 		std::shared_ptr<Image> bglight_reflect = object::Instantiate<Image>(
@@ -1193,12 +1201,16 @@ void roka::SeriaGateScene::OnEnter()
 			bglight_reflect->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = bglight_reflect->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectMaterial");
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"bglightreflect", 0, 1, L"SeriamRoomReflect");
+			mr->material->texture = texture;
 			std::shared_ptr<ImageComponent> imageComp = bglight_reflect->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"bglightreflect", 0);
+			imageComp->SetSprite(0);
 		}
 
 #pragma endregion
+
 
 #pragma region front tree
 		std::shared_ptr<Image> frontTree = object::Instantiate<Image>(
@@ -1211,9 +1223,11 @@ void roka::SeriaGateScene::OnEnter()
 			frontTree->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = frontTree->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultMaterial");
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"border_tree", 0, 2, L"SeriamRoomBorder_tree");
+			mr->material->texture = texture;
 			std::shared_ptr<ImageComponent> imageComp = frontTree->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"border_tree", 0);
+			imageComp->SetSprite(0);
 		}
 		std::shared_ptr<Image> frontTree2 = object::Instantiate<Image>(
 			Vector3(3.4f, 0.0f, 0.98f),
@@ -1225,17 +1239,22 @@ void roka::SeriaGateScene::OnEnter()
 			frontTree2->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = frontTree2->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultMaterial");
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"border_tree", 0, 2, L"SeriamRoomBorder_tree");
+			mr->material->texture = texture;
 			std::shared_ptr<ImageComponent> imageComp = frontTree2->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"border_tree", 1);
+			imageComp->SetSprite(1);
 		}
 
 #pragma endregion
 
 #pragma region flower bg
-
+		std::shared_ptr<NPK> seriaRoom_npk = Resources::Find<NPK>(L"seria_room");
+		std::shared_ptr<Texture> flower_texture01 = seriaRoom_npk->CreateAtlas(L"flower_1", 0, 4, L"SeriamRoomFlower1");
+		std::shared_ptr<Texture> flower_texture02 = seriaRoom_npk->CreateAtlas(L"flower_2", 0, 4, L"SeriamRoomFlower2");
 		std::shared_ptr<Image> Flower01 = object::Instantiate<Image>(
-			Vector3(-2.0f, 1.8f, 0.98f),
+			prefab::Prefabs[L"AniObject"],
+			Vector3(-2.0f, 1.8f, 0.985f),
 			Vector3::Zero,
 			Vector3(0.25f, 0.25f, 1.0f),
 			ELayerType::BackObject
@@ -1245,14 +1264,15 @@ void roka::SeriaGateScene::OnEnter()
 			Flower01->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Flower01->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+
 			std::shared_ptr<Animator> ani = Flower01->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"flower_1", L"SeriaFlower01", 0, 4, 0.3f);
+			ani->Create(flower_texture01, L"SeriaFlower01", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaFlower01", true);
 		}
 
 		std::shared_ptr<Image> Flower02 = object::Instantiate<Image>(
-			Vector3(-3.6f, 0.7f, 0.98f),
+			prefab::Prefabs[L"AniObject"],
+			Vector3(-3.6f, 0.7f, 0.985f),
 			Vector3::Zero,
 			Vector3(0.25f, 0.25f, 1.0f),
 			ELayerType::BackObject
@@ -1262,13 +1282,13 @@ void roka::SeriaGateScene::OnEnter()
 			Flower02->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Flower02->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Flower02->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"flower_1", L"SeriaFlower01", 0, 4, 0.35f);
+			ani->Create(flower_texture01, L"SeriaFlower01", 0, 4, 0.35f);
 			ani->PlayAnimation(L"SeriaFlower01", true);
 		}
 		std::shared_ptr<Image> Flower03 = object::Instantiate<Image>(
-			Vector3(2.0f, 2.0f, 0.98f),
+			prefab::Prefabs[L"AniObject"],
+			Vector3(2.0f, 2.0f, 0.985f),
 			Vector3(Vector3(0.0f, 0.0f, Deg2Rad(180))),
 			Vector3(0.25f, 0.25f, 1.0f),
 			ELayerType::BackObject
@@ -1278,13 +1298,13 @@ void roka::SeriaGateScene::OnEnter()
 			Flower03->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Flower03->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Flower03->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"flower_1", L"SeriaFlower01", 0, 4, 0.25f);
+			ani->Create(flower_texture01, L"SeriaFlower01", 0, 4, 0.25f);
 			ani->PlayAnimation(L"SeriaFlower01", true);
 		}
 
 		std::shared_ptr<Image> Flower04 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(1.5f, 2.0f, 0.98f),
 			Vector3(Vector3(0.0f, 0.0f, Deg2Rad(180))),
 			Vector3(0.25f, 0.25f, 1.0f),
@@ -1295,13 +1315,13 @@ void roka::SeriaGateScene::OnEnter()
 			Flower04->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Flower04->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Flower04->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"flower_2", L"SeriaFlower02", 0, 4, 0.3f);
+			ani->Create(flower_texture02, L"SeriaFlower02", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaFlower02", true);
 		}
 
 		std::shared_ptr<Image> Flower05 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(-3.3f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.25f, 0.25f, 1.0f),
@@ -1312,15 +1332,19 @@ void roka::SeriaGateScene::OnEnter()
 			Flower05->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Flower05->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Flower05->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"flower_2", L"SeriaFlower02", 0, 4, 0.4f);
+			ani->Create(flower_texture02, L"SeriaFlower02", 0, 4, 0.4f);
 			ani->PlayAnimation(L"SeriaFlower02", true);
 		}
+
 #pragma endregion	
 
 #pragma region leaf bg
+		std::shared_ptr<Texture> left_texture01 = seriaRoom_npk->CreateAtlas(L"leaf_1", 0, 4, L"SeriamRoomLeaf1");
+		std::shared_ptr<Texture> left_texture02 = seriaRoom_npk->CreateAtlas(L"leaf_2", 0, 4, L"SeriamRoomLeaf2");
+		std::shared_ptr<Texture> left_texture03 = seriaRoom_npk->CreateAtlas(L"leaf_3", 0, 4, L"SeriamRoomLeaf3");
 		std::shared_ptr<Image> Leaf01 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(-2.2f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1331,13 +1355,12 @@ void roka::SeriaGateScene::OnEnter()
 			Leaf01->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Leaf01->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Leaf01->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_1", L"SeriaLeaf01", 0, 4, 0.3f);
+			ani->Create(left_texture01, L"SeriaLeaf01", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf01", true);
 		}
 		std::shared_ptr<Image> Leaf02 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(-2.6f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1348,12 +1371,12 @@ void roka::SeriaGateScene::OnEnter()
 			Leaf02->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Leaf02->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Leaf02->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_3", L"SeriaLeaf03", 0, 4, 0.3f);
+			ani->Create(left_texture03, L"SeriaLeaf03", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf03", true);
 		}
 		std::shared_ptr<Image> Leaf03 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(-3.5f, 1.9f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1364,13 +1387,13 @@ void roka::SeriaGateScene::OnEnter()
 			Leaf03->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Leaf03->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Leaf03->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_3", L"SeriaLeaf03", 0, 4, 0.3f);
+			ani->Create(left_texture03, L"SeriaLeaf03", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf03", true);
 		}
 
 		std::shared_ptr<Image> Leaf04 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(2.5f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1381,13 +1404,13 @@ void roka::SeriaGateScene::OnEnter()
 			Leaf04->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Leaf04->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Leaf04->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_2", L"SeriaLeaf02", 0, 4, 0.3f);
+			ani->Create(left_texture02, L"SeriaLeaf02", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf02", true);
 		}
 
 		std::shared_ptr<Image> Leaf05 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(1.1f, 2.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1398,13 +1421,13 @@ void roka::SeriaGateScene::OnEnter()
 			Leaf05->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Leaf05->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Leaf05->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_2", L"SeriaLeaf02", 0, 4, 0.3f);
+			ani->Create(left_texture02, L"SeriaLeaf02", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf02", true);
 		}
 
 		std::shared_ptr<Image> Leaf06 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(2.0f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1415,13 +1438,13 @@ void roka::SeriaGateScene::OnEnter()
 			Leaf06->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = Leaf06->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = Leaf06->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_3", L"SeriaLeaf03", 0, 4, 0.3f);
+			ani->Create(left_texture03, L"SeriaLeaf03", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf03", true);
 		}
 
 		std::shared_ptr<Image> Leaf07 = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(1.5f, 1.8f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.2f, 0.25f, 1.0f),
@@ -1433,41 +1456,53 @@ void roka::SeriaGateScene::OnEnter()
 			std::shared_ptr<MeshRenderer> mr = Leaf07->AddComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 			std::shared_ptr<Animator> ani = Leaf07->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"leaf_1", L"SeriaLeaf01", 0, 4, 0.3f);
+			ani->Create(left_texture01, L"SeriaLeaf01", 0, 4, 0.3f);
 			ani->PlayAnimation(L"SeriaLeaf01", true);
 		}
 #pragma endregion
 
 #pragma region gate
+		std::shared_ptr<Texture> MiddleDoortexture = seriaRoom_npk->CreateAtlas(L"gate_new", 0, 1, L"SeriamRoomGate_New");
+		std::shared_ptr<NPK> gateNpk = Resources::Find<NPK>(L"gate");
+		std::shared_ptr<Texture> LeftPortalEfttexture = gateNpk->CreateAtlas(L"seriagate_dooreffect.img", 0, 9, L"SeriamRoomGate_PortalEft");
+		std::shared_ptr<Texture> LeftGateDownTexture = gateNpk->CreateAtlas(L"gatedown.img", 0, 29, L"SeriamRoomGate_DownEft");
+		std::shared_ptr<Texture> LeftGateDownThinTexture = gateNpk->CreateAtlas(L"gatedownthin.img", 0, 29, L"SeriamRoomGate_DownThinEft");
+		std::shared_ptr<Texture> LeftGateUpTexture = gateNpk->CreateAtlas(L"gateup.img", 0, 29, L"SeriamRoomGate_UpEft");
+		std::shared_ptr<Texture> LeftGateUpThinTexture = gateNpk->CreateAtlas(L"getupthin.img", 0, 29, L"SeriamRoomGate_UpThinEft");
+		std::shared_ptr<Texture> MiddleGateEftTexture = seriaRoom_npk->CreateAtlas(L"gate_new_eff", 0, 5, L"SeriamRoomGate_Gate_NewEft");
+		std::shared_ptr<Texture> MiddleGateGlowEftTexture = seriaRoom_npk->CreateAtlas(L"gate_new_glow_eff", 0, 24, L"SeriamRoomGate_Gate_NewGlowEft");
 		std::shared_ptr<Image> MGateRight = object::Instantiate<Image>(
 			Vector3(0.8f, -1.3f, 0.1f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
+			Vector3(2.0f, 2.0f, 1.0f),
 			ELayerType::FrontObject);
 		{
 			MGateRight->SetName(L"MGateRight");
 			MGateRight->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = MGateRight->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"TransparentMaterial");
+
+			mr->material->texture = MiddleDoortexture;
 			std::shared_ptr<ImageComponent> imageComp = MGateRight->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"gate_new", 0);
+			imageComp->SetSprite(0);
 		}
 		std::shared_ptr<Image> MGateLeft = object::Instantiate<Image>(
 			Vector3(-0.7f, -1.3f, 0.1f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
+			Vector3(2.0f, 2.0f, 1.0f),
 			ELayerType::FrontObject);
 		{
 			MGateLeft->SetName(L"MGateLeft");
 			MGateLeft->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = MGateLeft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"TransparentVInverterMaterial");
+			mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+			mr->material->texture = MiddleDoortexture;
 			std::shared_ptr<ImageComponent> imageComp = MGateLeft->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"seria_room", L"gate_new", 0);
+			imageComp->SetSprite(0);
 		}
 		std::shared_ptr<Image> DoorEft = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniEftObject"],
 			Vector3(3.4f, -0.3f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.4f, 1.2f, 1.0f),
@@ -1475,15 +1510,19 @@ void roka::SeriaGateScene::OnEnter()
 		{
 			DoorEft->SetName(L"DoorEft");
 			DoorEft->ismove = false;
+
+			std::shared_ptr<Animator> ani = DoorEft->AddComponent<Animator>();
+
 			std::shared_ptr<MeshRenderer> mr = DoorEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			std::shared_ptr<Animator> ani = DoorEft->AddComponent<Animator>();
-			ani->Create(L"gate", L"seriagate_dooreffect.img", L"DoorEft01", 0, 9, 0.1f);
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+
+			ani->Create(LeftPortalEfttexture, L"DoorEft01", 0, 9, 0.1f);
 			ani->PlayAnimation(L"DoorEft01", true);
 		}
 
 		std::shared_ptr<Image> GateDown = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(3.2f, -0.75f, 0.98f),
 			Vector3::Zero,
 			Vector3(2.5f, 2.0f, 1.0f),
@@ -1493,31 +1532,34 @@ void roka::SeriaGateScene::OnEnter()
 			GateDown->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = GateDown->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateDown->AddComponent<Animator>();
-			ani->Create(L"gate", L"gatedown.img", L"DoorEft02", 0, 29, 0.08f);
+			ani->Create(LeftGateDownTexture, L"DoorEft02", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft02", true);
 		}
 		std::shared_ptr<Image> GateDownThin = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniEftObject"],
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateDownThin->SetName(L"GateDownThin");
 			GateDownThin->ismove = false;
+			std::shared_ptr<Animator> ani = GateDownThin->AddComponent<Animator>();
+
 			std::shared_ptr<MeshRenderer> mr = GateDownThin->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
 			mr->alpha = 0.6f;
-			std::shared_ptr<Animator> ani = GateDownThin->AddComponent<Animator>();
-			ani->Create(L"gate", L"gatedownthin.img", L"DoorEft03", 0, 29, 0.08f);
+
+			ani->Create(LeftGateDownThinTexture, L"DoorEft03", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft03", true);
 			std::shared_ptr<Transform> tf = GateDownThin->GetComponent<Transform>();
 			GateDown->AddChild(GateDownThin);
 		}
 
 		std::shared_ptr<Image> GateUp = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(0.0f, 0.105f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.5f, 1.0f));
@@ -1526,105 +1568,115 @@ void roka::SeriaGateScene::OnEnter()
 			GateUp->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = GateUp->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			//mr->alpha = 0.6f;
 			std::shared_ptr<Animator> ani = GateUp->AddComponent<Animator>();
-			ani->Create(L"gate", L"gateup.img", L"DoorEft04", 0, 29, 0.08f);
+			ani->Create(LeftGateUpTexture, L"DoorEft04", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft04", true);
 			std::shared_ptr<Transform> tf = GateUp->GetComponent<Transform>();
 			GateDown->AddChild(GateUp);
 		}
 
 		std::shared_ptr<Image> GateUpThin = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniEftObject"],
 			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateUpThin->SetName(L"GateUpThin");
 			GateUpThin->ismove = false;
+			std::shared_ptr<Animator> ani = GateUpThin->AddComponent<Animator>();
 			std::shared_ptr<MeshRenderer> mr = GateUpThin->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			mr->alpha = 0.6f;
-			std::shared_ptr<Animator> ani = GateUpThin->AddComponent<Animator>();
-			ani->Create(L"gate", L"getupthin.img", L"DoorEft05", 0, 29, 0.08f);
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+			//mr->alpha = 0.6f;
+
+			ani->Create(LeftGateUpThinTexture, L"DoorEft05", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft05", true);
 			std::shared_ptr<Transform> tf = GateUpThin->GetComponent<Transform>();
 			GateUp->AddChild(GateUpThin);
 		}
 
 		std::shared_ptr<Image> GateMidRightEft = object::Instantiate<Image>(
-			Vector3(-0.05f, 0.19f, 0.0f),
+			prefab::Prefabs[L"AniEftObject"],
+			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(2.5f, 1.3f, 1.0f));
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidRightEft->SetName(L"GateMidRightEft");
 			GateMidRightEft->ismove = false;
+			std::shared_ptr<Animator> ani = GateMidRightEft->AddComponent<Animator>();
 			std::shared_ptr<MeshRenderer> mr = GateMidRightEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			std::shared_ptr<Animator> ani = GateMidRightEft->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"gate_new_eff", L"DoorEft06", 0, 5, 0.08f);
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+
+			ani->Create(MiddleGateEftTexture, L"DoorEft06", 0, 5, 0.08f);
 			ani->PlayAnimation(L"DoorEft06", true);
 			std::shared_ptr<Transform> tf = GateMidRightEft->GetComponent<Transform>();
 			MGateRight->AddChild(GateMidRightEft);
 		}
 
 		std::shared_ptr<Image> GateMidLeftEft = object::Instantiate<Image>(
-			Vector3(+0.05f, 0.19f, 0.0f),
+			prefab::Prefabs[L"AniEftObject"],
+			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(2.5f, 1.3f, 1.0f));
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidLeftEft->SetName(L"GateMidLeftEft");
 			GateMidLeftEft->ismove = false;
+			std::shared_ptr<Animator> ani = GateMidLeftEft->AddComponent<Animator>();
 			std::shared_ptr<MeshRenderer> mr = GateMidLeftEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultVInverterEftAniMaterial");
-			std::shared_ptr<Animator> ani = GateMidLeftEft->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"gate_new_eff", L"DoorEft06", 0, 5, 0.08f);
+			mr->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+			ani->Create(MiddleGateEftTexture, L"DoorEft06", 0, 5, 0.08f);
 			ani->PlayAnimation(L"DoorEft06", true);
 			std::shared_ptr<Transform> tf = GateMidLeftEft->GetComponent<Transform>();
 			MGateLeft->AddChild(GateMidLeftEft);
 		}
 
 		std::shared_ptr<Image> GateMidRightGlowEft = object::Instantiate<Image>(
-			Vector3(-0.08f, 0.15f, 0.0f),
+			prefab::Prefabs[L"AniEftObject"],
+			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(2.0f, 2.0f, 1.0f));
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidRightGlowEft->SetName(L"GateMidRightGlowEft");
 			GateMidRightGlowEft->ismove = false;
+			std::shared_ptr<Animator> ani = GateMidRightGlowEft->AddComponent<Animator>();
 			std::shared_ptr<MeshRenderer> mr = GateMidRightGlowEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			std::shared_ptr<Animator> ani = GateMidRightGlowEft->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"gate_new_glow_eff", L"DoorEft07", 0, 24, 0.08f);
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+
+			ani->Create(MiddleGateGlowEftTexture, L"DoorEft07", 0, 24, 0.08f);
 			ani->PlayAnimation(L"DoorEft07", true);
 			std::shared_ptr<Transform> tf = GateMidRightGlowEft->GetComponent<Transform>();
 			MGateRight->AddChild(GateMidRightGlowEft);
 		}
 
 		std::shared_ptr<Image> GateMidLeftGlowEft = object::Instantiate<Image>(
-			Vector3(0.08f, 0.15f, 0.0f),
+			prefab::Prefabs[L"AniEftObject"],
+			Vector3(0.0f, 0.0f, 0.0f),
 			Vector3::Zero,
-			Vector3(2.0f, 2.0f, 1.0f));
+			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			GateMidLeftGlowEft->SetName(L"GateMidLeftGlowEft");
 			GateMidLeftGlowEft->ismove = false;
+			std::shared_ptr<Animator> ani = GateMidLeftGlowEft->AddComponent<Animator>();
 			std::shared_ptr<MeshRenderer> mr = GateMidLeftGlowEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultVInverterEftAniMaterial");
-			std::shared_ptr<Animator> ani = GateMidLeftGlowEft->AddComponent<Animator>();
-			ani->Create(L"seria_room", L"gate_new_glow_eff", L"DoorEft07", 0, 24, 0.08f);
+			mr->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+
+			ani->Create(MiddleGateGlowEftTexture, L"DoorEft07", 0, 24, 0.08f);
 			ani->PlayAnimation(L"DoorEft07", true);
 			std::shared_ptr<Transform> tf = GateMidLeftGlowEft->GetComponent<Transform>();
 			MGateLeft->AddChild(GateMidLeftGlowEft);
 		}
 #pragma endregion
 
+#pragma endregion
 
 #pragma region obj
 		std::shared_ptr<Image> SeriaNPC = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(0.2f, 0.15f, 0.98f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.25f, 1.0f),
@@ -1634,12 +1686,12 @@ void roka::SeriaGateScene::OnEnter()
 			SeriaNPC->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = SeriaNPC->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = SeriaNPC->AddComponent<Animator>();
 			ani->Create(L"npc", L"seria_event_2012summer.img", L"SeriaNPC_Room", 0, 33, 0.1f);
 			ani->PlayAnimation(L"SeriaNPC_Room", true);
 		}
 		std::shared_ptr<Image> GoldBox = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(-1.3f, -0.45f, 0.98f),
 			Vector3::Zero,
 			Vector3(0.75f, 0.75f, 1.0f),
@@ -1649,7 +1701,6 @@ void roka::SeriaGateScene::OnEnter()
 			GoldBox->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = GoldBox->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = GoldBox->AddComponent<Animator>();
 			ani->Create(L"npc", L"storagebrilliantdiamond.img", L"GoldBoxNPC_Room", 0, 18, 0.1f);
 			ani->PlayAnimation(L"GoldBoxNPC_Room", true);
@@ -1657,6 +1708,7 @@ void roka::SeriaGateScene::OnEnter()
 
 
 		std::shared_ptr<Image> PremiumCoinShop = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(1.5f, 0.0f, 0.98f),
 			Vector3::Zero,
 			Vector3(3.0f, 3.0f, 1.0f),
@@ -1666,12 +1718,12 @@ void roka::SeriaGateScene::OnEnter()
 			PremiumCoinShop->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = PremiumCoinShop->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = PremiumCoinShop->AddComponent<Animator>();
 			ani->Create(L"npc", L"npc_coin.img", L"CoinNPC_Room", 0, 28, 0.1f);
 			ani->PlayAnimation(L"CoinNPC_Room", true);
 		}
 		std::shared_ptr<Image> EnchantBook = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniObject"],
 			Vector3(0.9f, 0.6f, 0.98f),
 			Vector3::Zero,
 			Vector3(2.5f, 2.5f, 1.0f),
@@ -1681,28 +1733,28 @@ void roka::SeriaGateScene::OnEnter()
 			EnchantBook->ismove = false;
 			std::shared_ptr<MeshRenderer> mr = EnchantBook->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
 			std::shared_ptr<Animator> ani = EnchantBook->AddComponent<Animator>();
 			ani->Create(L"npc", L"enchant_book_normal.img", L"EnchantBookNPC_Room", 0, 8, 0.12f);
 			ani->PlayAnimation(L"EnchantBookNPC_Room", true);
 		}
 		std::shared_ptr<Image> EnchantBookEft = object::Instantiate<Image>(
+			prefab::Prefabs[L"AniEftObject"],
 			Vector3(-0.001f, 0.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f));
 		{
 			EnchantBookEft->SetName(L"EnchantBookEft");
 			EnchantBookEft->ismove = false;
+			std::shared_ptr<Animator> ani = EnchantBookEft->AddComponent<Animator>();
+			ani->Create(L"npc", L"enchant_book_front_dodge.img", L"EnchantBookNPCEft_Room", 0, 8, 0.12f);
+			ani->PlayAnimation(L"EnchantBookNPCEft_Room", true);
 			std::shared_ptr<MeshRenderer> mr = EnchantBookEft->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
-			std::shared_ptr<Animator> ani = EnchantBookEft->AddComponent<Animator>();
-			ani->Create(L"npc", L"enchant_book_front_dodge.img", L"EnchantBookNPCEft_Room", 0, 8, 0.18f);
-			ani->PlayAnimation(L"EnchantBookNPCEft_Room", true);
+			mr->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+
 			std::shared_ptr<Transform> tf = EnchantBookEft->GetComponent<Transform>();
 			EnchantBook->AddChild(EnchantBookEft);
 		}
-
 		std::shared_ptr<Image> PostBox = object::Instantiate<Image>(
 			Vector3(2.45f, -0.40f, 0.98f),
 			Vector3::Zero,
@@ -1711,17 +1763,19 @@ void roka::SeriaGateScene::OnEnter()
 		{
 			PostBox->SetName(L"PostBox");
 			PostBox->ismove = false;
+			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"npc");
+			std::shared_ptr<Texture> texture = npk->CreateAtlas(L"postbox.img", 0, 1, L"SeriaRoomPostBox");
+
+			std::shared_ptr<ImageComponent> imageComp = PostBox->GetComponent<ImageComponent>();
+
 			std::shared_ptr<MeshRenderer> mr = PostBox->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultMaterial");
-			std::shared_ptr<ImageComponent> imageComp = PostBox->GetComponent<ImageComponent>();
-			imageComp->SetSprite(L"npc", L"postbox.img", 0);
+			mr->material->texture = texture;
+			imageComp->SetSprite(0);
 		}
-
-
 #pragma endregion
 	}
-
+	
 	//test
 
 	/*GameObject* player1 = new GameObject();

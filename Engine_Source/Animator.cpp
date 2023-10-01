@@ -1,6 +1,8 @@
 #include "Animator.h"
 #include "Sprite.h"
 #include "GameObject.h"
+#include "MeshRenderer.h"
+#include "Resources.h"
 namespace roka
 {
 	Animator::Animator() :Component(EComponentType::Animator)
@@ -45,6 +47,8 @@ namespace roka
 		Component::Initialize();
 		mAnimations.clear();
 		mEvents.clear();
+		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
+		//mr->material->Copy(Resources::Find<Material>(L"DefaultAtlasMaterial").get());
 	}
 	void Animator::Update()
 	{

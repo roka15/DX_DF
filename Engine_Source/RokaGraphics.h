@@ -37,7 +37,7 @@ namespace roka::graphics
 		Transform,
 		Material,
 		Grid,
-		Animation,
+		Atlas,
 		End
 	};
 	enum class ESamplerType

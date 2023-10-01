@@ -17,6 +17,7 @@ namespace roka
 		typedef roka::graphics::Texture Texture;
 		std::shared_ptr<Texture> GetTexture(std::wstring name, UINT index);
 		std::shared_ptr<Texture> Create(std::wstring name, UINT index);
+	
 		std::shared_ptr<Texture> CreateAtlas(std::wstring pack_name,UINT start_index, UINT end_index,std::wstring set_name);
 
 		Vector2 GetPos(std::wstring name, UINT index);

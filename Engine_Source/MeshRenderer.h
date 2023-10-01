@@ -18,7 +18,7 @@ namespace roka
 		virtual void LateUpdate()override;
 		virtual void Render()override;
 
-		void Execute();
+		void Execute(bool atlas);
 		void SetMesh(std::shared_ptr<Mesh> mesh) { mMesh = mesh; }
 		std::shared_ptr<Mesh> GetMesh() { return mMesh; }
 		void SetMaterial(std::shared_ptr<Material> material) { mMaterial = material; }

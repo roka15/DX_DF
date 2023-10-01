@@ -137,6 +137,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Cursor.cpp">
+      <Filter>GameObject\Component\Cursor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -299,6 +302,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Cursor.h">
+      <Filter>GameObject\Component\Cursor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -450,6 +456,9 @@
     </Filter>
     <Filter Include="Scene\DontDestroy">
       <UniqueIdentifier>{5d4dbe50-bd2a-4e61-95eb-bccd03d6a0a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Cursor">
+      <UniqueIdentifier>{16c7f58a-8097-4fcd-8fb5-6757fe1d136f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

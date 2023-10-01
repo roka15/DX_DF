@@ -151,20 +151,6 @@ namespace roka::graphics
 			textures.push_back(CreateTexture(packs->binbuf[i]->buffer, packs->binbuf[i]->length));
 		}
 
-		Sprite sprite0 = mSprites[0];
-		sprite0.canvas_size;
-		Vector2 canvas = sprite0.canvas_size;
-		Vector2 imagesize = sprite0.image_size;
-		Vector2 offset = sprite0.offset;
-
-		if (count == 1)
-		{
-			mDesc = textures[0]->mDesc;
-			mTexture = textures[0]->GetTexture();
-			Create(0, 0, mDesc.Format, D3D11_BIND_FLAG::D3D11_BIND_SHADER_RESOURCE);
-			return;
-		}
-
 		CreateCanvasBaseTexture();
 		CombineTextures(textures);
 	}

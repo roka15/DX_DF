@@ -65,7 +65,6 @@ namespace roka
 		Resources::Insert(texture_name, texture);
 		return texture;
 	}
-
 	std::shared_ptr<Texture> NPK::CreateAtlas(std::wstring pack_name, UINT start_index, UINT end_index, std::wstring set_name)
 	{
 		std::wstring key = GetKey();

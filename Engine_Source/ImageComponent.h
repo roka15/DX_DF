@@ -25,17 +25,15 @@ namespace roka
         virtual void Render()override;
 
         bool Binds();
-
-        void SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index);
-        void SetSprite(std::shared_ptr<Texture>& texture,int index);
-        const Sprite& GetSprite();
+        void SetSprite(int index) { mRenderIndex = index; }
         void SetMaterial(std::shared_ptr<Material> material);
+        void SetTexture(std::shared_ptr<Texture>& texture);
         
     private:
         friend class FactoryBase;
         friend class ComponentFactory;
-        std::unique_ptr<Sprite> mSprite;
         std::weak_ptr<Material> mMaterial;
+        int mRenderIndex;
 	};
 }
 

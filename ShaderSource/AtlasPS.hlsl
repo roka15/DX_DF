@@ -20,12 +20,12 @@ float4 main(VSOut In) : SV_TARGET
 {
 	float4 color = (float4) 1.0f;
 	//color = atlasTexture.Sample(pointSampler, In.UV);
-	float2 UV = AniLeftTop + (ViewSize * In.UV);
+	float2 UV = LeftTop + (ViewSize * In.UV);
 
-	if (UV.x < AniLeftTop.x || UV.x > AniLeftTop.x + AniSize.x
-		|| UV.y < AniLeftTop.y || UV.y > AniLeftTop.y + AniSize.y)
+	if (UV.x < LeftTop.x+Offset.x|| UV.x >= LeftTop.x +Offset.x+ Size.x
+		|| UV.y < LeftTop.y+Offset.y || UV.y >= LeftTop.y +Offset.y+ Size.y)
 		discard;
-
+	
 	color = atlasTexture.Sample(pointSampler, UV);
 
 

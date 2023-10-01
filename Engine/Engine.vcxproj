@@ -289,6 +289,12 @@
     <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\AnimationEffectPS.hlsl">
       <FileType>Document</FileType>
     </FxCompile>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\AtlasPS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\AtlasVS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
     <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\EffectPS.hlsl">
       <FileType>Document</FileType>
     </FxCompile>

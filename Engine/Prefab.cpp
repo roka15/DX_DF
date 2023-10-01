@@ -85,37 +85,37 @@ namespace roka::prefab
 			Resources::Insert(key, material);
 		}
 		{
-			key = L"DefaultAniMaterial";
+			key = L"DefaultAtlasMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
-			material->shader = Resources::Find<Shader>(L"AnimationShader");
+			material->shader = Resources::Find<Shader>(L"AtlasShader");
 			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
 		}
 		{
-			key = L"DefaultEffectAniMaterial";
+			key = L"DefaultEffectAtlasMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
-			material->shader = Resources::Find<Shader>(L"EffectAniShader");
+			material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
 			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
 		}
 		{
-			key = L"DefaultVInverterAniMaterial";
+			key = L"DefaultVInverterAtlasMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
-			material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+			material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
 			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
 		}
 		{
-			key = L"DefaultVInverterEftAniMaterial";
+			key = L"DefaultVInverterEftAtlasMaterial";
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
-			material->shader = Resources::Find<Shader>(L"VerticalInverterEftAnimationShader");
+			material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
@@ -125,21 +125,6 @@ namespace roka::prefab
 		if (npc_npk == nullptr)
 			npc_npk = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
 
-		std::shared_ptr<roka::GameObject> TestObject = object::Instantiate<roka::GameObject>(
-			Vector3(0.0f, 0.0f, 1.0001f),
-			Vector3::Zero,
-			Vector3(0.4f, 0.875f, 1.0f));
-		{
-			TestObject->SetName(L"TestObject");
-			std::shared_ptr<MeshRenderer> mr = TestObject->AddComponent<MeshRenderer>();
-			TestObject->AddComponent<Collider2D>();
-			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"SeriaTextureMaterial01");
-			{
-				std::shared_ptr<Texture> texture = npc_npk->GetTexture(L"seria_event_2012summer.img", 0);
-				mr->material->texture = texture;
-			}
-		}
 
 		std::shared_ptr<roka::Image> AniObject = object::Instantiate<roka::Image>(
 			Vector3::Zero,
@@ -151,7 +136,7 @@ namespace roka::prefab
 
 			std::shared_ptr<MeshRenderer>mr = AniObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultAtlasMaterial");
 			mr->material->shader->bsstate = EBSType::AlphaBlend;
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
@@ -165,7 +150,7 @@ namespace roka::prefab
 
 			std::shared_ptr<MeshRenderer>mr = AniEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAtlasMaterial");
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
 		std::shared_ptr<roka::Image> ColAniObject = object::Instantiate<roka::Image>(
@@ -179,7 +164,7 @@ namespace roka::prefab
 
 			std::shared_ptr<MeshRenderer>mr = ColAniObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultAtlasMaterial");
 			mr->material->shader->bsstate = EBSType::AlphaBlend;
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
@@ -194,7 +179,7 @@ namespace roka::prefab
 
 			std::shared_ptr<MeshRenderer>mr = ColAniEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAtlasMaterial");
 		}
 		std::shared_ptr<roka::Image> ChangeSizeOverTimeObject = object::Instantiate<roka::Image>(
 			Vector3::Zero,
@@ -206,7 +191,7 @@ namespace roka::prefab
 			ChangeSizeOverTimeObject->AddScript<ChangeSizeOverTime>();
 			std::shared_ptr<MeshRenderer>mr = ChangeSizeOverTimeObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultAtlasMaterial");
 			mr->material->shader->bsstate = EBSType::AlphaBlend;
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
@@ -220,7 +205,7 @@ namespace roka::prefab
 			ChangeSizeOverTimeEftObject->AddScript<ChangeSizeOverTime>();
 			std::shared_ptr<MeshRenderer>mr = ChangeSizeOverTimeEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAtlasMaterial");
 			mr->material->render_mode = ERenderMode::Transparent;
 		}
 
@@ -235,7 +220,7 @@ namespace roka::prefab
 
 			std::shared_ptr<MeshRenderer>mr = WarningObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultAtlasMaterial");
 		}
 		std::shared_ptr<roka::Image> WarningEftObject = object::Instantiate<roka::Image>(
 			Vector3::Zero,
@@ -248,10 +233,9 @@ namespace roka::prefab
 
 			std::shared_ptr<MeshRenderer>mr = WarningEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mr->material = Resources::Find<Material>(L"DefaultEffectAniMaterial");
+			mr->material = Resources::Find<Material>(L"DefaultEffectAtlasMaterial");
 		}
 
-		Prefabs.insert(std::make_pair(TestObject->GetName(), TestObject));
 		Prefabs.insert(std::make_pair(AniObject->GetName(), AniObject));
 		Prefabs.insert(std::make_pair(AniEftObject->GetName(), AniEftObject));
 		Prefabs.insert(std::make_pair(ColAniObject->GetName(), ColAniObject));

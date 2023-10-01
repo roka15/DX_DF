@@ -14,7 +14,7 @@ namespace roka::graphics
 		virtual void Copy(Material* src);
 		virtual HRESULT Load(const std::wstring& path)override;
 
-		void Binds();
+		void Binds(bool atlas);
 		void Clear();
 
 		void SetShader(std::shared_ptr<Shader> shader) { mShader = shader; }

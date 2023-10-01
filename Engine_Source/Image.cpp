@@ -28,9 +28,6 @@ namespace roka
 		mTransform = GetComponent<Transform>();
 		mMeshRender = AddComponent<MeshRenderer>();
 		mImage = AddComponent<ImageComponent>();
-
-		std::shared_ptr<MeshRenderer> mr = mMeshRender.lock();
-		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 		GameObject::Initialize();
 	}
 	void Image::Update()

@@ -52,6 +52,17 @@ namespace roka::object
 		return obj;
 	}
 	template<typename T>
+	static __forceinline std::shared_ptr<T> Instantiate(std::shared_ptr<GameObject> obj, Vector3 pos, Vector3 rotate, Vector3 scale)
+	{
+		std::shared_ptr<T> gameObject = Instantiate<T>(obj);
+		std::shared_ptr<Transform> tf = gameObject->GetComponent<Transform>();
+		tf->position = pos;
+		tf->rotation = rotate;
+		tf->scale = scale;
+		gameObject->Initialize();
+		return gameObject;
+	}
+	template<typename T>
 	static __forceinline std::shared_ptr<T> Instantiate(enums::ELayerType layer)
 	{
 		std::shared_ptr<T> obj = std::make_shared<T>();
@@ -112,6 +123,20 @@ namespace roka::object
 		obj->Initialize();
 		obj->layer_type = layer;
 		return obj;
+	}
+	template<typename T>
+	static __forceinline std::shared_ptr<T> Instantiate(std::shared_ptr<GameObject> obj,Vector3 pos, Vector3 rotate, Vector3 scale, enums::ELayerType layer)
+	{
+		std::shared_ptr<T> gameObject = Instantiate<T>(obj);
+		std::shared_ptr<Transform> tf = gameObject->GetComponent<Transform>();
+		tf->position = pos;
+		tf->rotation = rotate;
+		tf->scale = scale;
+		Scene* scene = SceneManager::GetActiveScene();
+		scene->AddGameObject(layer, gameObject);
+		gameObject->Initialize();
+		gameObject->layer_type = layer;
+		return gameObject;
 	}
 
 	static __forceinline void Destroy(std::shared_ptr<GameObject> obj)

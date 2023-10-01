@@ -9,13 +9,14 @@
 #include "Camera.h"
 #include "Transform.h"
 #include "Texture.h"
+#include "Animator.h"
 
 using namespace roka::graphics;
 namespace roka
 {
 	ImageComponent::ImageComponent() :Component(EComponentType::Image),
-		mSprite(std::make_unique<Sprite>()),
-		mMaterial()
+		mMaterial(),
+		mRenderIndex(-1)
 	{
 	}
 	ImageComponent::ImageComponent(const ImageComponent& ref) : Component(ref)
@@ -31,13 +32,12 @@ namespace roka
 	void ImageComponent::Initialize()
 	{
 		Component::Initialize();
-		auto default_material = prefab::Resources.find(L"DefaultMaterial");
-		if (default_material == prefab::Resources.end())
+		std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
+		if (ani != nullptr)
 			return;
-
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-		if (mr->material == nullptr)
-			mr->material = std::dynamic_pointer_cast<Material>(default_material->second);
+		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+		mr->material->Copy(Resources::Find<Material>(L"DefaultAtlasMaterial").get());
 	}
 	void ImageComponent::Update()
 	{
@@ -50,38 +50,35 @@ namespace roka
 	}
 	bool ImageComponent::Binds()
 	{
+		if (mRenderIndex == -1)
+			return false;
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
-		if (mr->material->IsNullTexture()==false)
-			return true;
-		if (mSprite == nullptr)
-			return false;
-		std::shared_ptr<NPK> npk = Resources::Find<NPK>(mSprite->npk_key);
-		
-		if (npk == nullptr)
-			return false;
-		std::shared_ptr<Texture> texture = npk->GetTexture(mSprite->pack_key, mSprite->index);
-	
+		std::shared_ptr<Texture> texture = mr->material->texture;
 		if (texture == nullptr)
-			texture = npk->Create(mSprite->pack_key, mSprite->index);
-		texture->BindShaderResource(EShaderStage::PS, 0);
+			return false;
+		texture->SetCurSpriteIndex(mRenderIndex);
+		Sprite sprite = texture->GetSprite();
+		renderer::AtlasCB data = {};
+		data.SpriteLeftTop = sprite.lefttop;
+		data.SpriteOffset = sprite.offset;
+		data.SpriteSize = sprite.image_size;
+		data.CanvasSize = sprite.canvas_size;
+		data.Alpha = mr->alpha;
+		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Atlas];
+		cb->SetData(&data);
+
+		texture->BindShaderResource(EShaderStage::PS, 12);
 		return true;
 	}
-	void ImageComponent::SetSprite(std::wstring npk_key, std::wstring pack_key, UINT index)
-	{
-		mSprite->Create(npk_key, pack_key, index);
-	}
-	void ImageComponent::SetSprite(std::shared_ptr<Texture>& texture, int index)
-	{
-		mSprite->Create(texture,index);
-	}
-	const Sprite& ImageComponent::GetSprite()
-	{
-		return *(mSprite.get());
-	}
+	
 	void ImageComponent::SetMaterial(std::shared_ptr<Material> material)
 	{
 		mMaterial = material;
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 		mr->material = material;
+	}
+	void ImageComponent::SetTexture(std::shared_ptr<Texture>& texture)
+	{
+		mMaterial.lock()->texture = texture;
 	}
 }

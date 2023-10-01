@@ -15,16 +15,17 @@ cbuffer Grid : register(b2)
 	float2 CameraScale;
 	float2 Resolution;
 }
-cbuffer Animation : register(b3)
+cbuffer Altlas : register(b3)
 {
-	float2 AniLeftTop;
-	float2 AniSize;
-	float2 AniOffset;
+	float2 LeftTop;
+	float2 Size;
+	float2 Offset;
 	float2 ViewSize;
 	float1 alpha;
 	int flag;
 	float2 padding;
 }
+
 struct LightAttribute
 {
 	float4 color;

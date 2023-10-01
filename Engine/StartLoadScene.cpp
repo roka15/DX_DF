@@ -36,11 +36,11 @@ namespace roka
         Cursor->SetName(L"Cursor");
         Cursor->layer_type = ELayerType::Raycast;
         std::shared_ptr<MeshRenderer> mesh = Cursor->AddComponent<MeshRenderer>();
-        mesh->material = std::make_shared<Material>();
-        mesh->material->Copy(Resources::Find<Material>(L"TransparentMaterial").get());
+        mesh->material->texture = texture;
         mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+      
         std::shared_ptr<ImageComponent> image = Cursor->GetComponent<ImageComponent>();
-        image->SetSprite(texture, 1);
+        image->SetSprite(1);
         std::shared_ptr<Collider2D> collider = Cursor->AddComponent<Collider2D>();
         
         MInput->SetCursor(Cursor);

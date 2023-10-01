@@ -191,14 +191,14 @@ namespace roka
 		PartScript::Right();
 		std::shared_ptr<GameObject> subObj = mSubObject.lock()->owner->GetSharedPtr();
 		std::shared_ptr<MeshRenderer> mr = subObj->GetComponent<MeshRenderer>();
-		mr->material->shader = Resources::Find<Shader>(L"AnimationShader");
+		mr->material->shader = Resources::Find<Shader>(L"AtlasShader");
 	}
 	void WeaponPartScript::Left()
 	{
 		PartScript::Left();
 		std::shared_ptr<GameObject> subObj = mSubObject.lock()->owner->GetSharedPtr();
 		std::shared_ptr<MeshRenderer> mr = subObj->GetComponent<MeshRenderer>();
-		mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAnimationShader");
+		mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
 	}
 	void WeaponPartScript::Stop()
 	{
