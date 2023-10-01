@@ -7,6 +7,7 @@
 #include "Animator.h"
 #include "Rigidbody.h"
 #include "Light.h"
+#include "Cursor.h"
 
 namespace roka
 {
@@ -43,6 +44,10 @@ namespace roka
 		mFactories[EComponentType::Light] = [](Component* component) {
 			Light* rg = dynamic_cast<Light*>(component);
 			return std::shared_ptr<Light>(new Light(*rg));
+		};
+		mFactories[EComponentType::Cursor] = [](Component* component) {
+			Cursor* rg = dynamic_cast<Cursor*>(component);
+			return std::shared_ptr<Cursor>(new Cursor(*rg));
 		};
 	}
 

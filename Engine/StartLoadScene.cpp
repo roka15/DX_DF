@@ -13,6 +13,7 @@
 #include "Collider2D.h"
 #include "ImageComponent.h"
 #include "PlayerScript.h"
+#include "Cursor.h"
 
 
 
@@ -32,19 +33,19 @@ namespace roka
 
         std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"infoBtn");
         std::shared_ptr<Texture> texture = npk->CreateAtlas(L"mouseIcon.img", 0, 3, L"MouseBtn");
-        std::shared_ptr<roka::Image> Cursor = object::Instantiate<roka::Image>(Vector3(0.0f,0.0f,-10.0f),Vector3::Zero,Vector3(0.12f,0.12f,1.0f));
-        Cursor->SetName(L"Cursor");
-        Cursor->layer_type = ELayerType::Raycast;
-        std::shared_ptr<MeshRenderer> mesh = Cursor->AddComponent<MeshRenderer>();
+        std::shared_ptr<roka::Image> cursor = object::Instantiate<roka::Image>(Vector3(0.0f,0.0f,-10.0f),Vector3::Zero,Vector3(0.12f,0.12f,1.0f));
+        cursor->SetName(L"Cursor");
+        cursor->layer_type = ELayerType::Raycast;
+        std::shared_ptr<MeshRenderer> mesh = cursor->AddComponent<MeshRenderer>();
         mesh->material->texture = texture;
         mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
       
-        std::shared_ptr<ImageComponent> image = Cursor->GetComponent<ImageComponent>();
+        std::shared_ptr<ImageComponent> image = cursor->GetComponent<ImageComponent>();
         image->SetSprite(1);
-        std::shared_ptr<Collider2D> collider = Cursor->AddComponent<Collider2D>();
-        
-        MInput->SetCursor(Cursor);
-        SceneManager::DontDestroy(Cursor);
+        std::shared_ptr<Collider2D> collider = cursor->AddComponent<Collider2D>();
+        cursor->AddComponent<Cursor>();
+        MInput->SetCursor(cursor);
+        SceneManager::DontDestroy(cursor);
     }
     void StartLoadScene::Update()
     {

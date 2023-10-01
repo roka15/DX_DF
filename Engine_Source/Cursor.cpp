@@ -37,10 +37,12 @@ namespace roka
 		//  switch(data->ui정보) cursor sprite 교체.
 		//일단 테스트로 그냥 어두워 지게 하기.
 		std::shared_ptr<ImageComponent> image = owner->GetComponent<ImageComponent>();
-		//image->
+		image->SetSprite(2);
 	}
 	void Cursor::OnPointerExit(PointerEventData* data)
 	{
+		std::shared_ptr<ImageComponent> image = owner->GetComponent<ImageComponent>();
+		image->SetSprite(1);
 	}
 	void Cursor::OnClick(PointerEventData* data)
 	{

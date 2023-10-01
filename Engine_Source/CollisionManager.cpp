@@ -164,6 +164,15 @@ namespace roka
 			itr->second = false;
 		}
 	}
+	bool CollisionManager::CollisionCheck(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
+	{
+		ColliderID id = {};
+		id.left = left->collider_id;
+		id.right = right->collider_id;
+		if (mCollisionMap.find(id.id) != mCollisionMap.end())
+			return mCollisionMap[id.id];
+		return false;
+	}
 	bool CollisionManager::Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
 	{
 		Vector3 LocalPos[4] =
@@ -258,6 +267,43 @@ namespace roka
 				return false;
 		}
 		return true;
+	}
+	std::vector<std::shared_ptr<GameObject>> CollisionManager::GetCollisionObjects(std::shared_ptr<GameObject>& obj)
+	{
+		std::vector<std::shared_ptr<GameObject>> objs;
+
+		ELayerType layerType = obj->layer_type;
+		std::shared_ptr<Collider2D> collider = obj->GetComponent<Collider2D>();
+		if (collider == nullptr)
+			return objs;
+
+		for (UINT row = 0; row < (UINT)ELayerType::End; row++)
+		{
+			if (row == (UINT)layerType)
+				continue;
+			if (mMatrix[(UINT)layerType][row] == true)
+			{
+				std::vector<std::shared_ptr<GameObject>> vec = SceneManager::FindGameObjects((ELayerType)row);
+				std::vector<std::shared_ptr<Collider2D>> cols = {};
+				for (auto itr : vec)
+				{
+					FindCollider(itr, cols);
+					for (auto col : cols)
+					{
+						bool flag = false;
+						flag = CollisionCheck(collider, col);
+						if (flag)
+						{
+							objs.push_back(col->owner->GetSharedPtr());
+						}
+					}
+					
+				}
+
+			}
+		}
+
+		return objs;
 	}
 	void CollisionManager::DisableCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
 	{

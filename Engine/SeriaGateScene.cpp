@@ -1862,7 +1862,7 @@ void roka::SeriaGateScene::OnEnter()
 	CollisionManager::RegisterID(portalCol, playercols[1]);
 
 	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal, true);
-	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Raycast, true);
+	CollisionManager::SetLayer(ELayerType::Raycast, ELayerType::Player, true);
 }
 
 void roka::SeriaGateScene::Loading()

@@ -2,9 +2,10 @@
 
 #include "GameObject.h"
 #include "IMouseEvent.h"
-
+#include "CollisionManager.h"
 #include "Transform.h"
 #include "Cursor.h"
+
 namespace roka::manager
 {
 	InputManager::InputManager()
@@ -68,10 +69,12 @@ namespace roka::manager
 	}
 	void InputManager::OnMouseEvent(PointerEventData* data)
 	{
-		if (mCursor.expired() == false)
+		if (mCursor.expired() == true)
 			return;
 		//충돌 object들 모두 뽑아오기
 		std::vector<std::shared_ptr<GameObject>> objs = {};
+		std::shared_ptr<GameObject> cursor = mCursor.lock();
+		objs = CollisionManager::GetCollisionObjects(cursor);
 		switch (data->btn_state)
 		{
 		case EKeyState::Down:
@@ -169,6 +172,7 @@ namespace roka::manager
 
 	void InputManager::MouseEnter(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
+		bool flag = false;
 		for (auto& obj : objs)
 		{
 			std::vector<std::shared_ptr<Script>> scripts = obj->GetScripts();
@@ -179,18 +183,25 @@ namespace roka::manager
 				{
 					handler->OnPointerEnter(data);
 					data->enter_object = obj;
-					return;
+					flag = true;
+					break;
 				}
 				else
 					continue;
 			}
+			if (flag)
+				break;
 		}
-		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
-		cursor->OnPointerEnter(data);
+		if (objs.size() != 0)
+		{
+			std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+			cursor->OnPointerEnter(data);
+		}
 	}
 
 	void InputManager::MouseExit(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
+		bool flag = false;
 		for (auto& obj : objs)
 		{
 			//cursor와 obj의 현 충돌 상태를 확인 후 exit 수행.
@@ -200,10 +211,22 @@ namespace roka::manager
 			{
 				IPointerExitHandler* handler = dynamic_cast<IPointerExitHandler*>(script.get());
 				if (handler != nullptr)
+				{
 					handler->OnPointerExit(data);
+					data->enter_object = obj;
+					flag = true;
+					break;
+				}
 				else
 					continue;
 			}
+			if (flag)
+				break;
+		}
+		if (objs.size() == 0)
+		{
+			std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+			cursor->OnPointerExit(data);
 		}
 	}
 
