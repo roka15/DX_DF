@@ -102,4 +102,10 @@ namespace roka::enums
 		FadeOut,
 		End,
 	};
+	enum class EApplicationType
+	{
+		Main,
+		TileTool,
+		End,
+	};
 }

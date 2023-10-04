@@ -4,6 +4,9 @@
     <Filter Include="Editor">
       <UniqueIdentifier>{c162acaf-4e77-43c3-bb85-0e81d6504f14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="High Level Interface">
+      <UniqueIdentifier>{dcca5077-6896-4bdf-bafa-05282e6509eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)guiDebugObject.h" />
@@ -12,6 +15,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)guiEditor.h">
       <Filter>Editor</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TileMapToolApplication.h">
+      <Filter>High Level Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)guiDebugObject.cpp" />
@@ -19,6 +25,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)guiWidget.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)guiEditor.cpp">
       <Filter>Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TileMapToolApplication.cpp">
+      <Filter>High Level Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

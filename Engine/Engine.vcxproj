@@ -222,6 +222,7 @@
     </ClInclude>
     <ClInclude Include="TairangSkill01.h" />
     <ClInclude Include="TargetMoveScript.h" />
+    <ClInclude Include="TileMapToolScene.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="WarningObjectPool.h" />
     <ClInclude Include="WarningScript.h" />
@@ -279,6 +280,7 @@
     </ClCompile>
     <ClCompile Include="TairangSkill01.cpp" />
     <ClCompile Include="TargetMoveScript.cpp" />
+    <ClCompile Include="TileMapToolScene.cpp" />
     <ClCompile Include="User.cpp" />
     <ClCompile Include="WarningObjectPool.cpp" />
     <ClCompile Include="WarningScript.cpp" />

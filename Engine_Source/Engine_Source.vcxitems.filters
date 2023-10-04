@@ -133,12 +133,14 @@
       <Filter>Manager\ObjectPoolManager\EX</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaRandom.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Cursor.cpp">
       <Filter>GameObject\Component\Cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp">
+      <Filter>Scene\DontDestroy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,12 +300,14 @@
       <Filter>Manager\ObjectPoolManager\EX</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaRandom.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Cursor.h">
       <Filter>GameObject\Component\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h">
+      <Filter>Scene\DontDestroy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

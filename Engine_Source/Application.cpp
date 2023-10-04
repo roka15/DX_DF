@@ -21,11 +21,13 @@ namespace roka
 {
 
 	Application::Application()
-		:graphicDevice(nullptr),
+		:mgraphicDevice(nullptr),
 		mHwnd(NULL),
 		mWidth(-1),
-		mHeight(-1)
+		mHeight(-1),
+		mType(EApplicationType::Main)
 	{
+		mbActive = false;
 	}
 
 	Application::~Application()
@@ -83,8 +85,8 @@ namespace roka
 	{
 		Time::Render();
 	
-		graphicDevice->ClearTarget();
-		graphicDevice->UpdateViewPort();
+		ClearTarget();
+		roka::graphics::GetDevice()->UpdateViewPort(mType);
 		renderer::Render();
 	}
 
@@ -108,31 +110,40 @@ namespace roka
 
 	void Application::Present()
 	{
-		graphicDevice->Present();
+		roka::graphics::GetDevice()->Present(mType);
 	}
 
 	void Application::ClearTarget()
 	{
-		graphicDevice->ClearTarget();
+		roka::graphics::GetDevice()->ClearTarget(mType,mBgColor);
 	}
 
-	void Application::SetWindow(HWND hwnd, UINT width, UINT height)
+	void Application::SetWindow(HWND hwnd,UINT x,UINT y, UINT width, UINT height)
 	{
-		if (graphicDevice == nullptr)
+		mHwnd = hwnd;
+		mWidth = width;
+		mHeight = height;
+		if (roka::graphics::GetDevice() == nullptr)
 		{
-			mHwnd = hwnd;
-			mWidth = width;
-			mHeight = height;
-
-			graphicDevice = std::make_unique<roka::graphics::GraphicDevice_Dx11>();
-			roka::graphics::GetDevice() = graphicDevice.get();
+			mgraphicDevice = std::make_unique<roka::graphics::GraphicDevice_Dx11>();
+			roka::graphics::GetDevice() = mgraphicDevice.get();
 		}
+		
+		roka::graphics::GetDevice()->CreateRenderSetting(mType);
 
 		RECT rt = { 0, 0, (LONG)width , (LONG)height };
 		AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
-		SetWindowPos(mHwnd, nullptr, 0, 0, rt.right - rt.left, rt.bottom - rt.top, 0);
+	
+		SetWindowPos(mHwnd, nullptr, x, y, rt.right - rt.left, rt.bottom - rt.top, 0);
+	
 		ShowWindow(mHwnd, true);
 		UpdateWindow(mHwnd);
+	}
+
+	void Application::SetWindowBGColor(float color[])
+	{
+		for (int i = 0; i < 4; i++)
+			mBgColor[i] = color[i];
 	}
 
 }

@@ -3,6 +3,10 @@
 #include "RokaGraphics.h"
 #include "Texture.h"
 
+namespace roka
+{
+	class Application;
+}
 namespace roka::graphics
 {
 	class GraphicDevice_Dx11
@@ -11,7 +15,8 @@ namespace roka::graphics
 		GraphicDevice_Dx11();
 		~GraphicDevice_Dx11();
 
-		bool CreateSwapChain(const DXGI_SWAP_CHAIN_DESC* desc, HWND hwnd);
+		bool CreateRenderSetting(enums::EApplicationType type);
+		bool CreateSwapChain(enums::EApplicationType type,const DXGI_SWAP_CHAIN_DESC* desc, HWND hwnd);
 		bool CreateTexture2D(const D3D11_TEXTURE2D_DESC* desc, void* data, ID3D11Texture2D** texture);
 		bool CreateInputLayout(const D3D11_INPUT_ELEMENT_DESC* pInputElementDescs, UINT NumElements, ID3DBlob* byteCode, ID3D11InputLayout** ppInputLayout);
 		bool CreateBuffer(ID3D11Buffer** buffer, D3D11_BUFFER_DESC* desc, D3D11_SUBRESOURCE_DATA* data);
@@ -55,10 +60,10 @@ namespace roka::graphics
 		void CopySubResourceRegion(ID3D11Resource* pDstResource, UINT DstSubresource, UINT DstX, UINT DstY, UINT DstZ, ID3D11Resource* pSrcResource, UINT SrcSubresource, const D3D11_BOX* pSrcBox);
 
 		void DrawIndexed(UINT IndexCount, UINT StartIndexLocation, INT BaseVertexLocation);
-		void ClearTarget();
-		void UpdateViewPort();
+		void ClearTarget(enums::EApplicationType type,float* color);
+		void UpdateViewPort(enums::EApplicationType type);
 		void Draw();
-		void Present();
+		void Present(enums::EApplicationType type);
 
 		ID3D11Device* GetID3D11Device() { return mDevice.Get(); }
 	private:
@@ -71,11 +76,13 @@ namespace roka::graphics
 
 		//최종 그려질 도화지
 		std::shared_ptr<roka::graphics::Texture> mRenderTarget;
+		std::shared_ptr<roka::graphics::Texture> mTileToolRenderTarget;
 		//깊이 버퍼
 		std::shared_ptr<roka::graphics::Texture> mDepthStencil;
-
+		std::shared_ptr<roka::graphics::Texture> mTileToolDepthStencil;
 		// 더블버퍼링 작업을 진행해주는 swapChain
 		Microsoft::WRL::ComPtr<IDXGISwapChain> mSwapChain;
+		Microsoft::WRL::ComPtr<IDXGISwapChain> mTileToolSwapChain;
 	    
 		D3D11_VIEWPORT mViewPort;
 	};

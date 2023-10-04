@@ -69,12 +69,20 @@ HRESULT roka::graphics::Material::Load(const std::wstring& path)
 	return E_NOTIMPL;
 }
 
-void roka::graphics::Material::Binds(bool atlas)
+void roka::graphics::Material::Binds()
 {
-	if (mTexture != nullptr && atlas == false)
+	if (mTexture != nullptr)
 	{
-		mTexture->BindShaderResource(EShaderStage::PS, 0);
+		if (mTexture->IsAtlas() == false)
+		{
+			mTexture->BindShaderResource(EShaderStage::PS, 0);
+		}
+		else
+		{
+			mTexture->BindShaderResource(EShaderStage::PS, 12);
+		}
 	}
+	
 	if (mShader != nullptr)
 		mShader->Binds();
 }

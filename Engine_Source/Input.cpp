@@ -5,7 +5,7 @@
 #include "Camera.h"
 #include "..\\Engine\\IMouseEvent.h"
 extern roka::Application application;
-
+extern roka::Application* applications[2];
 namespace roka
 {
 	static manager::InputManager* M_Input = manager::InputManager::GetInstance();
@@ -25,8 +25,8 @@ namespace roka
 	int Input::mMousePosSameCheck = 0;
 	EMouseBtnType Input::mMouseType = EMouseBtnType::NONE;
 	EKeyState Input::mMouseState = EKeyState::None;
-	double Input::mMouseLBUpTime=0.0;
-	double Input::mMouseRBUpTime=0.0;
+	double Input::mMouseLBUpTime = 0.0;
+	double Input::mMouseRBUpTime = 0.0;
 	const double Input::mDoubleClickTime = 1.0;
 	void Input::Initialize()
 	{
@@ -46,11 +46,11 @@ namespace roka
 	void Input::Update()
 	{
 		mTime += Time::DeltaTime();
-
-		if (GetFocus())
+		HWND hWnd = GetFocus();
+		if (hWnd)
 		{
 			KeyUpdate();
-			MouseUpdate();
+			MouseUpdate(hWnd);
 		}
 		else
 		{
@@ -94,7 +94,7 @@ namespace roka
 		data->button = mMouseType;
 		mMouseLBUpTime = mTime;
 	}
-	
+
 	void Input::KeyUpdate()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -130,17 +130,26 @@ namespace roka
 			}
 		}
 	}
-	void Input::MouseUpdate()
+	void Input::MouseUpdate(HWND hWnd)
 	{
 		POINT cursorPos = {};
 		GetCursorPos(&cursorPos);
-		ScreenToClient(application.GetHwnd(), &cursorPos);
-
+		Application* app;
+		if (hWnd == applications[(UINT)EApplicationType::Main]->GetHwnd())
+		{
+			app = applications[(UINT)EApplicationType::Main];
+			ScreenToClient(app->GetHwnd(), &cursorPos);
+		}
+		else if (hWnd == applications[(UINT)EApplicationType::TileTool]->GetHwnd())
+		{
+			app = applications[(UINT)EApplicationType::TileTool];
+			ScreenToClient(app->GetHwnd(), &cursorPos);
+		}
 
 		Viewport view;
 
-		view.width = application.GetWidth();
-		view.height = application.GetHeight();
+		view.width = app->GetWidth();
+		view.height = app->GetHeight();
 		view.x = 0;
 		view.y = 0;
 		view.minDepth = 0.0f;
@@ -163,7 +172,7 @@ namespace roka
 		data->btn_state = mMouseState;
 		data->delta = delta;
 		data->position = mMousePos;
-		
+
 		switch (mMouseState)
 		{
 		case EKeyState::Down:

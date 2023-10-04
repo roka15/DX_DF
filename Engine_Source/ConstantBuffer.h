@@ -1,8 +1,9 @@
 #pragma once
 #include "RokaGraphics.h"
+
 namespace roka::graphics
 {
-	class ConstantBuffer:public GpuBuffer
+	class ConstantBuffer :public GpuBuffer
 	{
 	public:
 		ConstantBuffer(const ECBType type);

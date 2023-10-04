@@ -57,7 +57,7 @@ namespace roka
 		{
 			if (animator->Binds())
 			{
-				Execute(true);
+				Execute();
 			}
 			return;
 		}
@@ -66,7 +66,7 @@ namespace roka
 		{
 			if (imageComp->Binds())
 			{
-				Execute(true);
+				Execute();
 			}
 			return;
 		}
@@ -74,17 +74,17 @@ namespace roka
 
 		if (owner->is_debug)
 		{
-			Execute(false);
+			Execute();
 			return;
 		}
 	}
-	void MeshRenderer::Execute(bool atlas)
+	void MeshRenderer::Execute()
 	{
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 
 		tf->BindConstantBuffer();
 		mMesh->BindBuffer();
-		mMaterial->Binds(atlas);
+		mMaterial->Binds();
 		mMesh->Render();
 		mMaterial->Clear();
 	}

@@ -59,6 +59,7 @@ namespace roka::graphics
 		SET_PROPERTY(SetDesc) D3D11_TEXTURE2D_DESC desc;
 		GET_PROPERTY(GetView) D3D11_SHADER_RESOURCE_VIEW_DESC view_desc;
 		GET_PROPERTY(GetTexture) Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
+		bool IsAtlas() { return mbAtlas; }
 	protected:
 		void CreateCanvasBaseTexture();
 		std::shared_ptr<Texture> CreateTexture(void* data, size_t size);
@@ -76,6 +77,7 @@ namespace roka::graphics
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> mRTV;
 		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> mDSV;
 		Microsoft::WRL::ComPtr<ID3D11UnorderedAccessView> mUAV;
+		bool mbAtlas;
 	};
 }
 

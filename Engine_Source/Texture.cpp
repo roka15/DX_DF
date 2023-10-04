@@ -16,6 +16,7 @@ namespace roka::graphics
 		, mUAV(nullptr)
 		, mDesc{}
 		, mSRVDesc{}
+		,mbAtlas(false)
 	{
 	}
 
@@ -144,6 +145,7 @@ namespace roka::graphics
 	}
 	void Texture::Create(const file::PackInfo* packs)
 	{
+		mbAtlas = true;
 		std::vector<std::shared_ptr<Texture>> textures;
 		int count = packs->binbuf.size();
 		for (int i = 0; i < count; i++)

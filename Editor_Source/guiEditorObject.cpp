@@ -4,6 +4,7 @@ namespace gui
 {
 	EditorObject::EditorObject()
 	{
+		mbDebugObject = true;
 	}
 
 	EditorObject::~EditorObject()

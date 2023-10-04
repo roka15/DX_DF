@@ -13,6 +13,7 @@
 #include "WestcoastScene.h"
 #include "HendonmyreScene.h"
 #include "SelectCharacterScene.h"
+#include "TileMapToolScene.h"
 namespace roka
 {
 	void InitializeScenes()
@@ -24,6 +25,7 @@ namespace roka
 		SceneManager::CreateScene<SeriaGateScene>(L"SeriaGateScene");
 		SceneManager::CreateScene<WestcoastScene>(L"WestcoastScene");
 		SceneManager::CreateScene<HendonmyreScene>(L"HendonmyreScene");
+		SceneManager::CreateScene<TileMapToolScene>(L"TileMapToolScene");
 
 		SceneManager::LoadScene(L"StartLoadScene");
 	}

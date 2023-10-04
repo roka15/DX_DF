@@ -89,7 +89,7 @@ namespace roka
 	{
 		if (mAtlas == nullptr)
 			return;
-		mAtlas->BindShaderResource(graphics::EShaderStage::PS, 12);
+		mAnimator.lock()->owner->GetComponent<MeshRenderer>()->material->texture = mAtlas;
 		renderer::AtlasCB data = {};
 		Sprite sprite = mAtlas->GetSprite(mIndex);
 		mAtlas->SetCurSpriteIndex(mIndex);

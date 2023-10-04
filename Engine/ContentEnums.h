@@ -103,6 +103,7 @@ namespace roka::enums
 		StartLoad,
 		SeriaRoom,
 		PlayTestScene,
+		TileMapTool,
 		End,
 	};
 }

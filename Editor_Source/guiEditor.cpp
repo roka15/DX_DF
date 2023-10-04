@@ -8,8 +8,11 @@
 #include "Transform.h"
 #include "MeshRenderer.h"
 #include "..\\Engine\\GridScript.h"
+#include "..\\Engine_Source\\Application.h"
+#include "..\\Editor_Source\\TileMapToolApplication.h"
 
-
+extern roka::Application application;
+extern roka::Application* applications[2];
 namespace gui
 {
 	using namespace roka::enums;
@@ -32,7 +35,7 @@ namespace gui
 		mr->mesh = mesh;
 		mDebugObjects[(UINT)EColliderType::Rect] = debugObj;
 
-		/*EditorObject* grid = new EditorObject();
+		EditorObject* grid = new EditorObject();
 		grid->SetName(L"Grid");
 
 		mr = grid->AddComponent<roka::MeshRenderer>();
@@ -41,7 +44,7 @@ namespace gui
 		std::shared_ptr<roka::GridScript> gridsc = grid->AddComponent<roka::GridScript>();
 		gridsc->camera = roka::renderer::MainCamera;
 
-		mEditorObjects.push_back(grid);*/
+		mEditorObjects.push_back(grid);
 	}
 
 	void Editor::Run()
@@ -74,12 +77,7 @@ namespace gui
 			obj->Render();
 		}
 
-		for (const roka::graphics::DebugMesh& mesh
-			: roka::renderer::debugMeshs)
-		{
-			DebugRender(mesh);
-		}
-		roka::renderer::debugMeshs.clear();
+		DebugRender();
 	}
 
 	void Editor::Release()
@@ -101,6 +99,16 @@ namespace gui
 			delete debugObj;
 			debugObj = nullptr;
 		}
+	}
+
+	void Editor::DebugRender()
+	{
+		for (const roka::graphics::DebugMesh& mesh
+			: roka::renderer::debugMeshs)
+		{
+			DebugRender(mesh);
+		}
+		roka::renderer::debugMeshs.clear();
 	}
 
 	void Editor::DebugRender(const roka::graphics::DebugMesh& mesh)

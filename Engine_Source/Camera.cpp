@@ -6,6 +6,8 @@
 #include "SceneManager.h"
 #include "MeshRenderer.h"
 extern roka::Application application;
+extern roka::Application* applications[2];
+
 namespace roka
 {
 	bool CompareZSort(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2)
@@ -136,7 +138,9 @@ namespace roka
 	bool Camera::CreateProjectionMatrix(EProjectionType type)
 	{
 		RECT rect = {};
-		GetClientRect(application.GetHwnd(), &rect);
+		if (applications[0] == nullptr)
+			return false;
+		GetClientRect(applications[0]->GetHwnd(), &rect);
 
 		float width = rect.right - rect.left;
 		float height = rect.bottom - rect.top;

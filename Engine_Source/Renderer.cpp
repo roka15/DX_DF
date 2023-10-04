@@ -95,6 +95,7 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
+
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State

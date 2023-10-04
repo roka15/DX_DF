@@ -145,6 +145,9 @@
     <ClInclude Include="IMouseEvent.h">
       <Filter>Contents\Interface\IMouseEvent</Filter>
     </ClInclude>
+    <ClInclude Include="TileMapToolScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -281,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="IMouseEvent.cpp">
       <Filter>Contents\Interface\IMouseEvent</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMapToolScene.cpp">
+      <Filter>Contents\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

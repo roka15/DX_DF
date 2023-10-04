@@ -96,7 +96,7 @@ namespace roka
 		static void MouseBtnUp(class PointerEventData* data);
 	private:
 		static void KeyUpdate();
-		static void MouseUpdate();
+		static void MouseUpdate(HWND hWnd);
 	private:
 		static std::vector<Key> mKeys;
 		static Vector2 mMousePos;

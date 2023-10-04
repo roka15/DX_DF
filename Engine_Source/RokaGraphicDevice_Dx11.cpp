@@ -1,12 +1,12 @@
 #include "RokaGraphicDevice_Dx11.h"
 #include "Application.h"
 #include "Renderer.h"
-extern roka::Application application;
+
+extern roka::Application* applications[2];
 namespace roka::graphics
 {
 	GraphicDevice_Dx11::GraphicDevice_Dx11()
 	{
-		HWND hWnd = application.GetHwnd();
 		UINT deviceFlag = D3D11_CREATE_DEVICE_DEBUG;
 		D3D_FEATURE_LEVEL featurelevel = (D3D_FEATURE_LEVEL)0;
 
@@ -14,38 +14,25 @@ namespace roka::graphics
 			deviceFlag, nullptr, 0,
 			D3D11_SDK_VERSION, mDevice.GetAddressOf(), &featurelevel,
 			mContext.GetAddressOf());
+	}
 
-#pragma region Swap Chain
+	GraphicDevice_Dx11::~GraphicDevice_Dx11()
+	{
+	}
+	bool GraphicDevice_Dx11::CreateRenderSetting(enums::EApplicationType type)
+	{
+		HWND hWnd;
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
-		swapChainDesc.BufferCount = 2;
-		swapChainDesc.BufferDesc.Width = application.GetWidth();
-		swapChainDesc.BufferDesc.Height = application.GetHeight();
-
-		if (!CreateSwapChain(&swapChainDesc, hWnd))
-			return;
-#pragma endregion
-
-		mRenderTarget = std::make_shared<Texture>();
-		mDepthStencil = std::make_shared<Texture>();
-
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget = nullptr;
-
-		if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf())))
-			return;
-		mRenderTarget->SetTexture(renderTarget);
-
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView = nullptr;
-		mDevice->CreateRenderTargetView(mRenderTarget->GetTexture().Get(), nullptr, renderTargetView.GetAddressOf());
-		mRenderTarget->SetRTV(renderTargetView);
-
-
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> renderTarget = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer = nullptr;
+		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> mDepthStencilView = nullptr;
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
+
 		depthStencilDesc.BindFlags = D3D11_BIND_FLAG::D3D11_BIND_DEPTH_STENCIL;
 		//깊이정보만 저장할거라 4byte
 		depthStencilDesc.Format = DXGI_FORMAT::DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthStencilDesc.Usage = D3D11_USAGE_DEFAULT;
-		depthStencilDesc.Width = application.GetWidth();
-		depthStencilDesc.Height = application.GetHeight();
 		//배열의 텍스쳐 수. 여러장 쓰는 경우 ex ) 그림자 표현할 때.
 		//방법에 따라 다름 이 방법을 쓰면 연산량 증가하고, 그냥 그림자 이미지 넣으면 메모리 손해보지만 연산량은 비교적 손해 안봄.
 		depthStencilDesc.ArraySize = 1;
@@ -55,15 +42,73 @@ namespace roka::graphics
 		//퀄리티
 		depthStencilDesc.MiscFlags = 0;
 
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> depthStencilBuffer = nullptr;
-		if (!CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf()))
-			return;
-		mDepthStencil->SetTexture(depthStencilBuffer);
 
-		Microsoft::WRL::ComPtr<ID3D11DepthStencilView> mDepthStencilView = nullptr;
-		if (!CreateDepthStencilView(depthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf()))
-			return;
-		mDepthStencil->SetDSV(mDepthStencilView);
+
+		switch (type)
+		{
+		case EApplicationType::Main:
+			hWnd = applications[(UINT)EApplicationType::Main]->GetHwnd();
+			swapChainDesc.BufferCount = 2;
+			swapChainDesc.BufferDesc.Width = applications[(UINT)EApplicationType::Main]->GetWidth();
+			swapChainDesc.BufferDesc.Height = applications[(UINT)EApplicationType::Main]->GetHeight();
+
+			if (!CreateSwapChain(type, &swapChainDesc, hWnd))
+				return false;
+			mRenderTarget = std::make_shared<Texture>();
+			mDepthStencil = std::make_shared<Texture>();
+
+			if (FAILED(mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf())))
+				return false;
+			mRenderTarget->SetTexture(renderTarget);
+
+			mDevice->CreateRenderTargetView(mRenderTarget->GetTexture().Get(), nullptr, renderTargetView.GetAddressOf());
+			mRenderTarget->SetRTV(renderTargetView);
+
+			depthStencilDesc.Width = applications[(UINT)EApplicationType::Main]->GetWidth();
+			depthStencilDesc.Height = applications[(UINT)EApplicationType::Main]->GetHeight();
+
+
+			if (!CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf()))
+				return false;
+			mDepthStencil->SetTexture(depthStencilBuffer);
+
+
+			if (!CreateDepthStencilView(depthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf()))
+				return false;
+			mDepthStencil->SetDSV(mDepthStencilView);
+
+			mContext->OMSetRenderTargets(1, mRenderTarget->GetRTV().GetAddressOf(), mDepthStencil->GetDSV().Get());
+			break;
+		case EApplicationType::TileTool:
+			hWnd = applications[(UINT)EApplicationType::TileTool]->GetHwnd();
+			swapChainDesc.BufferCount = 2;
+			swapChainDesc.BufferDesc.Width = applications[(UINT)EApplicationType::TileTool]->GetWidth();
+			swapChainDesc.BufferDesc.Height = applications[(UINT)EApplicationType::TileTool]->GetHeight();
+
+			if (!CreateSwapChain(type, &swapChainDesc, hWnd))
+				return false;
+			mTileToolRenderTarget = std::make_shared<Texture>();
+			mTileToolDepthStencil = std::make_shared<Texture>();
+
+			if (FAILED(mTileToolSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)renderTarget.GetAddressOf())))
+				return false;
+			mTileToolRenderTarget->SetTexture(renderTarget);
+
+			mDevice->CreateRenderTargetView(mTileToolRenderTarget->GetTexture().Get(), nullptr, renderTargetView.GetAddressOf());
+			mTileToolRenderTarget->SetRTV(renderTargetView);
+
+			depthStencilDesc.Width = applications[(UINT)EApplicationType::TileTool]->GetWidth();
+			depthStencilDesc.Height = applications[(UINT)EApplicationType::TileTool]->GetHeight();
+
+			if (!CreateTexture2D(&depthStencilDesc, nullptr, depthStencilBuffer.GetAddressOf()))
+				return false;
+			mTileToolDepthStencil->SetTexture(depthStencilBuffer);
+			if (!CreateDepthStencilView(depthStencilBuffer.Get(), nullptr, mDepthStencilView.GetAddressOf()))
+				return false;
+			mTileToolDepthStencil->SetDSV(mDepthStencilView);
+			mContext->OMSetRenderTargets(1, mTileToolRenderTarget->GetRTV().GetAddressOf(), mTileToolDepthStencil->GetDSV().Get());
+			break;
+		}
 
 		RECT winRect = {};
 		GetClientRect(hWnd, &winRect);
@@ -75,14 +120,10 @@ namespace roka::graphics
 			0.0f,1.0f
 		};
 		BindViewPort(&mViewPort);
-		mContext->OMSetRenderTargets(1, mRenderTarget->GetRTV().GetAddressOf(), mDepthStencil->GetDSV().Get());
 
+		return true;
 	}
-
-	GraphicDevice_Dx11::~GraphicDevice_Dx11()
-	{
-	}
-	bool GraphicDevice_Dx11::CreateSwapChain(const DXGI_SWAP_CHAIN_DESC* desc, HWND hwnd)
+	bool GraphicDevice_Dx11::CreateSwapChain(enums::EApplicationType type, const DXGI_SWAP_CHAIN_DESC* desc, HWND hwnd)
 	{
 		DXGI_SWAP_CHAIN_DESC dxgiDesc = {};
 		dxgiDesc.OutputWindow = hwnd;
@@ -122,12 +163,22 @@ namespace roka::graphics
 			return false;
 		if (FAILED(pAdapter->GetParent(__uuidof(IDXGIFactory), (void**)pFactory.GetAddressOf())))
 			return false;
-		if (FAILED(pFactory->CreateSwapChain(mDevice.Get(), &dxgiDesc, mSwapChain.GetAddressOf())))
-			return false;
+		switch (type)
+		{
+		case EApplicationType::Main:
+			if (FAILED(pFactory->CreateSwapChain(mDevice.Get(), &dxgiDesc, mSwapChain.GetAddressOf())))
+				return false;
+			break;
+		case EApplicationType::TileTool:
+			if (FAILED(pFactory->CreateSwapChain(mDevice.Get(), &dxgiDesc, mTileToolSwapChain.GetAddressOf())))
+				return false;
+			break;
+		}
+
 
 		return true;
 	}
-	
+
 	bool GraphicDevice_Dx11::CreateTexture2D(const D3D11_TEXTURE2D_DESC* desc, void* data, ID3D11Texture2D** texture)
 	{
 		if (FAILED(mDevice->CreateTexture2D(desc, nullptr, texture)))
@@ -418,24 +469,53 @@ namespace roka::graphics
 		mContext->DrawIndexed(IndexCount, StartIndexLocation, BaseVertexLocation);
 	}
 
-	void GraphicDevice_Dx11::ClearTarget()
+	void GraphicDevice_Dx11::ClearTarget(EApplicationType type, float* color)
 	{
-		FLOAT bgColor[4] = { 0.3f,0.74f,0.88f,1.0f };
-		mContext->ClearRenderTargetView(mRenderTarget->GetRTV().Get(), bgColor);
-		mContext->ClearDepthStencilView(mDepthStencil->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
-		mContext->OMSetRenderTargets(1, mRenderTarget->GetRTV().GetAddressOf(), mDepthStencil->GetDSV().Get());
+		FLOAT bgColor[4] = { color[0],color[1],color[2],color[3] };
+		RECT winRect = {};
+
+		switch (type)
+		{
+		case EApplicationType::Main:
+			mContext->ClearRenderTargetView(mRenderTarget->GetRTV().Get(), bgColor);
+			mContext->ClearDepthStencilView(mDepthStencil->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
+			mContext->OMSetRenderTargets(1, mRenderTarget->GetRTV().GetAddressOf(), mDepthStencil->GetDSV().Get());
+			break;
+		case EApplicationType::TileTool:
+			mContext->ClearRenderTargetView(mTileToolRenderTarget->GetRTV().Get(), bgColor);
+			mContext->ClearDepthStencilView(mTileToolDepthStencil->GetDSV().Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
+			mContext->OMSetRenderTargets(1, mTileToolRenderTarget->GetRTV().GetAddressOf(), mTileToolDepthStencil->GetDSV().Get());
+			break;
+		}
 	}
 
-	void GraphicDevice_Dx11::UpdateViewPort()
+	void GraphicDevice_Dx11::UpdateViewPort(enums::EApplicationType type)
 	{
-		HWND hWnd = application.GetHwnd();
+		HWND hWnd = applications[(UINT)EApplicationType::Main]->GetHwnd();
 		RECT winRect = {};
+		float width;
+		float height;
+
+		switch (type)
+		{
+		case EApplicationType::Main:
+			hWnd = applications[(UINT)EApplicationType::Main]->GetHwnd();
+			width = applications[(UINT)EApplicationType::Main]->GetWidth();
+			height = applications[(UINT)EApplicationType::Main]->GetHeight();
+			break;
+		case EApplicationType::TileTool:
+			hWnd = applications[(UINT)EApplicationType::TileTool]->GetHwnd();
+			width = applications[(UINT)EApplicationType::TileTool]->GetWidth();
+			height = applications[(UINT)EApplicationType::TileTool]->GetHeight();
+			break;
+		}
+
 		GetClientRect(hWnd, &winRect);
 		mViewPort =
 		{
 			0.0f,0.0f,
-			(float)application.GetWidth(),
-			(float)application.GetHeight(),
+			width,
+			height,
 			/*	(float)(winRect.right - winRect.left),
 				(float)(winRect.bottom - winRect.top+30),*/
 				0.0f,1.0f
@@ -446,9 +526,19 @@ namespace roka::graphics
 	void GraphicDevice_Dx11::Draw()
 	{
 	}
-	void GraphicDevice_Dx11::Present()
+	void GraphicDevice_Dx11::Present(enums::EApplicationType type)
 	{
-		mSwapChain->Present(0, 0);
+		switch (type)
+		{
+		case EApplicationType::Main:
+			mSwapChain->Present(0, 0);
+			break;
+		case EApplicationType::TileTool:
+			if (applications[(UINT)roka::enums::EApplicationType::TileTool] != nullptr &&
+				applications[(UINT)EApplicationType::TileTool]->GetActive() == true)
+				mTileToolSwapChain->Present(0, 0);
+			break;
+		}
 	}
 }
 

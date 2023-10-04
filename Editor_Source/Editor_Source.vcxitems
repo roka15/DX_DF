@@ -18,11 +18,13 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)guiEditor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)guiEditorObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)guiWidget.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TileMapToolApplication.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)guiDebugObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)guiEditor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)guiEditorObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)guiWidget.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TileMapToolApplication.cpp" />
   </ItemGroup>
 </Project>
