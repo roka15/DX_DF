@@ -16,6 +16,7 @@ namespace roka::enums
 		Rigidbody,
 		Light,
 		Cursor,
+		ScrollRect,
 		End,
 	};
 	enum class EScriptType
@@ -51,8 +52,8 @@ namespace roka::enums
 		FrontObject,
 		Light,
 		Portal,
-		UI,
 		Raycast,
+		UI,
 		End,
 	};
 	

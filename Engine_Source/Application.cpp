@@ -25,7 +25,8 @@ namespace roka
 		mHwnd(NULL),
 		mWidth(-1),
 		mHeight(-1),
-		mType(EApplicationType::Main)
+		mType(EApplicationType::Main),
+		mbEditObjectActive(false)
 	{
 		mbActive = false;
 	}
@@ -144,6 +145,18 @@ namespace roka
 	{
 		for (int i = 0; i < 4; i++)
 			mBgColor[i] = color[i];
+	}
+
+	void Application::BindViewPort()
+	{
+		RECT rect = {};
+		GetClientRect(mHwnd, &rect);
+		GetDevice()->SetViewPort(0.0f, rect.right - rect.left,0.0f,rect.bottom - rect.top+WindowBarHeight);
+	}
+
+	void Application::BindViewPort(RECT rect)
+	{
+		GetDevice()->SetViewPort(rect.left, rect.right - rect.left,rect.top, rect.bottom - rect.top);
 	}
 
 }

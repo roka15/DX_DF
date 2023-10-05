@@ -32,3 +32,7 @@
 #pragma comment(lib, "Winmm.lib") 
 
 
+#define RectMeshWindowRadius 100
+#define WindowBarHeight 20
+
+

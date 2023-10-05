@@ -26,7 +26,8 @@
 #include "Animator.h"
 #include "PlayerScript.h"
 #include "ChangeSizeOverTime.h"
-
+#include "ScrollView.h"
+#include "ScrollRect.h"
 
 roka::SeriaGateScene::SeriaGateScene() :Scene(ESceneType::SeriaRoom)
 {
@@ -44,8 +45,24 @@ void roka::SeriaGateScene::Initialize()
 	std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
 	std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
 
+	std::shared_ptr<roka::Image> testimg= object::Instantiate<roka::Image>();
+	testimg->SetName(L"TestImage");
+	std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
+	tf->scale = Vector3(5.0f, 5.0f, 1.0f);
+	std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
+	mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+	mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
+	std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"baseskin");
+	std::shared_ptr<Texture> texture = npk->CreateAtlas(L"mg_body80500.img", 0, 1, L"TestTexture");
+	mesh->material->texture = texture;
+	std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
+	imageComp->SetSprite(0);
+	std::shared_ptr<ScrollView> scrollTest = object::Instantiate<ScrollView>();
+	std::shared_ptr<ScrollRect> rect = scrollTest->GetComponent<ScrollRect>();
+	rect->AddContent(testimg);
 
-
+	
+	AddGameObject(ELayerType::UI, scrollTest);
 
 #pragma region hud/ui
 
@@ -1863,6 +1880,7 @@ void roka::SeriaGateScene::OnEnter()
 
 	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Portal, true);
 	CollisionManager::SetLayer(ELayerType::Raycast, ELayerType::Player, true);
+	CollisionManager::SetLayer(ELayerType::Raycast, ELayerType::UI, true);
 }
 
 void roka::SeriaGateScene::Loading()

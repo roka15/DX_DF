@@ -7,6 +7,10 @@
 #include "NPK.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "Collider2D.h"
+#include "DontDestroyOnLoad.h"
+
+extern roka::DontDestroyOnLoad* M_DotDestroyObj;
 namespace roka
 {
 	TileMapToolApplication::TileMapToolApplication() :Application()
@@ -31,6 +35,9 @@ namespace roka
 	{
 		if (mbActive == false)
 			return;
+		std::shared_ptr<GameObject> cursor = M_DotDestroyObj->FindGameObject(L"Cursor");
+		std::shared_ptr<Collider2D> col = cursor->GetComponent<Collider2D>();
+		col->LateUpdate();
 	}
 	void TileMapToolApplication::LateUpdate()
 	{
@@ -59,6 +66,9 @@ namespace roka
 	{
 	}
 	void TileMapToolApplication::Destroy()
+	{
+	}
+	void TileMapToolApplication::ListBoxInit()
 	{
 	}
 }

@@ -30,7 +30,7 @@ namespace roka::manager
 		void MouseUp(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs);
 		void MouseEnter(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs);
 		void MouseExit(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs);
-	
+		void MouseScroll(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs);
 
 		void EnableCursor();
 		void DisableCursor();

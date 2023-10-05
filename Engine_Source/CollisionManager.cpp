@@ -281,25 +281,50 @@ namespace roka
 		{
 			if (row == (UINT)layerType)
 				continue;
-			if (mMatrix[(UINT)layerType][row] == true)
+			if ((UINT)layerType < row)
 			{
-				std::vector<std::shared_ptr<GameObject>> vec = SceneManager::FindGameObjects((ELayerType)row);
-				std::vector<std::shared_ptr<Collider2D>> cols = {};
-				for (auto itr : vec)
+				if (mMatrix[row][(UINT)layerType] == true)
 				{
-					FindCollider(itr, cols);
-					for (auto col : cols)
+					std::vector<std::shared_ptr<GameObject>> vec = SceneManager::FindGameObjects((ELayerType)row);
+					for (auto itr : vec)
 					{
-						bool flag = false;
-						flag = CollisionCheck(collider, col);
-						if (flag)
+						std::vector<std::shared_ptr<Collider2D>> cols = {};
+						FindCollider(itr, cols);
+						for (auto col : cols)
 						{
-							objs.push_back(col->owner->GetSharedPtr());
+							bool flag = false;
+							flag = CollisionCheck(col, collider);
+							if (flag)
+							{
+								objs.push_back(col->owner->GetSharedPtr());
+							}
 						}
-					}
-					
-				}
 
+					}
+				}
+			}
+			else
+			{
+				if (mMatrix[(UINT)layerType][row] == true)
+				{
+					std::vector<std::shared_ptr<GameObject>> vec = SceneManager::FindGameObjects((ELayerType)row);
+					for (auto itr : vec)
+					{
+						std::vector<std::shared_ptr<Collider2D>> cols = {};
+						FindCollider(itr, cols);
+						for (auto col : cols)
+						{
+							bool flag = false;
+							flag = CollisionCheck(collider, col);
+							if (flag)
+							{
+								objs.push_back(col->owner->GetSharedPtr());
+							}
+						}
+
+					}
+
+				}
 			}
 		}
 

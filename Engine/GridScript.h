@@ -19,6 +19,7 @@ namespace roka
 		virtual void Render() override;
 
 		void SetCamera(std::weak_ptr<Camera> camera) { mCamera = camera; }
+		bool IsCamera() { return mCamera.lock() != nullptr; }
 		SET_PROPERTY(SetCamera) std::weak_ptr<Camera> camera;
 	private:
 		friend class FactoryBase;

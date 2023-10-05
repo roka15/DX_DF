@@ -500,27 +500,23 @@ namespace roka::graphics
 		{
 		case EApplicationType::Main:
 			hWnd = applications[(UINT)EApplicationType::Main]->GetHwnd();
-			width = applications[(UINT)EApplicationType::Main]->GetWidth();
-			height = applications[(UINT)EApplicationType::Main]->GetHeight();
+			applications[(UINT)EApplicationType::Main]->BindViewPort();
 			break;
 		case EApplicationType::TileTool:
 			hWnd = applications[(UINT)EApplicationType::TileTool]->GetHwnd();
-			width = applications[(UINT)EApplicationType::TileTool]->GetWidth();
-			height = applications[(UINT)EApplicationType::TileTool]->GetHeight();
+			applications[(UINT)EApplicationType::TileTool]->BindViewPort();
 			break;
 		}
 
-		GetClientRect(hWnd, &winRect);
+		/*GetClientRect(hWnd, &winRect);
 		mViewPort =
 		{
 			0.0f,0.0f,
-			width,
-			height,
-			/*	(float)(winRect.right - winRect.left),
-				(float)(winRect.bottom - winRect.top+30),*/
-				0.0f,1.0f
+			(float)(winRect.right - winRect.left),
+			(float)(winRect.bottom - winRect.top + 30),
+			0.0f,1.0f
 		};
-		BindViewPort(&mViewPort);
+		BindViewPort(&mViewPort);*/
 	}
 
 	void GraphicDevice_Dx11::Draw()
@@ -539,6 +535,18 @@ namespace roka::graphics
 				mTileToolSwapChain->Present(0, 0);
 			break;
 		}
+	}
+	void GraphicDevice_Dx11::SetViewPort(float left, float right, float top, float bottom)
+	{
+		RECT winRect = {};
+		mViewPort =
+		{
+			left,top,
+			(float)right,
+			(float)bottom,
+			0.0f,1.0f
+		};
+		BindViewPort(&mViewPort);
 	}
 }
 

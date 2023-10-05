@@ -28,6 +28,7 @@ namespace roka
 	double Input::mMouseLBUpTime = 0.0;
 	double Input::mMouseRBUpTime = 0.0;
 	const double Input::mDoubleClickTime = 1.0;
+	WPARAM Input::mWheel_wParam;
 	void Input::Initialize()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -94,7 +95,14 @@ namespace roka
 		data->button = mMouseType;
 		mMouseLBUpTime = mTime;
 	}
-
+	void Input::MouseWheel(PointerEventData* data)
+	{
+		SHORT wheel = HIWORD(mWheel_wParam);
+		if (wheel == 0)
+			data->wheel_delta = 0.0f;
+		else
+			data->wheel_delta = (int)wheel;
+	}
 	void Input::KeyUpdate()
 	{
 		for (UINT i = 0; i < (UINT)EKeyCode::END; i++)
@@ -172,7 +180,7 @@ namespace roka
 		data->btn_state = mMouseState;
 		data->delta = delta;
 		data->position = mMousePos;
-
+		
 		switch (mMouseState)
 		{
 		case EKeyState::Down:
@@ -181,9 +189,13 @@ namespace roka
 		case EKeyState::Up:
 			MouseBtnUp(data);
 			break;
+		case EKeyState::Scroll:
+			MouseWheel(data);
+			break;
 		}
 
 		M_Input->OnMouseEvent(data);
 		delete data;
+		mMouseState = EKeyState::None;
 	}
 }

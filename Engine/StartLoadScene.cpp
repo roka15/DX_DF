@@ -16,7 +16,6 @@
 #include "Cursor.h"
 
 
-
 namespace roka
 {
     manager::InputManager* MInput = manager::InputManager::GetInstance();
@@ -39,6 +38,7 @@ namespace roka
         std::shared_ptr<MeshRenderer> mesh = cursor->AddComponent<MeshRenderer>();
         mesh->material->texture = texture;
         mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+
       
         std::shared_ptr<ImageComponent> image = cursor->GetComponent<ImageComponent>();
         image->SetSprite(1);

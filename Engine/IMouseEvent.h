@@ -12,6 +12,7 @@ namespace roka
 	public:
 		Vector2 position;//event 발생 시점의 pos
 		Vector2 delta;//이전 프레임 이후 pos
+		float wheel_delta;//휠 이동량
 		EMouseBtnType button;//발생한 event의 버튼
 		EKeyState btn_state; // 버튼의 상태
 		int click_cnt; // 연속 클릭 
@@ -70,6 +71,11 @@ namespace roka
 	{
 	public:
 		virtual void OnEndDrag(PointerEventData* data) = 0;
+	};
+	class IWheelHandler
+	{
+	public:
+		virtual void OnMouseWheel(PointerEventData* data) = 0;
 	};
 }
 

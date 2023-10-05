@@ -390,7 +390,8 @@ namespace roka::renderer
 
 		constantBuffer[(UINT)ECBType::Atlas] = new roka::graphics::ConstantBuffer(ECBType::Atlas);
 		constantBuffer[(UINT)ECBType::Atlas]->Create(sizeof(AtlasCB));
-
+		
+		
 		lightsBuffer = new StructBuffer();
 		lightsBuffer->Create(sizeof(LightAttribute), 2, ESRVType::None);
 	}

@@ -38,6 +38,7 @@ struct LightAttribute
 	int pad;
 };
 
+
 StructuredBuffer<LightAttribute> lightsAttribute : register(t13);
 
 Texture2D albedoTexture:register(t0);

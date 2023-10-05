@@ -20,6 +20,7 @@ namespace gui
 	std::vector<EditorObject*> Editor::mEditorObjects = {};
 	std::vector<DebugObject*> Editor::mDebugObjects = {};
 
+
 	void Editor::Initialize()
 	{
 		mDebugObjects.resize((UINT)EColliderType::End);
@@ -59,6 +60,13 @@ namespace gui
 		for (EditorObject* obj : mEditorObjects)
 		{
 			obj->Update();
+			std::shared_ptr<roka::GridScript> gridsc = obj->GetComponent<roka::GridScript>();
+			if (gridsc == nullptr)
+				continue;
+			if (gridsc->IsCamera() == false)
+			{
+				gridsc->camera = roka::renderer::MainCamera;
+			}
 		}
 	}
 
@@ -76,8 +84,6 @@ namespace gui
 		{
 			obj->Render();
 		}
-
-		DebugRender();
 	}
 
 	void Editor::Release()

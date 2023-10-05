@@ -31,6 +31,10 @@ namespace roka
 		void SetWindowBGColor(float color[]);
 		void SetActive(bool active) { mbActive = active; }
 		bool GetActive() { return mbActive; }
+		void SetEditObjRender(bool flag) { mbEditObjectActive = flag; }
+		bool IsEditObjRener() { return mbEditObjectActive; }
+		void BindViewPort();
+		void BindViewPort(RECT rect);
 	protected:
 		bool mbInitialize = false;
 		// 오로지 한개의 객체만 만들수 있는 스마트 포인터
@@ -44,6 +48,7 @@ namespace roka
 
 		EApplicationType mType;
 		bool mbActive;
+		bool mbEditObjectActive;
 	};
 }
 

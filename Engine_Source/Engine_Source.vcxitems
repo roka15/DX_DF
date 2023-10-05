@@ -68,6 +68,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SceneSector.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Script.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ScrollRect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ScrollView.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Shader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SingleTon.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
@@ -124,6 +126,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SceneSector.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Script.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ScrollRect.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ScrollView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Shader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SingleTon.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />

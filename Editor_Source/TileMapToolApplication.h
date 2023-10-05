@@ -17,9 +17,13 @@ namespace roka
 		virtual void Release();
 		virtual void Destroy();
 
-	
+		void SetListBox(HWND hWnd) { mListBox = hWnd; }
+		void ListBoxInit();
+
 	private:
+		HWND mListBox;
 		std::wstring mNPKKey;
+		std::vector<std::wstring> mTileNPKKeys;
     };
 }
 

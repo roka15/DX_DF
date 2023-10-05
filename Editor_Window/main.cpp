@@ -9,9 +9,14 @@
 #include "..\Engine_Source\Input.h"
 #include "..\\Engine_Source\\SceneManager.h"
 #include "guiEditor.h"
+#include "DontDestroyOnLoad.h"
 roka::Application application;
 roka::TileMapToolApplication tileMapTool;
 roka::Application* applications[(UINT)roka::enums::EApplicationType::End];
+roka::Application* focusApp = nullptr;
+
+roka::DontDestroyOnLoad* M_DotDestroyObj = roka::DontDestroyOnLoad::GetInstance();
+
 #ifdef _DEBUG
 #pragma comment(lib, "..\\Libraries\\Debug\\Engine.lib")
 #else
@@ -19,7 +24,7 @@ roka::Application* applications[(UINT)roka::enums::EApplicationType::End];
 #endif
 
 #define MAX_LOADSTRING 100
-
+#define ID_TILELISTBOX 1
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -56,8 +61,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
-	
-	
+
+
 	HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_EDITORWINDOW));
 
 	MSG msg;
@@ -87,15 +92,26 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				continue;
 			}
 			timeDuration = 0;
+			HWND focus = GetFocus();
+			if (focus != NULL)
+			{
+				if (focus == application.GetHwnd())
+					focusApp = &application;
+				else if (focus == tileMapTool.GetHwnd())
+					focusApp = &tileMapTool;
+			}
+			
 			// 여기서 게임 로직이 돌아가야한다.
-			
 			application.Run();
-			gui::Editor::Run();
+			if (application.IsEditObjRener() == true)
+				gui::Editor::Run();
+			if (focusApp == &application)
+				gui::Editor::DebugRender();
 			application.Present();
-			tileMapTool.Run();	
-			gui::Editor::DebugRender();
+			tileMapTool.Run();
+			if (focusApp == &tileMapTool)
+				gui::Editor::DebugRender();
 			tileMapTool.Present();
-			
 		}
 	}
 	application.Release();
@@ -153,7 +169,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 	applications[0] = &application;
-	application.SetWindow(hWnd,0,0, 1600, 900);
+	application.SetWindow(hWnd, 0, 0, 1600, 900);
 	float bgColor[4] = { 0.3f,0.74f,0.88f,1.0f };
 	application.SetWindowBGColor(bgColor);
 	ShowWindow(hWnd, nCmdShow);
@@ -185,22 +201,20 @@ BOOL CreateTileMapToolWindow(HWND parent, HINSTANCE hInstance)
 	RegisterClassExW(&wcex);
 
 	int width = applications[0]->GetWidth();
-	TileToolHwnd = CreateWindowEx(0,TEXT("TileMapToolWindow"), TEXT("TileMapToolWindow"), WS_OVERLAPPEDWINDOW,
+	TileToolHwnd = CreateWindowEx(0, TEXT("TileMapToolWindow"), TEXT("TileMapToolWindow"), WS_OVERLAPPEDWINDOW,
 		width, 0, 500, 500, nullptr, nullptr, hInstance, nullptr);
 
 
 	applications[1] = &tileMapTool;
-	tileMapTool.SetWindow(TileToolHwnd,width,0, 500, 500);
+	tileMapTool.SetWindow(TileToolHwnd, width, 0, 500, 500);
 	float bgColor[4] = { 0.03f,0.03f,0.18f,1.0f };
 	tileMapTool.SetWindowBGColor(bgColor);
 	tileMapTool.Initialize();
 
-
-
 	ShowWindow(TileToolHwnd, SW_HIDE);
 	//UpdateWindow(TileToolHwnd);
 
-	
+
 	if (!TileToolHwnd)
 	{
 		return FALSE;
@@ -270,6 +284,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_RBUTTONUP:
 		roka::Input::SetMouseState(roka::EMouseBtnType::RIGHT, roka::EKeyState::Up);
 		break;
+	case WM_MOUSEWHEEL:
+		roka::Input::SetMouseState(roka::EMouseBtnType::WHEEL, roka::EKeyState::Scroll, wParam);
+		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -290,6 +307,10 @@ LRESULT CALLBACK TileMapToolWndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 		{
 		case IDM_ABOUT:
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+			break;
+		case ID_NextSeriaRoom:
+			roka::SceneManager::LoadScene(L"SeriaGateScene");
+			ShowWindow(TileToolHwnd, SW_HIDE);
 			break;
 		case IDM_EXIT:
 			DestroyWindow(hWnd);
@@ -318,6 +339,9 @@ LRESULT CALLBACK TileMapToolWndProc(HWND hWnd, UINT message, WPARAM wParam, LPAR
 		break;
 	case WM_RBUTTONUP:
 		roka::Input::SetMouseState(roka::EMouseBtnType::RIGHT, roka::EKeyState::Up);
+		break;
+	case WM_MOUSEWHEEL:
+		roka::Input::SetMouseState(roka::EMouseBtnType::WHEEL, roka::EKeyState::Scroll, wParam);
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);

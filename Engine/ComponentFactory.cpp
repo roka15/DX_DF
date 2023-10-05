@@ -8,6 +8,7 @@
 #include "Rigidbody.h"
 #include "Light.h"
 #include "Cursor.h"
+#include "ScrollRect.h"
 
 namespace roka
 {
@@ -48,6 +49,10 @@ namespace roka
 		mFactories[EComponentType::Cursor] = [](Component* component) {
 			Cursor* rg = dynamic_cast<Cursor*>(component);
 			return std::shared_ptr<Cursor>(new Cursor(*rg));
+		};
+		mFactories[EComponentType::ScrollRect] = [](Component* component) {
+			ScrollRect* rg = dynamic_cast<ScrollRect*>(component);
+			return std::shared_ptr<ScrollRect>(new ScrollRect(*rg));
 		};
 	}
 

@@ -4,9 +4,12 @@
 #include "Object.h"
 #include "Renderer.h"
 #include "Camera.h"
+#include "Application.h"
+
+extern roka::DontDestroyOnLoad* M_DotDestroyObj;
+extern roka::Application* applications[2];
 namespace roka
 {
-	DontDestroyOnLoad* M_DotDestroyObj = DontDestroyOnLoad::GetInstance();
 	TileMapToolScene::TileMapToolScene() :Scene(ESceneType::TileMapTool)
 	{
 	}
@@ -40,6 +43,7 @@ namespace roka
 	void TileMapToolScene::OnExit()
 	{
 		Scene::OnExit();
+		applications[(UINT)EApplicationType::Main]->SetEditObjRender(false);
 		std::vector<std::shared_ptr<GameObject>> objs = M_DotDestroyObj->GetGameObjects();
 		for (auto& obj : objs)
 		{
@@ -49,7 +53,7 @@ namespace roka
 	void TileMapToolScene::OnEnter()
 	{
 		Scene::OnEnter();
-
+		applications[(UINT)EApplicationType::Main]->SetEditObjRender(true);
 		std::shared_ptr<GameObject> camera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),
 			ELayerType::Player);

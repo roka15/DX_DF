@@ -5,6 +5,10 @@
 #include "Renderer.h"
 #include "ImageComponent.h"
 #include "Animator.h"
+#include "UI.h"
+#include "ScrollRect.h"
+#include "Application.h"
+extern roka::Application* focusApp;
 namespace roka
 {
 	using namespace roka::graphics;
@@ -52,6 +56,9 @@ namespace roka
 			return;
 		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
 		std::shared_ptr<Animator> animator = owner->GetComponent<Animator>();
+		UI* ui;
+		std::shared_ptr<ScrollRect> scroll;
+		ui = dynamic_cast<UI*>(owner);
 		int flag = 0;
 		if (animator != nullptr)
 		{
@@ -64,9 +71,21 @@ namespace roka
 
 		if (imageComp != nullptr)
 		{
+			if (ui != nullptr)
+			{
+				if (ui->parent != nullptr && ui->parent->GetName().compare(L"Content") == 0)
+				{
+					scroll = ui->parent->parent->parent->GetComponent<ScrollRect>();
+					scroll->Bind();
+				}
+			}
 			if (imageComp->Binds())
 			{
 				Execute();
+			}
+			if (scroll != nullptr)
+			{
+				focusApp->BindViewPort();
 			}
 			return;
 		}

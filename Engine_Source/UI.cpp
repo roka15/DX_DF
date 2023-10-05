@@ -5,6 +5,7 @@ namespace roka
     UI::UI():GameObject()
     {
         mbRayCastTarget = false;
+        layer_type = ELayerType::UI;
     }
     UI::UI(const UI& ref):GameObject(ref)
     {
@@ -18,17 +19,22 @@ namespace roka
     }
     void UI::Initialize()
     {
+        GameObject::Initialize();
     }
     void UI::Update()
     {
+        GameObject::Update();
     }
     void UI::LateUpdate()
     {
+        GameObject::LateUpdate();
     }
     void UI::Render()
     {
+        GameObject::Render();
     }
     void UI::Release()
     {
+        GameObject::Release();
     }
 }

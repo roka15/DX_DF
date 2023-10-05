@@ -21,7 +21,7 @@ namespace gui
 
 		virtual void Copy(GameObject* src);
 
-		void SetColor(roka::math::Vector4 color);
+		void SetColor(Vector4 color);
 	private:
 		Vector4 mColor;
 	};

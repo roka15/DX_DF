@@ -5,6 +5,7 @@
 #include "CollisionManager.h"
 #include "Transform.h"
 #include "Cursor.h"
+#include "ScrollRect.h"
 
 namespace roka::manager
 {
@@ -83,6 +84,10 @@ namespace roka::manager
 			break;
 		case EKeyState::Up:
 			MouseUp(data, objs);
+			break;
+		case EKeyState::Scroll:
+			objs = CollisionManager::GetCollisionObjects(cursor);
+			MouseScroll(data, objs);
 			break;
 		}
 		MouseEnter(data, objs);
@@ -227,6 +232,45 @@ namespace roka::manager
 		{
 			std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
 			cursor->OnPointerExit(data);
+		}
+	}
+
+	void InputManager::MouseScroll(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
+	{
+		bool flag = false;
+		for (auto& obj : objs)
+		{
+			std::vector<std::shared_ptr<Script>> scripts = obj->GetScripts();
+			for (auto& script : scripts)
+			{
+				IWheelHandler* handler = dynamic_cast<IWheelHandler*>(script.get());
+				if (handler != nullptr)
+				{
+					handler->OnMouseWheel(data);
+					data->enter_object = obj;
+					flag = true;
+					break;
+				}
+				else
+					continue;
+			}
+			std::shared_ptr<Component> comp = obj->GetComponent<ScrollRect>();
+			if (comp != nullptr)
+			{
+				IWheelHandler* handler = dynamic_cast<IWheelHandler*>(comp.get());
+				if (handler != nullptr)
+				{
+					handler->OnMouseWheel(data);
+					data->enter_object = obj;
+					flag = true;
+					break;
+				}
+				else
+					continue;
+			}
+
+			if (flag)
+				break;
 		}
 	}
 

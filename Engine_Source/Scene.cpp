@@ -1,4 +1,6 @@
 #include "Scene.h"
+#include "UI.h"
+#include "Object.h"
 namespace roka
 {
 	Scene::Scene(ESceneType type) :mType(type)

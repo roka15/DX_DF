@@ -133,14 +133,20 @@
       <Filter>Manager\ObjectPoolManager\EX</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)RokaRandom.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Cursor.cpp">
       <Filter>GameObject\Component\Cursor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp">
       <Filter>Scene\DontDestroy</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ScrollRect.cpp">
+      <Filter>GameObject\Component\ScrollRect</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp">
+      <Filter>GameObject\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ScrollView.cpp">
+      <Filter>GameObject\UIObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -300,14 +306,20 @@
       <Filter>Manager\ObjectPoolManager\EX</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaRandom.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
-      <Filter>GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Cursor.h">
       <Filter>GameObject\Component\Cursor</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.h">
       <Filter>Scene\DontDestroy</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ScrollRect.h">
+      <Filter>GameObject\Component\ScrollRect</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
+      <Filter>GameObject\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ScrollView.h">
+      <Filter>GameObject\UIObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -463,6 +475,21 @@
     </Filter>
     <Filter Include="GameObject\Component\Cursor">
       <UniqueIdentifier>{16c7f58a-8097-4fcd-8fb5-6757fe1d136f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\GroupLayout">
+      <UniqueIdentifier>{0df6614f-b82f-451a-bdeb-6577a9ff465b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\ScrollRect">
+      <UniqueIdentifier>{56f4d182-b058-49a4-910a-d90901aac8d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\GroupLayout\Vertical">
+      <UniqueIdentifier>{74000605-6064-4152-bcaf-e9b6c03e06eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\GroupLayout\Grid">
+      <UniqueIdentifier>{c32c1e3d-8754-497f-9656-9d4ece57dd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\UIObject">
+      <UniqueIdentifier>{e2c95e82-e8b8-4425-b8a6-5795a7b48629}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

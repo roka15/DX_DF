@@ -64,6 +64,7 @@ namespace roka::graphics
 		void UpdateViewPort(enums::EApplicationType type);
 		void Draw();
 		void Present(enums::EApplicationType type);
+		void SetViewPort(float left,float right,float top, float bottom);
 
 		ID3D11Device* GetID3D11Device() { return mDevice.Get(); }
 	private:

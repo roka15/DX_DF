@@ -46,7 +46,7 @@ namespace roka::renderer
 		int Flag;
 		Vector2 padding;
 	};
-	
+
 
 	extern roka::graphics::ConstantBuffer* constantBuffer[(UINT)ECBType::End];
 	extern Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerStates[(UINT)ESamplerType::End];
