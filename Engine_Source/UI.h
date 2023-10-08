@@ -18,9 +18,11 @@ namespace roka
 		virtual void Release();
 
 		void SetRayCastTarget(bool flag) { mbRayCastTarget = flag; }
-
+		void SetViewPortRect(RECT rect) { mViewPortRect = rect; }
+		RECT GetViewPortRect() { return mViewPortRect; }
 	private:
 		bool mbRayCastTarget;
+		RECT mViewPortRect;
 	};
 }
 

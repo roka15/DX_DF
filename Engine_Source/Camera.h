@@ -21,6 +21,7 @@ namespace roka
 		static Matrix& GetGpuViewMatrix() { return View; }
 		static void SetGpuViewMatrix(Matrix view) { View = view; }
 		static Matrix& GetGpuProjectionMatrix() { return Projection; }
+		static Matrix GetProjectionCalculate(RECT rect);
 		static void SetGpuProjectionMatrix(Matrix projection) { Projection = projection; }
 
 		virtual void Initialize() override;

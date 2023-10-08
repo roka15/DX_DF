@@ -115,6 +115,7 @@ namespace roka::graphics
 		float duration;
 		float time;
 		math::Vector4 color;
+		RECT viewPortRect;
 	};
 	struct LightAttribute
 	{

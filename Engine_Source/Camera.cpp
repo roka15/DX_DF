@@ -55,6 +55,16 @@ namespace roka
 		mCutOutGameObjects.clear();
 		mTransparentObjects.clear();
 	}
+	Matrix Camera::GetProjectionCalculate(RECT rect)
+	{
+		float orthoGraphicRatio = 5.0 / 1000.0f;
+		float width= rect.right - rect.left;
+		float height= rect.bottom - rect.top;
+		width *= orthoGraphicRatio;
+		height *= orthoGraphicRatio;
+		Matrix mat = Matrix::CreateOrthographicLH(width,height , 1.0, 1000.0f);
+		return mat;
+	}
 	void Camera::Initialize()
 	{
 		Component::Initialize();

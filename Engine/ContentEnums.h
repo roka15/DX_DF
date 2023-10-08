@@ -104,6 +104,7 @@ namespace roka::enums
 		SeriaRoom,
 		PlayTestScene,
 		TileMapTool,
+		UITestScene,
 		End,
 	};
 }

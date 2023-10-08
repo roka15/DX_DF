@@ -60,6 +60,7 @@ namespace roka::graphics
 		GET_PROPERTY(GetView) D3D11_SHADER_RESOURCE_VIEW_DESC view_desc;
 		GET_PROPERTY(GetTexture) Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 		bool IsAtlas() { return mbAtlas; }
+		void DisableAtlas() { mbAtlas = false; }
 	protected:
 		void CreateCanvasBaseTexture();
 		std::shared_ptr<Texture> CreateTexture(void* data, size_t size);

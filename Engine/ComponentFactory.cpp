@@ -9,6 +9,7 @@
 #include "Light.h"
 #include "Cursor.h"
 #include "ScrollRect.h"
+#include "GridGroupLayout.h"
 
 namespace roka
 {
@@ -53,6 +54,10 @@ namespace roka
 		mFactories[EComponentType::ScrollRect] = [](Component* component) {
 			ScrollRect* rg = dynamic_cast<ScrollRect*>(component);
 			return std::shared_ptr<ScrollRect>(new ScrollRect(*rg));
+		};
+		mFactories[EComponentType::GridLayout] = [](Component* component) {
+			GridGroupLayout* rg = dynamic_cast<GridGroupLayout*>(component);
+			return std::shared_ptr<GridGroupLayout>(new GridGroupLayout(*rg));
 		};
 	}
 

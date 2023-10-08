@@ -14,7 +14,7 @@
 #include "ImageComponent.h"
 #include "PlayerScript.h"
 #include "Cursor.h"
-
+#include "Animator.h"
 
 namespace roka
 {
@@ -24,11 +24,13 @@ namespace roka
         std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
         std::shared_ptr<GameObject> player = object::Instantiate<GameObject>(origin);
         player->SetName(L"Player");
+        player->layer_type = ELayerType::Player;
         std::shared_ptr<PlayerScript> playerScript = player->GetComponent<PlayerScript>();
         playerScript->LateInitialize();
         playerScript->RegisterKeyEvents();
         player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.3f);
         SceneManager::DontDestroy(player);
+
 
         std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"infoBtn");
         std::shared_ptr<Texture> texture = npk->CreateAtlas(L"mouseIcon.img", 0, 3, L"MouseBtn");

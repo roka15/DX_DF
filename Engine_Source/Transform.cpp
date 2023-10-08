@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "GameObject.h"
 #include "Object.h"
+#include "UI.h"
 #include "..\\Engine\\Prefab.h"
 namespace roka
 {
@@ -106,8 +107,12 @@ namespace roka
 			mPosition.x = mPivotOriginPos.x + result_diff.x;
 			mPosition.y = mPivotOriginPos.y + result_diff.y;
 		}
+		Vector3 worldScale = GetScale();
+		Matrix scale;
 
-		Matrix scale = Matrix::CreateScale(mScale);
+		scale = Matrix::CreateScale(mScale);
+
+
 		Matrix rotation = Matrix::CreateRotationX(mRotation.x);
 		rotation *= Matrix::CreateRotationY(mRotation.y);
 		rotation *= Matrix::CreateRotationZ(mRotation.z);
@@ -120,7 +125,7 @@ namespace roka
 		std::shared_ptr<GameObject> parent = owner->parent;
 		if (parent)
 		{
-			if (owner->GetName().compare(L"BasePart") == 0)
+			if (owner->GetName().compare(L"WeaponSubPart") == 0)
 				int a = 0;
 			std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
 			mWorld *= tf->mWorld;
@@ -146,7 +151,24 @@ namespace roka
 			CameraView._43 = depth;
 		}
 		trCB.mView = CameraView;
-		trCB.mProjection = Camera::GetGpuProjectionMatrix();
+		bool flag = false;
+		if (owner->layer_type == ELayerType::UI)
+		{
+			UI* ui = dynamic_cast<UI*>(owner);
+			if (ui != nullptr)
+			{
+				RECT viewPort = {};
+				viewPort = ui->GetViewPortRect();
+				if (viewPort.left != 0.0f && viewPort.top != 0.0f &&
+					viewPort.right != 0.0f && viewPort.bottom != 0.0f)
+				{
+					trCB.mProjection = Camera::GetProjectionCalculate(viewPort);
+					flag = true;
+				}
+			}
+		}
+		if (flag == false)
+			trCB.mProjection = Camera::GetGpuProjectionMatrix();
 
 		Matrix result = trCB.mWorld * trCB.mView * trCB.mProjection;
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Transform];
@@ -209,5 +231,31 @@ namespace roka
 	void Transform::DisablePivot()
 	{
 		mbPivot = false;
+	}
+	Vector3 Transform::GetLeftTop()
+	{
+		Vector2 distance = GetRadius();//* 2.0f;
+		return  Vector3(mPosition.x - distance.x, mPosition.y + distance.y, mPosition.z);
+	}
+	Vector3 Transform::GetRightTop()
+	{
+		Vector2 distance = GetRadius();
+		return  Vector3(mPosition.x + distance.x, mPosition.y + distance.y, mPosition.z);
+	}
+	Vector3 Transform::GetLeftBottom()
+	{
+		Vector2 distance = GetRadius();
+		return  Vector3(mPosition.x - distance.x, mPosition.y - distance.y, mPosition.z);
+	}
+	Vector3 Transform::GetRightBottom()
+	{
+		Vector2 distance = GetRadius();
+		return  Vector3(mPosition.x + distance.x, mPosition.y - distance.y, mPosition.z);
+	}
+	Vector2 Transform::GetRadius()
+	{
+		Vector3 scale = GetScale();
+		Vector2 radius = Vector2(scale.x * 0.5f, scale.y * 0.5f);
+		return radius;
 	}
 }

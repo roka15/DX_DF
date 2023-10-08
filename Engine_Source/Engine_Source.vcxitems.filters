@@ -148,6 +148,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)ScrollView.cpp">
       <Filter>GameObject\UIObject</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GroupLayout.cpp">
+      <Filter>GameObject\Component\GroupLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GridGroupLayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -321,6 +325,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)ScrollView.h">
       <Filter>GameObject\UIObject</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GroupLayout.h">
+      <Filter>GameObject\Component\GroupLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GridGroupLayout.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -476,20 +484,20 @@
     <Filter Include="GameObject\Component\Cursor">
       <UniqueIdentifier>{16c7f58a-8097-4fcd-8fb5-6757fe1d136f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\GroupLayout">
-      <UniqueIdentifier>{0df6614f-b82f-451a-bdeb-6577a9ff465b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\Component\ScrollRect">
       <UniqueIdentifier>{56f4d182-b058-49a4-910a-d90901aac8d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObject\GroupLayout\Vertical">
-      <UniqueIdentifier>{74000605-6064-4152-bcaf-e9b6c03e06eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameObject\GroupLayout\Grid">
-      <UniqueIdentifier>{c32c1e3d-8754-497f-9656-9d4ece57dd54}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameObject\UIObject">
       <UniqueIdentifier>{e2c95e82-e8b8-4425-b8a6-5795a7b48629}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\GroupLayout">
+      <UniqueIdentifier>{0df6614f-b82f-451a-bdeb-6577a9ff465b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\GroupLayout\Vertical">
+      <UniqueIdentifier>{74000605-6064-4152-bcaf-e9b6c03e06eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\GroupLayout\Grid">
+      <UniqueIdentifier>{c32c1e3d-8754-497f-9656-9d4ece57dd54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

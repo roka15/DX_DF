@@ -169,6 +169,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		return FALSE;
 	}
 	applications[0] = &application;
+	focusApp = &application;
 	application.SetWindow(hWnd, 0, 0, 1600, 900);
 	float bgColor[4] = { 0.3f,0.74f,0.88f,1.0f };
 	application.SetWindowBGColor(bgColor);
@@ -178,7 +179,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	application.Initialize();
 	roka::InitializeScenes();
 	gui::Editor::Initialize();
-
 	return TRUE;
 }
 BOOL CreateTileMapToolWindow(HWND parent, HINSTANCE hInstance)

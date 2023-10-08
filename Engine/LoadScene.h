@@ -14,6 +14,7 @@
 #include "HendonmyreScene.h"
 #include "SelectCharacterScene.h"
 #include "TileMapToolScene.h"
+#include "UITestScene.h"
 namespace roka
 {
 	void InitializeScenes()
@@ -26,7 +27,9 @@ namespace roka
 		SceneManager::CreateScene<WestcoastScene>(L"WestcoastScene");
 		SceneManager::CreateScene<HendonmyreScene>(L"HendonmyreScene");
 		SceneManager::CreateScene<TileMapToolScene>(L"TileMapToolScene");
+		SceneManager::CreateScene<UITestScene>(L"UITestScene");
 
-		SceneManager::LoadScene(L"StartLoadScene");
+		//SceneManager::LoadScene(L"StartLoadScene");
+		SceneManager::LoadScene(L"UITestScene");
 	}
 }

@@ -147,6 +147,7 @@ namespace roka
 	void WeaponPartScript::CreateSubObject()
 	{
 		std::shared_ptr<GameObject> subObject = manager::ObjectPoolManager<AnimationObjectPool,GameObject>::GetInstance()->Spawn(L"AniObject");
+		subObject->SetName(L"WeaponSubPart");
 		std::shared_ptr<Animator> sub_ani = subObject->GetComponent<Animator>();
 		std::wstring npk = mNpkKey;
 		std::wstring pack = mPackKey;

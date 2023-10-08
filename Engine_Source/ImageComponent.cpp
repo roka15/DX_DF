@@ -66,6 +66,9 @@ namespace roka
 		data.Alpha = mr->alpha;
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Atlas];
 		cb->SetData(&data);
+
+		cb->Bind(EShaderStage::VS);
+		cb->Bind(EShaderStage::PS);
 		return true;
 	}
 	

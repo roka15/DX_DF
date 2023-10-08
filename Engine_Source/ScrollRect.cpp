@@ -3,15 +3,16 @@
 #include "Transform.h"
 #include "Collider2D.h"
 #include "Application.h"
+#include "UI.h"
 #include "Camera.h"
 extern roka::Application* focusApp;
 namespace roka
 {
-	ScrollRect::ScrollRect():Component(EComponentType::ScrollRect)
+	ScrollRect::ScrollRect() :Component(EComponentType::ScrollRect)
 	{
 	}
-	ScrollRect::ScrollRect(const Component& ref):Component(ref)
-	{	
+	ScrollRect::ScrollRect(const Component& ref) : Component(ref)
+	{
 	}
 	ScrollRect::~ScrollRect()
 	{
@@ -42,6 +43,12 @@ namespace roka
 
 	void ScrollRect::Bind()
 	{
+		focusApp->BindViewPort(mViewRect);
+	}
+
+	void ScrollRect::SetViewPort(std::shared_ptr<GameObject> obj)
+	{
+		mViewPort = obj;
 		std::shared_ptr<Transform> tf = mViewPort->AddComponent<Transform>();
 		Vector3 pos = tf->position;
 		Vector3 scale = tf->scale;
@@ -57,7 +64,7 @@ namespace roka
 		pos = view.Project(pos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 
 
-		Vector2 diff = Vector2(scale.x* RectMeshWindowRadius, scale.y* RectMeshWindowRadius);
+		Vector2 diff = Vector2(scale.x * RectMeshWindowRadius, scale.y * RectMeshWindowRadius);
 
 		RECT rect = {};
 		rect.left = pos.x - diff.x;
@@ -65,12 +72,14 @@ namespace roka
 		rect.top = pos.y - diff.y;
 		rect.bottom = pos.y + diff.y;
 
-		focusApp->BindViewPort(rect);
+		mViewRect = rect;
 	}
 
 	void ScrollRect::AddContent(std::shared_ptr<GameObject> obj)
 	{
 		mContent->AddChild(obj);
+		std::shared_ptr<UI> ui = std::dynamic_pointer_cast<UI>(obj);
+		ui->SetViewPortRect(mViewRect);
 	}
 
 	void ScrollRect::OnMouseWheel(PointerEventData* data)
@@ -86,5 +95,4 @@ namespace roka
 			tf->position = pos;
 		}
 	}
-
 }

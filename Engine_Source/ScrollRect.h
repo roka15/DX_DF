@@ -22,15 +22,18 @@ namespace roka
         void SetHorizontal(bool flag) { mbHorizontal = flag; }
         void SetVertical(bool flag) { mbVertical = flag; }
         void SetContent(std::shared_ptr<GameObject> obj) { mContent = obj; }
-        void SetViewPort(std::shared_ptr<GameObject> obj) { mViewPort = obj; }
+        void SetViewPort(std::shared_ptr<GameObject> obj);
         
         void AddContent(std::shared_ptr<GameObject> obj); 
+        std::shared_ptr<GameObject> GetContent() { return mContent; }
         void OnMouseWheel(PointerEventData* data);
+     
     private:
         bool mbHorizontal;
         bool mbVertical;
         std::shared_ptr<GameObject> mContent;
         std::shared_ptr<GameObject> mViewPort;
+        RECT mViewRect;
     };
 }
 

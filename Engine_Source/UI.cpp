@@ -2,12 +2,12 @@
 
 namespace roka
 {
-    UI::UI():GameObject()
+    UI::UI() :GameObject(), mViewPortRect{}
     {
         mbRayCastTarget = false;
         layer_type = ELayerType::UI;
     }
-    UI::UI(const UI& ref):GameObject(ref)
+    UI::UI(const UI& ref) : GameObject(ref), mViewPortRect{}
     {
     }
     void UI::Copy(GameObject* src)
@@ -16,6 +16,7 @@ namespace roka
         if (source == nullptr)
             return;
         GameObject::Copy(src);
+        mViewPortRect = {};
     }
     void UI::Initialize()
     {

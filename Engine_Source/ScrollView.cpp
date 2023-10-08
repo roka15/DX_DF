@@ -27,13 +27,15 @@ namespace roka
 		std::shared_ptr<GameObject> horizontal_scroll;
 		std::shared_ptr<ScrollRect> scroll;
 	
+		SetName(L"ScrollView");
 		if (GetChildCont() == 0)
 		{
 			viewport = object::Instantiate<UI>();
 			viewport->SetName(L"ViewPort");
-			viewport->GetComponent<Transform>()->scale = Vector3(2.0f, 2.0f, 1.0f);
+			viewport->GetComponent<Transform>()->scale = Vector3(1.0f, 1.0f, 1.0f);
 			content = object::Instantiate<UI>();
 			content->SetName(L"Content");
+			content->GetComponent<Transform>()->scale = Vector3(1.0f, 1.0f, 1.0f);
 			vertical_scroll = object::Instantiate<UI>();
 			vertical_scroll->SetName(L"VerticalScroll");
 			horizontal_scroll = object::Instantiate<UI>();

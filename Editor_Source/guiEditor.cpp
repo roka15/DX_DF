@@ -13,6 +13,7 @@
 
 extern roka::Application application;
 extern roka::Application* applications[2];
+extern roka::Application* focusApp;
 namespace gui
 {
 	using namespace roka::enums;
@@ -134,8 +135,11 @@ namespace gui
 		std::shared_ptr<roka::Camera> mainCamera = roka::renderer::MainCamera;
 		roka::Camera::SetGpuViewMatrix(mainCamera->GetViewMatrix());
 		roka::Camera::SetGpuProjectionMatrix(mainCamera->GetProjectionMatrix());
-
+		if (mesh.viewPortRect.left !=0 && mesh.viewPortRect.top !=0 &&
+			mesh.viewPortRect.right != 0 && mesh.viewPortRect.bottom != 0)
+			focusApp->BindViewPort(mesh.viewPortRect);
 		debugObj->Render();
+		focusApp->BindViewPort();
 	}
 
 }

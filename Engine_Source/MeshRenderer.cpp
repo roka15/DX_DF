@@ -73,6 +73,8 @@ namespace roka
 		{
 			if (ui != nullptr)
 			{
+				if (focusApp == nullptr)
+					return;
 				if (ui->parent != nullptr && ui->parent->GetName().compare(L"Content") == 0)
 				{
 					scroll = ui->parent->parent->parent->GetComponent<ScrollRect>();
@@ -85,6 +87,8 @@ namespace roka
 			}
 			if (scroll != nullptr)
 			{
+				if (focusApp == nullptr)
+					return;
 				focusApp->BindViewPort();
 			}
 			return;

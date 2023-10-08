@@ -60,6 +60,7 @@ namespace roka
 		use_pack.binbuf.push_back(fileData);
 
 		texture->Create(&use_pack);
+		texture->DisableAtlas();
 		texture->SpriteRatioValue(sprite.canvas_size);
 
 		Resources::Insert(texture_name, texture);

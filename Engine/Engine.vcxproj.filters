@@ -148,6 +148,9 @@
     <ClInclude Include="TileMapToolScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="UITestScene.h">
+      <Filter>Contents\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -286,6 +289,9 @@
       <Filter>Contents\Interface\IMouseEvent</Filter>
     </ClCompile>
     <ClCompile Include="TileMapToolScene.cpp">
+      <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UITestScene.cpp">
       <Filter>Contents\Scene</Filter>
     </ClCompile>
   </ItemGroup>

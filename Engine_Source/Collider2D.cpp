@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "CollisionManager.h"
 #include "Transform.h"
+#include "UI.h"
 
 extern roka::Application application;
 namespace roka
@@ -119,6 +120,11 @@ namespace roka
 			mesh.color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 		else
 			mesh.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+
+		if (owner->layer_type == ELayerType::UI)
+		{
+			//mesh.viewPortRect = dynamic_cast<UI*>(owner)->GetViewPortRect();
+		}
 
 		renderer::PushDebugMeshAttribute(mesh);
 	}

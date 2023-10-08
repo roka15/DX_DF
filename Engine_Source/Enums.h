@@ -17,6 +17,8 @@ namespace roka::enums
 		Light,
 		Cursor,
 		ScrollRect,
+		GroupLayout,
+		GridLayout,
 		End,
 	};
 	enum class EScriptType
