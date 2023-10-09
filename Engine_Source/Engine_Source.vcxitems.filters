@@ -152,6 +152,24 @@
       <Filter>GameObject\Component\GroupLayout</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GridGroupLayout.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioListener.cpp">
+      <Filter>GameObject\Component\Audio\Listener</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioSource.cpp">
+      <Filter>GameObject\Component\Audio\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp">
+      <Filter>Resource\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Fmod.cpp">
+      <Filter>Resource\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FontWrapper.cpp">
+      <Filter>GameObject\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Text.cpp">
+      <Filter>GameObject\Component\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)RokaEngine.h">
@@ -329,6 +347,24 @@
       <Filter>GameObject\Component\GroupLayout</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GridGroupLayout.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioListener.h">
+      <Filter>GameObject\Component\Audio\Listener</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioSource.h">
+      <Filter>GameObject\Component\Audio\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h">
+      <Filter>Resource\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h">
+      <Filter>Resource\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FontWrapper.h">
+      <Filter>GameObject\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Text.h">
+      <Filter>GameObject\Component\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -498,6 +534,24 @@
     </Filter>
     <Filter Include="GameObject\Component\GroupLayout\Grid">
       <UniqueIdentifier>{c32c1e3d-8754-497f-9656-9d4ece57dd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Audio">
+      <UniqueIdentifier>{1514316a-5eb8-4efb-8b47-aca46cc13a1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Audio">
+      <UniqueIdentifier>{6ce2ef87-ee77-467e-a592-f63d29b12551}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Audio\Listener">
+      <UniqueIdentifier>{f1f80823-b4d6-4f8b-823e-98b3f556411b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Audio\Source">
+      <UniqueIdentifier>{2e562b91-fc94-4d22-9075-20e347a06324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Font">
+      <UniqueIdentifier>{9d1c50da-6734-45f4-bde7-6958765cd7e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject\Component\Text">
+      <UniqueIdentifier>{e54c2696-900d-40dc-a55e-a91e56bde6e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

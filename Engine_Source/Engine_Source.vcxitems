@@ -17,6 +17,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Animation.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Animator.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Application.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioClip.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioListener.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioSource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Collider2D.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CollisionManager.h" />
@@ -29,6 +32,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Entity.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Enums.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FactoryBase.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Fmod.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FontWrapper.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ForwardDeclarations.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GridGroupLayout.h" />
@@ -77,6 +82,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Sprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)StructBuffer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestPool.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Text.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Texture.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Transform.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
@@ -85,6 +91,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Animation.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Animator.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Application.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioClip.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioListener.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioSource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Collider2D.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)CollisionManager.cpp" />
@@ -95,6 +104,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DontDestroyOnLoad.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Entity.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)FactoryBase.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Fmod.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FontWrapper.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GridGroupLayout.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GroupLayout.cpp" />
@@ -137,6 +148,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Sprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)StructBuffer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestPool.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Text.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Texture.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Transform.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)UI.cpp" />

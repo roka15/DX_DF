@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "MeshRenderer.h"
+#include "Text.h"
 extern roka::Application application;
 extern roka::Application* applications[2];
 
@@ -200,6 +201,9 @@ namespace roka
 			if (obj->active != GameObject::EState::Active)
 				continue;
 			std::shared_ptr<MeshRenderer> mr = obj->GetComponent<MeshRenderer>();
+			std::shared_ptr<Text> text = obj->GetComponent<Text>();
+			if (text != nullptr)
+				text->Render();
 			if (mr != nullptr)
 			{
 				ERenderMode mode = mr->material->GetRenderMode();
@@ -251,6 +255,8 @@ namespace roka
 				continue;
 			if (obj->GetState() != GameObject::EState::Active)
 				continue;
+			if (obj->GetName().compare(L"MyText") == 0)
+				int a = 0;
 			obj->Render();
 			index++;
 		}

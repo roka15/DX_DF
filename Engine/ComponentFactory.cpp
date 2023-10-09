@@ -10,6 +10,9 @@
 #include "Cursor.h"
 #include "ScrollRect.h"
 #include "GridGroupLayout.h"
+#include "AudioListener.h"
+#include "AudioSource.h"
+#include "Text.h"
 
 namespace roka
 {
@@ -58,6 +61,18 @@ namespace roka
 		mFactories[EComponentType::GridLayout] = [](Component* component) {
 			GridGroupLayout* rg = dynamic_cast<GridGroupLayout*>(component);
 			return std::shared_ptr<GridGroupLayout>(new GridGroupLayout(*rg));
+		};
+		mFactories[EComponentType::AudioListener] = [](Component* component) {
+			AudioListener* rg = dynamic_cast<AudioListener*>(component);
+			return std::shared_ptr<AudioListener>(new AudioListener(*rg));
+		};
+		mFactories[EComponentType::AudioSource] = [](Component* component) {
+			AudioSource* rg = dynamic_cast<AudioSource*>(component);
+			return std::shared_ptr<AudioSource>(new AudioSource(*rg));
+		};
+		mFactories[EComponentType::Text] = [](Component* component) {
+			Text* rg = dynamic_cast<Text*>(component);
+			return std::shared_ptr<Text>(new Text(*rg));
 		};
 	}
 

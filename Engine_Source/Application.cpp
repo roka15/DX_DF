@@ -16,7 +16,8 @@
 #include "..\\Engine\\SkillManager.h"
 #include "..\\Engine\\PortalManager.h"
 #include "..\\Engine\\InputManager.h"
-
+#include "Fmod.h"
+#include "FontWrapper.h"
 namespace roka
 {
 
@@ -64,6 +65,9 @@ namespace roka
 		
 		ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Initialize();
 		ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Initialize();
+
+		Fmod::Initialize();
+		FontWrapper::Initialize();
 	}
 
 	void Application::Update()
@@ -84,9 +88,8 @@ namespace roka
 
 	void Application::Render()
 	{
-		Time::Render();
-	
 		ClearTarget();
+		Time::Render();
 		roka::graphics::GetDevice()->UpdateViewPort(mType);
 		renderer::Render();
 	}
@@ -102,6 +105,8 @@ namespace roka
 		manager::SkillManager::GetInstance()->Release();
 		ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Release();
 		ObjectPoolManager<WarningObjectPool, GameObject>::GetInstance()->Release();
+		Fmod::Release();
+		FontWrapper::Release();
 	}
 
 	void Application::Destroy()

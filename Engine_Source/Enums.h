@@ -19,6 +19,9 @@ namespace roka::enums
 		ScrollRect,
 		GroupLayout,
 		GridLayout,
+		AudioSource,
+		AudioListener,
+		Text,
 		End,
 	};
 	enum class EScriptType
@@ -68,6 +71,7 @@ namespace roka::enums
 		NPK,
 		Animation,
 		ComputeShader,
+		AudioClip,
 		End,
 	};
 	enum class EFactoryType

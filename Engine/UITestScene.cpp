@@ -29,6 +29,9 @@
 #include "ScrollView.h"
 #include "ScrollRect.h"
 #include "GridGroupLayout.h"
+#include "AudioListener.h"
+#include "FontWrapper.h"
+#include "Text.h"
 namespace roka
 {
 	UITestScene::UITestScene():Scene(ESceneType::UITestScene)
@@ -128,6 +131,7 @@ namespace roka
 	void UITestScene::Render()
 	{
 		Scene::Render();
+		FontWrapper::DrawFont(L"Test", 100, 100, 100, FONT_RGBA(255, 255, 255, 255));
 	}
 	void UITestScene::Release()
 	{
@@ -151,9 +155,14 @@ namespace roka
 		lightComp->SetType(ELightType::Directional);
 		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		
+		std::shared_ptr<UI> text = object::Instantiate<UI>();
+		text->SetName(L"MyText");
+		std::shared_ptr<Text> tc = text->AddComponent<Text>();
+		tc->Create(L"Hello World",255,255,255,255,100);
+		AddGameObject(ELayerType::UI, text);
+
 		std::shared_ptr<GameObject> UIcamera = object::Instantiate<GameObject>(
-			Vector3(0.0f, 0.0f, -10.0f),
+			Vector3(0.0f, 0.0f, -3.0f),
 			ELayerType::UI);
 		{
 			UIcamera->SetName(L"UICamera");
@@ -163,6 +172,7 @@ namespace roka
 			cameraComp->TurnLayerMask(ELayerType::Raycast, true);
 			
 			renderer::MainCamera = cameraComp;
+			UIcamera->AddComponent<AudioListener>();
 		}
 		CollisionManager::SetLayer(ELayerType::Raycast, ELayerType::UI, true);
 	}
