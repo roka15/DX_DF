@@ -31,6 +31,7 @@ namespace roka
 
 		Vector3 GetLocalPosition() { return mPosition; }
 		Vector3 GetLocalScale() { return mScale; }
+		Vector3 GetLocalRotation() { return mRotation; }
 		Vector3 GetPosition(); 
 		Vector3 GetRotation(); 
 		Vector3 GetScale(); 
@@ -60,7 +61,7 @@ namespace roka
 		GET_PROPERTY(Forward) Vector3 forward;
 		
 		Vector2 GetRadius();
-
+	
 	private:
 		friend class FactoryBase;
 		friend class ComponentFactory;

@@ -150,7 +150,7 @@ namespace roka
 				}
 			}
 		}
-	
+
 	}
 	void PlayerScript::Render()
 	{
@@ -170,7 +170,7 @@ namespace roka
 
 	void PlayerScript::RegisterKeyEvents()
 	{
-		M_Input->RegisterKeyEvent(mUser->left_key, EKeyState::Down, std::bind(&PlayerScript::LeftBtnDown,this));
+		M_Input->RegisterKeyEvent(mUser->left_key, EKeyState::Down, std::bind(&PlayerScript::LeftBtnDown, this));
 		M_Input->RegisterKeyEvent(mUser->left_key, EKeyState::Up, std::bind(&PlayerScript::LeftBtnUp, this));
 		M_Input->RegisterKeyEvent(mUser->right_key, EKeyState::Down, std::bind(&PlayerScript::RightBtnDown, this));
 		M_Input->RegisterKeyEvent(mUser->right_key, EKeyState::Up, std::bind(&PlayerScript::RightBtnUp, this));
@@ -383,6 +383,7 @@ namespace roka
 				mPlayerState = EPlayerState::Walk;
 			as->PlayPartsMotion();
 		}
+
 		ms->SetDirY(1.0f);
 	}
 
@@ -655,13 +656,13 @@ namespace roka
 		double cur_time = CollisionManager::GetColliderTimer();
 		double condition = 5.0f;
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
-		
+
 		if (as->IsAniStop() == false)
 		{
 			as->StopAni();
 			as->PlayPartsMotion();
 		}
-		
+
 		if (cur_time - befor_time <= condition)
 		{
 			as->AddSpriteIndex();

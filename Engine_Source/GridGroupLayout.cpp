@@ -37,15 +37,16 @@ void roka::GridGroupLayout::Update()
 	if (mbUpdateRequest == true)
 	{
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
-		RECT rect = std::dynamic_pointer_cast<UI>(objs[0])->GetViewPortRect();
 		Vector3 scale = tf->GetScale();
 		Vector2 cellSize = mCellSize * scale;
 		cellSize.y *= -1;
-		Vector3 leftTop = tf->GetLeftTop();
-		leftTop.x += mOffset.x + (cellSize.x / 2.0f);
-		leftTop.y += mOffset.y + (cellSize.y);
-		leftTop.y *= -1;
-	
+		tf->SetPivot(Vector3(1.0f, 1.0f, 0.0f));
+		Vector3 leftTop = Vector3::Zero;
+		Vector2 radius = tf->GetRadius();
+		leftTop.x = mOffset.x; //+ (cellSize.x / 2.0f);
+		leftTop.y = mOffset.y; //+(cellSize.y / 2.0f);
+		//leftTop.y *= -1;
+
 		//Vector2 radius =Vector2(RectMeshDXRadius*scale.x, RectMeshDXRadius*scale.y);
 		//radius.y *= -1;
 

@@ -29,7 +29,7 @@ namespace roka
 		SceneManager::CreateScene<TileMapToolScene>(L"TileMapToolScene");
 		SceneManager::CreateScene<UITestScene>(L"UITestScene");
 
-		//SceneManager::LoadScene(L"StartLoadScene");
-		SceneManager::LoadScene(L"UITestScene");
+		SceneManager::LoadScene(L"StartLoadScene");
+		//SceneManager::LoadScene(L"UITestScene");
 	}
 }

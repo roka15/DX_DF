@@ -125,6 +125,7 @@ namespace gui
 		std::shared_ptr<roka::Transform> tf = debugObj->GetComponent<roka::Transform>();
 		Vector3 pos = mesh.position;
 		pos.z = -1.00f;
+		debugObj->SetParent(mesh.parent);
 		tf->SetPosition(pos);
 		tf->SetScale(mesh.scale);
 		tf->SetRotation(mesh.rotation);
@@ -135,11 +136,7 @@ namespace gui
 		std::shared_ptr<roka::Camera> mainCamera = roka::renderer::MainCamera;
 		roka::Camera::SetGpuViewMatrix(mainCamera->GetViewMatrix());
 		roka::Camera::SetGpuProjectionMatrix(mainCamera->GetProjectionMatrix());
-		if (mesh.viewPortRect.left !=0 && mesh.viewPortRect.top !=0 &&
-			mesh.viewPortRect.right != 0 && mesh.viewPortRect.bottom != 0)
-			focusApp->BindViewPort(mesh.viewPortRect);
 		debugObj->Render();
-		focusApp->BindViewPort();
 	}
 
 }

@@ -164,7 +164,38 @@ void roka::SeriaGateScene::Initialize()
 		MPBase->AddChild(MPFilter);
 	}
 
-	float startx = -0.5f;
+	std::shared_ptr<UI> SkillQuickWindow = object::Instantiate<UI>(Vector3(0.0f, 0.0f, 0.0f));
+	SkillQuickWindow->SetName(L"SkillWindow");
+	SkillQuickWindow->AddComponent<Collider2D>();
+	hudParent->AddChild(SkillQuickWindow);
+	/*std::shared_ptr<GridGroupLayout> grid = SkillQuickWindow->AddComponent<GridGroupLayout>();
+	grid->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 2, 7);*/
+	/*grid->SetInfo(Vector2(0.1f, 0.1f), Vector2(0.25f,0.25f), 2, 7);
+	grid->SetCellSize(Vector2(0.008f, 0.008f));*/
+
+	//for (int i = 0; i < 2 * 7; i++)
+	//{
+	//	std::shared_ptr<Image> SkillQuickSlot = object::Instantiate<Image>(
+	//		Vector3(0.0f, 0.0f, -0.01f),
+	//		Vector3::Zero,
+	//		Vector3::One);
+	//		//Vector3(0.25f, 0.25f, 1.0f));
+	//	{
+	//		std::wstring name = L"SkillQuickSlot0" + i;
+	//		SkillQuickSlot->SetName(name);
+	//		SkillQuickSlot->ismove = false;
+	//		SkillQuickSlot->AddComponent<Collider2D>();
+	//		std::shared_ptr<MeshRenderer> mr = SkillQuickSlot->GetComponent<MeshRenderer>();
+	//		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+	//		mr->material->texture = hudTexture10;
+	//		std::shared_ptr<ImageComponent> imageComp = SkillQuickSlot->GetComponent<ImageComponent>();
+	//		imageComp->SetSprite(18);
+
+	//		SkillQuickWindow->AddChild(SkillQuickSlot);
+	//		break;
+	//	}
+	//}
+	/*float startx = -0.5f;
 	float starty = -2.0f;
 	for (int i = 0; i < 2; i++)
 	{
@@ -191,7 +222,7 @@ void roka::SeriaGateScene::Initialize()
 				hudParent->AddChild(SkillQuickSlot);
 			}
 		}
-	}
+	}*/
 
 	std::shared_ptr<Image> MoreSkillBtn = object::Instantiate<Image>(
 		Vector3(-0.75f, -1.75f, -0.01f),
@@ -224,7 +255,7 @@ void roka::SeriaGateScene::Initialize()
 		hudParent->AddChild(SkillChangeBtn);
 	}
 
-	startx = -3.25f;
+	/*startx = -3.25f;
 	starty = -2.0f;
 	for (int i = 0; i < 1; i++)
 	{
@@ -251,7 +282,7 @@ void roka::SeriaGateScene::Initialize()
 				hudParent->AddChild(ItemSlot);
 			}
 		}
-	}
+	}*/
 
 	std::shared_ptr<GameObject> hudIconParent = object::Instantiate<GameObject>(Vector3(0.3f, -0.65f, -5.0f));
 	hudIconParent->layer_type = ELayerType::UI;

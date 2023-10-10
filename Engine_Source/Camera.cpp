@@ -255,8 +255,6 @@ namespace roka
 				continue;
 			if (obj->GetState() != GameObject::EState::Active)
 				continue;
-			if (obj->GetName().compare(L"MyText") == 0)
-				int a = 0;
 			obj->Render();
 			index++;
 		}

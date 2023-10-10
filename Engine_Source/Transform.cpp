@@ -111,7 +111,7 @@ namespace roka
 		Matrix scale;
 
 		scale = Matrix::CreateScale(mScale);
-
+	
 
 		Matrix rotation = Matrix::CreateRotationX(mRotation.x);
 		rotation *= Matrix::CreateRotationY(mRotation.y);

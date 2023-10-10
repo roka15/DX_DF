@@ -107,6 +107,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 				gui::Editor::Run();
 			if (focusApp == &application)
 				gui::Editor::DebugRender();
+
 			application.Present();
 			tileMapTool.Run();
 			if (focusApp == &tileMapTool)

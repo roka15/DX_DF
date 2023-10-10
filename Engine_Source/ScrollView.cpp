@@ -32,7 +32,7 @@ namespace roka
 		{
 			viewport = object::Instantiate<UI>();
 			viewport->SetName(L"ViewPort");
-			viewport->GetComponent<Transform>()->scale = Vector3(1.0f, 1.0f, 1.0f);
+			viewport->GetComponent<Transform>()->scale = Vector3(2.0f, 3.0f, 1.0f);
 			content = object::Instantiate<UI>();
 			content->SetName(L"Content");
 			content->GetComponent<Transform>()->scale = Vector3(1.0f, 1.0f, 1.0f);

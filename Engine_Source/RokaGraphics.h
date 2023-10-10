@@ -21,6 +21,10 @@
 #define CBSLOT_ANIMATION 3
 #define CBSLOT_CLIPPINGRECT 4
 
+namespace roka
+{
+	class GameObject;
+}
 namespace roka::graphics
 {
 	enum class EShaderStage
@@ -104,12 +108,15 @@ namespace roka::graphics
 		}
 		virtual ~GpuBuffer() = default;
 	};
-	struct DebugMesh
+	class DebugMesh
 	{
+	public:
 		enums::EColliderType type;
 		math::Vector3 position;
 		math::Vector3 rotation;
 		math::Vector3 scale;
+
+		std::shared_ptr<GameObject> parent;
 
 		float radius;
 		float duration;

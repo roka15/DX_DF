@@ -88,13 +88,13 @@ namespace roka
 			return;
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 
-		Vector3 scale = tf->scale;
+		Vector3 scale = tf->GetLocalScale();
 		scale.x *= mSize.x;
 		scale.y *= mSize.y;
 
-		Vector3 pos = tf->position;
+		Vector3 pos = tf->GetLocalPosition();
 
-		Vector3 rotation = tf->rotation;
+		Vector3 rotation = tf->GetLocalRotation();
 		rotation.z += mRotationZ;
 
 		float rotationZ = tf->rotation.z;
@@ -111,7 +111,9 @@ namespace roka
 
 		mPosition = pos;
 
+		
 		roka::graphics::DebugMesh mesh = {};
+		mesh.parent = owner->parent;
 		mesh.position = pos;
 		mesh.rotation = rotation;
 		mesh.scale = scale;
@@ -121,6 +123,10 @@ namespace roka
 		else
 			mesh.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 
+		if (owner->GetName().compare(L"TestImage") == 0)
+		{
+			int a = 0;
+		}
 		if (owner->layer_type == ELayerType::UI)
 		{
 			//mesh.viewPortRect = dynamic_cast<UI*>(owner)->GetViewPortRect();
