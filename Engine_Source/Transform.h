@@ -47,10 +47,6 @@ namespace roka
 		void EnablePivot();
 		void DisablePivot(); 
 
-		Vector3 GetLeftTop();
-		Vector3 GetRightTop();
-		Vector3 GetLeftBottom();
-		Vector3 GetRightBottom();
 
 		PROPERTY(GetPosition, SetPosition) Vector3 position;
 		PROPERTY(GetRotation, SetRotation)Vector3 rotation;
@@ -60,7 +56,6 @@ namespace roka
 		GET_PROPERTY(Right) Vector3 right;
 		GET_PROPERTY(Forward) Vector3 forward;
 		
-		Vector2 GetRadius();
 	
 	private:
 		friend class FactoryBase;

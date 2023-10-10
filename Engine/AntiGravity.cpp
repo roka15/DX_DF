@@ -638,9 +638,10 @@ namespace roka
 		cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle, this, circleEft);
 		cso->SetActive(true);
 
+		Vector3 pos = caster->GetComponent<Transform>()->position;
 		std::shared_ptr<Transform> tf = circleEft->GetComponent<Transform>();
-		tf->scale = Vector3(15.8f, 10.5f, 1.0f);
-		tf->position = Vector3(-0.55f, 2.2f, 0.0f);
+		tf->scale = Vector3(8.0f, 8.0f, 1.0f);
+		tf->position = Vector3(-pos.x-0.6, pos.y+4.5f, 0.0f);
 
 	
 		ani = circleEft2->GetComponent<Animator>();
@@ -656,8 +657,8 @@ namespace roka
 		cso->SetActive(true);
 
 		tf = circleEft2->GetComponent<Transform>();
-		tf->scale = Vector3(15.8f, 10.5f, 1.0f);
-		tf->position = Vector3(0.55f, 2.2f, 0.0f);
+		tf->scale = Vector3(8.0f, 8.0f, 1.0f);
+		tf->position = Vector3(-pos.x+0.5f ,3.0f, 0.0f);
 
 		std::shared_ptr<MeshRenderer> mesh = circleEft->GetComponent<MeshRenderer>();
 		mesh->material->shader = VerticalAniEftShdaer;

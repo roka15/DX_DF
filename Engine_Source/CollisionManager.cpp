@@ -204,7 +204,7 @@ namespace roka
 		Vector3 Axis[4] = {};
 
 		Vector3 leftScale = Vector3(left->size.x, left->size.y, 1.0f);
-		Vector3 leftOffset = Vector3(left->center.x, left->center.y, 0.0f);
+		Vector3 leftOffset = Vector3(left->center.x * leftTf->scale.x, left->center.y* leftTf->scale.y, 0.0f);
 		Matrix finalLeft = Matrix::CreateScale(leftScale);
 		if (leftTf->rotation.z != 0.0f)
 		{
@@ -218,7 +218,7 @@ namespace roka
 		finalLeft *= leftMat;
 
 		Vector3 rightScale = Vector3(right->size.x, right->size.y, 1.0f);
-		Vector3 rightOffset = Vector3(right->center.x, right->center.y, 0.0f);
+		Vector3 rightOffset = Vector3(right->center.x*rightTf->scale.x, right->center.y*rightTf->scale.y, 0.0f);
 		Matrix finalRight = Matrix::CreateScale(rightScale);
 		if (rightTf->rotation.z != 0.0f)
 		{

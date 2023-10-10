@@ -49,7 +49,7 @@ namespace roka
 		if (texture == nullptr)
 		{
 			std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"monster_eft");
-			texture = npk->CreateAtlas(L"laser009_eft.img", 0, 20, L"LaserEft01");
+			texture = npk->CreateAtlas(L"laser009_eft.img", 0, 19, L"LaserEft01");
 		}
 		ani->Create(texture, L"LaserEft", 0, 20, 0.1f);
 		ani->PlayAnimation(L"LaserEft", false);
@@ -78,6 +78,10 @@ namespace roka
 		std::shared_ptr<MonsterScript> monster = caster->GetComponent<MonsterScript>();
 
 		EDir4Type dir = monster->GetDir();
+		std::shared_ptr<Transform> spiderTf = caster->GetComponent<Transform>();
+		Vector3 pos = spiderTf->position;
+		Vector3 scale = spiderTf->scale;
+
 		std::shared_ptr<Transform> transform = collider->owner->GetComponent<Transform>();
 		transform->scale = Vector3(5.0f, 0.5f, 1.0f);
 
@@ -86,17 +90,17 @@ namespace roka
 		switch (dir)
 		{
 		case EDir4Type::LEFT:
-			transform->position = Vector3(-2.25f, 0.025f, 1.0f);
-			colCenter.x = -5.5f;
+			transform->position = -pos+Vector3(-2.25f, 0.025f, 1.0f);
+			colCenter.x = -1.5f;
 			break;
 		case EDir4Type::RIGHT:
-			transform->position = Vector3(2.25f, 0.025f, 1.0f);
-			colCenter.x = 5.5f;
+			transform->position = -pos+Vector3(2.25f, 0.025f, 1.0f);
+			colCenter.x = 1.5f;
 			break;
 		}
 
-		colCenter.y = 0.025f;
-		collider->center = colCenter;
+		colCenter.y = 0.0f;
+		collider->center = Vector2::Zero; colCenter;
 		collider->size = Vector2(1.5f, 0.05f);
 	}
 

@@ -228,6 +228,16 @@ namespace roka
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
 			renderer::MainCamera = cameraComp;
 		}
+		std::shared_ptr<GameObject> UIcamera = object::Instantiate<GameObject>(
+			Vector3(0.0f, 0.0f, -10.0f),
+			ELayerType::Player);
+		{
+			UIcamera->SetName(L"UIcamera");
+			UIcamera->AddScript<CameraScript>();
+			std::shared_ptr<Camera> cameraComp = UIcamera->AddComponent<Camera>();
+			cameraComp->DisableLayerMasks();
+			cameraComp->TurnLayerMask(ELayerType::UI, true);
+		}
 		std::shared_ptr<GameObject> portal01 = object::Instantiate<GameObject>(
 			Vector3(-1.0f, 2.0f, 0.0f),
 			Vector3::Zero,

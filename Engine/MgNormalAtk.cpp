@@ -57,6 +57,8 @@ namespace roka
 		colObject->SetName(L"MgNormalAtkColObject");
 		std::shared_ptr<Collider2D> collider = colObject->AddComponent<Collider2D>();
 		std::shared_ptr<Transform> transform = colObject->GetComponent<Transform>();
+		Vector3 pos = player->owner->GetComponent<Transform>()->position;
+		transform->position = Vector3(-pos.x, -pos.y, -pos.z);
 		transform->scale = Vector3(0.1f, 0.1f, 1.0f);
 		
 
@@ -70,13 +72,13 @@ namespace roka
 			Right(colObject);
 		}
 		collider->SetCollisionListener(this);
-		caster->AddChild(colObject);
+		SceneManager::AddGameObject(ELayerType::FrontObject, colObject);
 	}
 
 	void MgNormalAtk::DeSpawnCollider(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<GameObject> playerObj = caster;
-		std::shared_ptr<Collider2D> collider = playerObj->GetChild(L"MgNormalAtkColObject")->GetComponent<Collider2D>();
+		std::shared_ptr<Collider2D> collider = SceneManager::FindGameObject(ELayerType::FrontObject, L"MgNormalAtkColObject")->GetComponent<Collider2D>();
 		collider->SetCollisionListener(nullptr);
 		collider->owner->active = GameObject::EState::Dead;
 	}
@@ -84,7 +86,7 @@ namespace roka
 	void MgNormalAtk::EnableCollision(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<GameObject> playerObj = caster;
-		std::shared_ptr<GameObject> colObj = playerObj->GetChild(L"MgNormalAtkColObject");
+		std::shared_ptr<GameObject> colObj = SceneManager::FindGameObject(ELayerType::FrontObject, L"MgNormalAtkColObject");
 		std::shared_ptr<Collider2D> collider = colObj->GetComponent<Collider2D>();
 		collider->EnableColCheck();
 	}
@@ -92,7 +94,7 @@ namespace roka
 	void MgNormalAtk::DisableCollision(std::shared_ptr<GameObject> caster)
 	{
 		std::shared_ptr<GameObject> playerObj = caster;
-		std::shared_ptr<GameObject> colObj = playerObj->GetChild(L"MgNormalAtkColObject");
+		std::shared_ptr<GameObject> colObj = SceneManager::FindGameObject(ELayerType::FrontObject, L"MgNormalAtkColObject");
 		std::shared_ptr<Collider2D> collider = colObj->GetComponent<Collider2D>();
 		collider->DisableColCheck();
 	}
@@ -140,7 +142,7 @@ namespace roka
 		if (frameEvent.compare(L"NextState") == 0)
 		{
 			EKeyCode key = (EKeyCode)player->GetUserInfo()->GetNormalAtkKey();
-			std::shared_ptr<GameObject> colObj = playerObj->GetChild(L"MgNormalAtkColObject");
+			std::shared_ptr<GameObject> colObj = SceneManager::FindGameObject(ELayerType::FrontObject,L"MgNormalAtkColObject");
 			if (colObj == nullptr)
 				return;
 			DisableCollision(playerObj);

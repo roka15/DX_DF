@@ -35,12 +35,18 @@ namespace roka
 	void TairangSkill01::SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)
 	{
 		AnimationObjectPool* pool = ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance();
-
+		std::shared_ptr<Transform> tirangtf = caster->GetComponent<Transform>();
+		Vector3 tirangPos = tirangtf->position;
+		Vector3 tirangScale = tirangtf->scale;
+		
 		if (key.compare(L"Effect1") == 0)
 		{
 
 			std::shared_ptr<GameObject> Eft01 = pool->Spawn(L"AniEftObject");
 			{
+				std::shared_ptr<Transform> tf = Eft01->GetComponent<Transform>();
+				tf->position = -tirangPos;
+				tf->scale = tirangScale;
 				std::shared_ptr<Animator> ani = Eft01->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"attack3slashglow.img", L"tairang_skill1glow", 0, 12, 0.05f);
 				MeshRenderer* meshRenderer = Eft01->GetComponent<MeshRenderer>().get();
@@ -49,30 +55,35 @@ namespace roka
 			}
 			std::shared_ptr<GameObject> Eft02 = pool->Spawn(L"AniEftObject");
 			{
+				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
+				tf->position = -tirangPos;
+				tf->scale = tirangScale;
 				std::shared_ptr<Animator> ani = Eft02->GetComponent<Animator>();
 				ani->Create(L"tairnag_eft", L"attack3trail.img", L"tairang_skill1trail", 0, 12, 0.05f);
 				MeshRenderer* meshRenderer = Eft02->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1trail") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1trail", false);
 			}
+		
 			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniEftObject");
 			{
+
 				std::shared_ptr<Animator> ani = Eft03->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft03->GetComponent<Transform>();
-				tf->position = Vector3(-0.03f, -0.1f, 0.0f);
-				tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+				tf->position = -tirangPos + Vector3(-0.03f, -0.1f, 0.0f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 
 				ani->Create(L"tairnag_eft", L"attack3purppleglow.img", L"tairang_skill1purppleglow", 0, 6, 0.05f);
 				MeshRenderer* meshRenderer = Eft03->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
-			}
+			}	
 			std::shared_ptr<GameObject> Eft04 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Animator> ani = Eft04->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft04->GetComponent<Transform>();
-				tf->position = Vector3(-0.1f, -0.11f, 0.0f);
-				tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+				tf->position = -tirangPos+Vector3(-0.1f, -0.11f, 0.0f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 				ani->Create(L"tairnag_eft", L"attack3purppleglow.img", L"tairang_skill1purppleglow", 0, 6, 0.05f);
 				MeshRenderer* meshRenderer = Eft04->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -82,8 +93,8 @@ namespace roka
 			{
 				std::shared_ptr<Animator> ani = Eft05->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft05->GetComponent<Transform>();
-				tf->position = Vector3(-0.19f, -0.13f, 0.0f);
-				tf->scale = Vector3(0.28f, 0.3f, 1.0f);
+				tf->position = -tirangPos+Vector3(-0.19f, -0.13f, 0.0f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 				ani->Create(L"tairnag_eft", L"attack3purppleglow.img", L"tairang_skill1purppleglow", 0, 6, 0.05f);
 				MeshRenderer* meshRenderer = Eft05->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -93,8 +104,8 @@ namespace roka
 			{
 				std::shared_ptr<Animator> ani = Eft06->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft06->GetComponent<Transform>();
-				tf->position = Vector3(-0.05f, -0.1f, 0.0f);
-				tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+				tf->position = -tirangPos+ Vector3(-0.05f, -0.1f, 0.0f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 				ani->Create(L"tairnag_eft", L"attack3purppleglow.img", L"tairang_skill1purppleglow", 0, 6, 0.05f);
 				MeshRenderer* meshRenderer = Eft06->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -104,8 +115,8 @@ namespace roka
 			{
 				std::shared_ptr<Animator> ani = Eft07->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft07->GetComponent<Transform>();
-				tf->position = Vector3(-0.1f, -0.11f, 0.01f);
-				tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+				tf->position = -tirangPos+Vector3(-0.1f, -0.11f, 0.01f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 				ani->Create(L"tairnag_eft", L"attack3purppleglow.img", L"tairang_skill1purppleglow", 0, 6, 0.05f);
 				MeshRenderer* meshRenderer = Eft07->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -115,8 +126,8 @@ namespace roka
 			{
 				std::shared_ptr<Animator> ani = Eft08->GetComponent<Animator>();
 				std::shared_ptr<Transform> tf = Eft08->GetComponent<Transform>();
-				tf->position = Vector3(-0.2f, -0.13f, 0.0f);
-				tf->scale = Vector3(0.3f, 0.3f, 1.0f);
+				tf->position = -tirangPos+Vector3(-0.2f, -0.13f, 0.0f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 				ani->Create(L"tairnag_eft", L"attack3purppleglow.img", L"tairang_skill1purppleglow", 0, 6, 0.05f);
 				MeshRenderer* meshRenderer = Eft08->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -149,9 +160,10 @@ namespace roka
 				ani->PlayAnimation(L"tairang_skill1line", false);
 
 				std::shared_ptr<Transform> tf = Eft01->GetComponent<Transform>();
-				tf->scale = Vector3(1.5f, 1.5f, 1.0f);
+			
+				tf->scale = tirangScale;
 				tf->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90));
-				tf->position = Vector3(-0.225f, 0.5f, 0.01f);
+				tf->position = -tirangPos + Vector3(-0.2f, 0.3f, 0.01f);
 
 				MeshRenderer* meshRenderer = Eft01->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1line") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -163,7 +175,8 @@ namespace roka
 				ani->PlayAnimation(L"tairang_skill1booster", false);
 
 				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
-				tf->position = Vector3(0.05f, 0.2f, 0.01f);
+				tf->scale = tirangScale;
+				tf->position = -tirangPos + Vector3(0.05f, 0.2f, 0.01f);
 			}
 			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniEftObject");
 			{
@@ -171,8 +184,8 @@ namespace roka
 				ani->Create(L"tairnag_eft", L"abyssbombsmall.img", L"tairang_skill1abyss_explosion", 0, 12, 0.08);
 
 				std::shared_ptr<Transform> tf = Eft03->GetComponent<Transform>();
-				tf->scale = Vector3(0.25f, 0.25f, 1.0f);
-				tf->position = Vector3(0.0f, 0.08f, 0.01f);
+				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
+				tf->position = -tirangPos + Vector3(0.0f, 0.08f, 0.01f);
 			}
 
 			Eft01->SetName(L"Eft01");
@@ -199,8 +212,8 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1lightning") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 
 				std::shared_ptr<Transform> tf = Eft01->GetComponent<Transform>();
-				tf->scale = Vector3(0.1f, 4.0f, 1.0f);
-				tf->position = Vector3(0.0f, 1.7f, 0.0f);
+				tf->scale = Vector3(1.0f, tirangScale.y, 1.0f);
+				tf->position = -tirangPos +Vector3(0.0f, +0.15f, 0.0f);
 			}
 			std::shared_ptr<GameObject> Eft02 = pool->Spawn(L"AniObject");
 			{
@@ -211,8 +224,8 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1abyssBomb") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 
 				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
-				tf->scale = Vector3(0.8f, 0.25f, 1.0f);
-				tf->position = Vector3(0.0f, -0.2f, 0.0f);
+				tf->scale = Vector3(tirangScale.x* 0.8f, tirangScale.y*0.25f, 1.0f);
+				tf->position = -tirangPos + Vector3(0.0f, -0.2f, 0.0f);
 			}
 			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniObject");
 			{
@@ -223,7 +236,8 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1dust") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 
 				std::shared_ptr<Transform> tf = Eft03->GetComponent<Transform>();
-				tf->scale = Vector3(0.8f, 1.0f, 1.0f);
+				tf->scale = tirangScale;
+				tf->position = -tirangPos;
 			}
 			std::shared_ptr<GameObject> Eft04 = pool->Spawn(L"AniObject");
 			{
@@ -234,7 +248,8 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1bolt") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 
 				std::shared_ptr<Transform> tf = Eft04->GetComponent<Transform>();
-				tf->position = Vector3(-0.05f, -0.05f, 0.0f);
+				tf->scale = tirangScale;
+				tf->position = -tirangPos+ Vector3(-0.05f, -0.05f, 0.0f);
 			}
 
 			Eft01->SetName(L"Eft01");

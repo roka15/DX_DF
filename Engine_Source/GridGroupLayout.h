@@ -18,6 +18,11 @@ namespace roka
         virtual void Render();
 
     private:
+        void SetLeftTop(Vector3& pos);
+        void SetRightTop(Vector3& pos);
+        void SetLeftBottom(Vector3& pos);
+        void SetRightBottom(Vector3& pos);
+    private:
         friend class FactoryBase;
         friend class ComponentFactory;
     };

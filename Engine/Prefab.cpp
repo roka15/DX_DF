@@ -46,6 +46,7 @@ namespace roka::prefab
 			std::shared_ptr<Material> material = std::make_shared<Material>();
 			material->SetKey(key);
 			material->shader = Resources::Find<Shader>(L"SpriteShader");
+			material->render_mode = ERenderMode::Transparent;
 			Resources.insert(std::make_pair(key, material));
 			Resources::Insert(key, material);
 		}
@@ -264,7 +265,9 @@ namespace roka::prefab
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
 			Spider_MonsterObject->AddChild(TopColObject);
 			std::shared_ptr<Collider2D> col = TopColObject->AddComponent<Collider2D>();
-			col->SetSize(Vector2(0.13f, 0.08f));
+			col->SetSize(Vector2(0.5f, 0.5f));
+			//col->SetCenter(Vector2(-0.0f, -0.1f));
+			//col->SetSize(Vector2(0.13f, 0.08f));
 			col->SetCenter(Vector2(-0.05f, 0.1f));
 			col->SetHitType(EHitBoxType::Top);
 			
@@ -277,7 +280,7 @@ namespace roka::prefab
 			std::shared_ptr<GameObject> BottomColObject = object::Instantiate<GameObject>();
 			Spider_MonsterObject->AddChild(BottomColObject);
 			col = BottomColObject->AddComponent<Collider2D>();
-			col->SetSize(Vector2(0.13f, 0.08f));
+			col->SetSize(Vector2(0.5f, 0.5f));
 			col->SetCenter(Vector2(-0.05f, -0.1f));
 			col->SetHitType(EHitBoxType::Bottom);
 			/*hitbox = BottomColObject->AddScript<HitBoxScript>();
@@ -311,22 +314,26 @@ namespace roka::prefab
 				Vector3::One);
 			{
 				AvatarParrent->SetName(L"AvatarParrentObj");
+				AvatarParrent->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 				PlayerObject->AddChild(AvatarParrent);
 				AvatarParrent->AddScript<AvatarScript>();
 			}
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
+			TopColObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 			PlayerObject->AddChild(TopColObject);
 			std::shared_ptr<Collider2D> col = TopColObject->AddComponent<Collider2D>();
-			col->SetSize(Vector2(0.05f, 0.045f));
-			col->SetCenter(Vector2(-0.01f, -0.4f));
+			col->SetSize(Vector2(0.05f, 0.05f));
+			col->SetCenter(Vector2(-0.0f, -0.1f));
 			col->SetHitType(EHitBoxType::Top);
 			TopColObject->layer_type = ELayerType::Player;
 
 			std::shared_ptr<GameObject> BottomColObject = object::Instantiate<GameObject>();
+			BottomColObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 			PlayerObject->AddChild(BottomColObject);
+			
 			col = BottomColObject->AddComponent<Collider2D>();
-			col->SetSize(Vector2(0.05f, 0.07f));
-			col->SetCenter(Vector2(-0.01f, -0.65f));
+			col->SetSize(Vector2(0.05f, 0.05f));
+			col->SetCenter(Vector2(-0.0f, -0.2f));
 			col->SetHitType(EHitBoxType::Bottom);
 			BottomColObject->layer_type = ELayerType::Player;
 

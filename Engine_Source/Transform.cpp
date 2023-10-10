@@ -111,7 +111,7 @@ namespace roka
 		Matrix scale;
 
 		scale = Matrix::CreateScale(mScale);
-	
+
 
 		Matrix rotation = Matrix::CreateRotationX(mRotation.x);
 		rotation *= Matrix::CreateRotationY(mRotation.y);
@@ -129,6 +129,7 @@ namespace roka
 				int a = 0;
 			std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
 			mWorld *= tf->mWorld;
+			//mWorld = mWorld*tf->mWorld.Invert();
 		}
 
 		mUp = Vector3::TransformNormal(Vector3::Up, rotation);
@@ -232,30 +233,5 @@ namespace roka
 	{
 		mbPivot = false;
 	}
-	Vector3 Transform::GetLeftTop()
-	{
-		Vector2 distance = GetRadius();//* 2.0f;
-		return  Vector3(mPosition.x - distance.x, mPosition.y + distance.y, mPosition.z);
-	}
-	Vector3 Transform::GetRightTop()
-	{
-		Vector2 distance = GetRadius();
-		return  Vector3(mPosition.x + distance.x, mPosition.y + distance.y, mPosition.z);
-	}
-	Vector3 Transform::GetLeftBottom()
-	{
-		Vector2 distance = GetRadius();
-		return  Vector3(mPosition.x - distance.x, mPosition.y - distance.y, mPosition.z);
-	}
-	Vector3 Transform::GetRightBottom()
-	{
-		Vector2 distance = GetRadius();
-		return  Vector3(mPosition.x + distance.x, mPosition.y - distance.y, mPosition.z);
-	}
-	Vector2 Transform::GetRadius()
-	{
-		Vector3 scale = GetScale();
-		Vector2 radius = Vector2(scale.x * 0.5f, scale.y * 0.5f);
-		return radius;
-	}
+	
 }

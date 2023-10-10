@@ -63,7 +63,7 @@ void roka::SeriaGateScene::Initialize()
 		AddGameObject(ELayerType::BackObject, testimg);
 	}*/
 
-	
+
 
 #pragma region hud/ui
 
@@ -81,7 +81,7 @@ void roka::SeriaGateScene::Initialize()
 	std::shared_ptr<Texture> hudTexture12 = hud_npk->CreateAtlas(L"hud.img", 220, 240, L"ui_hudAtlasTexture12");
 	std::shared_ptr<Texture> hudTexture13 = hud_npk->CreateAtlas(L"hud.img", 240, 257, L"ui_hudAtlasTexture13");
 
-	std::shared_ptr<GameObject> hudParent = object::Instantiate<GameObject>(Vector3(0.0f,0.0f,-5.0f));
+	std::shared_ptr<GameObject> hudParent = object::Instantiate<GameObject>(Vector3(0.0f, 0.0f, 0.0f));
 	hudParent->layer_type = ELayerType::UI;
 	SceneManager::DontDestroy(hudParent);
 
@@ -133,10 +133,12 @@ void roka::SeriaGateScene::Initialize()
 
 		hudParent->AddChild(MPBase);
 	}
+
+
 	std::shared_ptr<Image> HPFilter = object::Instantiate<Image>(
-		Vector3(0.0f, -0.05f, 0.0f),
+		Vector3(-1.25f, -1.85f, -0.11f),
 		Vector3::Zero,
-		Vector3(1.25f, 1.25f, 1.0f));
+		Vector3(0.6f, 0.6f, 1.0f));
 	{
 		HPFilter->SetName(L"HPFilter");
 		HPFilter->ismove = false;
@@ -149,9 +151,9 @@ void roka::SeriaGateScene::Initialize()
 		HPBase->AddChild(HPFilter);
 	}
 	std::shared_ptr<Image> MPFilter = object::Instantiate<Image>(
-		Vector3(0.0f, -0.05f, 0.0f),
+		Vector3(1.45f, -1.85f, -0.11f),
 		Vector3::Zero,
-		Vector3(1.25f, 1.25f, 1.0f));
+		Vector3(0.6f, 0.6f, 1.0f));
 	{
 		MPFilter->SetName(L"MPFilter");
 		MPFilter->ismove = false;
@@ -164,65 +166,36 @@ void roka::SeriaGateScene::Initialize()
 		MPBase->AddChild(MPFilter);
 	}
 
-	std::shared_ptr<UI> SkillQuickWindow = object::Instantiate<UI>(Vector3(0.0f, 0.0f, 0.0f));
+	std::shared_ptr<UI> SkillQuickWindow = object::Instantiate<UI>(Vector3(-0.125f, -2.125f, -5.11f));
 	SkillQuickWindow->SetName(L"SkillWindow");
-	SkillQuickWindow->AddComponent<Collider2D>();
+	//SkillQuickWindow->AddComponent<Collider2D>();
 	hudParent->AddChild(SkillQuickWindow);
-	/*std::shared_ptr<GridGroupLayout> grid = SkillQuickWindow->AddComponent<GridGroupLayout>();
-	grid->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 2, 7);*/
-	/*grid->SetInfo(Vector2(0.1f, 0.1f), Vector2(0.25f,0.25f), 2, 7);
-	grid->SetCellSize(Vector2(0.008f, 0.008f));*/
-
-	//for (int i = 0; i < 2 * 7; i++)
-	//{
-	//	std::shared_ptr<Image> SkillQuickSlot = object::Instantiate<Image>(
-	//		Vector3(0.0f, 0.0f, -0.01f),
-	//		Vector3::Zero,
-	//		Vector3::One);
-	//		//Vector3(0.25f, 0.25f, 1.0f));
-	//	{
-	//		std::wstring name = L"SkillQuickSlot0" + i;
-	//		SkillQuickSlot->SetName(name);
-	//		SkillQuickSlot->ismove = false;
-	//		SkillQuickSlot->AddComponent<Collider2D>();
-	//		std::shared_ptr<MeshRenderer> mr = SkillQuickSlot->GetComponent<MeshRenderer>();
-	//		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-	//		mr->material->texture = hudTexture10;
-	//		std::shared_ptr<ImageComponent> imageComp = SkillQuickSlot->GetComponent<ImageComponent>();
-	//		imageComp->SetSprite(18);
-
-	//		SkillQuickWindow->AddChild(SkillQuickSlot);
-	//		break;
-	//	}
-	//}
-	/*float startx = -0.5f;
-	float starty = -2.0f;
-	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < 7; j++)
+		std::shared_ptr<GridGroupLayout> grid = SkillQuickWindow->AddComponent<GridGroupLayout>();
+		grid->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 2, 7);
+		grid->SetCellSize(Vector2(0.25f, 0.25f));
+	}
+	for (int i = 0; i < 2 * 7; i++)
+	{
+		std::shared_ptr<Image> SkillQuickSlot = object::Instantiate<Image>(
+			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3::Zero,
+			Vector3(0.25f, 0.25f, 1.0f));
 		{
-			int index = i * 8 + j;
-			float x = startx + 0.25 * j;
-			float y = starty + 0.25 * i;
-			std::shared_ptr<Image> SkillQuickSlot = object::Instantiate<Image>(
-				Vector3(x, y, -0.01f),
-				Vector3::Zero,
-				Vector3(0.25f, 0.25f, 1.0f));
-			{
-				std::wstring name = L"SkillQuickSlot01" + index;
-				SkillQuickSlot->SetName(name);
-				SkillQuickSlot->ismove = false;
+			std::wstring name = L"SkillQuickSlot0" + i;
+			SkillQuickSlot->SetName(name);
+			SkillQuickSlot->ismove = false;
+			SkillQuickSlot->AddComponent<Collider2D>();
+			std::shared_ptr<MeshRenderer> mr = SkillQuickSlot->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material->texture = hudTexture10;
+			std::shared_ptr<ImageComponent> imageComp = SkillQuickSlot->GetComponent<ImageComponent>();
+			imageComp->SetSprite(18);
 
-				std::shared_ptr<MeshRenderer> mr = SkillQuickSlot->GetComponent<MeshRenderer>();
-				mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-				mr->material->texture = hudTexture10;
-				std::shared_ptr<ImageComponent> imageComp = SkillQuickSlot->GetComponent<ImageComponent>();
-				imageComp->SetSprite(18);
-
-				hudParent->AddChild(SkillQuickSlot);
-			}
+			SkillQuickWindow->AddChild(SkillQuickSlot);
 		}
-	}*/
+	}
+
 
 	std::shared_ptr<Image> MoreSkillBtn = object::Instantiate<Image>(
 		Vector3(-0.75f, -1.75f, -0.01f),
@@ -255,41 +228,43 @@ void roka::SeriaGateScene::Initialize()
 		hudParent->AddChild(SkillChangeBtn);
 	}
 
-	/*startx = -3.25f;
-	starty = -2.0f;
-	for (int i = 0; i < 1; i++)
+	std::shared_ptr<UI> QuickItemWindow = object::Instantiate<UI>(Vector3(-2.8f, -2.45f, -5.11f));
+	QuickItemWindow->SetName(L"QuickItemWindow");
+	hudParent->AddChild(QuickItemWindow);
 	{
-		for (int j = 0; j < 6; j++)
+		std::shared_ptr<GridGroupLayout> grid = QuickItemWindow->AddComponent<GridGroupLayout>();
+		grid->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 1, 6);
+		grid->SetCellSize(Vector2(0.225f, 0.225f));
+	}
+	for (int i = 0; i < 1 * 6; i++)
+	{
+		std::shared_ptr<Image> ItemQuickSlot = object::Instantiate<Image>(
+			Vector3(0.0f, 0.0f, -0.01f),
+			Vector3::Zero,
+			Vector3(0.25f, 0.25f, 1.0f));
 		{
-			int index = i * 8 + j;
-			float x = startx + 0.225 * j;
-			float y = starty + 0.25 * i;
-			std::shared_ptr<Image> ItemSlot = object::Instantiate<Image>(
-				Vector3(x, y, 0.0f),
-				Vector3::Zero,
-				Vector3(0.25f, 0.25f, 1.0f));
-			{
-				std::wstring name = L"SkillQuickSlot" + index;
-				ItemSlot->SetName(name);
-				ItemSlot->ismove = false;
+			std::wstring name = L"ItemQuickSlot01" + i;
+			ItemQuickSlot->SetName(name);
+			ItemQuickSlot->ismove = false;
 
-				std::shared_ptr<MeshRenderer> mr = ItemSlot->GetComponent<MeshRenderer>();
-				mr->mesh = Resources::Find<Mesh>(L"RectMesh");
-				mr->material->texture = hudTexture11;
-				std::shared_ptr<ImageComponent> imageComp = ItemSlot->GetComponent<ImageComponent>();
-				imageComp->SetSprite(0);
+			std::shared_ptr<MeshRenderer> mr = ItemQuickSlot->GetComponent<MeshRenderer>();
+			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+			mr->material->texture = hudTexture11;
+			std::shared_ptr<ImageComponent> imageComp = ItemQuickSlot->GetComponent<ImageComponent>();
+			imageComp->SetSprite(0);
 
-				hudParent->AddChild(ItemSlot);
-			}
+			QuickItemWindow->AddChild(ItemQuickSlot);
 		}
-	}*/
+	}
 
-	std::shared_ptr<GameObject> hudIconParent = object::Instantiate<GameObject>(Vector3(0.3f, -0.65f, -5.0f));
+	
+	std::shared_ptr<GameObject> hudIconParent = object::Instantiate<GameObject>(Vector3(0.1f, -0.15f, -5.11f));
+	hudParent->AddChild(hudIconParent);
 	hudIconParent->layer_type = ELayerType::UI;
 	SceneManager::DontDestroy(hudIconParent);
 
 	std::shared_ptr<Image> Icon1 = object::Instantiate<Image>(
-		Vector3(2.0f, -1.18f, 0.0f),
+		Vector3(2.0f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.28f, 0.25f, 1.0f));
 	{
@@ -305,7 +280,7 @@ void roka::SeriaGateScene::Initialize()
 	}
 
 	std::shared_ptr<Image> Icon2 = object::Instantiate<Image>(
-		Vector3(2.25f, -1.18f, 0.0f),
+		Vector3(2.25f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.25f, 0.25f, 1.0f));
 	{
@@ -320,7 +295,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon2);
 	}
 	std::shared_ptr<Image> Icon3 = object::Instantiate<Image>(
-		Vector3(2.45f, -1.18f, 0.0f),
+		Vector3(2.45f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.15f, 0.25f, 1.0f));
 	{
@@ -336,7 +311,7 @@ void roka::SeriaGateScene::Initialize()
 	}
 
 	std::shared_ptr<Image> Icon4 = object::Instantiate<Image>(
-		Vector3(2.575f, -1.18f, 0.0f),
+		Vector3(2.575f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.15f, 0.25f, 1.0f));
 	{
@@ -351,7 +326,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon4);
 	}
 	std::shared_ptr<Image> Icon5 = object::Instantiate<Image>(
-		Vector3(2.7f, -1.18f, 0.0f),
+		Vector3(2.7f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.15f, 0.25f, 1.0f));
 	{
@@ -366,7 +341,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon5);
 	}
 	std::shared_ptr<Image> Icon6 = object::Instantiate<Image>(
-		Vector3(2.825f, -1.18f, 0.0f),
+		Vector3(2.825f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.15f, 0.25f, 1.0f));
 	{
@@ -381,7 +356,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon6);
 	}
 	std::shared_ptr<Image> Icon7 = object::Instantiate<Image>(
-		Vector3(2.95f, -1.18f, 0.0f),
+		Vector3(2.95f, -1.5f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.15f, 0.25f, 1.0f));
 	{
@@ -396,7 +371,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon7);
 	}
 	std::shared_ptr<Image> Icon8 = object::Instantiate<Image>(
-		Vector3(1.95f, -1.35f, 0.0f),
+		Vector3(1.95f, -1.67f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.25f, 0.15f, 1.0f));
 	{
@@ -411,7 +386,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon8);
 	}
 	std::shared_ptr<Image> Icon9 = object::Instantiate<Image>(
-		Vector3(2.6f, -1.35f, 0.0f),
+		Vector3(2.6f, -1.67f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.9f, 0.05f, 1.0f));
 	{
@@ -426,7 +401,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon9);
 	}
 	std::shared_ptr<Image> Icon10 = object::Instantiate<Image>(
-		Vector3(2.5f, -1.45f, -0.01f),
+		Vector3(2.5f, -1.77f, -0.01f),
 		Vector3::Zero,
 		Vector3(1.1f, 0.1f, 1.0f));
 	{
@@ -442,7 +417,7 @@ void roka::SeriaGateScene::Initialize()
 	}
 
 	std::shared_ptr<Image> Icon11 = object::Instantiate<Image>(
-		Vector3(2.6f, -1.35f, -0.01f),
+		Vector3(2.6f, -1.67f, -0.02f),
 		Vector3::Zero,
 		Vector3(0.8f, 0.048f, 1.0f));
 	{
@@ -457,7 +432,7 @@ void roka::SeriaGateScene::Initialize()
 		hudIconParent->AddChild(Icon11);
 	}
 	std::shared_ptr<Image> Icon12 = object::Instantiate<Image>(
-		Vector3(2.6f, -1.45f, -0.01f),
+		Vector3(2.6f, -1.77f, -0.01f),
 		Vector3::Zero,
 		Vector3(0.8f, 0.048f, 1.0f));
 	{
@@ -471,6 +446,9 @@ void roka::SeriaGateScene::Initialize()
 
 		hudIconParent->AddChild(Icon12);
 	}
+
+
+
 
 	std::shared_ptr<Image> HudBase2 = object::Instantiate<Image>(
 		Vector3(0.1f, -2.1f, -0.2f),
@@ -1581,7 +1559,7 @@ void roka::SeriaGateScene::OnEnter()
 
 		std::shared_ptr<Image> GateDown = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniObject"],
-			Vector3(3.2f, -0.75f, 0.98f),
+			Vector3(3.0f, -0.75f, 0.98f),
 			Vector3::Zero,
 			Vector3(2.5f, 2.0f, 1.0f),
 			ELayerType::BackObject);
@@ -1597,7 +1575,7 @@ void roka::SeriaGateScene::OnEnter()
 		}
 		std::shared_ptr<Image> GateDownThin = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniEftObject"],
-			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3(-5.2f, 2.0f, 0.0f),
 			Vector3::Zero,
 			Vector3(1.0f, 1.0f, 1.0f));
 		{
@@ -1618,9 +1596,10 @@ void roka::SeriaGateScene::OnEnter()
 
 		std::shared_ptr<Image> GateUp = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniObject"],
-			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3(3.0f, -0.65f, -0.01f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f));
+			Vector3(2.5f, 2.5f, 1.0f),
+			ELayerType::FrontObject);
 		{
 			GateUp->SetName(L"GateUp");
 			GateUp->ismove = false;
@@ -1631,7 +1610,6 @@ void roka::SeriaGateScene::OnEnter()
 			ani->Create(LeftGateUpTexture, L"DoorEft04", 0, 29, 0.08f);
 			ani->PlayAnimation(L"DoorEft04", true);
 			std::shared_ptr<Transform> tf = GateUp->GetComponent<Transform>();
-			GateDown->AddChild(GateUp);
 		}
 
 		std::shared_ptr<Image> GateUpThin = object::Instantiate<Image>(
@@ -1656,9 +1634,10 @@ void roka::SeriaGateScene::OnEnter()
 
 		std::shared_ptr<Image> GateMidRightEft = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniEftObject"],
-			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3(0.75f, -1.28f, 0.01f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f));
+			Vector3(1.5f, 2.0f, 1.0f),
+			ELayerType::FrontObject);
 		{
 			GateMidRightEft->SetName(L"GateMidRightEft");
 			GateMidRightEft->ismove = false;
@@ -1670,14 +1649,14 @@ void roka::SeriaGateScene::OnEnter()
 			ani->Create(MiddleGateEftTexture, L"DoorEft06", 0, 5, 0.08f);
 			ani->PlayAnimation(L"DoorEft06", true);
 			std::shared_ptr<Transform> tf = GateMidRightEft->GetComponent<Transform>();
-			MGateRight->AddChild(GateMidRightEft);
 		}
 
 		std::shared_ptr<Image> GateMidLeftEft = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniEftObject"],
-			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3(-0.68f, -1.28f, 0.01f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f));
+			Vector3(1.5f, 2.0f, 1.0f),
+			ELayerType::FrontObject);
 		{
 			GateMidLeftEft->SetName(L"GateMidLeftEft");
 			GateMidLeftEft->ismove = false;
@@ -1688,14 +1667,14 @@ void roka::SeriaGateScene::OnEnter()
 			ani->Create(MiddleGateEftTexture, L"DoorEft06", 0, 5, 0.08f);
 			ani->PlayAnimation(L"DoorEft06", true);
 			std::shared_ptr<Transform> tf = GateMidLeftEft->GetComponent<Transform>();
-			MGateLeft->AddChild(GateMidLeftEft);
 		}
 
 		std::shared_ptr<Image> GateMidRightGlowEft = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniEftObject"],
-			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3(0.75f, -1.28f, 0.01f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f));
+			Vector3(1.5f, 2.0f, 1.0f),
+			ELayerType::FrontObject);
 		{
 			GateMidRightGlowEft->SetName(L"GateMidRightGlowEft");
 			GateMidRightGlowEft->ismove = false;
@@ -1707,14 +1686,14 @@ void roka::SeriaGateScene::OnEnter()
 			ani->Create(MiddleGateGlowEftTexture, L"DoorEft07", 0, 24, 0.08f);
 			ani->PlayAnimation(L"DoorEft07", true);
 			std::shared_ptr<Transform> tf = GateMidRightGlowEft->GetComponent<Transform>();
-			MGateRight->AddChild(GateMidRightGlowEft);
 		}
 
 		std::shared_ptr<Image> GateMidLeftGlowEft = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniEftObject"],
-			Vector3(0.0f, 0.0f, 0.0f),
+			Vector3(-0.68f, -1.28f, 0.01f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f));
+			Vector3(1.5f, 2.0f, 1.0f),
+			ELayerType::FrontObject);
 		{
 			GateMidLeftGlowEft->SetName(L"GateMidLeftGlowEft");
 			GateMidLeftGlowEft->ismove = false;
@@ -1726,7 +1705,6 @@ void roka::SeriaGateScene::OnEnter()
 			ani->Create(MiddleGateGlowEftTexture, L"DoorEft07", 0, 24, 0.08f);
 			ani->PlayAnimation(L"DoorEft07", true);
 			std::shared_ptr<Transform> tf = GateMidLeftGlowEft->GetComponent<Transform>();
-			MGateLeft->AddChild(GateMidLeftGlowEft);
 		}
 #pragma endregion
 
@@ -1797,9 +1775,9 @@ void roka::SeriaGateScene::OnEnter()
 		}
 		std::shared_ptr<Image> EnchantBookEft = object::Instantiate<Image>(
 			prefab::Prefabs[L"AniEftObject"],
-			Vector3(-0.001f, 0.0f, 0.0f),
+			Vector3(-0.9f, -0.6f, -0.98f),
 			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f));
+			Vector3(2.5f, 2.5f, 1.0f));
 		{
 			EnchantBookEft->SetName(L"EnchantBookEft");
 			EnchantBookEft->ismove = false;
@@ -1833,7 +1811,7 @@ void roka::SeriaGateScene::OnEnter()
 		}
 #pragma endregion
 	}
-	
+
 	//test
 
 	/*GameObject* player1 = new GameObject();
