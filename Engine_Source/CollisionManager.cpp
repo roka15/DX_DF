@@ -85,7 +85,7 @@ namespace roka
 			{
 				if (leftObj == rightObj)
 					continue;
-			
+
 				FindCollider(rightObj, rightCols);
 				if (rightCols.size() == 0)
 					continue;
@@ -152,7 +152,7 @@ namespace roka
 				if (mbBreak)
 					return;
 			}
-				itr->second = true;
+			itr->second = true;
 		}
 		else
 		{
@@ -182,56 +182,83 @@ namespace roka
 			Vector3{0.5f,-0.5f,0.0f},
 			Vector3{-0.5f,-0.5f,0.0f}
 		};
+		Vector3 Axis[4] = {};
 
 		std::shared_ptr<Transform> leftTf = left->owner->GetComponent<Transform>();
 		std::shared_ptr<Transform> rightTf = right->owner->GetComponent<Transform>();
 
-		Matrix scale = Matrix::CreateScale(leftTf->scale);
+		Matrix scale = Matrix::CreateScale(leftTf->GetLocalScale() * left->size);
 		Matrix rotation = Matrix::CreateRotationX(leftTf->rotation.x);
 		rotation *= Matrix::CreateRotationY(leftTf->rotation.y);
 		rotation *= Matrix::CreateRotationZ(left->GetRotation() + leftTf->rotation.z);
-		Matrix position;
-		position.Translation(leftTf->position);
+		Matrix position = Matrix::CreateTranslation(leftTf->GetLocalPosition() + left->center);
+		Matrix parentMat = {};
 		Matrix leftMat = scale * rotation * position;
-
-		scale = Matrix::CreateScale(rightTf->scale);
+		if (left->owner->parent != nullptr)
+		{
+			parentMat = left->owner->parent->GetComponent<Transform>()->GetMatrix();
+			leftMat *= parentMat;
+		}
+		scale = Matrix::CreateScale(rightTf->GetLocalScale() * right->size);
 		rotation = Matrix::CreateRotationX(rightTf->rotation.x);
 		rotation *= Matrix::CreateRotationY(rightTf->rotation.y);
 		rotation *= Matrix::CreateRotationZ(right->GetRotation() + rightTf->rotation.z);
-		position.Translation(rightTf->position);
+		position = Matrix::CreateTranslation(rightTf->GetLocalPosition() + right->center);
+		
 		Matrix rightMat = scale * rotation * position;
-
-		Vector3 Axis[4] = {};
-
-		Vector3 leftScale = Vector3(left->size.x, left->size.y, 1.0f);
-		Vector3 leftOffset = Vector3(left->center.x * leftTf->scale.x, left->center.y* leftTf->scale.y, 0.0f);
-		Matrix finalLeft = Matrix::CreateScale(leftScale);
-		if (leftTf->rotation.z != 0.0f)
+		if (right->owner->parent != nullptr)
 		{
-			Vector3 tempOffset = leftOffset;
-			tempOffset.x = (leftOffset.x * cos(leftTf->rotation.z)) - (leftOffset.y * sin(leftTf->rotation.z));
-			tempOffset.y = (leftOffset.x * sin(leftTf->rotation.z)) + (leftOffset.y * cos(leftTf->rotation.z));
-			leftOffset = tempOffset;
+			parentMat = right->owner->parent->GetComponent<Transform>()->GetMatrix();
+			rightMat *= parentMat;
 		}
-		/*	leftTranslate += leftOffset;
-			leftMat = Matrix::CreateTranslation(leftTranslate);*/
-		finalLeft *= leftMat;
+	
 
-		Vector3 rightScale = Vector3(right->size.x, right->size.y, 1.0f);
-		Vector3 rightOffset = Vector3(right->center.x*rightTf->scale.x, right->center.y*rightTf->scale.y, 0.0f);
-		Matrix finalRight = Matrix::CreateScale(rightScale);
-		if (rightTf->rotation.z != 0.0f)
-		{
-			Vector3 tempOffset = rightOffset;
-			tempOffset.x = (rightOffset.x * cos(rightTf->rotation.z)) - (rightOffset.y * sin(rightTf->rotation.z));
-			tempOffset.y = (rightOffset.x * sin(rightTf->rotation.z)) + (rightOffset.y * cos(rightTf->rotation.z));
-			rightOffset = tempOffset;
-		}
-		/*rightTranslate += rightOffset;
-		rightMat = Matrix::CreateTranslation(rightTranslate);*/
-		finalRight *= rightMat;
+		//Matrix scale = Matrix::CreateScale(leftTf->scale);
+		//Matrix rotation = Matrix::CreateRotationX(leftTf->rotation.x);
+		//rotation *= Matrix::CreateRotationY(leftTf->rotation.y);
+		//rotation *= Matrix::CreateRotationZ(left->GetRotation() + leftTf->rotation.z);
+		//Matrix position;
+		//position.Translation(leftTf->position);
+		//Matrix leftMat = scale * rotation * position;
 
-		Axis[0] = Vector3::Transform(LocalPos[1], finalLeft);
+		//scale = Matrix::CreateScale(rightTf->scale);
+		//rotation = Matrix::CreateRotationX(rightTf->rotation.x);
+		//rotation *= Matrix::CreateRotationY(rightTf->rotation.y);
+		//rotation *= Matrix::CreateRotationZ(right->GetRotation() + rightTf->rotation.z);
+		//position.Translation(rightTf->position);
+		//Matrix rightMat = scale * rotation * position;
+
+		
+
+		//Vector3 leftScale = Vector3(left->size.x, left->size.y, 1.0f);
+		//Vector3 leftOffset = Vector3(left->center.x * leftTf->scale.x, left->center.y * leftTf->scale.y, 0.0f);
+		//Matrix finalLeft = Matrix::CreateScale(leftScale);
+		//if (leftTf->rotation.z != 0.0f)
+		//{
+		//	Vector3 tempOffset = leftOffset;
+		//	tempOffset.x = (leftOffset.x * cos(leftTf->rotation.z)) - (leftOffset.y * sin(leftTf->rotation.z));
+		//	tempOffset.y = (leftOffset.x * sin(leftTf->rotation.z)) + (leftOffset.y * cos(leftTf->rotation.z));
+		//	leftOffset = tempOffset;
+		//}
+		///*	leftTranslate += leftOffset;
+		//	leftMat = Matrix::CreateTranslation(leftTranslate);*/
+		//finalLeft *= leftMat;
+
+		//Vector3 rightScale = Vector3(right->size.x, right->size.y, 1.0f);
+		//Vector3 rightOffset = Vector3(right->center.x * rightTf->scale.x, right->center.y * rightTf->scale.y, 0.0f);
+		//Matrix finalRight = Matrix::CreateScale(rightScale);
+		//if (rightTf->rotation.z != 0.0f)
+		//{
+		//	Vector3 tempOffset = rightOffset;
+		//	tempOffset.x = (rightOffset.x * cos(rightTf->rotation.z)) - (rightOffset.y * sin(rightTf->rotation.z));
+		//	tempOffset.y = (rightOffset.x * sin(rightTf->rotation.z)) + (rightOffset.y * cos(rightTf->rotation.z));
+		//	rightOffset = tempOffset;
+		//}
+		///*rightTranslate += rightOffset;
+		//rightMat = Matrix::CreateTranslation(rightTranslate);*/
+		//finalRight *= rightMat;
+
+	/*	Axis[0] = Vector3::Transform(LocalPos[1], finalLeft);
 		Axis[1] = Vector3::Transform(LocalPos[3], finalLeft);
 		Axis[2] = Vector3::Transform(LocalPos[1], finalRight);
 		Axis[3] = Vector3::Transform(LocalPos[3], finalRight);
@@ -239,15 +266,18 @@ namespace roka
 		Axis[0] -= Vector3::Transform(LocalPos[0], finalLeft);
 		Axis[1] -= Vector3::Transform(LocalPos[0], finalLeft);
 		Axis[2] -= Vector3::Transform(LocalPos[0], finalRight);
-		Axis[3] -= Vector3::Transform(LocalPos[0], finalRight);
+		Axis[3] -= Vector3::Transform(LocalPos[0], finalRight);*/
 
-		for (size_t i = 0; i < 4; i++)
+		/*for (size_t i = 0; i < 4; i++)
 		{
 			Axis[i].z = 0.0f;
 		}
 
 		Vector3 leftpos = {};
 		Vector3 rightpos = {};
+		if (leftTf->owner->GetName().compare(L"LayserObject") == 0
+			|| rightTf->owner->GetName().compare(L"LayserObject") == 0)
+			int a = 0;
 		leftpos = leftTf->position + leftOffset;
 		rightpos = rightTf->position + rightOffset;
 		Vector3 vc = leftpos - rightpos;
@@ -265,7 +295,40 @@ namespace roka
 			float temp = centerDir.Dot(vA);
 			if (projDistance < fabsf(centerDir.Dot(vA)))
 				return false;
+		}*/
+
+		Axis[0] = Vector3::Transform(LocalPos[1], leftMat);
+		Axis[1] = Vector3::Transform(LocalPos[3], leftMat);
+		Axis[2] = Vector3::Transform(LocalPos[1], rightMat);
+		Axis[3] = Vector3::Transform(LocalPos[3], rightMat);
+
+		Axis[0] -= Vector3::Transform(LocalPos[0], leftMat);
+		Axis[1] -= Vector3::Transform(LocalPos[0], leftMat);
+		Axis[2] -= Vector3::Transform(LocalPos[0], rightMat);
+		Axis[3] -= Vector3::Transform(LocalPos[0], rightMat);
+
+		for (size_t i = 0; i < 4; i++)
+		{
+			Axis[i].z = 0.0f;
 		}
+		Vector3 leftpos = {leftMat._41,leftMat._42,leftMat._43};
+		Vector3 rightpos = { rightMat._41,rightMat._42,rightMat._43 };
+		Vector3 vc = leftpos - rightpos;
+		vc.z = 0.0f;
+		Vector3 centerDir = vc;
+		for (size_t i = 0; i < 4; i++)
+		{
+			Vector3 vA = Axis[i];
+			float projDistance = 0.0f;
+			for (size_t j = 0; j < 4; j++)
+			{
+				projDistance += fabsf(Axis[j].Dot(vA) / 2.0f);
+			}
+			float temp = centerDir.Dot(vA);
+			if (projDistance < fabsf(centerDir.Dot(vA)))
+				return false;
+		}
+		
 		return true;
 	}
 	std::vector<std::shared_ptr<GameObject>> CollisionManager::GetCollisionObjects(std::shared_ptr<GameObject>& obj)
@@ -361,7 +424,7 @@ namespace roka
 	void CollisionManager::FindCollider(std::shared_ptr<GameObject> obj, std::vector<std::shared_ptr<Collider2D>>& cols)
 	{
 		std::shared_ptr<Collider2D> col = obj->GetComponent<Collider2D>();
-		if (col != nullptr &&col->is_active == true)
+		if (col != nullptr && col->is_active == true)
 			cols.push_back(col);
 
 		int cnt = obj->GetChildCont();

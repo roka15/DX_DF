@@ -125,6 +125,8 @@ namespace gui
 		std::shared_ptr<roka::Transform> tf = debugObj->GetComponent<roka::Transform>();
 		Vector3 pos = mesh.position;
 		pos.z = -1.00f;
+		if (mesh.parent!=nullptr &&mesh.parent->GetName().compare(L"Monster0") == 0)
+			int a = 0;
 		debugObj->SetParent(mesh.parent);
 		tf->SetPosition(pos);
 		tf->SetScale(mesh.scale);

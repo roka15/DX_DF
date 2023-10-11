@@ -47,7 +47,6 @@ namespace roka
 		std::shared_ptr<ScrollView> scrollTest = object::Instantiate<ScrollView>();
 	    std::shared_ptr<Texture> texture = inven_npk->CreateAtlas(L"inventory.img", 49, 50, L"InvenSlot");
 		std::shared_ptr<ScrollRect> rect = scrollTest->GetComponent<ScrollRect>();
-		
 		{
 			std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
 			testimg->SetName(L"TestImage");

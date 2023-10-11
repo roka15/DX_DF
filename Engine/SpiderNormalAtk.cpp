@@ -83,25 +83,25 @@ namespace roka
 		Vector3 scale = spiderTf->scale;
 
 		std::shared_ptr<Transform> transform = collider->owner->GetComponent<Transform>();
-		transform->scale = Vector3(5.0f, 0.5f, 1.0f);
+		transform->scale = Vector3(4.0f, 0.5f, 1.0f);
 
 		Vector2 colCenter = collider->center;
 
 		switch (dir)
 		{
 		case EDir4Type::LEFT:
-			transform->position = -pos+Vector3(-2.25f, 0.025f, 1.0f);
-			colCenter.x = -1.5f;
+			transform->position = -pos +Vector3(-2.0f, 0.025f, 1.0f);
+			colCenter.x = -2.0f;
 			break;
 		case EDir4Type::RIGHT:
-			transform->position = -pos+Vector3(2.25f, 0.025f, 1.0f);
-			colCenter.x = 1.5f;
+			transform->position = -pos+Vector3(2.0f, 0.025f, 1.0f);
+			colCenter.x = 0.1f;
 			break;
 		}
 
 		colCenter.y = 0.0f;
-		collider->center = Vector2::Zero; colCenter;
-		collider->size = Vector2(1.5f, 0.05f);
+		collider->center = colCenter;
+		collider->size = Vector2(1.0f, 0.1f);
 	}
 
 	void SpiderNormalAtk::DeSpawnCollider(std::shared_ptr<GameObject> caster)

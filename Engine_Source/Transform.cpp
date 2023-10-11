@@ -55,6 +55,7 @@ namespace roka
 	void Transform::Initialize()
 	{
 		Component::Initialize();
+		LateUpdate();
 	}
 	void Transform::Update()
 	{
@@ -107,7 +108,6 @@ namespace roka
 			mPosition.x = mPivotOriginPos.x + result_diff.x;
 			mPosition.y = mPivotOriginPos.y + result_diff.y;
 		}
-		Vector3 worldScale = GetScale();
 		Matrix scale;
 
 		scale = Matrix::CreateScale(mScale);
@@ -125,16 +125,22 @@ namespace roka
 		std::shared_ptr<GameObject> parent = owner->parent;
 		if (parent)
 		{
-			if (owner->GetName().compare(L"WeaponSubPart") == 0)
+			if (mPosition.x == 1.0f && mPosition.y == 0.025f)
 				int a = 0;
 			std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
 			mWorld *= tf->mWorld;
+			if (owner->GetName().compare(L"Eft01") == 0)
+				int a = 0;
 			//mWorld = mWorld*tf->mWorld.Invert();
 		}
+		mWorldPosition = Vector3(mWorld._41, mWorld._42, mWorld._43);
+		mWorldScale = Vector3(mWorld._11, mWorld._22, mWorld._33);
 
 		mUp = Vector3::TransformNormal(Vector3::Up, rotation);
 		mRight = Vector3::TransformNormal(Vector3::Right, rotation);
 		mForward = Vector3::TransformNormal(Vector3::Forward, rotation);
+
+
 	}
 	void Transform::Render()
 	{
@@ -177,9 +183,13 @@ namespace roka
 		cb->SetData(&trCB);
 		cb->Bind(EShaderStage::VS);
 	}
+	void Transform::SetWorldPosition(Vector3 world)
+	{
+	
+	}
 	Vector3 Transform::GetPosition()
 	{
-		std::shared_ptr<GameObject> parent = owner->parent;
+		/*std::shared_ptr<GameObject> parent = owner->parent;
 		if (parent != nullptr)
 		{
 			Vector3 value = parent->GetComponent<Transform>()->position;
@@ -189,7 +199,31 @@ namespace roka
 		else
 		{
 			return mPosition;
+		}*/
+		//LateUpdate();
+		Matrix scale = Matrix::CreateScale(mScale);
+		Matrix rotation = Matrix::CreateRotationX(mRotation.x);
+		rotation *= Matrix::CreateRotationY(mRotation.y);
+		rotation *= Matrix::CreateRotationZ(mRotation.z);
+		Matrix position;
+
+		position.Translation(mPosition);
+
+		mWorld = scale * rotation * position;
+
+		std::shared_ptr<GameObject> parent = owner->parent;
+		if (parent)
+		{
+			if (mPosition.x == 1.0f && mPosition.y == 0.025f)
+				int a = 0;
+			std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
+			mWorld *= tf->mWorld;
+			if (owner->GetName().compare(L"Eft01") == 0)
+				int a = 0;
+			//mWorld = mWorld*tf->mWorld.Invert();
 		}
+		
+		return Vector3(mWorld._41,mWorld._42,mWorld._43);
 	}
 	Vector3 Transform::GetRotation()
 	{
@@ -207,17 +241,40 @@ namespace roka
 	}
 	Vector3 Transform::GetScale()
 	{
+			/*std::shared_ptr<GameObject> parent = owner->parent;
+			if (parent != nullptr)
+			{
+				Vector3 value = parent->GetComponent<Transform>()->scale;
+				value *= mScale;
+				return value;
+			}
+			else
+			{
+				return mScale;
+			}*/
+		//LateUpdate();
+		Matrix scale = Matrix::CreateScale(mScale);
+		Matrix rotation = Matrix::CreateRotationX(mRotation.x);
+		rotation *= Matrix::CreateRotationY(mRotation.y);
+		rotation *= Matrix::CreateRotationZ(mRotation.z);
+		Matrix position;
+
+		position.Translation(mPosition);
+
+		mWorld = scale * rotation * position;
+
 		std::shared_ptr<GameObject> parent = owner->parent;
-		if (parent != nullptr)
+		if (parent)
 		{
-			Vector3 value = parent->GetComponent<Transform>()->scale;
-			value *= mScale;
-			return value;
+			if (mPosition.x == 1.0f && mPosition.y == 0.025f)
+				int a = 0;
+			std::shared_ptr<Transform> tf = parent->GetComponent<Transform>();
+			mWorld *= tf->mWorld;
+			if (owner->GetName().compare(L"Eft01") == 0)
+				int a = 0;
+			//mWorld = mWorld*tf->mWorld.Invert();
 		}
-		else
-		{
-			return mScale;
-		}
+		return Vector3(mWorld._11,mWorld._22,mWorld._33);
 	}
 	float Transform::GetWorldZ()
 	{
@@ -233,5 +290,5 @@ namespace roka
 	{
 		mbPivot = false;
 	}
-	
+
 }

@@ -48,11 +48,13 @@ namespace roka::manager
 
 		std::shared_ptr<GameObject> copy = std::make_shared<GameObject>(*(mPartInfos[type][name].get()));
 		std::shared_ptr<Animator> ani = copy->GetComponent<Animator>();
+		std::shared_ptr<Transform> tf = copy->GetComponent<Transform>();
+		tf->scale = Vector3(3.0f, 3.0f, 1.0f);
 		ani->SetAnimationOwner();
 		switch (type)
 		{
 		case EAvatarParts::Weapon:
-			copy->GetComponent<WeaponPartScript>()->CreateSubObject();
+			//copy->GetComponent<WeaponPartScript>()->CreateSubObject();
 			break;
 		}
 		return copy;

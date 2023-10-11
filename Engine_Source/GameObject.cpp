@@ -200,6 +200,19 @@ void roka::GameObject::InsertChild(std::shared_ptr<GameObject> child, int index)
 		mChild.insert(itr, child);
 	}
 	child->parent = GetSharedPtr();
+
+	std::shared_ptr<Transform> tf = child->GetComponent<Transform>();
+	std::shared_ptr<Transform> parentTf = GetComponent<Transform>();
+	Vector3 pScale = parentTf->GetScale();
+	Vector3 pPos = parentTf->GetPosition();
+
+	Vector3 cScale = tf->GetLocalScale();
+	cScale = cScale / pScale;
+	Vector3 cPos = tf->GetLocalPosition();
+
+	cPos = cPos + pPos;
+	tf->SetScale(cScale);
+	tf->SetPosition(cPos);
 }
 
 

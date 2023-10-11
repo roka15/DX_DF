@@ -37,6 +37,7 @@ namespace roka
 		
 	private:
 		std::shared_ptr<GameObject> mWarningObj;
+		bool mSpawnflag;
 	};
 }
 

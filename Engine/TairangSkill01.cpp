@@ -24,6 +24,7 @@ namespace roka
 		std::shared_ptr<Animator> ani = caster->GetComponent<Animator>();
 		std::shared_ptr<Animation> animation = ani->FindAnimation(L"Skill01_Start");
 
+		mSpawnflag = false;
 		ani->PlayAnimation(L"Skill01_Start", false);
 		ani->SetFrameEventListener(this);
 		monster->DisableNextState();
@@ -38,10 +39,10 @@ namespace roka
 		std::shared_ptr<Transform> tirangtf = caster->GetComponent<Transform>();
 		Vector3 tirangPos = tirangtf->position;
 		Vector3 tirangScale = tirangtf->scale;
-		
+		if (mSpawnflag == true)
+			return;
 		if (key.compare(L"Effect1") == 0)
 		{
-
 			std::shared_ptr<GameObject> Eft01 = pool->Spawn(L"AniEftObject");
 			{
 				std::shared_ptr<Transform> tf = Eft01->GetComponent<Transform>();
@@ -150,6 +151,7 @@ namespace roka
 			caster->AddChild(Eft06);
 			caster->AddChild(Eft07);
 			caster->AddChild(Eft08);
+			
 		}
 		else if (key.compare(L"Effect2") == 0)
 		{
@@ -163,7 +165,7 @@ namespace roka
 			
 				tf->scale = tirangScale;
 				tf->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90));
-				tf->position = -tirangPos + Vector3(-0.2f, 0.3f, 0.01f);
+				tf->position = -tirangPos +Vector3(-0.2f, 0.2f, 0.01f);
 
 				MeshRenderer* meshRenderer = Eft01->GetComponent<MeshRenderer>().get();
 				ani->CompleteEvent(L"tairang_skill1line") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
@@ -176,7 +178,10 @@ namespace roka
 
 				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
 				tf->scale = tirangScale;
-				tf->position = -tirangPos + Vector3(0.05f, 0.2f, 0.01f);
+				tf->position = -tirangPos +Vector3(0.05f, 0.2f, 0.01f);
+
+				MeshRenderer* meshRenderer = Eft02->GetComponent<MeshRenderer>().get();
+				ani->CompleteEvent(L"tairang_skill1booster") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 			}
 			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniEftObject");
 			{
@@ -185,21 +190,19 @@ namespace roka
 
 				std::shared_ptr<Transform> tf = Eft03->GetComponent<Transform>();
 				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
-				tf->position = -tirangPos + Vector3(0.0f, 0.08f, 0.01f);
-			}
+				tf->position = -tirangPos;// +Vector3(0.0f, 0.4f, 0.01f);
+			}/**/
 
-			Eft01->SetName(L"Eft01");
-			Eft02->SetName(L"Eft02");
-			Eft03->SetName(L"Eft03");
+			Eft01->SetName(L"Eft09");
+			Eft02->SetName(L"Eft10");
+			Eft03->SetName(L"Eft11");/**/
 			caster->AddChild(Eft01);
 			caster->AddChild(Eft02);
-			caster->AddChild(Eft03);
+			caster->AddChild(Eft03);/**/
 		}
 		else if (key.compare(L"Effect2_2") == 0)
 		{
-			caster->GetChild(L"Eft01")->GetComponent<MeshRenderer>()->is_active = false;
-			caster->GetChild(L"Eft02")->GetComponent<MeshRenderer>()->is_active = false;
-			caster->GetChild(L"Eft03")->GetComponent<Animator>()->PlayAnimation(L"tairang_skill1abyss_explosion", false);
+			caster->GetChild(L"Eft11")->GetComponent<Animator>()->PlayAnimation(L"tairang_skill1abyss_explosion", false);
 		}
 		else if (key.compare(L"Effect3") == 0)
 		{
@@ -209,11 +212,12 @@ namespace roka
 				ani->Create(L"tairnag_eft", L"lightning01a.img", L"tairang_skill1lightning", 0, 9, 0.08);
 				ani->PlayAnimation(L"tairang_skill1lightning", false);
 				MeshRenderer* meshRenderer = Eft01->GetComponent<MeshRenderer>().get();
+				meshRenderer->is_active = true;
 				ani->CompleteEvent(L"tairang_skill1lightning") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 
 				std::shared_ptr<Transform> tf = Eft01->GetComponent<Transform>();
 				tf->scale = Vector3(1.0f, tirangScale.y, 1.0f);
-				tf->position = -tirangPos +Vector3(0.0f, +0.15f, 0.0f);
+				tf->position = -tirangPos;//+Vector3(0.0f, -0.05f, 0.0f);
 			}
 			std::shared_ptr<GameObject> Eft02 = pool->Spawn(L"AniObject");
 			{
@@ -225,7 +229,7 @@ namespace roka
 
 				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
 				tf->scale = Vector3(tirangScale.x* 0.8f, tirangScale.y*0.25f, 1.0f);
-				tf->position = -tirangPos + Vector3(0.0f, -0.2f, 0.0f);
+				tf->position = -tirangPos +Vector3(0.0f, -0.2f, 0.0f);
 			}
 			std::shared_ptr<GameObject> Eft03 = pool->Spawn(L"AniObject");
 			{
@@ -252,16 +256,18 @@ namespace roka
 				tf->position = -tirangPos+ Vector3(-0.05f, -0.05f, 0.0f);
 			}
 
-			Eft01->SetName(L"Eft01");
-			Eft02->SetName(L"Eft02");
-			Eft03->SetName(L"Eft03");
-			Eft04->SetName(L"Eft04");
+			Eft01->SetName(L"Eft12");
+			Eft02->SetName(L"Eft13");
+			Eft03->SetName(L"Eft14");
+			Eft04->SetName(L"Eft15");
 
 			caster->AddChild(Eft01);
 			caster->AddChild(Eft02);
 			caster->AddChild(Eft03);
 			caster->AddChild(Eft04);
 		}
+
+		mSpawnflag = true;
 	}
 
 	void TairangSkill01::DeSpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)
@@ -279,17 +285,18 @@ namespace roka
 		}
 		else if (key.compare(L"Effect02") == 0)
 		{
-			caster->SetChildState(GameObject::EState::Dead, L"Eft01");
-			caster->SetChildState(GameObject::EState::Dead, L"Eft02");
-			caster->SetChildState(GameObject::EState::Dead, L"Eft03");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft09");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft10");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft11");
 		}
 		else if (key.compare(L"Effect03") == 0)
 		{
-			caster->SetChildState(GameObject::EState::Dead, L"Eft01");
-			caster->SetChildState(GameObject::EState::Dead, L"Eft02");
-			caster->SetChildState(GameObject::EState::Dead, L"Eft03");
-			caster->SetChildState(GameObject::EState::Dead, L"Eft04");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft12");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft13");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft14");
+			caster->SetChildState(GameObject::EState::Dead, L"Eft15");
 		}
+		mSpawnflag = false;
 	}
 
 	void TairangSkill01::SpawnCollider(std::shared_ptr<GameObject> caster)
@@ -382,6 +389,7 @@ namespace roka
 		}
 		else if (frameEvent.compare(L"NextMotion02") == 0)
 		{
+			DeSpawnEffect(caster,L"Effect2Disable");
 			SpawnEffect(caster, L"Effect2_2");
 			caster->GetComponent<MeshRenderer>()->is_active = false;
 			Time::CallBackTimerInfo callBack = {};
@@ -434,7 +442,7 @@ namespace roka
 		std::shared_ptr<WarningScript> wr = mWarningObj->GetComponent<WarningScript>();
 		wr->SetTarget(nullptr);
 		std::shared_ptr<Transform> tf = caster->GetComponent<Transform>();
-		tf->position = mWarningObj->GetComponent<WarningScript>()->GetPos();
+		tf->position = (mWarningObj->GetComponent<WarningScript>()->GetPos());
 
 		std::shared_ptr<Animator> ani = caster->GetComponent<Animator>();
 		ani->PlayAnimation(L"Skill01_End");

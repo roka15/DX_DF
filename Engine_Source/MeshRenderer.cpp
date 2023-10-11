@@ -54,6 +54,11 @@ namespace roka
 		GameObject* Owner = GetOwner();
 		if (is_active == false)
 			return;
+
+		if (owner->GetName().compare(L"Eft09") == 0)
+			int a = 0;
+		if (owner->GetName().compare(L"BackGround") == 0)
+			int a = 0;
 		std::shared_ptr<ImageComponent> imageComp = owner->GetComponent<ImageComponent>();
 		std::shared_ptr<Animator> animator = owner->GetComponent<Animator>();
 		UI* ui;

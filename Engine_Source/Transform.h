@@ -19,7 +19,7 @@ namespace roka
 
 		void BindConstantBuffer();
 
-		void SetPosition(Vector3 position) {mPosition = position; }
+		void SetPosition(Vector3 position) {mPosition =  position; }
 		void SetRotation(Vector3 rotation) { mRotation = rotation; }
 		void SetScale(Vector3 scale) { mScale = scale; }
 
@@ -28,6 +28,7 @@ namespace roka
 		void SetScale(float x, float y, float z) { mScale = Vector3(x, y, z); }
 
 		void SetPosition(Vector2 position) { mPosition.x = position.x; mPosition.y = position.y; }
+		void SetWorldPosition(Vector3 world);
 
 		Vector3 GetLocalPosition() { return mPosition; }
 		Vector3 GetLocalScale() { return mScale; }
@@ -63,6 +64,10 @@ namespace roka
 		Vector3 mPosition;
 		Vector3 mRotation;
 		Vector3 mScale;
+
+		Vector3 mWorldPosition;
+		Vector3 mWorldRotation;
+		Vector3 mWorldScale;
 
 		Vector3 mUp;
 		Vector3 mForward;

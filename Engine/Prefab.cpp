@@ -263,9 +263,10 @@ namespace roka::prefab
 
 
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
+			TopColObject->GetComponent<Transform>()->scale = Vector3(2.0f, 2.0f, 1.0f);
 			Spider_MonsterObject->AddChild(TopColObject);
 			std::shared_ptr<Collider2D> col = TopColObject->AddComponent<Collider2D>();
-			col->SetSize(Vector2(0.5f, 0.5f));
+			col->SetSize(Vector2(0.25f, 0.25f));
 			//col->SetCenter(Vector2(-0.0f, -0.1f));
 			//col->SetSize(Vector2(0.13f, 0.08f));
 			col->SetCenter(Vector2(-0.05f, 0.1f));
@@ -278,9 +279,10 @@ namespace roka::prefab
 			hitbox->hitbox_owner = Spider_MonsterObject;*/
 
 			std::shared_ptr<GameObject> BottomColObject = object::Instantiate<GameObject>();
+			BottomColObject->GetComponent<Transform>()->scale = Vector3(2.0f, 2.0f, 1.0f);
 			Spider_MonsterObject->AddChild(BottomColObject);
 			col = BottomColObject->AddComponent<Collider2D>();
-			col->SetSize(Vector2(0.5f, 0.5f));
+			col->SetSize(Vector2(0.25f, 0.25f));
 			col->SetCenter(Vector2(-0.05f, -0.1f));
 			col->SetHitType(EHitBoxType::Bottom);
 			/*hitbox = BottomColObject->AddScript<HitBoxScript>();

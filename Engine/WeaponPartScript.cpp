@@ -162,7 +162,8 @@ namespace roka
 
 		std::shared_ptr<Texture> texture1 = weapon_npk->CreateAtlas(pack, 109, 136, L"mg_broom7200c_02");
 		sub_ani->Create(texture1, L"NormalAtk", 0, 19, 0.05f);
-
+		std::shared_ptr<Transform> tf = subObject->GetComponent<Transform>();
+		tf->scale = Vector3(3.0f, 3.0f, 1.0f);
 		owner->AddChild(subObject);
 		mSubObject = sub_ani;
 	}

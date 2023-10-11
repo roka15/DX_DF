@@ -12,7 +12,7 @@
 #include "MeshRenderer.h"
 #include "PlayerScript.h"
 #include "PartScript.h"
-
+#include "WeaponPartScript.h"
 
 
 namespace roka
@@ -51,6 +51,18 @@ namespace roka
 		std::shared_ptr<GameObject> part = manager::PartManager::GetInstance()->Find(type, name);
 		if (part == nullptr)
 			return;
+
+		std::shared_ptr<GameObject> obj = mParts[type].lock();
+		if (obj != nullptr)
+		{
+			owner->SwapRemoveChild(obj, part);
+		}
+		else
+		{
+			owner->InsertChild(part, (UINT)type - 1);
+		}
+		RegisterPart(type, part);
+
 		std::shared_ptr<PartScript>partScript = part->GetComponent<PartScript>();
 		partScript->SetEvent();
 
@@ -61,19 +73,11 @@ namespace roka
 			break;
 		case EAvatarParts::Weapon:
 			part->SetName(L"WeaponPart");
+			part->GetComponent<WeaponPartScript>()->CreateSubObject();
 			break;
 		}
 		
-		std::shared_ptr<GameObject> obj = mParts[type].lock();
-		if (obj != nullptr)
-		{
-			owner->SwapRemoveChild(obj, part);
-		}
-		else
-		{
-			owner->InsertChild(part,(UINT)type -1);
-		}
-		RegisterPart(type, part);
+	
 	}
 	void AvatarScript::CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name, std::wstring set_name, UINT start, UINT end, float duration)
 	{

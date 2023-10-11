@@ -86,6 +86,8 @@ namespace roka
 			return;
 		if (mbRender == false)
 			return;
+		if (owner->GetName().compare(L"LayserObject") == 0)
+			int a = 0;
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 
 		Vector3 scale = tf->GetLocalScale();

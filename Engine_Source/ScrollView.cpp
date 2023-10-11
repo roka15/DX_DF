@@ -28,6 +28,10 @@ namespace roka
 		std::shared_ptr<ScrollRect> scroll;
 	
 		SetName(L"ScrollView");
+
+		std::shared_ptr<Transform> tf = GetComponent<Transform>();
+		tf->position = Vector3(0.0f, 0.0f, -1.0f);
+
 		if (GetChildCont() == 0)
 		{
 			viewport = object::Instantiate<UI>();
