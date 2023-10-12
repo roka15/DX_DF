@@ -334,6 +334,7 @@ namespace roka::prefab
 			PlayerObject->AddChild(BottomColObject);
 			
 			col = BottomColObject->AddComponent<Collider2D>();
+			BottomColObject->SetName(L"PlayerBottomCol");
 			col->SetSize(Vector2(0.05f, 0.05f));
 			col->SetCenter(Vector2(-0.0f, -0.2f));
 			col->SetHitType(EHitBoxType::Bottom);

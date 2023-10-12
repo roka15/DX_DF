@@ -42,9 +42,7 @@ float4 main(VSOut In) : SV_TARGET
 	if (Gaugetype == 1)
 	{
 		float damage = Gaugeratio;
-
-		if (damage < 0.0)
-			damage *= -1;
+		damage *= -1;
 
 		// 데미지 * 0.65 / 100 하기.
 		float result = saturate(damage * 0.65 / maxGauge);

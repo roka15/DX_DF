@@ -6,7 +6,8 @@ namespace roka
 		mRatioValue(0.1f),
 		mRatio(0.0f),
 		mMax(0.0f),
-		mDamage(0.0f)
+		mDamage(0.0f),
+		mbSign(false)
 	{
 	}
 	GaugeScript::GaugeScript(const GaugeScript& ref) :Script(ref),
@@ -25,7 +26,7 @@ namespace roka
 	void GaugeScript::Update()
 	{
 
-		if (mDamage < 0)
+		if (mbSign == false)
 		{
 			if (mRatio >= mDamage)
 				mRatio -= mRatioValue;
@@ -34,6 +35,8 @@ namespace roka
 		{
 			if (mRatio <= mDamage)
 				mRatio += mRatioValue;
+			if (mRatio >= 0.0)
+				mRatio = 0;
 		}
 
 	}
@@ -47,6 +50,11 @@ namespace roka
 	{
 		mMax = max;
 		mDamage += damage;
+		if (mDamage >= 0.0)
+			mDamage = 0.0;
+		if (damage < 0.0)
+			mbSign = false;
+		else mbSign = true;
 	}
 	void GaugeScript::Bind()
 	{
