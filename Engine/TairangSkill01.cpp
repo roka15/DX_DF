@@ -358,6 +358,7 @@ namespace roka
 		monster->EnableNextState();
 
 		DeSpawnEffect(caster, L"Effect3");
+		DeSpawnCollider(caster);
 	}
 
 	void TairangSkill01::OnAnimationFramEvent(std::shared_ptr<GameObject> caster, std::wstring frameEvent)
@@ -407,12 +408,16 @@ namespace roka
 		std::shared_ptr<PlayerScript> player = target->parent->GetComponent<PlayerScript>();
 		if (player == nullptr)
 			return;
-
-		player->BeAttacked(mDamage, EStunState::Down);
-		DeSpawnCollider(caster);
+		
 		std::shared_ptr<Collider2D> caster_col = caster->GetComponent<Collider2D>();
 		std::shared_ptr<Collider2D> target_col = target->GetComponent<Collider2D>();
 		CollisionManager::DisableCollision(caster_col, target_col);
+
+		EHitBoxType hitboxType = target_col->GetHitType();
+		if (hitboxType != EHitBoxType::Bottom)
+			return;
+		player->BeAttacked(mDamage, EStunState::Down);
+		DeSpawnCollider(caster);
 	}
 
 	void TairangSkill01::OnCollisionStay(std::shared_ptr<GameObject> caster, std::shared_ptr<GameObject> target)

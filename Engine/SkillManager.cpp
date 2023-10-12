@@ -10,21 +10,21 @@ namespace roka::manager
 	void SkillManager::Initialize()
 	{
 #pragma region player character skill
-		ISkill* normalAttack = new MgNormalAtk();
+		ISkill* normalAttack = new MgNormalAtk(10);
 		mSkillInfos.insert(std::make_pair(roka::enums::ECharacterClassType::Mage, std::map<std::wstring, ISkill*>()));
 		mSkillInfos[roka::enums::ECharacterClassType::Mage].insert(std::make_pair(L"NormalAtk", normalAttack));
 
-		ISkill* antiGravity = new AntiGravity();
+		ISkill* antiGravity = new AntiGravity(50);
 		mSkillInfos.insert(std::make_pair(roka::enums::ECharacterClassType::Mage, std::map<std::wstring, ISkill*>()));
 		mSkillInfos[roka::enums::ECharacterClassType::Mage].insert(std::make_pair(L"mageAntiGravity", antiGravity));
 
 #pragma endregion
 #pragma region monster skill
-		ISkill* skill = new SpiderNormalAtk();
+		ISkill* skill = new SpiderNormalAtk(1);
 		mMonsterSkillInfos.insert(std::make_pair(roka::enums::EMonsterType::Spider, std::map<std::wstring, ISkill*>()));
 		mMonsterSkillInfos[roka::enums::EMonsterType::Spider].insert(std::make_pair(L"Skill01", skill));
 
-		skill = new TairangSkill01();
+		skill = new TairangSkill01(20);
 		mMonsterSkillInfos.insert(std::make_pair(roka::enums::EMonsterType::Tairang, std::map<std::wstring, ISkill*>()));
 		mMonsterSkillInfos[roka::enums::EMonsterType::Tairang].insert(std::make_pair(L"Skill01", skill));
 #pragma endregion	

@@ -75,6 +75,8 @@ namespace roka
 	}
 	void Rigidbody::Update()
 	{
+		if (owner->GetName().compare(L"Player") == 0)
+			int a = 0;
 		if (mbActive == false)
 			return;
 		Vector2 resolution = { (float)application.GetWidth(),(float)application.GetHeight() };
@@ -184,6 +186,10 @@ namespace roka
 		Vector3 pos = tf->position;
 		pos = pos + mVelocity * Time::DeltaTime();
 
+		if (mbGround == false)
+		{
+			int a = 0;
+		}
 		if (mbGround==false && pos.y <= mLandingPoint.y)
 		{
 			mbGround = true;

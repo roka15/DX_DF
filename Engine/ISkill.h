@@ -33,7 +33,7 @@ namespace roka
 	class Skill : public ISkill
 	{
 	public:
-		Skill() { mbCallbackEvent = false; }
+		Skill(const UINT& damage):mDamage(damage) { mbCallbackEvent = false; }
 		virtual ~Skill() {}
 		virtual void Execute(std::shared_ptr<GameObject> caster)override;
 		virtual void SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key) = 0;
@@ -55,7 +55,7 @@ namespace roka
 		virtual void Release() = 0;
 	protected:
 		bool mbCallbackEvent;
-		UINT mDamage;
+		const UINT mDamage;
 	};
 }
 

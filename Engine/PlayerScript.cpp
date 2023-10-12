@@ -141,10 +141,11 @@ namespace roka
 					float radian = Deg2Rad(0.0f);
 					for (int i = 0; i < cols.size(); i++)
 					{
-						cols[i]->SetRotation(radian);
+						/*cols[i]->SetRotation(radian);
 						Vector2 center = cols[i]->center;
 						center.y += 0.2f;
-						cols[i]->center = center;
+						cols[i]->center = center;*/
+						cols[i]->is_active = true;
 					}
 					return;
 				}
@@ -280,7 +281,7 @@ namespace roka
 				if (mTime - mLeftTime <= mDiff)
 				{
 					mPlayerState = EPlayerState::Run;
-					rigid->is_active = false;
+					//rigid->is_active = false;
 					ms->AddSpeed(2.0f);
 				}
 				else
@@ -294,7 +295,7 @@ namespace roka
 		{
 			if (mTime - mLeftTime <= mDiff)
 			{
-				rigid->is_active = false;
+				//rigid->is_active = false;
 				ms->is_active = true;
 				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
@@ -336,7 +337,7 @@ namespace roka
 				if (mTime - mRightTime <= mDiff)
 				{
 					mPlayerState = EPlayerState::Run;
-					rigid->is_active = false;
+					//rigid->is_active = false;
 					ms->AddSpeed(2.0f);
 				}
 				else
@@ -350,7 +351,7 @@ namespace roka
 		{
 			if (mTime - mRightTime <= mDiff)
 			{
-				rigid->is_active = false;
+				//rigid->is_active = false;
 				ms->is_active = true;
 				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
@@ -688,10 +689,11 @@ namespace roka
 		float radian = Deg2Rad(90.0f);
 		for (int i = 0; i < cols.size(); i++)
 		{
-			cols[i]->SetRotation(radian);
+			/*cols[i]->SetRotation(radian);
 			Vector2 center = cols[i]->center;
 			center.y -= 0.2f;
-			cols[i]->center = center;
+			cols[i]->center = center;*/
+			cols[i]->is_active = false;
 		}
 		as->PlayPartsMotion();
 
@@ -824,10 +826,11 @@ namespace roka
 			float radian = Deg2Rad(0.0f);
 			for (int i = 0; i < cols.size(); i++)
 			{
-				cols[i]->SetRotation(radian);
+				/*cols[i]->SetRotation(radian);
 				Vector2 center = cols[i]->center;
 				center.y += 0.2f;
-				cols[i]->center = center;
+				cols[i]->center = center;*/
+				cols[i]->is_active = true;
 			}
 			break;
 		}

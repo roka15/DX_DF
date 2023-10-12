@@ -6,7 +6,7 @@ namespace roka
 		public Skill
 	{
 	public:
-		AntiGravity():Skill() {}
+		AntiGravity(const UINT& damage):Skill(damage) {}
 		virtual ~AntiGravity() {}
 		virtual void Execute(std::shared_ptr<GameObject> caster) override;
 		virtual void SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key) override;

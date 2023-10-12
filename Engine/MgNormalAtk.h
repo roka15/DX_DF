@@ -6,7 +6,7 @@ namespace roka
 		public Skill
 	{
 	public:
-		MgNormalAtk();
+		MgNormalAtk(const UINT& damage);
 		virtual ~MgNormalAtk() {};
 
 		virtual void Execute(std::shared_ptr<GameObject> caster)override;

@@ -6,7 +6,7 @@ namespace roka
         public Skill
     {
     public:
-        SpiderNormalAtk();
+        SpiderNormalAtk(const UINT& damage);
         virtual ~SpiderNormalAtk();
 		virtual void Execute(std::shared_ptr<GameObject> caster) override;
 		virtual void SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)override;

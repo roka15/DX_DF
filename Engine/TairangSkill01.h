@@ -6,6 +6,8 @@ namespace roka
 		public Skill
 	{
 	public:
+		TairangSkill01(const UINT& damage) :Skill(damage) {}
+		virtual ~TairangSkill01() {}
 		virtual void Execute(std::shared_ptr<GameObject> caster)override;
 		virtual void SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key) override;
 		virtual void DeSpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key) override;

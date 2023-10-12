@@ -19,7 +19,7 @@
 #include "MoveScript.h"
 namespace roka
 {
-	MgNormalAtk::MgNormalAtk() :Skill()
+	MgNormalAtk::MgNormalAtk(const UINT& damage) :Skill(damage)
 	{
 	}
 	void MgNormalAtk::Execute(std::shared_ptr<GameObject> caster)

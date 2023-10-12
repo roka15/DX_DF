@@ -16,7 +16,7 @@
 #include "PlayerScript.h"
 namespace roka
 {
-	SpiderNormalAtk::SpiderNormalAtk() :Skill()
+	SpiderNormalAtk::SpiderNormalAtk(const UINT& damage) :Skill(damage)
 	{
 	}
 
