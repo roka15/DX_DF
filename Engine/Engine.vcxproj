@@ -178,6 +178,8 @@
     <ClInclude Include="ContentEnums.h" />
     <ClInclude Include="FactoryManager.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="GaugeManager.h" />
+    <ClInclude Include="GaugeScript.h" />
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="HendonmyreScene.h" />
     <ClInclude Include="IAnimationFramEvent.h" />
@@ -239,6 +241,8 @@
     <ClCompile Include="ComponentFactory.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="FactoryManager.cpp" />
+    <ClCompile Include="GaugeManager.cpp" />
+    <ClCompile Include="GaugeScript.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="HendonmyreScene.cpp" />
     <ClCompile Include="IAnimationFramEvent.cpp" />
@@ -300,6 +304,9 @@
       <FileType>Document</FileType>
     </FxCompile>
     <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\EffectPS.hlsl">
+      <FileType>Document</FileType>
+    </FxCompile>
+    <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\GaugePS.hlsl">
       <FileType>Document</FileType>
     </FxCompile>
     <FxCompile Update="C:\Users\skagu\OneDrive\Desktop\Yeram\DX11_DF\ShaderSource\HideAnimationPS.hlsl">

@@ -26,6 +26,13 @@ cbuffer Altlas : register(b3)
 	float2 padding;
 }
 
+cbuffer Gauge : register(b4)
+{
+	int Gaugetype;
+	float damage;
+	float maxGauge;
+	float Gaugeratio;
+}
 struct LightAttribute
 {
 	float4 color;
@@ -39,12 +46,15 @@ struct LightAttribute
 };
 
 
+
+
 StructuredBuffer<LightAttribute> lightsAttribute : register(t13);
 
 Texture2D albedoTexture:register(t0);
 Texture2D atlasTexture:register(t12);
 SamplerState pointSampler : register(s0); 
 SamplerState anisotropicSampler : register(s1);
+SamplerState LinearSampler : register(s2);
 
 void CalculateLight2D(in out float4 lightColor, float3 position, int idx)
 {

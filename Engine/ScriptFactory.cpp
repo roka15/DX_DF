@@ -18,6 +18,7 @@
 #include "TairangMonsterScript.h"
 
 #include "ChangeSizeOverTime.h"
+#include "GaugeScript.h"
 
 namespace roka
 {
@@ -98,6 +99,11 @@ namespace roka
 			ChangeSizeOverTime* cs = dynamic_cast<ChangeSizeOverTime*>(script);
 			return std::shared_ptr<ChangeSizeOverTime>(new ChangeSizeOverTime(*cs));
 		};
+		mFactories[EScriptType::Gauge] = [](Script* script)
+		{
+			GaugeScript* cs = dynamic_cast<GaugeScript*>(script);
+			return std::shared_ptr<GaugeScript>(new GaugeScript(*cs));
+		}; 
 	}
 	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)
 	{

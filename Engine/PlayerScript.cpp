@@ -21,6 +21,7 @@
 #include "PartScript.h"
 
 #include "User.h"
+#include "GaugeManager.h"
 
 
 using namespace roka::info;
@@ -38,6 +39,7 @@ namespace roka
 		mTime = 0.0;
 		mDiff = 0.1;
 		mCurDir = 1.0f;
+		mHP = 100;
 	}
 	PlayerScript::PlayerScript(const PlayerScript& ref) :Script(ref)
 	{
@@ -48,6 +50,7 @@ namespace roka
 		mDiff = 0.1;
 		mCurDir = 1.0f;
 		mStunState = EStunState::None;
+		mHP = 100;
 	}
 	PlayerScript::~PlayerScript()
 	{
@@ -65,10 +68,12 @@ namespace roka
 		mDiff = 0.1;
 		mCurDir = 1.0f;
 		mStunState = EStunState::None;
+		mHP = 100;
 	}
 	void PlayerScript::Initialize()
 	{
 		Script::Initialize();
+		mHP = 100;
 		owner->layer_type = ELayerType::Player;
 		mTransform = owner->GetComponent<Transform>();
 		mMoveScript = owner->GetComponent<MoveScript>();
@@ -189,7 +194,8 @@ namespace roka
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		bool flag = false;
 		EPlayerState befor_state = mPlayerState;
-
+		GaugeManager::GetInstance()->UseGauge(EGaugeType::PlayerHP,-damage, 100);
+		mHP -= damage;
 		switch (stun)
 		{
 		case EStunState::HardStagger:
@@ -219,6 +225,12 @@ namespace roka
 		{
 			mPlayerState = befor_state;
 		}
+	}
+
+	void PlayerScript::Recovery(float recovery)
+	{
+		GaugeManager::GetInstance()->UseGauge(EGaugeType::PlayerHP, recovery, 100);
+		mHP += recovery;
 	}
 
 	void PlayerScript::EquipPart(EAvatarParts type)

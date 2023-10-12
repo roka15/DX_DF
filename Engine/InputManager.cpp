@@ -144,6 +144,13 @@ namespace roka::manager
 				}
 			}
 		}
+
+		if (objs.size() != 0)
+		{
+			std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+			data->select_objects = objs;
+			cursor->OnClick(data);
+		}
 	}
 	void InputManager::MouseUp(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{

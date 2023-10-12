@@ -44,6 +44,7 @@ namespace roka::enums
 		TairangMonster,
 		Warning,
 		ChangeSizeOverTime,
+		Gauge,
 		End,
 	};
 
@@ -113,6 +114,13 @@ namespace roka::enums
 	{
 		Main,
 		TileTool,
+		End,
+	};
+	enum class GaugeType
+	{
+		None,
+		Virtical,
+		Horizontal,
 		End,
 	};
 }

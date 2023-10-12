@@ -1,6 +1,7 @@
 #include "Cursor.h"
 #include "GameObject.h"
 #include "ImageComponent.h"
+#include "..\\Engine\\PlayerScript.h"
 namespace roka
 {
 	Cursor::Cursor():Component(EComponentType::Cursor)
@@ -46,6 +47,18 @@ namespace roka
 	}
 	void Cursor::OnClick(PointerEventData* data)
 	{
+		std::shared_ptr<GameObject> player;
+		for (auto obj : data->select_objects)
+		{
+			if (obj->GetName().compare(L"PlayerTopCol") == 0)
+			{
+				obj->parent->GetComponent<PlayerScript>()->BeAttacked(10, EStunState::None);
+			}
+			if (obj->GetName().compare(L"PlayerBottomCol") == 0)
+			{
+				obj->parent->GetComponent<PlayerScript>()->Recovery(20);
+			}
+		}
 	}
 	void Cursor::OnBeginDrag(PointerEventData* data)
 	{

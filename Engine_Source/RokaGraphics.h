@@ -19,7 +19,8 @@
 #define CBSLOT_MATERIAL 1
 #define CBSLOT_GRID 2
 #define CBSLOT_ANIMATION 3
-#define CBSLOT_CLIPPINGRECT 4
+#define CBSLOT_GAUGE 4
+
 
 namespace roka
 {
@@ -43,11 +44,12 @@ namespace roka::graphics
 		Material,
 		Grid,
 		Atlas,
-		ClippingRect,
+		Gauge,
 		End
 	};
 	enum class ESamplerType
 	{
+		Linear,
 		Point,
 		Anisotropic,
 		End,

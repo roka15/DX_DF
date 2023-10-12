@@ -95,7 +95,9 @@ namespace roka::renderer
 		shader = roka::Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
 		GetDevice()->CreateInputLayout(arrLayout, 3
 			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
-
+		shader = roka::Resources::Find<Shader>(L"GaugeAtlasShader");
+		GetDevice()->CreateInputLayout(arrLayout, 3
+			, shader->GetVSCode(), shader->GetInputLayoutAddressOf());
 #pragma endregion
 #pragma region SamplerState
 		//Sampler State
@@ -110,6 +112,9 @@ namespace roka::renderer
 		Samplerdesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		GetDevice()->CreateSamplerState(&Samplerdesc, samplerStates[(UINT)ESamplerType::Anisotropic].GetAddressOf());
 		GetDevice()->BindSampler(EShaderStage::PS, 1, samplerStates[(UINT)ESamplerType::Anisotropic].GetAddressOf());
+		Samplerdesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		GetDevice()->CreateSamplerState(&Samplerdesc, samplerStates[(UINT)ESamplerType::Linear].GetAddressOf());
+		GetDevice()->BindSampler(EShaderStage::PS, 2, samplerStates[(UINT)ESamplerType::Linear].GetAddressOf());
 #pragma endregion
 #pragma region RasterizerState
 		D3D11_RASTERIZER_DESC RasterDesc = {};
@@ -391,6 +396,8 @@ namespace roka::renderer
 		constantBuffer[(UINT)ECBType::Atlas] = new roka::graphics::ConstantBuffer(ECBType::Atlas);
 		constantBuffer[(UINT)ECBType::Atlas]->Create(sizeof(AtlasCB));
 		
+		constantBuffer[(UINT)ECBType::Gauge] = new roka::graphics::ConstantBuffer(ECBType::Gauge);
+		constantBuffer[(UINT)ECBType::Gauge]->Create(sizeof(GaugeCB));
 		
 		lightsBuffer = new StructBuffer();
 		lightsBuffer->Create(sizeof(LightAttribute), 2, ESRVType::None);
@@ -455,6 +462,12 @@ namespace roka::renderer
 		animationinverterEftShader->bsstate = EBSType::OneOne;
 		animationinverterShader->SetKey(L"VerticalInverterEftAtlasShader");
 		roka::Resources::Insert(L"VerticalInverterEftAtlasShader", animationinverterEftShader);
+
+		std::shared_ptr<Shader> GaugeShader = std::make_shared<Shader>();
+		GaugeShader->Create(EShaderStage::VS, L"AtlasVS.hlsl", "main");
+		GaugeShader->Create(EShaderStage::PS, L"GaugePS.hlsl", "main");
+		GaugeShader->SetKey(L"GaugeAtlasShader");
+		roka::Resources::Insert(L"GaugeAtlasShader", GaugeShader);
 	
 		std::shared_ptr<PaintShader> paintShader = std::make_shared<PaintShader>();
 		paintShader->Create(L"PaintCS.hlsl", "main");

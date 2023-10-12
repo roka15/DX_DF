@@ -309,7 +309,6 @@ namespace roka::prefab
 			PlayerObject->SetName(L"PlayerObject");
 			PlayerObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 			PlayerObject->layer_type = ELayerType::Player;
-
 			std::shared_ptr<roka::GameObject> AvatarParrent = object::Instantiate<roka::GameObject>(
 				Vector3::Zero,
 				Vector3::Zero,
@@ -321,6 +320,7 @@ namespace roka::prefab
 				AvatarParrent->AddScript<AvatarScript>();
 			}
 			std::shared_ptr<GameObject> TopColObject = object::Instantiate<GameObject>();
+			TopColObject->SetName(L"PlayerTopCol");
 			TopColObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 			PlayerObject->AddChild(TopColObject);
 			std::shared_ptr<Collider2D> col = TopColObject->AddComponent<Collider2D>();

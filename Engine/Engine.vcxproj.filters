@@ -151,6 +151,12 @@
     <ClInclude Include="UITestScene.h">
       <Filter>Contents\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="GaugeScript.h">
+      <Filter>Contents\Script\GaugeScript</Filter>
+    </ClInclude>
+    <ClInclude Include="GaugeManager.h">
+      <Filter>Manager\GaugeManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="User.cpp">
@@ -293,6 +299,12 @@
     </ClCompile>
     <ClCompile Include="UITestScene.cpp">
       <Filter>Contents\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GaugeScript.cpp">
+      <Filter>Contents\Script\GaugeScript</Filter>
+    </ClCompile>
+    <ClCompile Include="GaugeManager.cpp">
+      <Filter>Manager\GaugeManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -463,6 +475,12 @@
     </Filter>
     <Filter Include="Contents\Interface\IMouseEvent">
       <UniqueIdentifier>{724e3715-5d4f-48fd-8c19-55b9aa50a7a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\GaugeScript">
+      <UniqueIdentifier>{668ffb31-0c8a-4f42-8ede-f1e0f254a880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\GaugeManager">
+      <UniqueIdentifier>{ad6a05be-9028-4c27-adcd-87c7f2e10a5c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

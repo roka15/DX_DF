@@ -37,6 +37,7 @@ namespace roka
 		virtual void RegisterKeyEvents();
 
 		virtual void BeAttacked(float damage,EStunState stun);
+		virtual void Recovery(float recovery);
 		void EquipPart(EAvatarParts type);
 		void EquipPart(EAvatarParts type, std::wstring name);
 
@@ -105,6 +106,8 @@ namespace roka
 		double mDiff;
 
 		float mCurDir;
+
+		UINT mHP;
 
 		//std::vector<std::shared_ptr<SkillScript>> mSkillList;
 	};

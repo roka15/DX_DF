@@ -30,6 +30,9 @@
 #include "ScrollRect.h"
 #include "GridGroupLayout.h"
 
+#include "GaugeManager.h"
+#include "GaugeScript.h"
+
 roka::SeriaGateScene::SeriaGateScene() :Scene(ESceneType::SeriaRoom)
 {
 }
@@ -111,11 +114,15 @@ void roka::SeriaGateScene::Initialize()
 		HPBase->ismove = false;
 		std::shared_ptr<MeshRenderer> mr = HPBase->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
+		mr->material->shader = Resources::Find<Shader>(L"GaugeAtlasShader");
 		mr->material->texture = hudTexture1;
 		std::shared_ptr<ImageComponent> imageComp = HPBase->GetComponent<ImageComponent>();
 		imageComp->SetSprite(1);
 
 		hudParent->AddChild(HPBase);
+
+		HPBase->AddScript<GaugeScript>();
+		GaugeManager::GetInstance()->RegisterGaugeObject(EGaugeType::PlayerHP, HPBase);
 	}
 
 	std::shared_ptr<Image> MPBase = object::Instantiate<Image>(
