@@ -19,6 +19,15 @@ namespace roka
 
 		return true;
 	}
+	bool CompareReverseZSort(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2)
+	{
+		if (obj1->GetComponent<Transform>()->GetWorldZ()
+			>= obj2->GetComponent<Transform>()->GetWorldZ())
+			return false;
+
+		return true;
+	}
+	
 	Matrix Camera::View = Matrix::Identity;
 	Matrix Camera::Projection = Matrix::Identity;
 
@@ -191,7 +200,7 @@ namespace roka
 	}
 	void Camera::ZSortTransparencyGameObjects()
 	{
-		std::sort(mCutOutGameObjects.begin(), mCutOutGameObjects.end(), CompareZSort);
+		std::sort(mCutOutGameObjects.begin(), mCutOutGameObjects.end(), CompareReverseZSort);
 		std::sort(mTransparentObjects.begin(), mTransparentObjects.end(), CompareZSort);
 	}
 	void Camera::DivideAlphaBlendGameObjects(const std::vector<std::shared_ptr<GameObject>> objs)

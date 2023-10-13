@@ -245,10 +245,10 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(WarningEftObject->GetName(), WarningEftObject));
 		Prefabs.insert(std::make_pair(ChangeSizeOverTimeObject->GetName(), ChangeSizeOverTimeObject));
 		Prefabs.insert(std::make_pair(ChangeSizeOverTimeEftObject->GetName(), ChangeSizeOverTimeEftObject));
-		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01)); 
+		/*Prefabs.insert(std::make_pair(TairangSkillEft01->GetName(), TairangSkillEft01));
 		Prefabs.insert(std::make_pair(TairangSkillEft02->GetName(), TairangSkillEft02));
 		Prefabs.insert(std::make_pair(TairangSkillEft03->GetName(), TairangSkillEft03));*/
-		
+
 	}
 	void LateInitialize()
 	{
@@ -271,7 +271,7 @@ namespace roka::prefab
 			//col->SetSize(Vector2(0.13f, 0.08f));
 			col->SetCenter(Vector2(-0.05f, 0.1f));
 			col->SetHitType(EHitBoxType::Top);
-			
+
 
 
 			/*std::shared_ptr<HitBoxScript> hitbox = TopColObject->AddScript<HitBoxScript>();
@@ -300,7 +300,7 @@ namespace roka::prefab
 			std::shared_ptr<Transform> tf = Tairang_MonsterObject->GetComponent<Transform>();
 			tf->position = Vector3(0.0f, 0.0f, 0.1f);
 		}
-		
+
 		std::shared_ptr<roka::GameObject> PlayerObject = object::Instantiate<roka::GameObject>(
 			Vector3::Zero,
 			Vector3::Zero,
@@ -332,7 +332,7 @@ namespace roka::prefab
 			std::shared_ptr<GameObject> BottomColObject = object::Instantiate<GameObject>();
 			BottomColObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 			PlayerObject->AddChild(BottomColObject);
-			
+
 			col = BottomColObject->AddComponent<Collider2D>();
 			BottomColObject->SetName(L"PlayerBottomCol");
 			col->SetSize(Vector2(0.05f, 0.05f));
@@ -347,7 +347,7 @@ namespace roka::prefab
 		Prefabs.insert(std::make_pair(Spider_MonsterObject->GetName(), Spider_MonsterObject));
 		Prefabs.insert(std::make_pair(Tairang_MonsterObject->GetName(), Tairang_MonsterObject));
 		Prefabs.insert(std::make_pair(PlayerObject->GetName(), PlayerObject));
-	
+
 	}
 	void Release()
 	{
@@ -373,6 +373,7 @@ namespace roka::prefab
 		std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
 		std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
 		std::shared_ptr<NPK> infomationButton = Resources::Find<NPK>(L"infoBtn");
+		std::shared_ptr<NPK> item = Resources::Find<NPK>(L"item");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -398,7 +399,7 @@ namespace roka::prefab
 
 		if (seria_room == nullptr)
 			seria_room = Resources::Load<NPK>(L"seria_room", L"..\\Resources\\npk\\seriaroom.npk");
-		if(npc == nullptr)
+		if (npc == nullptr)
 			npc = Resources::Load<NPK>(L"npc", L"..\\Resources\\npk\\npc.npk");
 		if (gate == nullptr)
 			gate = Resources::Load<NPK>(L"gate", L"..\\Resources\\npk\\gate.npk");
@@ -406,7 +407,10 @@ namespace roka::prefab
 			inven_npk = Resources::Load<NPK>(L"inventory", L"..\\Resources\\npk\\inventory.npk");
 		if (tooltip_npk == nullptr)
 			tooltip_npk = Resources::Load<NPK>(L"tooltip", L"..\\Resources\\npk\\tooltip.npk");
-		if(infomationButton == nullptr)
+		if (infomationButton == nullptr)
 			infomationButton = Resources::Load<NPK>(L"infoBtn", L"..\\Resources\\npk\\InformationButton.npk");
+		if (item == nullptr)
+			item = Resources::Load<NPK>(L"item", L"..\\Resources\\npk\\Item.npk");
+
 	}
 }

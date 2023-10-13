@@ -147,7 +147,7 @@ namespace roka
 
 		void AddChild(std::shared_ptr<GameObject> child);
 		void InsertChild(std::shared_ptr<GameObject> child, int index);
-		void SetParent(std::weak_ptr<GameObject> parent) { mParent = parent; }
+		void SetParent(std::shared_ptr<GameObject> parent) { mParent = parent; }
 		std::shared_ptr<GameObject> GetParent() { return mParent.lock(); }
 
 		std::shared_ptr<GameObject> GetChild(std::wstring name);

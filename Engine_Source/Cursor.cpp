@@ -2,12 +2,18 @@
 #include "GameObject.h"
 #include "ImageComponent.h"
 #include "..\\Engine\\PlayerScript.h"
+#include "Transform.h"
+#include "..\\Engine\\ItemScript.h"
+#include "MeshRenderer.h"
+#include "..\\Engine\\InputManager.h"
 namespace roka
 {
-	Cursor::Cursor():Component(EComponentType::Cursor)
+	Cursor::Cursor():Component(EComponentType::Cursor),
+		mbDrag(false)
 	{
 	}
-	Cursor::Cursor(const Cursor& ref):Component(ref)
+	Cursor::Cursor(const Cursor& ref):Component(ref),
+		mbDrag(false)
 	{
 	}
 	void Cursor::Copy(Component* src)
@@ -16,6 +22,7 @@ namespace roka
 		if (source == nullptr)
 			return;
 		Component::Copy(src);
+		mbDrag = false;
 	}
 	Cursor::~Cursor()
 	{
@@ -62,26 +69,57 @@ namespace roka
 	}
 	void Cursor::OnBeginDrag(PointerEventData* data)
 	{
+		for (auto obj : mDragObjects)
+		{
+			std::shared_ptr<MeshRenderer> mr = obj->GetComponent<MeshRenderer>();
+			mr->alpha = 0.5f;
+			mr->EnableChangeAlpha();
+			if (obj->parent == nullptr)
+				continue;
+			obj->parent->RemoveChild(obj);
+			obj->parent = nullptr;
+		}
 	}
 	void Cursor::OnDrag(PointerEventData* data)
 	{
+		std::shared_ptr<Transform> cursorTf = owner->GetComponent<Transform>();
+		Vector3 pos = cursorTf->position;
+		for(auto obj : mDragObjects)
+		{
+			std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
+			tf->SetWorldPosition(pos);
+		}
 	}
 	void Cursor::OnEndDrag(PointerEventData* data)
 	{
+		std::shared_ptr<GameObject> enter_obj = data->enter_object;
+	    
+		if (enter_obj == nullptr)
+		{
+			//field drop
+			for (auto drop : mDragObjects)
+			{
+				std::shared_ptr<MeshRenderer> mr = drop->GetComponent<MeshRenderer>();
+				std::shared_ptr<ItemScript> item = drop->GetComponent<ItemScript>();
+				if (item != nullptr)
+				{
+					item->SetMode(owner->GetSharedPtr(),EItemModeType::Field);
+				}
+				mr->alpha = 1.0f;
+				mr->DisableChangeAlpha();
+			}
+		}
+		else
+		{
+			//enter obj 가 slot면 옮겨주고 item 이면 둘이 swap
+		}
 	}
-	std::shared_ptr<GameObject> Cursor::GetDragObject()
+	std::shared_ptr<GameObject> Cursor::GetDragObject(int index)
 	{
-		std::shared_ptr<GameObject> obj = mDragObjects.front().lock();
-		mDragObjects.pop();
-		return obj;
+		return mDragObjects[index];
 	}
 	void Cursor::DragObjectClear()
 	{
-		while (mDragObjects.empty() == false)
-		{
-			std::weak_ptr<GameObject> obj = mDragObjects.front();
-			obj.reset();
-			mDragObjects.pop();
-		}
+		mDragObjects.clear();
 	}
 }

@@ -231,6 +231,8 @@ namespace roka
 	{
 		GaugeManager::GetInstance()->UseGauge(EGaugeType::PlayerHP, recovery, 100);
 		mHP += recovery;
+		if (mHP >= 100)
+			mHP = 100;
 	}
 
 	void PlayerScript::EquipPart(EAvatarParts type)

@@ -78,12 +78,13 @@ namespace roka
 	}
 	void Input::MouseBtnDown(PointerEventData* data)
 	{
-		if (mTime - mMouseLBUpTime <= mDoubleClickTime)
-		{
-			//double click
-			data->click_cnt++;
-		}
-		else if (mMouseState == EKeyState::Down)
+		//if (mTime - mMouseLBUpTime <= mDoubleClickTime)
+		//{
+		//	//double click
+		//	data->click_cnt++;
+		//}
+		//else 
+		if (mMouseState == EKeyState::Down)
 		{
 			//state-> pressed
 			mMouseState = EKeyState::Pressed;
@@ -102,6 +103,10 @@ namespace roka
 			data->wheel_delta = 0.0f;
 		else
 			data->wheel_delta = (int)wheel;
+	}
+	void Input::MouseBtnPress(class PointerEventData* data)
+	{
+		data->btn_state = EKeyState::Pressed;
 	}
 	void Input::KeyUpdate()
 	{
@@ -180,11 +185,14 @@ namespace roka
 		data->btn_state = mMouseState;
 		data->delta = delta;
 		data->position = mMousePos;
-		
+
 		switch (mMouseState)
 		{
 		case EKeyState::Down:
 			MouseBtnDown(data);
+			break;
+		case EKeyState::Pressed:
+			MouseBtnPress(data);
 			break;
 		case EKeyState::Up:
 			MouseBtnUp(data);
@@ -196,6 +204,7 @@ namespace roka
 
 		M_Input->OnMouseEvent(data);
 		delete data;
-		mMouseState = EKeyState::None;
+		if (mMouseState != EKeyState::Pressed && mMouseState != EKeyState::None)
+			mMouseState = EKeyState::None;
 	}
 }

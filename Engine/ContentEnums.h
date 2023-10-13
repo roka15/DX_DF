@@ -33,17 +33,17 @@ namespace roka::enums
 		Down,
 		Standing,
 		Skill,
-	
-		
+
+
 		End,
 	};
 	enum class EStunState
 	{
 		None,
-		Stagger=1,
-		Down=2,
-		HardStagger=4,
-		HardDown=8,
+		Stagger = 1,
+		Down = 2,
+		HardStagger = 4,
+		HardDown = 8,
 		End,
 	};
 	enum class EPlayerSkillType
@@ -105,6 +105,13 @@ namespace roka::enums
 		PlayTestScene,
 		TileMapTool,
 		UITestScene,
+		End,
+	};
+	enum class EItemModeType
+	{
+		None,
+		Field,
+		Icon,
 		End,
 	};
 }

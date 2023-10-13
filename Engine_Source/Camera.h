@@ -2,6 +2,9 @@
 #include "Component.h"
 namespace roka
 {
+	bool CompareZSort(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2);
+	bool CompareReverseZSort(std::shared_ptr<GameObject> obj1, std::shared_ptr<GameObject> obj2);
+
 	class Camera :public Component,public std::enable_shared_from_this<Camera>
 	{
 	private:

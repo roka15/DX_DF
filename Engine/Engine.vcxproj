@@ -186,6 +186,9 @@
     <ClInclude Include="ICollisionListener.h" />
     <ClInclude Include="IMouseEvent.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemManager.h" />
+    <ClInclude Include="ItemScript.h" />
     <ClInclude Include="LoadScene.h" />
     <ClInclude Include="MgNormalAtk.h" />
     <ClInclude Include="MonsterScript.h" />
@@ -249,6 +252,9 @@
     <ClCompile Include="ICollisionListener.cpp" />
     <ClCompile Include="IMouseEvent.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemManager.cpp" />
+    <ClCompile Include="ItemScript.cpp" />
     <ClCompile Include="MgNormalAtk.cpp" />
     <ClCompile Include="MonsterScript.cpp" />
     <ClCompile Include="MoveScript.cpp" />

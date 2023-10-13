@@ -72,10 +72,15 @@ namespace roka::manager
 	{
 		if (mCursor.expired() == true)
 			return;
+
 		//충돌 object들 모두 뽑아오기
 		std::vector<std::shared_ptr<GameObject>> objs = {};
 		std::shared_ptr<GameObject> cursor = mCursor.lock();
 		objs = CollisionManager::GetCollisionObjects(cursor);
+
+		MouseEnter(data, objs);
+		MouseExit(data, objs);
+
 		switch (data->btn_state)
 		{
 		case EKeyState::Down:
@@ -90,14 +95,15 @@ namespace roka::manager
 			MouseScroll(data, objs);
 			break;
 		}
-		MouseEnter(data, objs);
-		MouseExit(data, objs);
+
 	}
 	void InputManager::MouseDown(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
 		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
 		if (data->btn_state == EKeyState::Pressed)//누르는중
 		{
+			if (data->button == EMouseBtnType::RIGHT)
+				return;
 			for (auto& obj : objs)
 			{
 				//z값이 제일 앞에 있는 object 처리
@@ -107,16 +113,24 @@ namespace roka::manager
 					IDragHandler* handler = dynamic_cast<IDragHandler*>(script.get());
 					if (handler == nullptr)
 						continue;
-					
-					cursor->AddDragObject(obj);
+
 					handler->OnDrag(data);
+
+					if (cursor->GetDragState() == false)
+					{
+						cursor->SetDragState(true);
+						cursor->AddDragObject(obj);
+						cursor->OnBeginDrag(data);
+					}
+
+					cursor->OnDrag(data);
 					return;
 				}
 			}
 		}
 		else//일반 down
 		{
-			
+			bool flag = false;
 			//z값이 제일 앞에 있는 object 처리
 			for (auto& obj : objs)
 			{
@@ -130,33 +144,34 @@ namespace roka::manager
 					{
 						down_handler->OnPointerDown(data);
 						data->enter_object = obj;
-						return;
+						flag = true;
 					}
 					else if (click_handler != nullptr)
 					{
 						click_handler->OnClick(data);
 						data->enter_object = obj;
-						return;
+						flag = true;
 					}
 					else
 						continue;
 
 				}
+				if (flag == true)
+					break;
 			}
-		}
-
-		if (objs.size() != 0)
-		{
-			std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
-			data->select_objects = objs;
-			cursor->OnClick(data);
+			if (objs.size() != 0)
+			{
+				std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+				data->select_objects = objs;
+				cursor->OnClick(data);
+			}
 		}
 	}
 	void InputManager::MouseUp(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
 		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
+		bool flag = false;
 
-	
 		//z값이 제일 앞에 있는 object 처리
 		for (auto& obj : objs)
 		{
@@ -168,25 +183,45 @@ namespace roka::manager
 				if (handler != nullptr)
 				{
 					handler->OnPointerUp(data);
-					return;
+					flag = true;
 				}
 				else if (drop_hendler != nullptr)
 				{
 					drop_hendler->OnDrop(data);
-					return;
+					flag = true;
 				}
 				else
 					continue;
+
+				if (flag == true)
+					break;
 			}
 		}
-		cursor->DragObjectClear();
+		if (cursor->GetDragState() == true)
+		{
+			cursor->SetDragState(false);
+			cursor->OnEndDrag(data);
+			cursor->DragObjectClear();
+		}
+	
 	}
 
 	void InputManager::MouseEnter(PointerEventData* data, std::vector<std::shared_ptr<GameObject>>& objs)
 	{
+		std::shared_ptr<Cursor> cursor = mCursor.lock()->GetComponent<Cursor>();
 		bool flag = false;
+		data->enter_object = nullptr;
 		for (auto& obj : objs)
 		{
+			if (cursor->GetDragState() == true)
+			{
+				std::shared_ptr<GameObject> dragObj = cursor->GetDragObject(0);
+				if (dragObj == obj)
+				{
+					continue;
+				}
+			}
+
 			std::vector<std::shared_ptr<Script>> scripts = obj->GetScripts();
 			for (auto& script : scripts)
 			{

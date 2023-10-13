@@ -28,6 +28,7 @@ namespace roka::info
 	}
 	void User::Initialize()
 	{
+		mUserInfo->index = 1;
 		wcscpy(mUserInfo->party_name,L"코딩노예람");
 		wcscpy(mUserInfo->id, L"1234");
 		mUserInfo->character_cnt = 1;

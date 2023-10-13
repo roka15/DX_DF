@@ -45,6 +45,8 @@ namespace roka::enums
 		Warning,
 		ChangeSizeOverTime,
 		Gauge,
+		Slot,
+		Item,
 		End,
 	};
 
@@ -52,6 +54,7 @@ namespace roka::enums
 	{
 		Grid,
 		BackObject,
+		Item,
 		Skill,
 		Player,
 		Monster,

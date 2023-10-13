@@ -25,14 +25,18 @@ namespace roka
         virtual void OnDrag(PointerEventData* data)override;
         virtual void OnEndDrag(PointerEventData* data)override;
 
-        void AddDragObject(std::shared_ptr<GameObject> obj) { mDragObjects.push(obj); }
-        std::shared_ptr<GameObject> GetDragObject();
+        void AddDragObject(std::shared_ptr<GameObject> obj) { mDragObjects.push_back(obj); }
+        std::shared_ptr<GameObject> GetDragObject(int index);
         void DragObjectClear();
+
+        bool GetDragState() { return mbDrag; }
+        void SetDragState(bool flag) { mbDrag = flag; }
     private:
         friend class FactoryBase;
         friend class ComponentFactory;
     protected:
-        std::queue<std::weak_ptr<GameObject>> mDragObjects;
+        std::vector<std::shared_ptr<GameObject>> mDragObjects;
+        bool mbDrag;
     };
 }
 

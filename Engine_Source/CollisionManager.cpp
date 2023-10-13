@@ -4,6 +4,7 @@
 #include "Collider2D.h"
 #include "Transform.h"
 #include "RokaTime.h"
+#include "Camera.h"
 namespace roka
 {
 	std::bitset<LAYER_MAX>  CollisionManager::mMatrix[LAYER_MAX] = {};
@@ -390,7 +391,7 @@ namespace roka
 				}
 			}
 		}
-
+		std::sort(objs.begin(), objs.end(), CompareReverseZSort);
 		return objs;
 	}
 	void CollisionManager::DisableCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)

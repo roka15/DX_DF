@@ -10,6 +10,7 @@ namespace roka::info
 {
 	struct UserInfo
 	{
+		unsigned int index;
 		wchar_t party_name[MAX_NAME]; // 모험단 명
 		wchar_t id[MAX_ID];
 
@@ -61,6 +62,8 @@ namespace roka::info
 		void Initialize(); //나중에 로그인 성공시 db 가져온 정보 세팅해주기
 		void Release();
 
+		const int GetID()const { return mUserInfo->index; }
+
 		const std::wstring& GetPartyName()const { return std::wstring(mUserInfo->party_name); }
 		const std::wstring& GetName()const { return std::wstring(mCharacterInfo->name); }
 		const int& GetFame()const { return mCharacterInfo->fame; }
@@ -84,6 +87,8 @@ namespace roka::info
 		void SetWeaponAvatar2(std::wstring name) { wcscpy(mCharacterInfo->weapon_avatar2, name.c_str()); }
 
 		const std::wstring& GetKeySkillName(UINT input)const {return mSkillNames.find(input)->second;}
+
+		GET_PROPERTY(GetID) int id;
 		GET_PROPERTY(GetPartyName) std::wstring party_name;
 		GET_PROPERTY(GetName) std::wstring name;
 		GET_PROPERTY(GetFame) int fame;

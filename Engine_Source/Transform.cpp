@@ -185,7 +185,18 @@ namespace roka
 	}
 	void Transform::SetWorldPosition(Vector3 world)
 	{
-	
+		if (owner->parent == nullptr)
+		{
+			mPosition = world;
+			return;
+		}
+		
+		std::shared_ptr<Transform> parentTf = owner->parent->GetComponent<Transform>();
+		Matrix Invert_parentMat = parentTf->GetMatrix().Invert();
+		Matrix worldMat = Matrix::CreateTranslation(world);
+		Matrix localMat = Invert_parentMat * worldMat;
+
+		mPosition = Vector3(localMat._41, localMat._42, localMat._43);
 	}
 	Vector3 Transform::GetPosition()
 	{

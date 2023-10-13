@@ -41,7 +41,7 @@ float4 main(VSOut In) : SV_TARGET
 	
 	if ((!(flag&0x1))&& (flag&0x2))// oneone ==false && change alpha ==true
 	{
-		if (color.x != 0.0f && color.y != 0.0f && color.z != 0.0f)
+		//if (color.x != 0.0f && color.y != 0.0f && color.z != 0.0f)
 		{
 			color.w = alpha;
 		}

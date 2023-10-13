@@ -16,6 +16,7 @@
 #include "..\\Engine\\SkillManager.h"
 #include "..\\Engine\\PortalManager.h"
 #include "..\\Engine\\InputManager.h"
+#include "..\\Engine\\ItemManager.h"
 #include "Fmod.h"
 #include "FontWrapper.h"
 namespace roka
@@ -57,6 +58,7 @@ namespace roka
 	
 		roka::renderer::Initialize();
 		roka::prefab::Initialize();
+		manager::ItemManager::GetInstance()->Initialize();
 		manager::PartManager::GetInstance()->Initialize();
 		roka::prefab::LateInitialize();
 		SceneManager::Initialize();

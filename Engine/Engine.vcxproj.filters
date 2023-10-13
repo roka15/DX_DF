@@ -4,9 +4,6 @@
     <ClInclude Include="LoadScene.h">
       <Filter>Contents\Load</Filter>
     </ClInclude>
-    <ClInclude Include="User.h">
-      <Filter>Contents\Info</Filter>
-    </ClInclude>
     <ClInclude Include="ContentEnums.h">
       <Filter>Contents\Info</Filter>
     </ClInclude>
@@ -157,11 +154,20 @@
     <ClInclude Include="GaugeManager.h">
       <Filter>Manager\GaugeManager</Filter>
     </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Contents\Info\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Contents\Info\User</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemScript.h">
+      <Filter>Contents\Script\ItemScript</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManager.h">
+      <Filter>Manager\ItemManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="User.cpp">
-      <Filter>Contents\Info</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -305,6 +311,18 @@
     </ClCompile>
     <ClCompile Include="GaugeManager.cpp">
       <Filter>Manager\GaugeManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Contents\Info\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="User.cpp">
+      <Filter>Contents\Info\User</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemScript.cpp">
+      <Filter>Contents\Script\ItemScript</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManager.cpp">
+      <Filter>Manager\ItemManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -481,6 +499,18 @@
     </Filter>
     <Filter Include="Manager\GaugeManager">
       <UniqueIdentifier>{ad6a05be-9028-4c27-adcd-87c7f2e10a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Info\Item">
+      <UniqueIdentifier>{3ff0dfd0-d748-42e3-bc28-e4697de8d01a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Info\User">
+      <UniqueIdentifier>{5f67bdbd-8e76-41d9-b922-131957cca7f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager\ItemManager">
+      <UniqueIdentifier>{80c961b3-3042-4f52-9d3a-e70d81a97de6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents\Script\ItemScript">
+      <UniqueIdentifier>{d0f19a14-27ad-400e-8489-69a5e81e261e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

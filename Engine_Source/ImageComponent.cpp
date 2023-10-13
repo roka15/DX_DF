@@ -38,6 +38,7 @@ namespace roka
 		std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 		mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 		mr->material->Copy(Resources::Find<Material>(L"DefaultAtlasMaterial").get());
+		mMaterial = mr->material;
 	}
 	void ImageComponent::Update()
 	{
@@ -64,6 +65,12 @@ namespace roka
 		data.SpriteSize = sprite.image_size;
 		data.CanvasSize = sprite.canvas_size;
 		data.Alpha = mr->alpha;
+		if (EBSType::OneOne == mr->material->shader->bsstate)
+			data.Flag |= 0x1;
+
+		if (mr->GetChangeActiveAlpha() == true)
+			data.Flag |= 0x2;
+
 		ConstantBuffer* cb = renderer::constantBuffer[(UINT)ECBType::Atlas];
 		cb->SetData(&data);
 

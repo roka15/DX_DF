@@ -19,6 +19,8 @@
 
 #include "ChangeSizeOverTime.h"
 #include "GaugeScript.h"
+#include "ItemScript.h"
+#include "Slot.h"
 
 namespace roka
 {
@@ -104,6 +106,16 @@ namespace roka
 			GaugeScript* cs = dynamic_cast<GaugeScript*>(script);
 			return std::shared_ptr<GaugeScript>(new GaugeScript(*cs));
 		}; 
+		mFactories[EScriptType::Item] = [](Script* script)
+		{
+			ItemScript* sc = dynamic_cast<ItemScript*>(script);
+			return std::shared_ptr<ItemScript>(new ItemScript(*sc));
+		};
+		mFactories[EScriptType::Slot] = [](Script* script)
+		{
+			Slot* sc = dynamic_cast<Slot*>(script);
+			return std::shared_ptr<Slot>(new Slot(*sc));
+		};
 	}
 	std::shared_ptr<Component> ScriptFactory::CreateNCopy(Component* comp)
 	{

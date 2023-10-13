@@ -97,6 +97,7 @@ namespace roka
 		static void MouseBtnDown(class PointerEventData* data);
 		static void MouseBtnUp(class PointerEventData* data);
 		static void MouseWheel(class PointerEventData* data);
+		static void MouseBtnPress(class PointerEventData* data);
 	private:
 		static void KeyUpdate();
 		static void MouseUpdate(HWND hWnd);
