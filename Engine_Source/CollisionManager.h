@@ -27,6 +27,7 @@ namespace roka
 		static void LayerCollision(ELayerType left, ELayerType right);
 		static void ColliderCollision(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
 		static bool CollisionCheck(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
+		static bool CollisionCheck(std::shared_ptr<GameObject>left, ELayerType type);
 		static bool Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right);
 		static std::vector<std::shared_ptr<GameObject>> GetCollisionObjects(std::shared_ptr<GameObject>& obj);
 

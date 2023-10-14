@@ -174,6 +174,17 @@ namespace roka
 			return mCollisionMap[id.id];
 		return false;
 	}
+	bool CollisionManager::CollisionCheck(std::shared_ptr<GameObject> left, ELayerType type)
+	{
+		std::vector<std::shared_ptr<GameObject>> objs = GetCollisionObjects(left);
+		for (auto obj : objs)
+		{
+			if (obj->layer_type == type)
+				return true;
+		}
+
+		return false;
+	}
 	bool CollisionManager::Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
 	{
 		if (left->owner->GetName().compare(L"ScrollView") == 0 ||
@@ -208,14 +219,14 @@ namespace roka
 		rotation *= Matrix::CreateRotationY(rightTf->rotation.y);
 		rotation *= Matrix::CreateRotationZ(right->GetRotation() + rightTf->rotation.z);
 		position = Matrix::CreateTranslation(rightTf->GetLocalPosition() + right->center);
-		
+
 		Matrix rightMat = scale * rotation * position;
 		if (right->owner->parent != nullptr)
 		{
 			parentMat = right->owner->parent->GetComponent<Transform>()->GetMatrix();
 			rightMat *= parentMat;
 		}
-	
+
 
 		//Matrix scale = Matrix::CreateScale(leftTf->scale);
 		//Matrix rotation = Matrix::CreateRotationX(leftTf->rotation.x);
@@ -232,7 +243,7 @@ namespace roka
 		//position.Translation(rightTf->position);
 		//Matrix rightMat = scale * rotation * position;
 
-		
+
 
 		//Vector3 leftScale = Vector3(left->size.x, left->size.y, 1.0f);
 		//Vector3 leftOffset = Vector3(left->center.x * leftTf->scale.x, left->center.y * leftTf->scale.y, 0.0f);
@@ -315,7 +326,7 @@ namespace roka
 		{
 			Axis[i].z = 0.0f;
 		}
-		Vector3 leftpos = {leftMat._41,leftMat._42,leftMat._43};
+		Vector3 leftpos = { leftMat._41,leftMat._42,leftMat._43 };
 		Vector3 rightpos = { rightMat._41,rightMat._42,rightMat._43 };
 		Vector3 vc = leftpos - rightpos;
 		vc.z = 0.0f;
@@ -332,7 +343,7 @@ namespace roka
 			if (projDistance < fabsf(centerDir.Dot(vA)))
 				return false;
 		}
-		
+
 		return true;
 	}
 	std::vector<std::shared_ptr<GameObject>> CollisionManager::GetCollisionObjects(std::shared_ptr<GameObject>& obj)

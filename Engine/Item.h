@@ -53,7 +53,9 @@ namespace roka
 		wchar_t icon[MAXITEMSTR];
 		int icon_index;
 		wchar_t desc[MAXITEMSTR];
+		int reference_key;
 	};
+
 	struct ExpendablesInfo
 	{
 		unsigned int id;
@@ -61,15 +63,30 @@ namespace roka
 		unsigned int expendables_type;//아이템 타입
 		float value; // 아이템 증감량
 	};
+	
+	struct AvatarPartInfo
+	{
+		unsigned int id;
+		unsigned int part_type; // 파츠 타입.
+	};
+
 
 	//이 정보는 slot 정보와도 함께 엮이는게 좋을듯 왜냐하면 게임을 껐다 켜도 위치해 있던 슬롯에 그대로 위치해 있기 때문.
 	//하지만 시간 없어서 생략
 	struct UserItemInfo
 	{
-		int foreignkey;// item id
-		int count;//보유 갯수
+		int OwnItemInfoTableKey;
 	};
 
+	struct OwnItemInfo
+	{
+		unsigned int id;
+		unsigned int count;
+	};
+
+	
 }
 
 
+
+//userTable -> ownTable -> Item Table

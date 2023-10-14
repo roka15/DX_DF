@@ -33,6 +33,7 @@ namespace roka
 		std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
 		std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
 		std::shared_ptr<NPK> baseskin_npk = Resources::Find<NPK>(L"baseskin");
+		std::shared_ptr<NPK> mgAvatarUInpk = Resources::Find<NPK>(L"mgAvatarUI");
 
 
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
@@ -45,6 +46,8 @@ namespace roka
 		player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.3f);
 		SceneManager::DontDestroy(player);
 
+		//test
+		manager::ItemManager::GetInstance()->UseItem(player, 6000);
 
 
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"infoBtn");
@@ -67,7 +70,17 @@ namespace roka
 			as->SetClip(clip);
 			as->Play();*/
 
-
+#pragma region avatar ui texture
+		std::shared_ptr<Texture> mgAUTexture1 = mgAvatarUInpk->CreateAtlas(L"mg_abelt.img", 0, 2, L"mg_abelt");
+		std::shared_ptr<Texture> mgAUTexture2 = mgAvatarUInpk->CreateAtlas(L"mg_abody.img", 0, 2, L"mg_abody");
+		std::shared_ptr<Texture> mgAUTexture3 = mgAvatarUInpk->CreateAtlas(L"mg_acoat.img", 0, 2, L"mg_acoat");
+		std::shared_ptr<Texture> mgAUTexture4 = mgAvatarUInpk->CreateAtlas(L"mg_acap.img", 0, 2, L"mg_acap");
+		std::shared_ptr<Texture> mgAUTexture5 = mgAvatarUInpk->CreateAtlas(L"mg_aface.img", 0, 2, L"mg_aface");
+		std::shared_ptr<Texture> mgAUTexture6 = mgAvatarUInpk->CreateAtlas(L"mg_ahair.img", 0, 2, L"mg_ahair");
+		std::shared_ptr<Texture> mgAUTexture7 = mgAvatarUInpk->CreateAtlas(L"mg_aneck.img", 0, 2, L"mg_aneck");
+		std::shared_ptr<Texture> mgAUTexture8 = mgAvatarUInpk->CreateAtlas(L"mg_apants.img", 0, 2, L"mg_apants");
+		std::shared_ptr<Texture> mgAUTexture9 = mgAvatarUInpk->CreateAtlas(L"mg_ashoes.img", 0, 2, L"mg_ashoes");
+#pragma endregion
 
 
 #pragma region hud/ui

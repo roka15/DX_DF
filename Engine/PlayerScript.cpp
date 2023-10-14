@@ -187,6 +187,8 @@ namespace roka
 		M_Input->RegisterKeyEvent(mUser->normalAtk_key, EKeyState::Down, std::bind(&PlayerScript::NomalAtkBtnDown, this));
 		M_Input->RegisterKeyEvent(mUser->jump_key, EKeyState::Down, std::bind(&PlayerScript::JumpBtnDown, this));
 		M_Input->RegisterKeyEvent(mUser->skill01_key, EKeyState::Down, std::bind(&PlayerScript::Skill, this, mUser->skill01_key));
+		M_Input->RegisterKeyEvent(mUser->inven_key, EKeyState::Down, std::bind(&PlayerScript::InvenOnOff, this));
+		M_Input->RegisterKeyEvent(mUser->pickup_key, EKeyState::Down, std::bind(&PlayerScript::PickUpItem, this));
 	}
 
 	void PlayerScript::BeAttacked(float damage, EStunState stun)
@@ -603,6 +605,14 @@ namespace roka
 	{
 		if (mPlayerState == EPlayerState::NomalAtk)
 			return;
+		std::vector<std::shared_ptr<Collider2D>> cols = owner->GetChilds<Collider2D>();
+		for (auto col : cols)
+		{
+			bool flag = CollisionManager::CollisionCheck(col->owner->GetSharedPtr(), ELayerType::Item);
+			if (flag == true)
+				return;
+		}
+			
 		ISkill* skill = manager::SkillManager::GetInstance()->Find(ECharacterClassType::Mage, L"NormalAtk");
 		skill->Execute(owner->GetSharedPtr());
 	}
@@ -643,6 +653,23 @@ namespace roka
 			as->PlayPartsMotion();
 			ms->ResetSpeed();
 		}
+	}
+
+	void PlayerScript::InvenOnOff()
+	{
+		if (mInven->active == GameObject::EState::Paused)
+		{
+			mInven->active = GameObject::EState::Active;
+		}
+		else if(mInven->active == GameObject::EState::Active)
+		{
+			mInven->active = GameObject::EState::Paused;
+		}
+	}
+
+	void PlayerScript::PickUpItem()
+	{
+		int a = 0;
 	}
 
 	void PlayerScript::Skill(UINT input)

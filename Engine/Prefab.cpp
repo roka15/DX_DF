@@ -374,6 +374,7 @@ namespace roka::prefab
 		std::shared_ptr<NPK> tooltip_npk = Resources::Find<NPK>(L"tooltip");
 		std::shared_ptr<NPK> infomationButton = Resources::Find<NPK>(L"infoBtn");
 		std::shared_ptr<NPK> item = Resources::Find<NPK>(L"item");
+		std::shared_ptr<NPK> mgAvatarUI = Resources::Find<NPK>(L"mgAvatarUI");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -411,6 +412,7 @@ namespace roka::prefab
 			infomationButton = Resources::Load<NPK>(L"infoBtn", L"..\\Resources\\npk\\InformationButton.npk");
 		if (item == nullptr)
 			item = Resources::Load<NPK>(L"item", L"..\\Resources\\npk\\Item.npk");
-
+		if (mgAvatarUI == nullptr)
+			mgAvatarUI = Resources::Load<NPK>(L"mgAvatarUI", L"..\\Resources\\npk\\mgAvatarUI.npk");
 	}
 }

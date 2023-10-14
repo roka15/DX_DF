@@ -46,6 +46,8 @@ namespace roka::info
 		UINT quick_standing;
 		UINT normalAtk;
 		UINT skill1;
+		UINT inven;
+		UINT pickup;
 	};
 	struct SkillNameInfo
 	{
@@ -81,6 +83,8 @@ namespace roka::info
 		const UINT& GetNormalAtkKey()const { return mKeysInfo->normalAtk; }
 		const UINT& GetJumpKey()const { return mKeysInfo->jump; }
 		const UINT& GetSkillKey01()const { return mKeysInfo->skill1; }
+		const UINT& GetInvenKey()const { return mKeysInfo->inven; }
+		const UINT& GetPickUp()const { return mKeysInfo->pickup; }
 
 		void SetBaseAvatar(std::wstring name) { wcscpy(mCharacterInfo->base_skin_avatar,name.c_str()); }
 		void SetWeaponAvatar1(std::wstring name) { wcscpy(mCharacterInfo->weapon_avatar1, name.c_str()); }
@@ -106,6 +110,8 @@ namespace roka::info
 		GET_PROPERTY(GetNormalAtkKey) UINT normalAtk_key;
 		GET_PROPERTY(GetJumpKey) UINT jump_key;
 		GET_PROPERTY(GetSkillKey01) UINT skill01_key;
+		GET_PROPERTY(GetInvenKey) UINT inven_key;
+		GET_PROPERTY(GetPickUp) UINT pickup_key;
 
 	private:
 		std::unique_ptr<UserInfo> mUserInfo;

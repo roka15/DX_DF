@@ -54,6 +54,8 @@ namespace roka
 		void DownBtnUp();
 		void NomalAtkBtnDown();
 		void JumpBtnDown();
+		void InvenOnOff();
+		void PickUpItem();
 
 		void Skill(UINT input);
 		void NormalFallEvent();
