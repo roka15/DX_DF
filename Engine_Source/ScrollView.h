@@ -16,8 +16,6 @@ namespace roka
 		virtual void LateUpdate();
 		virtual void Render();
 		virtual void Release();
-
-
 	private:
 
 	};

@@ -7,8 +7,8 @@ namespace roka
 	{
 		NONE,
 		Expendables,//소모품
-		Defense,//방어형
-		Attack,//공격형
+		Part,//part형 state 변동 = 장비 파츠
+		AvatarPart,//avatar part
 		END,
 	};
 	enum class EItemRankType

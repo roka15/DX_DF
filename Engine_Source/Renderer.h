@@ -63,11 +63,11 @@ namespace roka::renderer
 	extern std::vector<std::shared_ptr<GameObject>> lights;
 	extern std::vector<std::shared_ptr<roka::Camera>> cameras;
 	extern std::shared_ptr<roka::Camera> MainCamera;
-	extern std::vector<DebugMesh> debugMeshs;
+	extern std::vector<DebugMesh*> debugMeshs;
 
 	void Initialize();
 	void BindLights();
 	void Render();
 	void Release();
-	void PushDebugMeshAttribute(DebugMesh mesh);
+	void PushDebugMeshAttribute(DebugMesh* mesh);
 }

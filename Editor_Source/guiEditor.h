@@ -19,7 +19,7 @@ namespace gui
 		static void Release();
 		static void DebugRender();
 
-		static void DebugRender(const roka::graphics::DebugMesh& mesh);
+		static void DebugRender(const roka::graphics::DebugMesh* mesh);
 		static void PushEditObject(EditorObject* editObj) { mEditorObjects.push_back(editObj); }
 	private:
 		static std::vector<Widget*> mWidgets;

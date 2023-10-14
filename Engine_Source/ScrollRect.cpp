@@ -28,14 +28,10 @@ namespace roka
 	}
 	void ScrollRect::Update()
 	{
-		std::shared_ptr<Collider2D> collider = owner->GetComponent<Collider2D>();
-
-		std::shared_ptr<GameObject> viewport = mViewPort;
-		Vector3 scale = viewport->GetComponent<Transform>()->scale;
-		collider->SetSize(Vector2(scale.x, scale.y));
 	}
 	void ScrollRect::LateUpdate()
 	{
+		SetViewPort();
 	}
 	void ScrollRect::Render()
 	{
@@ -49,9 +45,18 @@ namespace roka
 	void ScrollRect::SetViewPort(std::shared_ptr<GameObject> obj)
 	{
 		mViewPort = obj;
+		SetViewPort();
+	}
+
+	void ScrollRect::SetViewPort()
+	{
+		std::shared_ptr<Collider2D> col = owner->GetComponent<Collider2D>();
 		std::shared_ptr<Transform> tf = mViewPort->AddComponent<Transform>();
 		Vector3 pos = tf->position;
 		Vector3 scale = tf->scale;
+
+		col->SetSize(Vector2(2, 3));
+
 
 		Viewport view;
 		view.width = focusApp->GetWidth();
@@ -90,7 +95,7 @@ namespace roka
 		for (auto obj : contents)
 		{
 			std::shared_ptr<Transform> tf = obj->GetComponent<Transform>();
-			Vector3 pos = tf->position;
+			Vector3 pos = tf->GetLocalPosition();
 			pos.y += offset;
 			tf->position = pos;
 		}

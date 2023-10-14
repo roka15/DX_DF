@@ -80,6 +80,8 @@ namespace roka
 		EPlayerState GetPlayerState() { return mPlayerState; }
 		float GetDir() { return mCurDir; }
 
+		void SetInven(std::shared_ptr<GameObject> obj) { mInven = obj; }
+
 		PROPERTY(GetPlayerState, SetPlayerState) EPlayerState player_state;
 	protected:
 		
@@ -99,6 +101,7 @@ namespace roka
 		std::weak_ptr<Collider2D> mTopCollider;
 		std::weak_ptr<Collider2D> mBottomCollider;
 	
+		std::shared_ptr<GameObject> mInven;
 
 		double mLeftTime;
 		double mRightTime;

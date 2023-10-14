@@ -44,79 +44,80 @@ namespace roka
 	{
 		Scene::Initialize();
 		std::shared_ptr<NPK> inven_npk = Resources::Find<NPK>(L"inventory");
-		std::shared_ptr<ScrollView> scrollTest = object::Instantiate<ScrollView>();
-	    std::shared_ptr<Texture> texture = inven_npk->CreateAtlas(L"inventory.img", 49, 50, L"InvenSlot");
-		std::shared_ptr<ScrollRect> rect = scrollTest->GetComponent<ScrollRect>();
-		{
-			std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
-			testimg->SetName(L"TestImage");
-			testimg->AddComponent <Collider2D>();
-			std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
-			tf->scale = Vector3(0.25f, 0.25f, 1.0f);
-			std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
-			mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
-			mesh->material->texture = texture;
-			std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
-			imageComp->SetSprite(0);
-			rect->AddContent(testimg);
-		}
-		{
-			std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
-			testimg->layer_type = ELayerType::UI;
-			testimg->SetName(L"TestImage");
-			testimg->AddComponent <Collider2D>();
-			std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
-			tf->scale = Vector3(0.25f, 0.25f, 1.0f);
-			std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
-			mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
-			mesh->material->texture = texture;
-			std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
-			imageComp->SetSprite(0);
+		//std::shared_ptr<ScrollView> scrollTest = object::Instantiate<ScrollView>();
+	 //   std::shared_ptr<Texture> texture = inven_npk->CreateAtlas(L"inventory.img", 49, 50, L"InvenSlot");
+		//std::shared_ptr<Transform> tf = scrollTest->GetComponent<Transform>();
+		//std::shared_ptr<ScrollRect> rect = scrollTest->GetComponent<ScrollRect>();
+		//{
+		//	std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
+		//	testimg->SetName(L"TestImage");
+		//	testimg->AddComponent <Collider2D>();
+		//	std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
+		//	tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+		//	std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
+		//	mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+		//	mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
+		//	mesh->material->texture = texture;
+		//	std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
+		//	imageComp->SetSprite(0);
+		//	rect->AddContent(testimg);
+		//}
+		//{
+		//	std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
+		//	testimg->layer_type = ELayerType::UI;
+		//	testimg->SetName(L"TestImage");
+		//	testimg->AddComponent <Collider2D>();
+		//	std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
+		//	tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+		//	std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
+		//	mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+		//	mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
+		//	mesh->material->texture = texture;
+		//	std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
+		//	imageComp->SetSprite(0);
 
-			rect->AddContent(testimg);
-		}
-		{
-			std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
-			testimg->layer_type = ELayerType::UI;
-			testimg->SetName(L"TestImage");
-			testimg->AddComponent <Collider2D>();
-			std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
-			tf->scale = Vector3(0.25f, 0.25f, 1.0f);
-			std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
-			mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
-			mesh->material->texture = texture;
-			std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
-			imageComp->SetSprite(0);
+		//	rect->AddContent(testimg);
+		//}
+		//{
+		//	std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
+		//	testimg->layer_type = ELayerType::UI;
+		//	testimg->SetName(L"TestImage");
+		//	testimg->AddComponent <Collider2D>();
+		//	std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
+		//	tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+		//	std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
+		//	mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+		//	mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
+		//	mesh->material->texture = texture;
+		//	std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
+		//	imageComp->SetSprite(0);
 
-			rect->AddContent(testimg);
-		}
-		{
-			std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
-			testimg->layer_type = ELayerType::UI;
-			testimg->SetName(L"TestImage");
-			testimg->AddComponent <Collider2D>();
-			std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
-			tf->scale = Vector3(0.25f, 0.25f, 1.0f);
-			std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
-			mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
-			mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
-			mesh->material->texture = texture;
-			std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
-			imageComp->SetSprite(0);
+		//	rect->AddContent(testimg);
+		//}
+		//{
+		//	std::shared_ptr<roka::Image> testimg = object::Instantiate<roka::Image>();
+		//	testimg->layer_type = ELayerType::UI;
+		//	testimg->SetName(L"TestImage");
+		//	testimg->AddComponent <Collider2D>();
+		//	std::shared_ptr<Transform> tf = testimg->GetComponent<Transform>();
+		//	tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+		//	std::shared_ptr<MeshRenderer> mesh = testimg->GetComponent<MeshRenderer>();
+		//	mesh->mesh = Resources::Find<Mesh>(L"RectMesh");
+		//	mesh->material->shader = Resources::Find<Shader>(L"AtlasShader");
+		//	mesh->material->texture = texture;
+		//	std::shared_ptr<ImageComponent> imageComp = testimg->GetComponent<ImageComponent>();
+		//	imageComp->SetSprite(0);
 
-			rect->AddContent(testimg);
-		}
+		//	rect->AddContent(testimg);
+		//}
 
 
-		std::shared_ptr<GameObject> content = rect->GetContent();
-		std::shared_ptr<GridGroupLayout> grid_layout = content->AddComponent<GridGroupLayout>();
-		grid_layout->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 3, 2);
-		//grid_layout->SetCellSize(Vector2(2.0f, 3.0f));
+		//std::shared_ptr<GameObject> content = rect->GetContent();
+		//std::shared_ptr<GridGroupLayout> grid_layout = content->AddComponent<GridGroupLayout>();
+		//grid_layout->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 3, 2);
+		////grid_layout->SetCellSize(Vector2(2.0f, 3.0f));
 
-		SceneManager::DontDestroy(scrollTest);
+		//SceneManager::DontDestroy(scrollTest);
 
 		
 	}

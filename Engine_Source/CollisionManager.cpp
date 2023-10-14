@@ -176,6 +176,9 @@ namespace roka
 	}
 	bool CollisionManager::Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
 	{
+		if (left->owner->GetName().compare(L"ScrollView") == 0 ||
+			right->owner->GetName().compare(L"ScrollView") == 0)
+			int a = 0;
 		Vector3 LocalPos[4] =
 		{
 			Vector3{-0.5f,0.5f,0.0f},

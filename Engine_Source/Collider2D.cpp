@@ -86,7 +86,7 @@ namespace roka
 			return;
 		if (mbRender == false)
 			return;
-		if (owner->GetName().compare(L"LayserObject") == 0)
+		if (owner->GetName().compare(L"ScrollView") == 0)
 			int a = 0;
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 
@@ -114,16 +114,16 @@ namespace roka
 		mPosition = pos;
 
 		
-		roka::graphics::DebugMesh mesh = {};
-		mesh.parent = owner->parent;
-		mesh.position = pos;
-		mesh.rotation = rotation;
-		mesh.scale = scale;
-		mesh.type = EColliderType::Rect;
+		roka::graphics::DebugMesh* mesh = new roka::graphics::DebugMesh();
+		mesh->parent = owner->parent;
+		mesh->position = pos;
+		mesh->rotation = rotation;
+		mesh->scale = scale;
+		mesh->type = EColliderType::Rect;
 		if (mbCollision == true)
-			mesh.color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+			mesh->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 		else
-			mesh.color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+			mesh->color = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
 
 		if (owner->GetName().compare(L"TestImage") == 0)
 		{

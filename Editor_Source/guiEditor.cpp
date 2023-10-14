@@ -110,30 +110,31 @@ namespace gui
 
 	void Editor::DebugRender()
 	{
-		for (const roka::graphics::DebugMesh& mesh
+		for (const roka::graphics::DebugMesh* mesh
 			: roka::renderer::debugMeshs)
 		{
 			DebugRender(mesh);
+			delete mesh;
 		}
 		roka::renderer::debugMeshs.clear();
 	}
 
-	void Editor::DebugRender(const roka::graphics::DebugMesh& mesh)
+	void Editor::DebugRender(const roka::graphics::DebugMesh* mesh)
 	{
-		DebugObject* debugObj = mDebugObjects[(UINT)mesh.type];
+		DebugObject* debugObj = mDebugObjects[(UINT)mesh->type];
 
 		std::shared_ptr<roka::Transform> tf = debugObj->GetComponent<roka::Transform>();
-		Vector3 pos = mesh.position;
+		Vector3 pos = mesh->position;
 		pos.z = -1.00f;
-		if (mesh.parent!=nullptr &&mesh.parent->GetName().compare(L"Monster0") == 0)
+		if (mesh->parent!=nullptr &&mesh->parent->GetName().compare(L"Monster0") == 0)
 			int a = 0;
-		debugObj->SetParent(mesh.parent);
+		debugObj->SetParent(mesh->parent);
 		tf->SetPosition(pos);
-		tf->SetScale(mesh.scale);
-		tf->SetRotation(mesh.rotation);
+		tf->SetScale(mesh->scale);
+		tf->SetRotation(mesh->rotation);
 		tf->LateUpdate();
 
-		debugObj->SetColor(mesh.color);
+		debugObj->SetColor(mesh->color);
 
 		std::shared_ptr<roka::Camera> mainCamera = roka::renderer::MainCamera;
 		roka::Camera::SetGpuViewMatrix(mainCamera->GetViewMatrix());

@@ -11,6 +11,7 @@
 
 #include "Enums.h"
 #include "RokaMath.h"
+#include "MemoryPool.h"
 
 #define CB_GETBINDSLOT(name) __CBUFFERBINDSLOT__##name##__
 #define CBUFFER(name,slot) static const int CB_GETBINDSLOT(name)=slot; struct alignas(16) name
@@ -110,9 +111,20 @@ namespace roka::graphics
 		}
 		virtual ~GpuBuffer() = default;
 	};
-	class DebugMesh
+	class DebugMesh : public stl::MemoryPool
 	{
 	public:
+		DebugMesh() :viewPortRect{} {
+			type = enums::EColliderType::End; 
+			position =math::Vector3::Zero;
+			rotation = math::Vector3::Zero;
+			scale = math::Vector3::Zero;
+			parent = nullptr;
+			radius = 0.0f;
+			duration = 0.0f;
+			time = 0.0f;
+			color = math::Vector4::Zero;
+		}
 		enums::EColliderType type;
 		math::Vector3 position;
 		math::Vector3 rotation;

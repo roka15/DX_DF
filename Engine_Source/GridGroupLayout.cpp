@@ -33,12 +33,16 @@ void roka::GridGroupLayout::Initialize()
 
 void roka::GridGroupLayout::Update()
 {
+}
+
+void roka::GridGroupLayout::LateUpdate()
+{
 	std::vector<std::shared_ptr<GameObject>> objs = owner->GetChilds();
 	if (mbUpdateRequest == true)
 	{
 		std::shared_ptr<Transform> tf = owner->GetComponent<Transform>();
 		Vector3 scale = tf->GetLocalScale();
-		Vector2 cellSize = mCellSize*scale;
+		Vector2 cellSize = mCellSize * scale;
 		cellSize.y *= -1;
 		mOffset.x += cellSize.x * 0.5f;
 		mOffset.y += cellSize.y * 0.5f;
@@ -125,10 +129,6 @@ void roka::GridGroupLayout::Update()
 	}
 }
 
-void roka::GridGroupLayout::LateUpdate()
-{
-}
-
 void roka::GridGroupLayout::Render()
 {
 }
@@ -137,15 +137,16 @@ void roka::GridGroupLayout::SetLeftTop(Vector3& pos)
 {
 	std::shared_ptr<Transform> gridTf = owner->GetComponent<Transform>();
 	Vector3 lscale = gridTf->GetLocalScale();
-	Vector3 wscale = gridTf->scale;
+	Vector3 parentScale = owner->parent->GetComponent<Transform>()->GetLocalScale();
+	Vector3 wscale = lscale * parentScale;
 	Vector3 gpos = Vector3::Zero;//gridTf->position;
-
 	Vector2 diff = Vector2::One;
+
 	if (owner->parent != nullptr)
 	{
 		Matrix scaleMat = Matrix::CreateScale(lscale);
 		scaleMat = scaleMat.Invert();
-
+	
 		diff.x = scaleMat._11;
 		diff.y = scaleMat._22;
 	}

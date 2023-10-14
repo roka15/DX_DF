@@ -131,6 +131,8 @@ namespace roka
 			mWorld *= tf->mWorld;
 			if (owner->GetName().compare(L"Eft01") == 0)
 				int a = 0;
+			if (owner->GetName().compare(L"InvenSlot0") == 0)
+				int a = 0;
 			//mWorld = mWorld*tf->mWorld.Invert();
 		}
 		mWorldPosition = Vector3(mWorld._41, mWorld._42, mWorld._43);
@@ -147,6 +149,8 @@ namespace roka
 	}
 	void Transform::BindConstantBuffer()
 	{
+		if (owner->GetName().compare(L"InvenSlot0") == 0)
+			int a = 0;
 		GameObject* aowner = GetOwner();
 		renderer::TransformCB trCB = {};
 		trCB.mWorld = mWorld;
@@ -169,6 +173,13 @@ namespace roka
 				if (viewPort.left != 0.0f && viewPort.top != 0.0f &&
 					viewPort.right != 0.0f && viewPort.bottom != 0.0f)
 				{
+					Vector3 localPos = GetLocalPosition();
+					Vector3 localScale = GetLocalScale();
+					trCB.mWorld._41 = localPos.x;
+					trCB.mWorld._42 = localPos.y;
+					trCB.mWorld._11 = localScale.x;
+					trCB.mWorld._22 = localScale.y;
+					trCB.mWorld._33 = localScale.z;
 					trCB.mProjection = Camera::GetProjectionCalculate(viewPort);
 					flag = true;
 				}

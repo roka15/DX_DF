@@ -27,7 +27,7 @@ namespace roka::renderer
 	std::vector<std::shared_ptr<roka::Camera>> cameras = {};
 	std::shared_ptr<roka::Camera> MainCamera = nullptr;
 
-	std::vector<DebugMesh> debugMeshs = {};
+	std::vector<DebugMesh*> debugMeshs = {};
 	void SetupState()
 	{
 #pragma region InputLayout
@@ -574,7 +574,7 @@ namespace roka::renderer
 		delete lightsBuffer;
 		lightsBuffer = nullptr;
 	}
-	void PushDebugMeshAttribute(DebugMesh mesh)
+	void PushDebugMeshAttribute(DebugMesh* mesh)
 	{
 		debugMeshs.push_back(mesh);
 	}
