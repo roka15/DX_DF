@@ -21,6 +21,7 @@ namespace roka::manager
 		~ItemManager();
 
 		void Initialize();
+		void SetInventoryItem(std::shared_ptr<GameObject> inven,std::shared_ptr<GameObject> player);
 		const ItemInfo& GetItemInfo(std::shared_ptr<GameObject> caster,int id);
 		const ItemInfo& GetItemInfo(int id);
 		const AvatarPartInfo& GetAvatarPartInfo(int id);

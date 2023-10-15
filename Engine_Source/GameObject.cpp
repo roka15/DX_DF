@@ -132,7 +132,7 @@ void roka::GameObject::Copy(GameObject* src)
 
 void roka::GameObject::ChildDestroy()
 {
-	for(auto itr = mChild.begin(); itr!= mChild.end();)
+	for (auto itr = mChild.begin(); itr != mChild.end();)
 	{
 		std::shared_ptr<GameObject> child = (*itr);
 		if (child->active == EState::Dead)
@@ -178,10 +178,11 @@ void roka::GameObject::AddChild(std::shared_ptr<GameObject> child)
 	Vector3 cScale = tf->GetLocalScale();
 	cScale = cScale / pScale;
 	Vector3 cPos = tf->GetLocalPosition();
-	
+
 	cPos = cPos + pPos;
 	tf->SetScale(cScale);
 	tf->SetPosition(cPos);
+	tf->LateUpdate();
 }
 
 void roka::GameObject::InsertChild(std::shared_ptr<GameObject> child, int index)
@@ -215,6 +216,19 @@ void roka::GameObject::InsertChild(std::shared_ptr<GameObject> child, int index)
 	tf->SetPosition(cPos);
 }
 
+std::shared_ptr<roka::GameObject> roka::GameObject::FindParent(std::wstring name)
+{
+	std::shared_ptr<roka::GameObject> parent = nullptr;
+	if (mParent.lock() != nullptr)
+	{
+		if (mParent.lock()->GetName().compare(name) == 0)
+			parent = mParent.lock();
+		else
+			parent = mParent.lock()->FindParent(name);
+	}
+	return parent;
+}
+
 
 std::shared_ptr<roka::GameObject> roka::GameObject::GetChild(std::wstring name)
 {
@@ -237,7 +251,7 @@ std::vector<std::shared_ptr<roka::GameObject>> roka::GameObject::GetChilds()
 	return vec;
 }
 
-void roka::GameObject::SetChildState(EState state,std::wstring key)
+void roka::GameObject::SetChildState(EState state, std::wstring key)
 {
 	for (auto& child : mChild)
 	{
@@ -252,7 +266,7 @@ void roka::GameObject::RemoveChild(std::wstring key)
 {
 	for (auto& child : mChild)
 	{
-		if (child->GetName().compare(key) == 0) 
+		if (child->GetName().compare(key) == 0)
 		{
 			child.reset();
 		}
@@ -263,13 +277,13 @@ void roka::GameObject::RemoveChild(std::wstring key)
 void roka::GameObject::RemoveChild(std::shared_ptr<GameObject> obj)
 {
 	auto itr = mChild.begin();
-	while (itr != mChild.end()) 
+	while (itr != mChild.end())
 	{
-		if ((*itr)==obj) 
+		if ((*itr) == obj)
 		{
-			itr = mChild.erase(itr); 
+			itr = mChild.erase(itr);
 		}
-		else 
+		else
 		{
 			++itr;
 		}
@@ -364,7 +378,7 @@ void roka::GameObject::Render()
 		}*/
 		comp->Render();
 	}
-	
+
 	for (std::shared_ptr<Script>& script : mScripts)
 	{
 		script->Render();

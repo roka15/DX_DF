@@ -11,6 +11,7 @@
 #include "Input.h"
 #include "CollisionManager.h"
 #include "SceneManager.h"
+#include "UI.h"
 using namespace roka::graphics;
 namespace roka
 {
@@ -32,6 +33,8 @@ namespace roka
 	void ItemScript::Initialize()
 	{
 		owner->AddComponent<Collider2D>();
+		UI* ui = dynamic_cast<UI*>(owner);
+		ui->ui_type = EUIType::Item;
 	}
 	void ItemScript::Update()
 	{

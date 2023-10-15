@@ -1,9 +1,10 @@
 #pragma once
 #include "Script.h"
+#include "..\\Engine\\IMouseEvent.h"
 namespace roka
 {
     class Slot :
-        public Script
+        public Script, public IPointerEnterHandler
     {
     protected:
         Slot();
@@ -16,6 +17,11 @@ namespace roka
         virtual void Update() override;
         virtual void LateUpdate() override;
         virtual void Render() override;
+
+        virtual void OnPointerEnter(PointerEventData* data)override;
+
+        void AddItem();
+        void RemveItem();
     private:
         friend class FactoryBase;
         friend class ScriptFactory;

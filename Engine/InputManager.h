@@ -20,6 +20,7 @@ namespace roka::manager
 		void Release();
 
 		void SetCursor(std::shared_ptr<GameObject> cursor) { mCursor = cursor; }
+		std::shared_ptr<GameObject> GetCursor() { return mCursor.lock(); }
 		void RegisterKeyEvent(UINT key1,EKeyState key2, std::function<void()> key_event);
 		void OnEvent(EKeyCode key1, EKeyState key2);
 

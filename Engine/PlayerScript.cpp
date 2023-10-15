@@ -22,6 +22,7 @@
 
 #include "User.h"
 #include "GaugeManager.h"
+#include "ItemManager.h"
 
 
 using namespace roka::info;
@@ -189,6 +190,14 @@ namespace roka
 		M_Input->RegisterKeyEvent(mUser->skill01_key, EKeyState::Down, std::bind(&PlayerScript::Skill, this, mUser->skill01_key));
 		M_Input->RegisterKeyEvent(mUser->inven_key, EKeyState::Down, std::bind(&PlayerScript::InvenOnOff, this));
 		M_Input->RegisterKeyEvent(mUser->pickup_key, EKeyState::Down, std::bind(&PlayerScript::PickUpItem, this));
+	}
+
+	void PlayerScript::SettingInventory()
+	{
+		if (mInven != nullptr)
+		{
+			manager::ItemManager::GetInstance()->SetInventoryItem(mInven, owner->GetSharedPtr());
+		}
 	}
 
 	void PlayerScript::BeAttacked(float damage, EStunState stun)

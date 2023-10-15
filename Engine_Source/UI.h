@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+
 namespace roka
 {
 	class UI :
@@ -16,13 +17,20 @@ namespace roka
 		virtual void LateUpdate();
 		virtual void Render();
 		virtual void Release();
+	
 
 		void SetRayCastTarget(bool flag) { mbRayCastTarget = flag; }
 		void SetViewPortRect(RECT rect) { mViewPortRect = rect; }
 		RECT GetViewPortRect() { return mViewPortRect; }
+
+		void SetUIType(EUIType type) { mUIType = type; }
+		const EUIType& GetUIType() { return mUIType; }
+		PROPERTY(GetUIType,SetUIType) EUIType ui_type;
+		
 	private:
 		bool mbRayCastTarget;
 		RECT mViewPortRect;
+		EUIType mUIType;
 	};
 }
 

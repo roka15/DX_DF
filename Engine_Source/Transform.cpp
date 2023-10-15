@@ -170,16 +170,33 @@ namespace roka
 			{
 				RECT viewPort = {};
 				viewPort = ui->GetViewPortRect();
+				if (owner->GetName().compare(L"È£¶ûÀÌ ±â¿îÀÌ ¾¦¾¦") == 0)
+					int a = 0;
 				if (viewPort.left != 0.0f && viewPort.top != 0.0f &&
 					viewPort.right != 0.0f && viewPort.bottom != 0.0f)
 				{
 					Vector3 localPos = GetLocalPosition();
 					Vector3 localScale = GetLocalScale();
-					trCB.mWorld._41 = localPos.x;
-					trCB.mWorld._42 = localPos.y;
-					trCB.mWorld._11 = localScale.x;
-					trCB.mWorld._22 = localScale.y;
-					trCB.mWorld._33 = localScale.z;
+					Vector3 worldPos = position;
+					Vector3 worldScale = scale;
+					if (ui->ui_type !=EUIType::Slot)
+					{
+						trCB.mWorld._41 = worldPos.x;
+						trCB.mWorld._42 = worldPos.y;
+						trCB.mWorld._11 = worldScale.x;
+						trCB.mWorld._22 = worldScale.y;
+						trCB.mWorld._33 = worldScale.z;
+					}
+					else 
+					{
+						trCB.mWorld._41 = localPos.x;
+						trCB.mWorld._42 = localPos.y;
+						trCB.mWorld._11 = localScale.x;
+						trCB.mWorld._22 = localScale.y;
+						trCB.mWorld._33 = localScale.z;
+					}
+				
+					
 					trCB.mProjection = Camera::GetProjectionCalculate(viewPort);
 					flag = true;
 				}

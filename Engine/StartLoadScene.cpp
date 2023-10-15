@@ -23,6 +23,7 @@
 #include "GaugeManager.h"
 #include "ScrollRect.h"
 #include "ScrollView.h"
+#include "Slot.h"
 
 namespace roka
 {
@@ -255,7 +256,7 @@ namespace roka
 		hudParent->AddChild(QuickItemWindow);
 		{
 			std::shared_ptr<GridGroupLayout> grid = QuickItemWindow->AddComponent<GridGroupLayout>();
-			grid->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.0f, 0.0f), 1, 6);
+			grid->SetInfo(Vector2(0.0f, 0.0f), Vector2(0.05f, 0.0f), 1, 6);
 			grid->SetCellSize(Vector2(0.225f, 0.225f));
 		}
 		for (int i = 0; i < 1 * 6; i++)
@@ -265,10 +266,10 @@ namespace roka
 				Vector3::Zero,
 				Vector3(0.25f, 0.25f, 1.0f));
 			{
-				std::wstring name = L"ItemQuickSlot01" + i;
+				std::wstring name = L"ItemQuickSlot01" + std::to_wstring(i);
 				ItemQuickSlot->SetName(name);
 				ItemQuickSlot->ismove = false;
-
+				ItemQuickSlot->AddScript<Slot>();
 				std::shared_ptr<MeshRenderer> mr = ItemQuickSlot->GetComponent<MeshRenderer>();
 				mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 				mr->material->texture = hudTexture11;
@@ -519,6 +520,7 @@ namespace roka
 		std::shared_ptr<Texture> tooltipTexture = tooltip_npk->CreateAtlas(L"tooltip.img", 0, 8, L"ui_ToolTip");
 
 		std::shared_ptr<GameObject> InvenParent = object::Instantiate<GameObject>(Vector3(3.0f, 0.0f, -0.6f));
+
 		InvenParent->layer_type = ELayerType::UI;
 		SceneManager::DontDestroy(InvenParent);
 		playerScript->SetInven(InvenParent);
@@ -845,33 +847,37 @@ namespace roka
 						Vector3::Zero,
 						Vector3(0.25f, 0.35f, 1.0f));
 					{
+						ItemSlot->ui_type = EUIType::Slot;
 						std::wstring name = L"InvenSlot" + std::to_wstring(i);
 						ItemSlot->SetName(name);
 						ItemSlot->ismove = false;
-						ItemSlot->AddComponent<Collider2D>();
 						std::shared_ptr<MeshRenderer> mr = ItemSlot->GetComponent<MeshRenderer>();
 						mr->mesh = Resources::Find<Mesh>(L"RectMesh");
 						mr->material->texture = texture;
 						std::shared_ptr<ImageComponent> imageComp = ItemSlot->GetComponent<ImageComponent>();
 						imageComp->SetSprite(19);
-
+						std::shared_ptr<Slot> slot = ItemSlot->AddScript<Slot>();
+						std::shared_ptr<Collider2D> col = ItemSlot->GetComponent<Collider2D>();
+						col->SetSize(Vector2(0.75f, 0.75f));
 						rect->AddContent(ItemSlot);
 					}
 				}
 			}
 		}
+
+		playerScript->SettingInventory();
 		//test item
-		std::shared_ptr<roka::Image> item = object::Instantiate<roka::Image>();
+	/*	std::shared_ptr<roka::Image> item = object::Instantiate<roka::Image>();
 		{
 			std::shared_ptr<ItemScript> script = item->AddScript<ItemScript>();
 			script->SetUseOwner(player);
 			script->SetItem(1000);
 			script->SetMode(cursor, EItemModeType::Icon);
 			std::shared_ptr<Transform> tf = item->GetComponent<Transform>();
-			tf->scale = Vector3(0.25f, 0.25f, 1.0f);
+			tf->scale = Vector3(0.15f, 0.15f, 1.0f);
 			tf->position = Vector3(-3.75f, 1.325f, 0.0f);
 		}
-		SceneManager::DontDestroy(item);
+		SceneManager::DontDestroy(item);*/
 		//	    startx = -0.4f;
 		//		starty = -0.32f;
 		//		for (int i = 0; i < 7; i++)

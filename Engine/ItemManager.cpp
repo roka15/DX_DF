@@ -7,6 +7,11 @@
 #include "Resources.h"
 #include "NPK.h"
 #include "..\\Engine_Source\\Texture.h"
+#include "Image.h"
+#include "Object.h"
+#include "ItemScript.h"
+#include "InputManager.h"
+#include "ScrollRect.h"
 using namespace roka::graphics;
 namespace roka::manager
 {
@@ -466,6 +471,40 @@ namespace roka::manager
 	void ItemManager::Initialize()
 	{
 		ItemTextureLoad();
+	}
+
+	void ItemManager::SetInventoryItem(std::shared_ptr<GameObject> inven, std::shared_ptr<GameObject> player)
+	{
+		int user_id = player->GetComponent<PlayerScript>()->GetUserInfo()->id;
+		std::vector<OwnItemInfo>& ownList = mOwnItemTable[user_id];
+
+
+		std::shared_ptr<ScrollRect> scrollRect = inven->GetChild<ScrollRect>()->GetComponent<ScrollRect>();
+		std::shared_ptr<GameObject> content = scrollRect->GetContent();
+
+		std::vector<std::shared_ptr<GameObject>> slotList = content->GetChilds();
+		Vector3 slotScale = slotList[0]->GetComponent<Transform>()->scale;
+		int slot_index = 0;
+		for (auto own : ownList)
+		{
+			int itemID = own.id;
+			int count = own.count; // text·Î Ãâ·Â
+
+			ItemInfo& item = mItemTable[itemID];
+			
+			std::shared_ptr<GameObject> cursor = manager::InputManager::GetInstance()->GetCursor();
+			std::shared_ptr<roka::Image> object = object::Instantiate<roka::Image>();
+			std::shared_ptr<ItemScript> script = object->AddScript<ItemScript>();
+			script->SetUseOwner(player);
+			script->SetItem(itemID);
+			script->SetMode(cursor,EItemModeType::Icon);
+			object->SetName(item.name);
+
+			std::shared_ptr<Transform> tf = object->GetComponent<Transform>();
+			tf->scale = slotScale;
+			slotList[slot_index]->AddChild(object);
+			slot_index++;
+		}
 	}
 
 	const ItemInfo& ItemManager::GetItemInfo(std::shared_ptr<GameObject> caster, int id)

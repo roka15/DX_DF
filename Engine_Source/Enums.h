@@ -126,4 +126,11 @@ namespace roka::enums
 		Horizontal,
 		End,
 	};
+	enum class EUIType
+	{
+		None,
+		Slot,
+		Item,
+		End,
+	};
 }

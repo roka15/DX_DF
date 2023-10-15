@@ -1,5 +1,7 @@
 #include "Slot.h"
-
+#include "GameObject.h"
+#include "Collider2D.h"
+#include "UI.h"
 namespace roka
 {
 	Slot::Slot():Script(EScriptType::Slot)
@@ -17,6 +19,9 @@ namespace roka
 	void Slot::Initialize()
 	{
 		Script::Initialize();
+		owner->AddComponent<Collider2D>();
+		UI* ui = dynamic_cast<UI*>(owner);
+		ui->ui_type = EUIType::Slot;
 	}
 
 	void Slot::Update()
@@ -28,6 +33,18 @@ namespace roka
 	}
 
 	void Slot::Render()
+	{
+	}
+
+	void Slot::OnPointerEnter(PointerEventData* data)
+	{
+	}
+
+	void Slot::AddItem()
+	{
+	}
+
+	void Slot::RemveItem()
 	{
 	}
 

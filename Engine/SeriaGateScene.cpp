@@ -869,6 +869,7 @@ void roka::SeriaGateScene::OnEnter()
 	CollisionManager::SetLayer(ELayerType::Player, ELayerType::Item, true);
 	CollisionManager::SetLayer(ELayerType::Raycast, ELayerType::Player, true);
 	CollisionManager::SetLayer(ELayerType::Raycast, ELayerType::UI, true);
+	//CollisionManager::SetLayer(ELayerType::Raycast,E)
 }
 
 void roka::SeriaGateScene::Loading()

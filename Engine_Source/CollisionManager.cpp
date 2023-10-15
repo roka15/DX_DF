@@ -5,6 +5,7 @@
 #include "Transform.h"
 #include "RokaTime.h"
 #include "Camera.h"
+#include "UI.h"
 namespace roka
 {
 	std::bitset<LAYER_MAX>  CollisionManager::mMatrix[LAYER_MAX] = {};
@@ -54,9 +55,9 @@ namespace roka
 				= mCollisionMap.find(id.id);
 
 			if (itr == mCollisionMap.end())
-				return;
+				continue;
 			if (itr->second == false)
-				return;
+				continue;
 
 			itr->second = false;
 			left->OnCollisionExit(right);
@@ -114,6 +115,9 @@ namespace roka
 		ELayerType leftType = left->owner->layer_type;
 		ELayerType RightType = right->owner->layer_type;
 
+		if (left->owner->GetName().compare(L"호랑이 기운이 쑥쑥") == 0 ||
+			right->owner->GetName().compare(L"호랑이 기운이 쑥쑥") == 0)
+			int a = 0;
 		std::map<UINT64, bool>::iterator itr
 			= mCollisionMap.find(id.id);
 		if (itr == mCollisionMap.end())
@@ -187,9 +191,29 @@ namespace roka
 	}
 	bool CollisionManager::Intersect(std::shared_ptr<Collider2D> left, std::shared_ptr<Collider2D> right)
 	{
-		if (left->owner->GetName().compare(L"ScrollView") == 0 ||
-			right->owner->GetName().compare(L"ScrollView") == 0)
-			int a = 0;
+		UI* leftUI = dynamic_cast<UI*>(left->owner);
+		UI* rightUI = dynamic_cast<UI*>(right->owner);
+		//원래 여기서 하면 안될것 같지만 시간 없어서 그냥 여기서 예외처리
+		if (leftUI != nullptr && rightUI != nullptr)
+		{
+			if (leftUI->ui_type == EUIType::Item)
+			{
+				if (rightUI->ui_type == EUIType::Slot ||
+					rightUI->GetName().compare(L"ScrollView") == 0)
+				{
+					return false;
+				}
+					
+			}
+			else if (rightUI->ui_type == EUIType::Item)
+			{
+				if (leftUI->ui_type == EUIType::Slot ||
+					leftUI->GetName().compare(L"ScrollView") == 0)
+				{
+					return false;
+				}
+			}
+		}
 		Vector3 LocalPos[4] =
 		{
 			Vector3{-0.5f,0.5f,0.0f},

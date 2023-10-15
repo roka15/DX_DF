@@ -18,7 +18,8 @@ namespace roka
         virtual void Render();
         virtual void Bind();
 
-
+        void SetScale(Vector3 scale);
+        void SetTransform(Vector3 position);
         void SetHorizontal(bool flag) { mbHorizontal = flag; }
         void SetVertical(bool flag) { mbVertical = flag; }
         void SetContent(std::shared_ptr<GameObject> obj) { mContent = obj; }
@@ -30,6 +31,7 @@ namespace roka
         std::shared_ptr<GameObject> GetViewPort() { return mViewPort; }
         void OnMouseWheel(PointerEventData* data);
      
+        RECT GetViewPortRect() { return mViewRect; }
     private:
         bool mbHorizontal;
         bool mbVertical;
