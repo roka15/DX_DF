@@ -13,6 +13,7 @@
 #include "PlayerScript.h"
 #include "PartScript.h"
 #include "WeaponPartScript.h"
+#include "SkinPartScript.h"
 
 
 namespace roka
@@ -48,7 +49,11 @@ namespace roka
 	}
 	void AvatarScript::EquipPart(EAvatarParts type, std::wstring name)
 	{
-		std::shared_ptr<GameObject> part = manager::PartManager::GetInstance()->Find(type, name);
+		std::shared_ptr<GameObject> part = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);//manager::PartManager::GetInstance()->Find(type, name);
+		std::shared_ptr<Transform> tf = part->GetComponent<Transform>();
+		std::shared_ptr<Transform> pTf = owner->parent->GetComponent<Transform>();
+		tf->scale = pTf->scale;
+
 		if (part == nullptr)
 			return;
 
@@ -63,21 +68,26 @@ namespace roka
 		}
 		RegisterPart(type, part);
 
-		std::shared_ptr<PartScript>partScript = part->GetComponent<PartScript>();
-		partScript->SetEvent();
-
-		switch (partScript->part_type)
+	
+		switch(type)
 		{
 		case EAvatarParts::Base:
+		{
+			std::shared_ptr<SkinPartScript> skin = part->AddScript<SkinPartScript>();
+			skin->Create(L"baseskin", name);
 			part->SetName(L"BasePart");
 			break;
+		}
 		case EAvatarParts::Weapon:
+			std::shared_ptr<WeaponPartScript> weapon = part->AddScript<WeaponPartScript>();
+			weapon->Create(L"weapon", name);
 			part->SetName(L"WeaponPart");
 			part->GetComponent<WeaponPartScript>()->CreateSubObject();
 			break;
 		}
-		
-	
+		std::shared_ptr<PartScript>partScript = part->GetComponent<PartScript>();
+		partScript->SetEvent();
+
 	}
 	void AvatarScript::CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name, std::wstring set_name, UINT start, UINT end, float duration)
 	{
@@ -153,7 +163,7 @@ namespace roka
 				break;
 			}
 		}
-	
+
 	}
 	void AvatarScript::SkillPartsMotion(std::wstring key)
 	{
