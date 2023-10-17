@@ -457,7 +457,45 @@ namespace roka::manager
 		mAvatarPartTable.insert(std::make_pair(7016, avatar));
 #pragma endregion
 
-
+#pragma region
+		AvatarSubPartInfo sub = {};
+		
+		//belt
+		sub.id = 6001;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id,std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//coat
+		sub.id = 6005;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//cap
+		sub.id = 6007;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//hair
+		sub.id = 6011;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//neck
+		sub.id = 6013;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//pants
+		sub.id = 6015;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//pants
+		sub.id = 6017;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+#pragma endregion
 
 #pragma endregion
 
@@ -615,19 +653,12 @@ namespace roka::manager
 
 		bool flag = false;
 		int a = 0;
-		switch (part_type)
-		{
-		case (UINT)EAvatarParts::Belt:
-			//아바타 바꾸는 함수 호출
-			flag = true;
-			break;
-		case (UINT)EAvatarParts::Base:
-			//아바타 바꾸는 함수 호출
-			flag = true;
-			break;
-		}
-
-		return flag;
+		std::vector<AvatarSubPartInfo> vec = mAvatarSubPartTable[avatar_id];
+		if (vec.size() == 0)
+			return false;
+		player->EquipPart((EAvatarParts)part_type, vec);
+		flag = true;
+		
 	}
 
 	void ItemManager::ItemTextureLoad()

@@ -14,6 +14,7 @@
 #include "PartScript.h"
 #include "WeaponPartScript.h"
 #include "SkinPartScript.h"
+#include "Item.h"
 
 
 namespace roka
@@ -89,6 +90,31 @@ namespace roka
 		partScript->SetEvent();
 
 	}
+    void AvatarScript::EquipPart(EAvatarParts type, std::vector<AvatarSubPartInfo> infos)
+    {
+		std::shared_ptr<GameObject> part = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);//manager::PartManager::GetInstance()->Find(type, name);
+		std::shared_ptr<Transform> tf = part->GetComponent<Transform>();
+		std::shared_ptr<Transform> pTf = owner->parent->GetComponent<Transform>();
+		tf->scale = pTf->scale;
+
+		if (part == nullptr)
+			return;
+
+		std::shared_ptr<GameObject> obj = mParts[type].lock();
+		if (obj != nullptr)
+		{
+			owner->SwapRemoveChild(obj, part);
+		}
+		else
+		{
+			owner->InsertChild(part, (UINT)type - 1);
+		}
+		RegisterPart(type, part);
+		for (auto info : infos)
+		{
+			info.field
+		}
+    }
 	void AvatarScript::CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name, std::wstring set_name, UINT start, UINT end, float duration)
 	{
 	}

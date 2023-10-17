@@ -83,7 +83,9 @@ namespace roka
 		std::shared_ptr<Texture> mgAUTexture9 = mgAvatarUInpk->CreateAtlas(L"mg_ashoes.img", 0, 2, L"mg_ashoes");
 #pragma endregion
 
+#pragma region avatar field texture
 
+#pragma endregion	
 #pragma region hud/ui
 
 		std::shared_ptr<Texture> hudTexture1 = hud_npk->CreateAtlas(L"hud.img", 0, 20, L"ui_hudAtlasTexture01");

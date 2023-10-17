@@ -69,6 +69,11 @@ namespace roka
 		unsigned int id;
 		unsigned int part_type; // 파츠 타입.
 	};
+	struct AvatarSubPartInfo
+	{
+		unsigned int id;
+		wchar_t field[MAXITEMSTR];
+	};
 
 
 	//이 정보는 slot 정보와도 함께 엮이는게 좋을듯 왜냐하면 게임을 껐다 켜도 위치해 있던 슬롯에 그대로 위치해 있기 때문.
@@ -89,4 +94,4 @@ namespace roka
 
 
 
-//userTable -> ownTable -> Item Table
+//ownTable -> Item Table ->type table
