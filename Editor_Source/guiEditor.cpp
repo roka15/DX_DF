@@ -121,6 +121,7 @@ namespace gui
 
 	void Editor::DebugRender(const roka::graphics::DebugMesh* mesh)
 	{
+		return;
 		DebugObject* debugObj = mDebugObjects[(UINT)mesh->type];
 
 		std::shared_ptr<roka::Transform> tf = debugObj->GetComponent<roka::Transform>();

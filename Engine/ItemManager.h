@@ -9,6 +9,7 @@ namespace roka
 	struct UserItemInfo;
 	struct OwnItemInfo;
 	struct AvatarPartInfo;
+	struct AvatarSubInfo;
 	class GameObject;
 }
 namespace roka::manager
@@ -39,6 +40,7 @@ namespace roka::manager
 		std::map<unsigned int, ItemInfo> mItemTable;
 		std::map<unsigned int, ExpendablesInfo> mExpendablesTable;
 		std::map<unsigned int, AvatarPartInfo> mAvatarPartTable;
+		std::map<unsigned int, std::vector<AvatarSubInfo>> mAvatarSubTable;
 	};
 
 }

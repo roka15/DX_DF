@@ -30,6 +30,7 @@ namespace roka
 		virtual void OnCollisionStay(std::shared_ptr<Collider2D> other) {}
 		virtual void OnCollisionExit(std::shared_ptr<Collider2D> other) {}
 
+		void EquipPart(std::shared_ptr<GameObject> obj);
 		void EquipPart(EAvatarParts type, std::wstring name);
 		void RegisterPart(EAvatarParts type, std::shared_ptr<GameObject> obj) { mParts[type] = obj; }
 
@@ -38,7 +39,9 @@ namespace roka
 		
 		void InsertStateAniInfo(EPlayerState state,EAvatarParts part, std::wstring ani_name);
 		void SettingRightMaterial();
-		void SettingLeftMaterial();
+		void RightMaterial(std::shared_ptr<class PartScript> script);
+		void SettingLeftMaterial(); 
+		void LeftMaterial(std::shared_ptr<class PartScript> script);
 		void PlayPartsMotion();
 		void SkillPartsMotion(std::wstring key);
 		
@@ -55,6 +58,9 @@ namespace roka
 		void StartAni();
 		void AddSpriteIndex();
 
+		void SugPartFunc(std::shared_ptr<GameObject> obj, std::function<void(std::shared_ptr<class PartScript>)>func);
+
+		void StatePlay(std::shared_ptr<class PartScript > script, EPlayerState state);
 		std::shared_ptr<GameObject> GetPart(EAvatarParts part) { mParts[part]; }
 		bool IsAniStop() { return mbAniStop; }
 	private:

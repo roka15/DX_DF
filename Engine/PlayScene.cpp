@@ -141,6 +141,15 @@ namespace roka
 		lightComp->SetType(ELightType::Directional);
 		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
+		std::shared_ptr<roka::Image> bg = object::Instantiate<roka::Image>();
+		std::shared_ptr<ImageComponent> image = bg->GetComponent<ImageComponent>();
+		image->SetSprite(0);
+		std::shared_ptr<MeshRenderer> mesh = bg->GetComponent<MeshRenderer>();
+		mesh->material->texture = Resources::Find<NPK>(L"dgbg1")->CreateAtlas(L"dgbg1", 0, 1, L"dgbg1");
+		std::shared_ptr<Transform> tf = bg->GetComponent<Transform>();
+		tf->position = Vector3(0.0f, 0.0f, 0.99f);
+		tf->scale = Vector3(9.0f, 6.0f, 1.0f);
+		AddGameObject(ELayerType::BackObject, bg);
 
 		//point light
 		/*std::shared_ptr<GameObject> light = object::Instantiate<GameObject>();
@@ -170,26 +179,6 @@ namespace roka
 		std::vector<std::shared_ptr<Collider2D>> playercols = player->GetChilds<Collider2D>();
 		
 
-		//경직
-		std::shared_ptr<GameObject> skill01 = object::Instantiate<GameObject>(
-			Vector3(2.0f, 1.0f, 0.0f),
-			Vector3::Zero,
-			Vector3(1.0f, 1.0f, 1.0f),
-			ELayerType::Monster);
-		skill01->SetName(L"skill01");
-		skill01->AddComponent<Collider2D>();
-		
-
-
-		//다운
-		std::shared_ptr<GameObject> skill02 = object::Instantiate<GameObject>(
-			Vector3(2.0f, -1.0f, 0.0f),
-			Vector3::Zero,
-			Vector3(1.5f, 0.2f, 1.0f),
-			ELayerType::Monster);
-		skill02->SetName(L"skill02");
-		skill02->AddComponent<Collider2D>();
-		
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
 		for (int i = 0; i < 1; i++)

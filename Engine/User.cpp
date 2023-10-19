@@ -40,6 +40,7 @@ namespace roka::info
 		//mg_body0019.img
 		//mg_body80500.img
 		wcscpy(mCharacterInfo->base_skin_avatar,L"mg_body0019.img");
+	
 		wcscpy(mCharacterInfo->weapon_avatar1, L"mg_broom7200d.img");
 		wcscpy(mCharacterInfo->weapon_avatar2, L"mg_broom7200c.img");
 

@@ -241,6 +241,37 @@ std::shared_ptr<roka::GameObject> roka::GameObject::GetChild(std::wstring name)
 	return nullptr;
 }
 
+void roka::GameObject::SwapRemoveChild(std::shared_ptr<GameObject> find, std::shared_ptr<GameObject> swap)
+{
+
+	int index = 0;
+	for (auto& child : mChild)
+	{
+		if (child == find)
+		{
+			mChild[index].reset();
+			mChild[index] = swap;
+			swap->parent = GetSharedPtr();
+
+			std::shared_ptr<Transform> tf = child->GetComponent<Transform>();
+			std::shared_ptr<Transform> parentTf = GetComponent<Transform>();
+			Vector3 pScale = parentTf->GetScale();
+			Vector3 pPos = parentTf->GetPosition();
+
+			Vector3 cScale = tf->GetLocalScale();
+			cScale = cScale / pScale;
+			Vector3 cPos = tf->GetLocalPosition();
+
+			cPos = cPos + pPos;
+			tf->SetScale(cScale);
+			tf->SetPosition(cPos);
+			return;
+		}
+		index++;
+	}
+
+}
+
 std::vector<std::shared_ptr<roka::GameObject>> roka::GameObject::GetChilds()
 {
 	std::vector<std::shared_ptr<GameObject>> vec;
@@ -396,4 +427,35 @@ void roka::GameObject::Release()
 	mComponents.clear();
 	mScripts.clear();
 	mChild.clear();
+}
+
+void roka::GameObject::SwapRemoveChild(std::wstring find, std::shared_ptr<roka::GameObject> swap)
+{
+	{
+		int index = 0;
+		for (auto& child : mChild)
+		{
+			if (child->GetName().compare(find) == 0)
+			{
+				mChild[index].reset();
+				mChild[index] = swap;
+				swap->parent = GetSharedPtr();
+
+				std::shared_ptr<Transform> tf = child->GetComponent<Transform>();
+				std::shared_ptr<Transform> parentTf = GetComponent<Transform>();
+				Vector3 pScale = parentTf->GetScale();
+				Vector3 pPos = parentTf->GetPosition();
+
+				Vector3 cScale = tf->GetLocalScale();
+				cScale = cScale / pScale;
+				Vector3 cPos = tf->GetLocalPosition();
+
+				cPos = cPos + pPos;
+				tf->SetScale(cScale);
+				tf->SetPosition(cPos);
+				return;
+			}
+			index++;
+		}
+	}
 }

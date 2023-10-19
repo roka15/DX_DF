@@ -179,36 +179,10 @@ namespace roka
 			return nullptr;
 		}
 
-		void SwapRemoveChild(std::shared_ptr<GameObject> find, std::shared_ptr<GameObject> swap)
-		{
-			int index = 0;
-			for (auto& child : mChild)
-			{
-				if (child == find)
-				{
-					mChild[index].reset();
-					mChild[index] = swap;
-					swap->parent = GetSharedPtr();
-					return;
-				}
-				index++;
-			}
-		}
-		void SwapRemoveChild(std::wstring find, std::shared_ptr<GameObject> swap)
-		{
-			int index = 0;
-			for (auto& child : mChild)
-			{
-				if (child->GetName().compare(find)==0)
-				{
-					mChild[index].reset();
-					mChild[index] = swap;
-					swap->parent = GetSharedPtr();
-					return;
-				}
-				index++;
-			}
-		}
+		void SwapRemoveChild(std::shared_ptr<GameObject> find, std::shared_ptr<GameObject> swap);
+		
+		void SwapRemoveChild(std::wstring find, std::shared_ptr<GameObject> swap);
+	
 		void SetChildState(EState state,std::wstring key);
 		void RemoveChild(std::wstring key);
 		void RemoveChild(std::shared_ptr<GameObject> obj);

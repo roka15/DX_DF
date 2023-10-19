@@ -70,6 +70,13 @@ namespace roka
 		unsigned int part_type; // 파츠 타입.
 	};
 
+	struct AvatarSubInfo
+	{
+		unsigned int id;
+		wchar_t field[MAXITEMSTR];
+		float z_pos;
+	};
+
 
 	//이 정보는 slot 정보와도 함께 엮이는게 좋을듯 왜냐하면 게임을 껐다 켜도 위치해 있던 슬롯에 그대로 위치해 있기 때문.
 	//하지만 시간 없어서 생략

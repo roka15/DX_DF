@@ -47,6 +47,9 @@ namespace roka
 	void AvatarScript::Render()
 	{
 	}
+	void AvatarScript::EquipPart(std::shared_ptr<GameObject> obj)
+	{
+	}
 	void AvatarScript::EquipPart(EAvatarParts type, std::wstring name)
 	{
 		std::shared_ptr<GameObject> part = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);//manager::PartManager::GetInstance()->Find(type, name);
@@ -104,9 +107,21 @@ namespace roka
 		std::shared_ptr<PlayerScript> ps = owner->parent->GetComponent<PlayerScript>();
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
+			if (partScript == nullptr)
+			{
+				SugPartFunc(part.second.lock(), std::bind(&AvatarScript::RightMaterial,this, std::placeholders::_1));
+			}
+			else
 			partScript->Right();
 		}
+	}
+
+	void AvatarScript::RightMaterial(std::shared_ptr<PartScript> script)
+	{
+		script->Right();
 	}
 
 	void AvatarScript::SettingLeftMaterial()
@@ -114,9 +129,21 @@ namespace roka
 		std::shared_ptr<PlayerScript> ps = owner->parent->GetComponent<PlayerScript>();
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
+			if (partScript == nullptr)
+			{
+				SugPartFunc(part.second.lock(), std::bind(&AvatarScript::LeftMaterial, this, std::placeholders::_1));
+			}
+			else
 			partScript->Left();
 		}
+	}
+
+	void AvatarScript::LeftMaterial(std::shared_ptr<PartScript> script)
+	{
+		script->Left();
 	}
 
 	void AvatarScript::PlayPartsMotion()
@@ -125,43 +152,27 @@ namespace roka
 		StartAni();
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> script = part.second.lock()->GetComponent<PartScript>();
-			switch (ps->player_state)
+			if (script == nullptr)
 			{
-			case EPlayerState::Idle:
-				script->Idle();
-				break;
-			case EPlayerState::Walk:
-				script->Walk();
-				break;
-			case EPlayerState::Run:
-				script->Run();
-				break;
-			case EPlayerState::Jump:
-				script->Jump();
-				break;
-			case EPlayerState::JumpRun:
-				script->JumpDash();
-				break;
-			case EPlayerState::FallDown:
-				script->Fall();
-				break;
-			case EPlayerState::Landing:
-				script->Landing();
-				break;
-			case EPlayerState::Standing:
-				script->Standing();
-				break;
-			case EPlayerState::Stagger:
-				script->Stagger();
-				break;
-			case EPlayerState::Down:
-				script->Down();
-				break;
-			case EPlayerState::NomalAtk:
-				script->NormalAtk();
-				break;
+				if (part.second.lock()->GetChildCont() != 0)
+				{
+					std::vector<std::shared_ptr<PartScript>> scripts = part.second.lock()->GetChilds<PartScript>();
+					for (auto sc : scripts)
+					{
+						StatePlay(sc, ps->player_state);
+					}
+				}
+				else
+					return;
 			}
+			else
+			{
+				StatePlay(script,ps->player_state);
+			}
+			
 		}
 
 	}
@@ -171,6 +182,8 @@ namespace roka
 		StartAni();
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> script = part.second.lock()->GetComponent<PartScript>();
 			if (ps->player_state == EPlayerState::Skill)
 			{
@@ -227,6 +240,8 @@ namespace roka
 	{
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
 			partScript->Stop();
 		}
@@ -237,8 +252,21 @@ namespace roka
 	{
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
-			partScript->Start();
+			if (partScript != nullptr)
+			{
+				partScript->Start();
+			}
+			else if (part.second.lock()->GetChildCont() != 0)
+			{
+				std::vector<std::shared_ptr<PartScript>> scripts = part.second.lock()->GetChilds<PartScript>();
+				for (auto script : scripts)
+				{
+					script->Start();
+				}
+			}
 		}
 		mbAniStop = false;
 	}
@@ -247,8 +275,64 @@ namespace roka
 	{
 		for (auto part : mParts)
 		{
+			if (part.second.expired() == true)
+				continue;
 			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
 			partScript->NextSprite();
+		}
+	}
+
+	void AvatarScript::SugPartFunc(std::shared_ptr<GameObject> obj, std::function<void(std::shared_ptr<PartScript>)> func)
+	{
+		if (obj == nullptr)
+			return;
+		if (obj->GetChildCont() != 0)
+		{
+			std::vector<std::shared_ptr<PartScript>> scripts = obj->GetChilds<PartScript>();
+			for (auto script : scripts)
+			{
+				func(script);
+			}
+		}
+	}
+
+	void AvatarScript::StatePlay(std::shared_ptr<PartScript> script, EPlayerState state)
+	{
+		switch (state)
+		{
+		case EPlayerState::Idle:
+			script->Idle();
+			break;
+		case EPlayerState::Walk:
+			script->Walk();
+			break;
+		case EPlayerState::Run:
+			script->Run();
+			break;
+		case EPlayerState::Jump:
+			script->Jump();
+			break;
+		case EPlayerState::JumpRun:
+			script->JumpDash();
+			break;
+		case EPlayerState::FallDown:
+			script->Fall();
+			break;
+		case EPlayerState::Landing:
+			script->Landing();
+			break;
+		case EPlayerState::Standing:
+			script->Standing();
+			break;
+		case EPlayerState::Stagger:
+			script->Stagger();
+			break;
+		case EPlayerState::Down:
+			script->Down();
+			break;
+		case EPlayerState::NomalAtk:
+			script->NormalAtk();
+			break;
 		}
 	}
 

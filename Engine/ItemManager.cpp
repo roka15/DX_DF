@@ -12,6 +12,9 @@
 #include "ItemScript.h"
 #include "InputManager.h"
 #include "ScrollRect.h"
+#include "AvatarScript.h"
+#include "SkinPartScript.h"
+#include "Prefab.h"
 using namespace roka::graphics;
 namespace roka::manager
 {
@@ -419,45 +422,231 @@ namespace roka::manager
 		//body
 		avatar.id = 7001;
 		avatar.part_type = (UINT)EAvatarParts::Base;
-		mAvatarPartTable.insert(std::make_pair(7002, avatar));
+		mAvatarPartTable.insert(std::make_pair(7001, avatar));
 		//coat
 		avatar.id = 7002;
 		avatar.part_type = (UINT)EAvatarParts::Coat;
-		mAvatarPartTable.insert(std::make_pair(7004, avatar));
+		mAvatarPartTable.insert(std::make_pair(7002, avatar));
 
 		//cap
 		avatar.id = 7003;
 		avatar.part_type = (UINT)EAvatarParts::Cap;
-		mAvatarPartTable.insert(std::make_pair(7006, avatar));
+		mAvatarPartTable.insert(std::make_pair(7003, avatar));
 
 		//face
 		avatar.id = 7004;
 		avatar.part_type = (UINT)EAvatarParts::Face;
-		mAvatarPartTable.insert(std::make_pair(7008, avatar));
+		mAvatarPartTable.insert(std::make_pair(7004, avatar));
 
 		//hair
 		avatar.id = 7005;
 		avatar.part_type = (UINT)EAvatarParts::Hair;
-		mAvatarPartTable.insert(std::make_pair(7010, avatar));
+		mAvatarPartTable.insert(std::make_pair(7005, avatar));
 
 		//neck
 		avatar.id = 7006;
 
 		avatar.part_type = (UINT)EAvatarParts::Neck;
-		mAvatarPartTable.insert(std::make_pair(7012, avatar));
+		mAvatarPartTable.insert(std::make_pair(7006, avatar));
 
 		//pants
 		avatar.id = 7007;
 		avatar.part_type = (UINT)EAvatarParts::Pants;
-		mAvatarPartTable.insert(std::make_pair(7014, avatar));
+		mAvatarPartTable.insert(std::make_pair(7007, avatar));
 
 		//shoes
 		avatar.id = 7008;
 		avatar.part_type = (UINT)EAvatarParts::Pants;
-		mAvatarPartTable.insert(std::make_pair(7016, avatar));
+		mAvatarPartTable.insert(std::make_pair(7008, avatar));
 #pragma endregion
 
+#pragma region avatar sub info
 
+#pragma endregion
+		AvatarSubInfo sub_info = {};
+
+		//cap 
+		sub_info.id = 6006;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_cap25800a.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6006;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_cap25800b.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+		sub_info.id = 6006;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_cap25800c.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6007;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_cap33200c.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		/*sub_info.id = 6007;
+		sub_info.flag = 1;
+		wcscpy(sub_info.field, L"mg_cap33200cf.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6007;
+		sub_info.flag = 1;
+		wcscpy(sub_info.field, L"mg_cap33200kf.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);*/
+
+		sub_info.id = 6007;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_cap33200k.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		//coat
+		sub_info.id = 6004;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat22700a.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6004;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat22700b.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+		
+		sub_info.id = 6004;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat22700c.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+
+		sub_info.id = 6004;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat22700d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+
+		sub_info.id = 6005;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat26100a.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6005;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat26100b.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6005;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat26100c.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+
+		sub_info.id = 6005;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat26100d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6005;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_coat26100x.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		//hair
+		sub_info.id = 6010;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_hair20200a.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6010;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_hair20200b.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6011;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_hair23100d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6011;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_hair23100a.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6011;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_hair23100b.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6011;
+		sub_info.z_pos = -0.002f;
+		wcscpy(sub_info.field, L"mg_hair23100d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		//neck
+		sub_info.id = 6012;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck20000c.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6012;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck20000d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6012;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck20000e.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6012;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck20000x.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+
+		sub_info.id = 6013;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck23300c.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6013;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck23300d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6013;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck23300e.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6013;
+		sub_info.z_pos = -0.003f;
+		wcscpy(sub_info.field, L"mg_neck23300x.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		//pants
+		sub_info.id = 6014;
+		sub_info.z_pos = 0.0f;
+		wcscpy(sub_info.field, L"mg_pants20700a.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6014;
+		sub_info.z_pos = -0.001f;
+		wcscpy(sub_info.field, L"mg_pants20700d.img");
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
+
+		sub_info.id = 6015;
+		sub_info.z_pos = 0.0f;
+		wcscpy(sub_info.field, L"mg_pants23700d.img");
+		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
+		mAvatarSubTable[sub_info.id].push_back(sub_info);
 
 #pragma endregion
 
@@ -491,13 +680,13 @@ namespace roka::manager
 			int count = own.count; // text로 출력
 
 			ItemInfo& item = mItemTable[itemID];
-			
+
 			std::shared_ptr<GameObject> cursor = manager::InputManager::GetInstance()->GetCursor();
 			std::shared_ptr<roka::Image> object = object::Instantiate<roka::Image>();
 			std::shared_ptr<ItemScript> script = object->AddScript<ItemScript>();
 			script->SetUseOwner(player);
 			script->SetItem(itemID);
-			script->SetMode(cursor,EItemModeType::Icon);
+			script->SetMode(cursor, EItemModeType::Icon);
 			object->SetName(item.name);
 
 			std::shared_ptr<Transform> tf = object->GetComponent<Transform>();
@@ -612,22 +801,77 @@ namespace roka::manager
 		std::shared_ptr<PlayerScript> player = caster->GetComponent<PlayerScript>();
 		if (player == nullptr)
 			return false;
-
+		std::shared_ptr<GameObject> avatarObj = caster->GetChild<AvatarScript>();
+		std::shared_ptr<AvatarScript> avatar = avatarObj->GetComponent<AvatarScript>();
 		bool flag = false;
 		int a = 0;
-		switch (part_type)
+		size_t size = 0;
+		std::shared_ptr<GameObject> Parent = object::Instantiate<GameObject>();
+		std::shared_ptr<Transform> tf = Parent->GetComponent<Transform>();
+		std::shared_ptr<Transform> pTf = caster->GetComponent<Transform>();
+		Vector3 pos = pTf->position;
+		//아바타 바꾸는 함수 호출
+		size = mAvatarSubTable[avatar_id].size();
+		std::wstring find_part;
+
+	
+
+		for (int i = 0; i < size; i++)
 		{
-		case (UINT)EAvatarParts::Belt:
-			//아바타 바꾸는 함수 호출
-			flag = true;
-			break;
-		case (UINT)EAvatarParts::Base:
-			//아바타 바꾸는 함수 호출
-			flag = true;
-			break;
+			std::shared_ptr<GameObject> Part = object::Instantiate<GameObject>(prefab::Prefabs[L"AniObject"]);
+			if (part_type == (UINT)EAvatarParts::Weapon)
+			{
+
+			}
+			else
+			{
+				std::shared_ptr<SkinPartScript> skin = Part->AddComponent<SkinPartScript>();
+				switch (part_type)
+				{
+				case (UINT)EAvatarParts::Hair:
+					find_part = L"mgHair";
+					break;
+				case (UINT)EAvatarParts::Cap:
+					find_part = L"mgCap";
+					break;
+				case (UINT)EAvatarParts::Coat:
+					find_part = L"mgCoat";
+					break;
+				case (UINT)EAvatarParts::Neck:
+					find_part = L"mgNeck";
+					break;
+				case (UINT)EAvatarParts::Pants:
+					find_part = L"mgPants";
+					break;
+				}
+				Vector3 pos2 = Vector3::Zero;
+				std::shared_ptr<Transform> partTf = Part->GetComponent<Transform>();
+				pos2.z = mAvatarSubTable[avatar_id][i].z_pos;
+				partTf->position = pos2;
+				Part->SetName(find_part + std::to_wstring(i));
+				skin->Create(find_part, mAvatarSubTable[avatar_id][i].field);
+				Parent->AddChild(Part);
+				Parent->SetName(find_part);
+			}
+
 		}
 
-		return flag;
+		std::shared_ptr<GameObject> Find = avatarObj->GetChild(find_part);
+		tf->scale = caster->GetComponent<Transform>()->scale;
+		tf->position = -pos;
+		if (Find != nullptr)
+		{
+			avatarObj->SwapRemoveChild(Find, Parent);
+		}
+		else
+		{
+			avatarObj->InsertChild(Parent, (UINT)part_type - 1);
+		}
+		
+		avatar->RegisterPart((EAvatarParts)part_type, Parent);
+
+		avatar->PlayPartsMotion();
+		return true;
 	}
 
 	void ItemManager::ItemTextureLoad()

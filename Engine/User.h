@@ -73,6 +73,7 @@ namespace roka::info
 		const ECharacterClassType& GetClassType()const { return mCharacterInfo->character_class_type; }
 		
 		std::wstring GetBaseAvatar()const { return std::wstring(mCharacterInfo->base_skin_avatar); }
+		std::wstring GetHairAvatar()const { return std::wstring(mCharacterInfo->hair_avatar); }
 		std::wstring GetWeaponAvatar1()const { return std::wstring(mCharacterInfo->weapon_avatar1); }
 		std::wstring GetWeaponAvatar2()const { return std::wstring(mCharacterInfo->weapon_avatar2); }
 

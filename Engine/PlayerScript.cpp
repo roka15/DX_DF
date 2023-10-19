@@ -256,6 +256,11 @@ namespace roka
 				return;
 			avatar->EquipPart(type, mUser->base_avartar);
 			break;
+		case EAvatarParts::Hair:
+			if (mUser->base_avartar.size() == 0)
+				return;
+			//avatar->EquipPart(type, mUser->);
+			break;
 		case EAvatarParts::Weapon:
 			if (mUser->weapon_avatar1.size() == 0)
 				return;

@@ -375,6 +375,12 @@ namespace roka::prefab
 		std::shared_ptr<NPK> infomationButton = Resources::Find<NPK>(L"infoBtn");
 		std::shared_ptr<NPK> item = Resources::Find<NPK>(L"item");
 		std::shared_ptr<NPK> mgAvatarUI = Resources::Find<NPK>(L"mgAvatarUI");
+		std::shared_ptr<NPK> mgHair = Resources::Find<NPK>(L"mgHair");
+		std::shared_ptr<NPK> mgCap = Resources::Find<NPK>(L"mgCap");
+		std::shared_ptr<NPK> mgNeck = Resources::Find<NPK>(L"mgNeck");
+		std::shared_ptr<NPK> mgCoat = Resources::Find<NPK>(L"mgCoat");
+		std::shared_ptr<NPK> mgPants = Resources::Find<NPK>(L"mgPants");
+		std::shared_ptr<NPK> dgbg1 = Resources::Find<NPK>(L"dgbg1");
 		if (base_npk == nullptr)
 			base_npk = Resources::Load<NPK>(L"baseskin", path + L"baseskin.npk");
 		if (weapon_npk == nullptr)
@@ -414,5 +420,18 @@ namespace roka::prefab
 			item = Resources::Load<NPK>(L"item", L"..\\Resources\\npk\\Item.npk");
 		if (mgAvatarUI == nullptr)
 			mgAvatarUI = Resources::Load<NPK>(L"mgAvatarUI", L"..\\Resources\\npk\\mgAvatarUI.npk");
+		if (mgHair == nullptr)
+			mgHair = Resources::Load<NPK>(L"mgHair", L"..\\Resources\\npk\\mg_hair.npk");
+		if (mgCap == nullptr)
+			mgCap = Resources::Load<NPK>(L"mgCap", L"..\\Resources\\npk\\mg_cap.npk");
+		if (mgNeck == nullptr)
+			mgNeck = Resources::Load<NPK>(L"mgNeck", L"..\\Resources\\npk\\mg_neck.npk");
+		if (mgCoat == nullptr)
+			mgCoat = Resources::Load<NPK>(L"mgCoat", L"..\\Resources\\npk\\mg_coat.npk");
+		if (mgPants == nullptr)
+			mgPants = Resources::Load<NPK>(L"mgPants", L"..\\Resources\\npk\\mg_pants.npk");
+		
+		if (dgbg1 == nullptr)
+			dgbg1 = Resources::Load<NPK>(L"dgbg1", L"..\\Resources\\npk\\dgbg1.npk");
 	}
 }
