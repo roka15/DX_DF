@@ -287,11 +287,7 @@ namespace roka
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
 		avatar->EquipPart(type, name);
 	}
-	void PlayerScript::EquipPart(EAvatarParts type, std::vector<AvatarSubPartInfo> info)
-	{
-		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
-		avatar->EquipPart(type, name);
-	}
+
 	void PlayerScript::LeftBtnDown()
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
@@ -329,7 +325,7 @@ namespace roka
 		{
 			if (mTime - mLeftTime <= mDiff)
 			{
-				//rigid->is_active = false;
+				rigid->is_active = false;
 				ms->is_active = true;
 				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
@@ -385,7 +381,7 @@ namespace roka
 		{
 			if (mTime - mRightTime <= mDiff)
 			{
-				//rigid->is_active = false;
+				rigid->is_active = false;
 				ms->is_active = true;
 				ms->AddSpeed(3.0f);
 				mPlayerState = EPlayerState::JumpRun;
@@ -408,6 +404,7 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+	
 		if (mIsActiveInput == false)
 			return;
 		if (mPlayerState < EPlayerState::Jump)
@@ -426,6 +423,7 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
+
 		if (mIsActiveInput == false)
 			return;
 		if (mPlayerState < EPlayerState::Jump)
@@ -444,7 +442,7 @@ namespace roka
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
-
+	
 		if (mIsActiveInput == false)
 			return;
 

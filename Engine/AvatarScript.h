@@ -9,10 +9,8 @@ namespace roka
 	}
 	class Image;
 	class Transform;
-	class AvatarSubPartInfo;
 	using namespace enums;
 	using namespace graphics;
-	
 	class AvatarScript :
 		public Script
 	{
@@ -34,7 +32,6 @@ namespace roka
 
 		void EquipPart(std::shared_ptr<GameObject> obj);
 		void EquipPart(EAvatarParts type, std::wstring name);
-		void EquipPart(EAvatarParts type, std::vector<AvatarSubPartInfo>infos);
 		void RegisterPart(EAvatarParts type, std::shared_ptr<GameObject> obj) { mParts[type] = obj; }
 
 		void CreatePartAni(EAvatarParts type, std::wstring npk_name, std::wstring pack_name,std::wstring set_name, UINT start, UINT end, float duration);

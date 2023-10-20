@@ -7,7 +7,6 @@
 #include "RokaTime.h"
 
 #include "Animator.h"
-#include "AnimationObjectPool.h"
 
 namespace roka
 {
@@ -67,10 +66,7 @@ namespace roka
         std::shared_ptr<NPK> skin_npk = Resources::Find<NPK>(npk);
         if (skin_npk == nullptr)
             return;
-		std::shared_ptr<GameObject> part = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->GetPool(L"AniObject")->Spawn();
-		owner->AddChild(part);
-		mParts.push_back(part);
-        std::shared_ptr<Animator> ani = part->GetComponent<Animator>();
+        std::shared_ptr<Animator> ani = owner->GetComponent<Animator>();
         float speed = 0.05f;
         std::shared_ptr<Texture> idle_texture = skin_npk->CreateAtlas(pack, 0, 14, pack+L"MgBaseIdleWalk");
         ani->Create(idle_texture, L"Idle", 10, 14, 0.3f);

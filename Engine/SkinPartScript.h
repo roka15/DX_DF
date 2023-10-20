@@ -2,7 +2,6 @@
 #include "PartScript.h"
 namespace roka
 {
-	class GameObject;
 	class SkinPartScript :
 		public PartScript
 	{
@@ -26,7 +25,6 @@ namespace roka
 		friend class FactoryBase;
 		friend class ScriptFactory;
 	protected:
-		std::vector<std::weak_ptr<GameObject>> mParts;
 
 	};
 }

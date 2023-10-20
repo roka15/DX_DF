@@ -110,7 +110,6 @@ namespace gui
 
 	void Editor::DebugRender()
 	{
-		return;
 		for (const roka::graphics::DebugMesh* mesh
 			: roka::renderer::debugMeshs)
 		{
