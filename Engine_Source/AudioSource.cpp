@@ -12,7 +12,7 @@ namespace roka
 
 	}
 
-	AudioSource::AudioSource(const AudioSource& ref):Component(ref)
+	AudioSource::AudioSource(const AudioSource& ref) :Component(ref)
 	{
 	}
 
@@ -38,7 +38,7 @@ namespace roka
 		std::shared_ptr<Transform> tr = GetOwner()->GetComponent<Transform>();
 		Vector3 pos = tr->GetPosition();
 		Vector3 foward = tr->forward;
-
+		if (mAudioClip != nullptr)
 		mAudioClip->Set3DAttributes(pos, foward);
 	}
 
@@ -48,14 +48,17 @@ namespace roka
 
 	void AudioSource::Play()
 	{
-		mAudioClip->Play();
+		if (mAudioClip != nullptr)
+			mAudioClip->Play();
 	}
 	void AudioSource::Stop()
 	{
-		mAudioClip->Stop();
+		if (mAudioClip != nullptr)
+			mAudioClip->Stop();
 	}
 	void AudioSource::SetLoop(bool loop)
 	{
-		mAudioClip->SetLoop(loop);
+		if (mAudioClip != nullptr)
+			mAudioClip->SetLoop(loop);
 	}
 }

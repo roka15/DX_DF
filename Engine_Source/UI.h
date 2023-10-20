@@ -27,10 +27,12 @@ namespace roka
 		const EUIType& GetUIType() { return mUIType; }
 		PROPERTY(GetUIType,SetUIType) EUIType ui_type;
 		
+		void SetTarget(std::shared_ptr<GameObject> target) { mTarget = target; }
 	private:
 		bool mbRayCastTarget;
 		RECT mViewPortRect;
 		EUIType mUIType;
+		std::weak_ptr<GameObject> mTarget;
 	};
 }
 

@@ -23,6 +23,9 @@
 #include "User.h"
 #include "GaugeManager.h"
 #include "ItemManager.h"
+#include "AudioClip.h"
+#include "AudioSource.h"
+#include "Text.h"
 
 
 using namespace roka::info;
@@ -205,7 +208,7 @@ namespace roka
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		bool flag = false;
 		EPlayerState befor_state = mPlayerState;
-		GaugeManager::GetInstance()->UseGauge(EGaugeType::PlayerHP,-damage, 100);
+		GaugeManager::GetInstance()->UseGauge(EGaugeType::PlayerHP, -damage, 100);
 		mHP -= damage;
 		switch (stun)
 		{
@@ -404,7 +407,7 @@ namespace roka
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
-	
+
 		if (mIsActiveInput == false)
 			return;
 		if (mPlayerState < EPlayerState::Jump)
@@ -442,7 +445,7 @@ namespace roka
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 		std::shared_ptr<Rigidbody> rigid = mRigid.lock();
-	
+
 		if (mIsActiveInput == false)
 			return;
 
@@ -628,7 +631,7 @@ namespace roka
 			if (flag == true)
 				return;
 		}
-			
+
 		ISkill* skill = manager::SkillManager::GetInstance()->Find(ECharacterClassType::Mage, L"NormalAtk");
 		skill->Execute(owner->GetSharedPtr());
 	}
@@ -677,7 +680,7 @@ namespace roka
 		{
 			mInven->active = GameObject::EState::Active;
 		}
-		else if(mInven->active == GameObject::EState::Active)
+		else if (mInven->active == GameObject::EState::Active)
 		{
 			mInven->active = GameObject::EState::Paused;
 		}
@@ -732,6 +735,36 @@ namespace roka
 		size_t str_length = key.size();
 		std::wcsncpy(info.key, key.c_str(), str_length);
 		Time::RequestEvent(info, owner->GetSharedPtr());
+		std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+		std::shared_ptr<AudioClip> clip = audioSource->GetClip();
+		if (clip == nullptr)
+		{
+			clip = Resources::Find<AudioClip>(L"MgDmgSound1");
+			if (clip == nullptr)
+				clip = Resources::Load<AudioClip>(L"MgDmgSound1", L"..\\Resources\\Audio\\wz_dmg_01.ogg");
+		}
+		else if (clip->GetKey().compare(L"MgDmgSound1") == 0)
+		{
+			clip = Resources::Find<AudioClip>(L"MgDmgSound2");
+			if (clip == nullptr)
+				clip = Resources::Load<AudioClip>(L"MgDmgSound2", L"..\\Resources\\Audio\\wz_dmg_02.ogg");
+		}
+		else if (clip->GetKey().compare(L"MgDmgSound2") == 0)
+		{
+			clip = Resources::Find<AudioClip>(L"MgDmgSound3");
+			if (clip == nullptr)
+				clip = Resources::Load<AudioClip>(L"MgDmgSound3", L"..\\Resources\\Audio\\wz_dmg_03.ogg");
+		}
+		else if (clip->GetKey().compare(L"MgDmgSound3") == 0)
+		{
+			clip = Resources::Find<AudioClip>(L"MgDmgSound1");
+			if (clip == nullptr)
+				clip = Resources::Load<AudioClip>(L"MgDmgSound1", L"..\\Resources\\Audio\\wz_dmg_01.ogg");
+		}
+		audioSource->Stop();
+		audioSource->SetClip(clip);
+		audioSource->SetLoop(false);
+		audioSource->Play();
 	}
 
 	void PlayerScript::StunDown()
@@ -766,6 +799,18 @@ namespace roka
 
 		rigid->disableGround();
 		rigid->SetLandingPoint(Vector2(tf->position.x, tf->position.y));
+
+
+
+		std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+		std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MgDmgSound3");
+		if (clip == nullptr)
+			clip = Resources::Load<AudioClip>(L"MgDmgSound3", L"..\\Resources\\Audio\\wz_dmg_03.ogg");
+
+		audioSource->Stop();
+		audioSource->SetClip(clip);
+		audioSource->SetLoop(false);
+		audioSource->Play();
 	}
 
 	void PlayerScript::NextState()

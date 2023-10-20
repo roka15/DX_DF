@@ -20,6 +20,8 @@
 #include "SpiderMonsterScript.h"
 #include "TairangMonsterScript.h"
 #include "ChangeSizeOverTime.h"
+#include "AudioSource.h"
+#include "Text.h"
 namespace roka::prefab
 {
 	std::map<std::wstring, std::shared_ptr<roka::GameObject>> Prefabs = {};
@@ -134,6 +136,7 @@ namespace roka::prefab
 		{
 			AniObject->SetName(L"AniObject");
 			AniObject->AddComponent<Animator>();
+			AniObject->AddComponent<AudioSource>();
 
 			std::shared_ptr<MeshRenderer>mr = AniObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -148,6 +151,7 @@ namespace roka::prefab
 		{
 			AniEftObject->SetName(L"AniEftObject");
 			AniEftObject->AddComponent<Animator>();
+			AniEftObject->AddComponent<AudioSource>();
 
 			std::shared_ptr<MeshRenderer>mr = AniEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -162,6 +166,7 @@ namespace roka::prefab
 			ColAniObject->SetName(L"ColAniObject");
 			ColAniObject->AddComponent<Animator>();
 			ColAniObject->AddComponent<Collider2D>();
+			ColAniObject->AddComponent<AudioSource>();
 
 			std::shared_ptr<MeshRenderer>mr = ColAniObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -177,6 +182,7 @@ namespace roka::prefab
 			ColAniEftObject->SetName(L"ColAniEftObject");
 			ColAniEftObject->AddComponent<Animator>();
 			ColAniEftObject->AddComponent<Collider2D>();
+			ColAniEftObject->AddComponent<AudioSource>();
 
 			std::shared_ptr<MeshRenderer>mr = ColAniEftObject->GetComponent<MeshRenderer>();
 			mr->mesh = Resources::Find<Mesh>(L"RectMesh");
@@ -309,6 +315,14 @@ namespace roka::prefab
 			PlayerObject->SetName(L"PlayerObject");
 			PlayerObject->GetComponent<Transform>()->scale = Vector3(3.0f, 3.0f, 1.0f);
 			PlayerObject->layer_type = ELayerType::Player;
+
+			PlayerObject->AddComponent<AudioSource>();
+
+			std::shared_ptr<UI> text = object::Instantiate<UI>();
+			text->SetName(L"MyText");
+			std::shared_ptr<Text> tc = text->AddComponent<Text>();
+			PlayerObject->AddChild(text);
+
 			std::shared_ptr<roka::GameObject> AvatarParrent = object::Instantiate<roka::GameObject>(
 				Vector3::Zero,
 				Vector3::Zero,

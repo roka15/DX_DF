@@ -24,7 +24,7 @@
 #include "ScrollRect.h"
 #include "ScrollView.h"
 #include "Slot.h"
-
+#include "Text.h"
 namespace roka
 {
 	manager::InputManager* MInput = manager::InputManager::GetInstance();
@@ -47,6 +47,12 @@ namespace roka
 		player->GetComponent<Transform>()->position = Vector3(0.0f, 0.0f, 0.3f);
 		SceneManager::DontDestroy(player);
 
+		std::shared_ptr<UI> text = object::Instantiate<UI>();
+		text->SetTarget(player);
+		std::shared_ptr<Text> ts = text->AddComponent<Text>();
+		ts->Create(L"Player1", 0, 0, 0, 255, 20);
+		SceneManager::DontDestroy(text);
+
 		//test
 		manager::ItemManager::GetInstance()->UseItem(player, 6000);
 
@@ -65,11 +71,6 @@ namespace roka
 		cursor->AddComponent<Cursor>();
 		MInput->SetCursor(cursor);
 		SceneManager::DontDestroy(cursor);
-
-		/*	std::shared_ptr<AudioClip> clip = Resources::Load<AudioClip>(L"TestSound", L"..\\Resources\\Audio\\seria_gate.ogg");
-			std::shared_ptr<AudioSource>as = cursor->AddComponent<AudioSource>();
-			as->SetClip(clip);
-			as->Play();*/
 
 #pragma region avatar ui texture
 		std::shared_ptr<Texture> mgAUTexture1 = mgAvatarUInpk->CreateAtlas(L"mg_abelt.img", 0, 2, L"mg_abelt");
@@ -826,18 +827,18 @@ namespace roka
 			std::shared_ptr<ScrollView> scrollTest = object::Instantiate<ScrollView>();
 			scrollTest->GetComponent<Transform>()->position = Vector3(-3.0f, -0.56f, -0.9f);
 			scrollTest->GetComponent<Transform>()->scale = Vector3(0.65f, 0.45f, 1.0f);
-		
+
 			std::shared_ptr<Texture> texture = invenTexture2;
 			std::shared_ptr<ScrollRect> rect = scrollTest->GetComponent<ScrollRect>();
 			std::shared_ptr<GameObject> ViewPort = rect->GetViewPort();
-		
+
 			std::shared_ptr<GameObject> Content = rect->GetContent();
-		
+
 			InvenParent->AddChild(scrollTest);
 			//SceneManager::DontDestroy(scrollTest);
 			{
 				std::shared_ptr<GridGroupLayout>grid = Content->AddComponent<GridGroupLayout>();
-				grid->SetInfo(Vector2(0.0f, -0.1f), Vector2(0.0f, 0.2f), 14,8);
+				grid->SetInfo(Vector2(0.0f, -0.1f), Vector2(0.0f, 0.2f), 14, 8);
 				grid->SetCellSize(Vector2(0.5f, 0.5f));
 
 				for (int i = 0; i < 14 * 8; i++)

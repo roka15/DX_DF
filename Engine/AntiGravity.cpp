@@ -17,7 +17,8 @@
 #include "PlayerScript.h"
 #include "ChangeSizeOverTime.h"
 
-
+#include "AudioClip.h"
+#include "AudioSource.h"
 namespace roka
 {
 	void AntiGravity::Execute(std::shared_ptr<GameObject> caster)
@@ -29,6 +30,16 @@ namespace roka
 		const std::wstring aniKey = user->GetKeySkillName(keycode);
 		player->SkillPartMotion(aniKey);
 		Skill::Execute(caster);
+
+		std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"mgAntiGravitySound");
+		if (clip == nullptr)
+		{
+			clip = Resources::Load<AudioClip>(L"mgAntiGravitySound", L"..\\Resources\\Audio\\wz_antigravity_starter.ogg");
+		}
+		std::shared_ptr<AudioSource> audioSource = caster->GetComponent<AudioSource>();
+		audioSource->Stop();
+		audioSource->SetClip(clip);
+		audioSource->Play();
 	}
 	void AntiGravity::SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)
 	{
@@ -86,6 +97,26 @@ namespace roka
 			cso->EndTime(1.0f);
 			cso->SetEndEvent() = std::bind(&AntiGravity::DeSpawnCircle, this, Object);
 			cso->SetActive(true);
+
+			std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"AntiGravitySteamSound");
+			if (clip == nullptr)
+			{
+				clip = Resources::Load<AudioClip>(L"AntiGravitySteamSound", L"..\\Resources\\Audio\\antigravity_steam.ogg");
+			}
+			std::shared_ptr<AudioSource> audioSource = deleteObj->GetComponent<AudioSource>();
+			audioSource->Stop();
+			audioSource->SetClip(clip);
+			audioSource->SetLoop(false);
+			audioSource->Play();
+
+			clip = Resources::Find<AudioClip>(L"AntiGravityExpSound");
+			if (clip == nullptr)
+			{
+				clip = Resources::Load<AudioClip>(L"AntiGravityExpSound", L"..\\Resources\\Audio\\antigravity_exp.ogg");
+			}
+			audioSource->SetClip(clip);
+			audioSource->SetLoop(false);
+			audioSource->Play();
 		}
 		else if (key.compare(L"pluto_reverse") == 0)
 		{
@@ -143,6 +174,9 @@ namespace roka
 		{
 			EyeType1(caster);
 			PlutoSparkEffect(caster);
+			std::shared_ptr<AudioSource> audioSource = caster->GetComponent<AudioSource>();
+			
+
 			CreateSuccessTube(caster, L"tube", Vector3(-0.3f, -0.5f, -0.001f));
 			CreateSuccessTube(caster, L"tube", Vector3(-1.2f, -0.2f, 0.0f));
 			CreateSuccessTube(caster, L"tube", Vector3(0.55f, 0.0f, 0.001f));
@@ -326,6 +360,27 @@ namespace roka
 		}
 
 		tf->scale = scale;
+
+
+		std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"AntiGravityStartSound");
+		if (clip == nullptr)
+		{
+			clip = Resources::Load<AudioClip>(L"AntiGravityStartSound", L"..\\Resources\\Audio\\antigravity_start.ogg");
+		}
+		std::shared_ptr<AudioSource> audioSource = effectObj->GetComponent<AudioSource>();
+		audioSource->Stop();
+		audioSource->SetClip(clip);
+		audioSource->SetLoop(false);
+		audioSource->Play();
+		clip = Resources::Find<AudioClip>(L"AntiGravityLoopSound");
+		if (clip == nullptr)
+		{
+			clip = Resources::Load<AudioClip>(L"AntiGravityLoopSound", L"..\\Resources\\Audio\\antigravity_loop.ogg");
+		}
+		audioSource->SetClip(clip);
+		audioSource->SetLoop(false);
+		audioSource->Play();
+		
 	}
 	void AntiGravity::CreatePlutoEffect(std::shared_ptr<GameObject> caster, std::wstring key)
 	{

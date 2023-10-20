@@ -118,14 +118,14 @@ namespace roka
 
 			Vector3 projectPos = view.Project(FinalTargetPos, Camera::GetGpuProjectionMatrix(), Camera::GetGpuViewMatrix(), Matrix::Identity);
 
-			if (projectPos.x > AspectRatioX ||
+			/*if (projectPos.x > AspectRatioX ||
 				projectPos.x < 0.0f ||
 				projectPos.y >AspectRatioY ||
 				projectPos.y < 400.0f)
 			{
 				continue;
 			}
-			else
+			else*/
 				break;
 		}
 		outDir = Vector2(DirX, DirY);

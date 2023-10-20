@@ -1,5 +1,6 @@
 #include "UI.h"
 
+#include "Transform.h"
 namespace roka
 {
     UI::UI() :GameObject(), mViewPortRect{}
@@ -29,6 +30,10 @@ namespace roka
     void UI::LateUpdate()
     {
         GameObject::LateUpdate();
+        if (mTarget.expired() == true)
+            return;
+        Vector3 pos =   mTarget.lock()->GetComponent<Transform>()->position;
+        GetComponent<Transform>()->position = pos + Vector3(-0.15f,-0.1f,0.0f);
     }
     void UI::Render()
     {

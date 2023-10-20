@@ -17,6 +17,9 @@
 #include "PlayerScript.h"
 #include "MonsterScript.h"
 #include "MoveScript.h"
+#include "AudioSource.h"
+#include "AudioClip.h"
+#include "Resources.h"
 namespace roka
 {
 	MgNormalAtk::MgNormalAtk(const UINT& damage) :Skill(damage)
@@ -40,6 +43,15 @@ namespace roka
 		ani->SetFrameEventListener(this);
 
 		SpawnCollider(caster);
+		std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"mgAtkSound1");
+		if (clip == nullptr)
+		{
+			clip = Resources::Load<AudioClip>(L"mgAtkSound1", L"..\\Resources\\Audio\\wz_atk_01.ogg");
+		}
+		std::shared_ptr<AudioSource> audioSource = caster->GetComponent<AudioSource>();
+		audioSource->Stop();
+		audioSource->SetClip(clip);
+		audioSource->Play();
 	}
 
 	void MgNormalAtk::SpawnEffect(std::shared_ptr<GameObject> caster, std::wstring key)
@@ -157,7 +169,39 @@ namespace roka
 					Time::RequestEvent(callBack, std::bind([this]()->void {mbCallbackEvent = false; }));
 					mbCallbackEvent = true;
 				}
+				std::shared_ptr<AudioSource> audioSource = playerObj->GetComponent<AudioSource>();
+				std::shared_ptr<AudioClip> clip= audioSource->GetClip();
+				if (clip == nullptr)
+					return;
+				if (clip->GetKey().compare(L"mgAtkSound1") == 0)
+				{
+					clip = Resources::Find<AudioClip>(L"mgAtkSound2");
+					if (clip == nullptr)
+					{
+						clip = Resources::Load<AudioClip>(L"mgAtkSound2", L"..\\Resources\\Audio\\wz_atk_02.ogg");
+					}
+				}
+				else if (clip->GetKey().compare(L"mgAtkSound2") == 0)
+				{
+					clip = Resources::Find<AudioClip>(L"mgAtkSound3");
+					if (clip == nullptr)
+					{
+						clip = Resources::Load<AudioClip>(L"mgAtkSound3", L"..\\Resources\\Audio\\wz_atk_03.ogg");
+					}
+				}
+				else if (clip->GetKey().compare(L"mgAtkSound3") == 0)
+				{
+					clip = Resources::Find<AudioClip>(L"mgAtkSound1");
+					if (clip == nullptr)
+					{
+						clip = Resources::Load<AudioClip>(L"mgAtkSound1", L"..\\Resources\\Audio\\wz_atk_01.ogg");
+					}
+				}
 
+				
+				audioSource->Stop();
+				audioSource->SetClip(clip);
+				audioSource->Play();
 				return;
 			}
 			else

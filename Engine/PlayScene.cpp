@@ -37,7 +37,9 @@
 
 #include "ComputeShader.h"
 #include "PaintShader.h"
-
+#include "InputManager.h"
+#include "AudioClip.h"
+#include "AudioSource.h"
 namespace roka
 {
 	static int test_num = 0;
@@ -53,7 +55,7 @@ namespace roka
 		Scene::Initialize();
 
 
-		
+
 	}
 
 	void PlayScene::Update()
@@ -62,7 +64,7 @@ namespace roka
 
 		//std::shared_ptr<GameObject> obj
 		//	= SceneManager::FindGameObject(L"Player");
-	
+
 		//std::shared_ptr<GameObject> obj2
 		//	= FindGameObject(ELayerType::Player, L"AnotherPlayer");
 
@@ -140,6 +142,15 @@ namespace roka
 		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 		lightComp->SetType(ELightType::Directional);
 		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		
+		std::shared_ptr<GameObject> cursor = manager::InputManager::GetInstance()->GetCursor();
+
+		std::shared_ptr<AudioClip> clip = Resources::Load<AudioClip>(L"DestroyedCastleBGM", L"..\\Resources\\Audio\\destroyed_castle_normal.ogg");
+		std::shared_ptr<AudioSource>as = cursor->GetComponent<AudioSource>();
+		as->Stop();
+		as->SetClip(clip);
+		as->SetLoop(true);
+		as->Play();
 
 		std::shared_ptr<roka::Image> bg = object::Instantiate<roka::Image>();
 		std::shared_ptr<ImageComponent> image = bg->GetComponent<ImageComponent>();
@@ -170,14 +181,14 @@ namespace roka
 		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
 		std::shared_ptr<PlayerScript> playerScript = another_player->GetComponent<PlayerScript>();
 		playerScript->LateInitialize();
-	
+
 		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
 		AddGameObject(ELayerType::Player, another_player);
 
 		std::shared_ptr<GameObject> player
-			=SceneManager::FindGameObject(L"Player");
+			= SceneManager::FindGameObject(L"Player");
 		std::vector<std::shared_ptr<Collider2D>> playercols = player->GetChilds<Collider2D>();
-		
+
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
@@ -191,7 +202,7 @@ namespace roka
 			AddGameObject(ELayerType::Monster, monster);
 		}
 
-	
+
 
 		std::shared_ptr<GameObject> TairangOrigin = prefab::Prefabs[L"Tairang_MonsterObject"];
 		{
@@ -212,7 +223,7 @@ namespace roka
 			ELayerType::Player);
 		{
 			camera->SetName(L"camera");
-			camera->AddScript<CameraScript>();
+			//	camera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 			cameraComp->TurnLayerMask(ELayerType::UI, false);
 			renderer::MainCamera = cameraComp;
@@ -222,7 +233,7 @@ namespace roka
 			ELayerType::Player);
 		{
 			UIcamera->SetName(L"UIcamera");
-			UIcamera->AddScript<CameraScript>();
+			//UIcamera->AddScript<CameraScript>();
 			std::shared_ptr<Camera> cameraComp = UIcamera->AddComponent<Camera>();
 			cameraComp->DisableLayerMasks();
 			cameraComp->TurnLayerMask(ELayerType::UI, true);
@@ -236,7 +247,7 @@ namespace roka
 		std::shared_ptr<Collider2D> portalCol = portal01->AddComponent<Collider2D>();
 		Portal* portal = manager::PortalManager::GetInstance()->Find(EPortalType::PlayTestUp);
 		portal->SetCollisionListener(portal01);
-		
+
 		CollisionManager::RegisterID(portalCol, playercols[0]);
 		CollisionManager::RegisterID(portalCol, playercols[1]);
 
@@ -251,7 +262,7 @@ namespace roka
 		renderer::MainCamera.reset();
 		ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance()->Release();
 	}
-	
+
 	void PlayScene::Loading()
 	{
 	}

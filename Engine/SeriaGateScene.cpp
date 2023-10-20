@@ -34,6 +34,10 @@
 #include "GaugeScript.h"
 #include "ItemManager.h"
 #include "ItemScript.h"
+#include "InputManager.h"
+#include "AudioClip.h"
+#include "AudioSource.h"
+#include "Text.h"
 
 roka::SeriaGateScene::SeriaGateScene() :Scene(ESceneType::SeriaRoom)
 {
@@ -134,6 +138,15 @@ void roka::SeriaGateScene::OnEnter()
 	std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 	lightComp->SetType(ELightType::Directional);
 	lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+
+
+	std::shared_ptr<GameObject> cursor = manager::InputManager::GetInstance()->GetCursor();
+	std::shared_ptr<AudioClip> clip = Resources::Load<AudioClip>(L"SeriaRoomBGM", L"..\\Resources\\Audio\\seria_gate.ogg");
+	std::shared_ptr<AudioSource>as = cursor->AddComponent<AudioSource>();
+	as->Stop();
+	as->SetClip(clip);
+	as->SetLoop(true);
+	as->Play();
 
 	{
 		std::shared_ptr<NPK> npk = Resources::Find<NPK>(L"seria_room");
@@ -821,7 +834,7 @@ void roka::SeriaGateScene::OnEnter()
 		ELayerType::FrontObject);
 	{
 		camera->SetName(L"camera");
-		camera->AddScript<CameraScript>();
+		//camera->AddScript<CameraScript>();
 		std::shared_ptr<Camera> cameraComp = camera->AddComponent<Camera>();
 		cameraComp->TurnLayerMask(ELayerType::UI, false);
 		cameraComp->TurnLayerMask(ELayerType::Raycast, false);

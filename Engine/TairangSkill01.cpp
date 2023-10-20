@@ -15,6 +15,7 @@
 #include "TargetMoveScript.h"
 #include "WarningScript.h"
 #include "PlayerScript.h"
+#include "Resources.h"
 
 namespace roka
 {
@@ -39,6 +40,8 @@ namespace roka
 		std::shared_ptr<Transform> tirangtf = caster->GetComponent<Transform>();
 		Vector3 tirangPos = tirangtf->position;
 		Vector3 tirangScale = tirangtf->scale;
+		std::shared_ptr<MonsterScript> monster = caster->GetComponent<MonsterScript>();
+		EDir4Type dir = monster->GetDir();
 		if (mSpawnflag == true)
 			return;
 		if (key.compare(L"Effect1") == 0)
@@ -134,6 +137,28 @@ namespace roka
 				ani->CompleteEvent(L"tairang_skill1purppleglow") = std::bind([meshRenderer]()->void {meshRenderer->is_active = false; });
 				ani->PlayAnimation(L"tairang_skill1purppleglow", false);
 			}
+			if (dir == EDir4Type::LEFT)
+			{
+				Eft01->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft02->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft03->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft04->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft05->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft06->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft07->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft08->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+			}
+			else
+			{
+				Eft01->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft02->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft03->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft04->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft05->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft06->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft07->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft08->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+			}
 			Eft01->SetName(L"Eft01");
 			Eft02->SetName(L"Eft02");
 			Eft03->SetName(L"Eft03");
@@ -178,6 +203,11 @@ namespace roka
 
 				std::shared_ptr<Transform> tf = Eft02->GetComponent<Transform>();
 				tf->scale = tirangScale;
+				if (dir == EDir4Type::LEFT)
+				{
+					tf->position = -tirangPos + Vector3(-0.05f, 0.2f, 0.01f);
+				}
+				else
 				tf->position = -tirangPos +Vector3(0.05f, 0.2f, 0.01f);
 
 				MeshRenderer* meshRenderer = Eft02->GetComponent<MeshRenderer>().get();
@@ -192,7 +222,18 @@ namespace roka
 				tf->scale = Vector3(1.0f, 1.0f, 1.0f);
 				tf->position = -tirangPos;// +Vector3(0.0f, 0.4f, 0.01f);
 			}/**/
-
+			if (dir == EDir4Type::LEFT)
+			{
+				Eft01->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft02->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+				Eft03->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"VerticalInverterEftAtlasShader");
+			}
+			else
+			{
+				Eft01->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft02->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+				Eft03->GetComponent<MeshRenderer>()->material->shader = Resources::Find<Shader>(L"EffectAtlasShader");
+			}
 			Eft01->SetName(L"Eft09");
 			Eft02->SetName(L"Eft10");
 			Eft03->SetName(L"Eft11");/**/
@@ -255,7 +296,7 @@ namespace roka
 				tf->scale = tirangScale;
 				tf->position = -tirangPos+ Vector3(-0.05f, -0.05f, 0.0f);
 			}
-
+			
 			Eft01->SetName(L"Eft12");
 			Eft02->SetName(L"Eft13");
 			Eft03->SetName(L"Eft14");

@@ -10,6 +10,10 @@
 #include "UI.h"
 #include "Collider2D.h"
 #include "SceneManager.h"
+
+#include "AudioSource.h"
+#include "AudioClip.h"
+#include "Resources.h"
 namespace roka
 {
 	Cursor::Cursor():Component(EComponentType::Cursor),
@@ -70,6 +74,15 @@ namespace roka
 				obj->parent->GetComponent<PlayerScript>()->Recovery(20);
 			}
 		}
+
+		std::shared_ptr<AudioSource> audio = owner->GetComponent<AudioSource>();
+		std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MouseTouchSound");
+		if (clip == nullptr)
+		{
+			clip = Resources::Load<AudioClip>(L"MouseTouchSound", L"..\\Resources\\Audio\\name_touch.ogg");
+		}
+		audio->SetClip(clip);
+		audio->Play();
 	}
 	void Cursor::OnBeginDrag(PointerEventData* data)
 	{
