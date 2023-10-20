@@ -163,7 +163,7 @@ namespace roka
 				break;
 			}
 			//test
-			ms->mState = EMonsterState::Skill;
+			//ms->mState = EMonsterState::Skill;
 			ms->mSkillStateCnt++;
 			switch (ms->mState)
 			{
@@ -228,7 +228,7 @@ namespace roka
 			{
 				std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 				mCurDirType = EDir4Type::LEFT;
-				mr->material->shader = Resources::Find<Shader>(L"AtlasShader");
+				mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
 				LeftSetting();
 			}
 		}
@@ -238,7 +238,7 @@ namespace roka
 			{
 				std::shared_ptr<MeshRenderer> mr = owner->GetComponent<MeshRenderer>();
 				mCurDirType = EDir4Type::RIGHT;
-				mr->material->shader = Resources::Find<Shader>(L"VerticalInverterAtlasShader");
+				mr->material->shader = Resources::Find<Shader>(L"AtlasShader");
 				RightSetting();
 			}
 		}

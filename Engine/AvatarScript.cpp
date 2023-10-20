@@ -301,7 +301,18 @@ namespace roka
 			if (part.second.expired() == true)
 				continue;
 			std::shared_ptr<PartScript> partScript = part.second.lock()->GetComponent<PartScript>();
-			partScript->NextSprite();
+			if (partScript != nullptr)
+			{
+				partScript->NextSprite();
+			}
+			else if (part.second.lock()->GetChildCont() != 0)
+			{
+				std::vector<std::shared_ptr<PartScript>> scripts = part.second.lock()->GetChilds<PartScript>();
+				for (auto script : scripts)
+				{
+					script->NextSprite();
+				}
+			}
 		}
 	}
 

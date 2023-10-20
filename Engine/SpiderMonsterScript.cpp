@@ -140,7 +140,7 @@ namespace roka
 			if (projectPos.x > AspectRatioX ||
 				projectPos.x < 0.0f ||
 				projectPos.y >AspectRatioY ||
-				projectPos.y < 0.0f)
+				projectPos.y < 400.0f)
 			{
 				continue;
 			}

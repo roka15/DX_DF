@@ -43,6 +43,7 @@ namespace roka
 		Effect = manager::ObjectPoolManager<AnimationObjectPool, GameObject>::GetInstance()->Spawn(L"ColAniEftObject");
 		Effect->SetName(key);
 		Effect->layer_type = ELayerType::Monster;
+		std::shared_ptr<Transform> tf = caster->GetComponent<Transform>();
 		std::shared_ptr<MeshRenderer> mesh = Effect->GetComponent<MeshRenderer>();
 		std::shared_ptr<Animator> ani = Effect->GetComponent<Animator>();
 		std::shared_ptr<Texture> texture = Resources::Find<Texture>(L"LaserEft01AtlasTexture");
@@ -53,6 +54,19 @@ namespace roka
 		}
 		ani->Create(texture, L"LaserEft", 0, 20, 0.1f);
 		ani->PlayAnimation(L"LaserEft", false);
+		std::shared_ptr<Transform> transform = Effect->GetComponent<Transform>();
+		Vector3 pos = tf->position;
+		transform->scale = Vector3(8.0f, 0.5f, 1.0f);
+		EDir4Type dir = monster->GetDir();
+		switch (dir)
+		{
+		case EDir4Type::LEFT:
+			transform->position = -pos + Vector3(-2.0f, 0.025f, 0.8f);
+			break;
+		case EDir4Type::RIGHT:
+			transform->position = -pos + Vector3(2.0f, 0.025f, 0.8f);
+			break;
+		}
 		caster->AddChild(Effect);
 	}
 
@@ -83,18 +97,16 @@ namespace roka
 		Vector3 scale = spiderTf->scale;
 
 		std::shared_ptr<Transform> transform = collider->owner->GetComponent<Transform>();
-		transform->scale = Vector3(4.0f, 0.5f, 1.0f);
+		
 
 		Vector2 colCenter = collider->center;
 
 		switch (dir)
 		{
 		case EDir4Type::LEFT:
-			transform->position = -pos +Vector3(-2.0f, 0.025f, 1.0f);
-			colCenter.x = -2.0f;
+			colCenter.x = -0.1f;
 			break;
 		case EDir4Type::RIGHT:
-			transform->position = -pos+Vector3(2.0f, 0.025f, 1.0f);
 			colCenter.x = 0.1f;
 			break;
 		}

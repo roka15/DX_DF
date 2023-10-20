@@ -181,7 +181,7 @@ namespace roka
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
-		for (int i = 0; i < 1; i++)
+		for (int i = 0; i < 10; i++)
 		{
 			std::shared_ptr<GameObject> monster = normalMonsterPool->Spawn(L"SpiderMonster");
 
