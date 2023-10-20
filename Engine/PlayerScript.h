@@ -14,6 +14,7 @@ namespace roka
 	class AvatarScript;
 	class Rigidbody;
 
+	class AvatarSubPartInfo;
 	class PlayerScript :
 		public Script
 	{
@@ -41,7 +42,7 @@ namespace roka
 		virtual void Recovery(float recovery);
 		void EquipPart(EAvatarParts type);
 		void EquipPart(EAvatarParts type, std::wstring name);
-
+		void EquipPart(EAvatarParts type, std::vector<AvatarSubPartInfo> infos);
 		void Move();
 		// input system 적용시 사용
 		void LeftBtnDown();
@@ -49,6 +50,7 @@ namespace roka
 		void UpBtnDown();;
 		void DownBtnDown();
 
+		void LeftBtnUp();
 		void LeftBtnUp();
 		void RightBtnUp();
 		void UpBtnUp();

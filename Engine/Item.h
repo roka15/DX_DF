@@ -69,6 +69,11 @@ namespace roka
 		unsigned int id;
 		unsigned int part_type; // ÆÄÃ÷ Å¸ÀÔ.
 	};
+	struct AvatarSubPartInfo
+	{
+		unsigned int id;
+		wchar_t field[MAXITEMSTR];
+	};
 
 	struct AvatarSubInfo
 	{
@@ -96,4 +101,4 @@ namespace roka
 
 
 
-//userTable -> ownTable -> Item Table
+//ownTable -> Item Table ->type table

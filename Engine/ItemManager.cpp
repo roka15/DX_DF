@@ -502,6 +502,7 @@ namespace roka::manager
 		wcscpy(sub_info.field, L"mg_cap33200k.img");
 		mAvatarSubTable[sub_info.id].push_back(sub_info);
 
+<<<<<<< HEAD
 		//coat
 		sub_info.id = 6004;
 		sub_info.z_pos = -0.001f;
@@ -647,6 +648,47 @@ namespace roka::manager
 		wcscpy(sub_info.field, L"mg_pants23700d.img");
 		mAvatarSubTable.insert(std::make_pair(sub_info.id, std::vector<AvatarSubInfo>()));
 		mAvatarSubTable[sub_info.id].push_back(sub_info);
+=======
+#pragma region
+		AvatarSubPartInfo sub = {};
+		
+		//belt
+		sub.id = 6001;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id,std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//coat
+		sub.id = 6005;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//cap
+		sub.id = 6007;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//hair
+		sub.id = 6011;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//neck
+		sub.id = 6013;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//pants
+		sub.id = 6015;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+		//pants
+		sub.id = 6017;
+		mAvatarSubPartTable.insert(std::make_pair(sub.id, std::vector<AvatarSubPartInfo>()));
+		wcscpy(sub.field, L"pack 이름");
+		mAvatarSubPartTable[sub.id].push_back(sub);
+#pragma endregion
+>>>>>>> 196c08dd0ba6b6a4ccf9ed9808fde15bf7229f53
 
 #pragma endregion
 
@@ -805,6 +847,7 @@ namespace roka::manager
 		std::shared_ptr<AvatarScript> avatar = avatarObj->GetComponent<AvatarScript>();
 		bool flag = false;
 		int a = 0;
+<<<<<<< HEAD
 		size_t size = 0;
 		std::shared_ptr<GameObject> Parent = object::Instantiate<GameObject>();
 		std::shared_ptr<Transform> tf = Parent->GetComponent<Transform>();
@@ -872,6 +915,14 @@ namespace roka::manager
 
 		avatar->PlayPartsMotion();
 		return true;
+=======
+		std::vector<AvatarSubPartInfo> vec = mAvatarSubPartTable[avatar_id];
+		if (vec.size() == 0)
+			return false;
+		player->EquipPart((EAvatarParts)part_type, vec);
+		flag = true;
+		
+>>>>>>> 196c08dd0ba6b6a4ccf9ed9808fde15bf7229f53
 	}
 
 	void ItemManager::ItemTextureLoad()

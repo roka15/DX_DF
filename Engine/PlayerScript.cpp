@@ -287,7 +287,11 @@ namespace roka
 		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
 		avatar->EquipPart(type, name);
 	}
-
+	void PlayerScript::EquipPart(EAvatarParts type, std::vector<AvatarSubPartInfo> info)
+	{
+		std::shared_ptr<AvatarScript> avatar = mAvatar.lock();
+		avatar->EquipPart(type, name);
+	}
 	void PlayerScript::LeftBtnDown()
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
