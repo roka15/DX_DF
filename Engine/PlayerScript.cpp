@@ -210,6 +210,10 @@ namespace roka
 		EPlayerState befor_state = mPlayerState;
 		GaugeManager::GetInstance()->UseGauge(EGaugeType::PlayerHP, -damage, 100);
 		mHP -= damage;
+		if (mHP <= 0)
+		{
+
+		}
 		switch (stun)
 		{
 		case EStunState::HardStagger:
@@ -291,6 +295,11 @@ namespace roka
 		avatar->EquipPart(type, name);
 	}
 
+	void PlayerScript::Die()
+	{
+
+	}
+
 	void PlayerScript::LeftBtnDown()
 	{
 		std::shared_ptr<MoveScript> ms = mMoveScript.lock();
@@ -316,6 +325,17 @@ namespace roka
 					mPlayerState = EPlayerState::Run;
 					//rigid->is_active = false;
 					ms->AddSpeed(2.0f);
+
+					std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+					std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MgDashSound1");
+
+					if (clip == nullptr)
+						clip = Resources::Load<AudioClip>(L"MgDashSound1", L"..\\Resources\\Audio\\dash_move.ogg");
+
+					audioSource->Stop();
+					audioSource->SetClip(clip);
+					audioSource->SetLoop(true);
+					audioSource->Play();
 				}
 				else
 				{
@@ -339,6 +359,17 @@ namespace roka
 				size_t str_length = key.size();
 				std::wcsncpy(info.key, key.c_str(), str_length);
 				Time::RequestEvent(info, owner->GetSharedPtr());
+
+				std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+				std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MgWzBroomControlJumpSound");
+
+				if (clip == nullptr)
+					clip = Resources::Load<AudioClip>(L"MgWzBroomControlJumpSound", L"..\\Resources\\Audio\\wz_broom_control_jump.ogg");
+
+				audioSource->Stop();
+				audioSource->SetClip(clip);
+				audioSource->SetLoop(false);
+				audioSource->Play();
 			}
 		}
 		as->SettingLeftMaterial();
@@ -372,6 +403,17 @@ namespace roka
 					mPlayerState = EPlayerState::Run;
 					//rigid->is_active = false;
 					ms->AddSpeed(2.0f);
+
+					std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+					std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MgDashSound1");
+
+					if (clip == nullptr)
+						clip = Resources::Load<AudioClip>(L"MgDashSound1", L"..\\Resources\\Audio\\dash_move.ogg");
+
+					audioSource->Stop();
+					audioSource->SetClip(clip);
+					audioSource->SetLoop(true);
+					audioSource->Play();
 				}
 				else
 				{
@@ -395,6 +437,17 @@ namespace roka
 				size_t str_length = key.size();
 				std::wcsncpy(info.key, key.c_str(), str_length);
 				Time::RequestEvent(info, owner->GetSharedPtr());
+
+				std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+				std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MgWzBroomControlJumpSound");
+
+				if (clip == nullptr)
+					clip = Resources::Load<AudioClip>(L"MgWzBroomControlJumpSound", L"..\\Resources\\Audio\\wz_broom_control_jump.ogg");
+
+				audioSource->Stop();
+				audioSource->SetClip(clip);
+				audioSource->SetLoop(false);
+				audioSource->Play();
 			}
 		}
 
@@ -496,6 +549,8 @@ namespace roka
 				mPlayerState = EPlayerState::Idle;
 				ms->ResetSpeed();
 				as->PlayPartsMotion();
+				std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+				audioSource->Stop();
 			}
 		}
 	}
@@ -553,6 +608,8 @@ namespace roka
 				mPlayerState = EPlayerState::Idle;
 				ms->ResetSpeed();
 				as->PlayPartsMotion();
+				std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+				audioSource->Stop();
 			}
 		}
 	}
@@ -585,6 +642,8 @@ namespace roka
 				std::shared_ptr<AvatarScript> as = mAvatar.lock();
 				ms->ResetSpeed();
 				as->PlayPartsMotion();
+				std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+				audioSource->Stop();
 			}
 		}
 	}
@@ -617,6 +676,8 @@ namespace roka
 				std::shared_ptr<AvatarScript> as = mAvatar.lock();
 				ms->ResetSpeed();
 				as->PlayPartsMotion();
+				std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+				audioSource->Stop();
 			}
 		}
 	}
@@ -671,6 +732,17 @@ namespace roka
 			rigid->SetLandingPoint(Vector2(tf->position.x, tf->position.y));
 			as->PlayPartsMotion();
 			ms->ResetSpeed();
+
+			std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+			std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MgJumpSound1");
+
+			if (clip == nullptr)
+				clip = Resources::Load<AudioClip>(L"MgJumpSound1", L"..\\Resources\\Audio\\wz_jump.ogg");
+
+			audioSource->Stop();
+			audioSource->SetClip(clip);
+			audioSource->SetLoop(false);
+			audioSource->Play();
 		}
 	}
 
@@ -718,53 +790,59 @@ namespace roka
 		double condition = 5.0f;
 		std::shared_ptr<AvatarScript> as = mAvatar.lock();
 
+		bool flag = false;
 		if (as->IsAniStop() == false)
 		{
 			as->StopAni();
 			as->PlayPartsMotion();
+			flag = true;
 		}
 
 		if (cur_time - befor_time <= condition)
 		{
 			as->AddSpriteIndex();
+			flag = true;
 		}
 
+		if (flag == true)
+		{
+			std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
+			std::shared_ptr<AudioClip> clip = audioSource->GetClip();
+			if (clip == nullptr || (clip != nullptr && clip->GetKey().compare(L"MgDmgSound3") != 0))
+			{
+				clip = Resources::Find<AudioClip>(L"MgDmgSound1");
+				if (clip == nullptr)
+					clip = Resources::Load<AudioClip>(L"MgDmgSound1", L"..\\Resources\\Audio\\wz_dmg_01.ogg");
+			}
+			else if (clip->GetKey().compare(L"MgDmgSound1") == 0)
+			{
+				clip = Resources::Find<AudioClip>(L"MgDmgSound2");
+				if (clip == nullptr)
+					clip = Resources::Load<AudioClip>(L"MgDmgSound2", L"..\\Resources\\Audio\\wz_dmg_02.ogg");
+			}
+			else if (clip->GetKey().compare(L"MgDmgSound2") == 0)
+			{
+				clip = Resources::Find<AudioClip>(L"MgDmgSound3");
+				if (clip == nullptr)
+					clip = Resources::Load<AudioClip>(L"MgDmgSound3", L"..\\Resources\\Audio\\wz_dmg_03.ogg");
+			}
+			else if (clip->GetKey().compare(L"MgDmgSound3") == 0)
+			{
+				clip = Resources::Find<AudioClip>(L"MgDmgSound1");
+				if (clip == nullptr)
+					clip = Resources::Load<AudioClip>(L"MgDmgSound1", L"..\\Resources\\Audio\\wz_dmg_01.ogg");
+			}
+			audioSource->Stop();
+			audioSource->SetClip(clip);
+			audioSource->SetLoop(false);
+			audioSource->Play();
+		}
 		Time::CallBackTimerInfo info = {};
 		info.endTime = endtime;
 		std::wstring key = L"PlayerStunCompEvent";
 		size_t str_length = key.size();
 		std::wcsncpy(info.key, key.c_str(), str_length);
 		Time::RequestEvent(info, owner->GetSharedPtr());
-		std::shared_ptr<AudioSource> audioSource = owner->GetComponent<AudioSource>();
-		std::shared_ptr<AudioClip> clip = audioSource->GetClip();
-		if (clip == nullptr)
-		{
-			clip = Resources::Find<AudioClip>(L"MgDmgSound1");
-			if (clip == nullptr)
-				clip = Resources::Load<AudioClip>(L"MgDmgSound1", L"..\\Resources\\Audio\\wz_dmg_01.ogg");
-		}
-		else if (clip->GetKey().compare(L"MgDmgSound1") == 0)
-		{
-			clip = Resources::Find<AudioClip>(L"MgDmgSound2");
-			if (clip == nullptr)
-				clip = Resources::Load<AudioClip>(L"MgDmgSound2", L"..\\Resources\\Audio\\wz_dmg_02.ogg");
-		}
-		else if (clip->GetKey().compare(L"MgDmgSound2") == 0)
-		{
-			clip = Resources::Find<AudioClip>(L"MgDmgSound3");
-			if (clip == nullptr)
-				clip = Resources::Load<AudioClip>(L"MgDmgSound3", L"..\\Resources\\Audio\\wz_dmg_03.ogg");
-		}
-		else if (clip->GetKey().compare(L"MgDmgSound3") == 0)
-		{
-			clip = Resources::Find<AudioClip>(L"MgDmgSound1");
-			if (clip == nullptr)
-				clip = Resources::Load<AudioClip>(L"MgDmgSound1", L"..\\Resources\\Audio\\wz_dmg_01.ogg");
-		}
-		audioSource->Stop();
-		audioSource->SetClip(clip);
-		audioSource->SetLoop(false);
-		audioSource->Play();
 	}
 
 	void PlayerScript::StunDown()

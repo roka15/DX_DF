@@ -137,7 +137,7 @@ void roka::SeriaGateScene::OnEnter()
 	AddGameObject(ELayerType::Light, light);
 	std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 	lightComp->SetType(ELightType::Directional);
-	lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	lightComp->SetColor(Vector4(0.5f, 0.5f, 0.5f, 1.0f));
 
 
 	std::shared_ptr<GameObject> cursor = manager::InputManager::GetInstance()->GetCursor();

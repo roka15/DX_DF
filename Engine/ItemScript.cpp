@@ -12,6 +12,7 @@
 #include "CollisionManager.h"
 #include "SceneManager.h"
 #include "UI.h"
+#include "AudioSource.h"
 using namespace roka::graphics;
 namespace roka
 {
@@ -33,6 +34,7 @@ namespace roka
 	void ItemScript::Initialize()
 	{
 		owner->AddComponent<Collider2D>();
+		owner->AddComponent<AudioSource>();
 		UI* ui = dynamic_cast<UI*>(owner);
 		ui->ui_type = EUIType::Item;
 	}
@@ -87,6 +89,15 @@ namespace roka
 				manager::ItemManager::GetInstance()->UseItem(mUseOwner, mItemID);
 			}
 		}
+
+		std::shared_ptr<AudioSource> audio = owner->GetComponent<AudioSource>();
+		std::shared_ptr<AudioClip> clip = Resources::Find<AudioClip>(L"MouseTouchSound");
+		if (clip == nullptr)
+		{
+			clip = Resources::Load<AudioClip>(L"MouseTouchSound", L"..\\Resources\\Audio\\name_touch.ogg");
+		}
+		audio->SetClip(clip);
+		audio->Play();
 	}
 	void ItemScript::OnDrag(PointerEventData* data)
 	{

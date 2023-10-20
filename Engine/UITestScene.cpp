@@ -154,13 +154,8 @@ namespace roka
 		AddGameObject(ELayerType::Light, light);
 		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 		lightComp->SetType(ELightType::Directional);
-		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		lightComp->SetColor(Vector4(0.5f, 0.5f, 0.5f, 1.0f));
 
-		std::shared_ptr<UI> text = object::Instantiate<UI>();
-		text->SetName(L"MyText");
-		std::shared_ptr<Text> tc = text->AddComponent<Text>();
-		tc->Create(L"Hello World",255,255,255,255,100);
-		AddGameObject(ELayerType::UI, text);
 
 		std::shared_ptr<GameObject> UIcamera = object::Instantiate<GameObject>(
 			Vector3(0.0f, 0.0f, -10.0f),

@@ -42,6 +42,8 @@ namespace roka
 		void EquipPart(EAvatarParts type);
 		void EquipPart(EAvatarParts type, std::wstring name);
 
+	
+		void Die();
 		void Move();
 		// input system 적용시 사용
 		void LeftBtnDown();

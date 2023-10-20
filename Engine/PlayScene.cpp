@@ -108,6 +108,23 @@ namespace roka
 		//}
 		//if (Input::GetKeyDown(EKeyCode::SPACE))
 		//	ps->JumpBtnDown();
+
+		if (Input::GetKeyDown(EKeyCode::K))
+		{
+			std::shared_ptr<GameObject> player
+				= SceneManager::FindGameObject(L"Player");
+			std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
+			NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
+			for (int i = 0; i < 5; i++)
+			{
+				std::shared_ptr<GameObject> monster = normalMonsterPool->Spawn(L"SpiderMonster");
+
+				monster->SetName(L"Monster" + std::to_wstring(i));
+				monster->GetComponent<Transform>()->position = Vector3(0.5f * i, 0.0f, 0.0f);
+				monster->GetComponent<MonsterScript>()->SetTarget(player);
+				AddGameObject(ELayerType::Monster, monster);
+			}
+		}
 	}
 
 	void PlayScene::LateUpdate()
@@ -141,7 +158,7 @@ namespace roka
 		AddGameObject(ELayerType::Light, light);
 		std::shared_ptr<Light> lightComp = light->AddComponent<Light>();
 		lightComp->SetType(ELightType::Directional);
-		lightComp->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+		lightComp->SetColor(Vector4(0.5f, 0.5f, 0.5f, 1.0f));
 		
 		std::shared_ptr<GameObject> cursor = manager::InputManager::GetInstance()->GetCursor();
 
@@ -176,14 +193,14 @@ namespace roka
 		/* player script text*/
 		std::shared_ptr<GameObject> origin = prefab::Prefabs[L"PlayerObject"];
 
-		std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
+	/*	std::shared_ptr<GameObject> another_player = object::Instantiate<GameObject>(origin);
 		another_player->SetName(L"AnotherPlayer");
 		another_player->GetComponent<Transform>()->position = Vector3(-2.0f, 0.0f, 0.0f);
 		std::shared_ptr<PlayerScript> playerScript = another_player->GetComponent<PlayerScript>();
-		playerScript->LateInitialize();
+		playerScript->LateInitialize();*/
 
 		//another_player->GetComponent<Transform>()->rotation = Vector3(0.0f, 0.0f, Deg2Rad(90.0f));
-		AddGameObject(ELayerType::Player, another_player);
+		//AddGameObject(ELayerType::Player, another_player);
 
 		std::shared_ptr<GameObject> player
 			= SceneManager::FindGameObject(L"Player");
@@ -192,7 +209,7 @@ namespace roka
 
 		std::shared_ptr<GameObject> monsterOrigin = prefab::Prefabs[L"Spider_MonsterObject"];
 		NormalMonsterPool* normalMonsterPool = ObjectPoolManager<NormalMonsterPool, GameObject>::GetInstance();
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			std::shared_ptr<GameObject> monster = normalMonsterPool->Spawn(L"SpiderMonster");
 
